@@ -113,6 +113,7 @@
     <Compile Include="Event\ValidEventInitializer.cs" />
     <Compile Include="GameTools\Camera3D.cs" />
     <Compile Include="GameTools\Graph\GraphMath.cs" />
+    <Compile Include="GameTools\MultipriorityQueue.cs" />
     <Compile Include="GameTools\Noise2D\PerlinNoise2D.cs" />
     <Compile Include="GameTools\Noise2D\PerlinNoiseSettings2D.cs" />
     <Compile Include="GameTools\Noise2D\SimpleNoise2D.cs" />
@@ -137,14 +138,16 @@
     <Compile Include="Event\WarlordEventManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="General Standards\Game Standards.txt" />
     <None Include="Event\EventRules.txt" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WarlordContent\WarlordContent.contentproj">
-      <Name>WarlordContent</Name>
+      <Name>WarlordContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{A5D386EF-45A1-423E-B4FE-29A40BAEC572}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

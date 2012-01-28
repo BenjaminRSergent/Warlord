@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="2ff23fdc-dcb0-4079-a2ae-1fa82299564f" name="Labouts@LION-2011 2012-01-27 22:18:03" runUser="Lion-2011\Labouts" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="0986ac97-03c6-40d0-bcbd-a36784bd35d9">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="Labouts_LION-2011 2012-01-27 22_18_03">
+      <DeploymentItem filename="Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Warlord.exe" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2012-01-27T22:18:03.4455381-08:00" queuing="2012-01-27T22:18:04.7396121-08:00" start="2012-01-27T22:18:04.7906150-08:00" finish="2012-01-27T22:18:05.5636592-08:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="3" executed="3" error="0" failed="2" timeout="0" aborted="0" inconclusive="1" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="GetAndRemoveTest" storage="z:\data\c#\xna\warlord\warlordunittest\bin\debug\warlordunittest.dll" id="eb643b59-127a-4d30-f789-e91b4c5ab446">
+      <Execution id="f5af0671-0e02-43a5-a10a-0719e3389754" />
+      <TestMethod codeBase="Z:/Data/C#/XNA/Warlord/WarlordUnitTest/bin/Debug/WarlordUnitTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WarlordUnitTest.MultipriorityQueueTest, WarlordUnitTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GetAndRemoveTest" />
+    </UnitTest>
+    <UnitTest name="AddTest" storage="z:\data\c#\xna\warlord\warlordunittest\bin\debug\warlordunittest.dll" id="bf5428d9-601d-47f3-ada7-274e12dfab78">
+      <Execution id="177643b4-6529-4d05-8b97-dedd9e04c5aa" />
+      <TestMethod codeBase="Z:/Data/C#/XNA/Warlord/WarlordUnitTest/bin/Debug/WarlordUnitTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WarlordUnitTest.MultipriorityQueueTest, WarlordUnitTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="AddTest" />
+    </UnitTest>
+    <UnitTest name="MultipriorityQueueConstructorTest" storage="z:\data\c#\xna\warlord\warlordunittest\bin\debug\warlordunittest.dll" id="d2de6350-ad34-8fb4-170b-08d8d9a70e13">
+      <Execution id="8ab08e7b-5ded-49dc-ac4d-b330c2ff6b34" />
+      <TestMethod codeBase="Z:/Data/C#/XNA/Warlord/WarlordUnitTest/bin/Debug/WarlordUnitTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WarlordUnitTest.MultipriorityQueueTest, WarlordUnitTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="MultipriorityQueueConstructorTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="d2de6350-ad34-8fb4-170b-08d8d9a70e13" executionId="8ab08e7b-5ded-49dc-ac4d-b330c2ff6b34" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bf5428d9-601d-47f3-ada7-274e12dfab78" executionId="177643b4-6529-4d05-8b97-dedd9e04c5aa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eb643b59-127a-4d30-f789-e91b4c5ab446" executionId="f5af0671-0e02-43a5-a10a-0719e3389754" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="8ab08e7b-5ded-49dc-ac4d-b330c2ff6b34" testId="d2de6350-ad34-8fb4-170b-08d8d9a70e13" testName="MultipriorityQueueConstructorTest" computerName="LION-2011" duration="00:00:00.0504783" startTime="2012-01-27T22:18:04.8156165-08:00" endTime="2012-01-27T22:18:05.4326518-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8ab08e7b-5ded-49dc-ac4d-b330c2ff6b34">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. TODO: Implement code to verify target</Message>
+          <StackTrace>   at WarlordUnitTest.MultipriorityQueueTest.MultipriorityQueueConstructorTestHelper[value,data]() in Z:\Data\C#\XNA\Warlord\WarlordUnitTest\MultipriorityQueueTest.cs:line 76
+   at WarlordUnitTest.MultipriorityQueueTest.MultipriorityQueueConstructorTest() in Z:\Data\C#\XNA\Warlord\WarlordUnitTest\MultipriorityQueueTest.cs:line 82
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="177643b4-6529-4d05-8b97-dedd9e04c5aa" testId="bf5428d9-601d-47f3-ada7-274e12dfab78" testName="AddTest" computerName="LION-2011" duration="00:00:00.0446239" startTime="2012-01-27T22:18:05.4356519-08:00" endTime="2012-01-27T22:18:05.4866548-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="177643b4-6529-4d05-8b97-dedd9e04c5aa">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method WarlordUnitTest.MultipriorityQueueTest.AddTest threw exception: 
+System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index</Message>
+          <StackTrace>    at System.ThrowHelper.ThrowArgumentOutOfRangeException()
+   at System.Collections.Generic.List`1.set_Item(Int32 index, T value)
+   at Warlord.GameTools.MultipriorityQueue`2.Add(value theValue, data theData) in Z:\Data\C#\XNA\Warlord\Warlord\Warlord\GameTools\MultipriorityQueue.cs:line 29
+   at WarlordUnitTest.MultipriorityQueueTest.AddTestHelper[value,data]() in Z:\Data\C#\XNA\Warlord\WarlordUnitTest\MultipriorityQueueTest.cs:line 99
+   at WarlordUnitTest.MultipriorityQueueTest.AddTest() in Z:\Data\C#\XNA\Warlord\WarlordUnitTest\MultipriorityQueueTest.cs:line 115
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f5af0671-0e02-43a5-a10a-0719e3389754" testId="eb643b59-127a-4d30-f789-e91b4c5ab446" testName="GetAndRemoveTest" computerName="LION-2011" duration="00:00:00.0225562" startTime="2012-01-27T22:18:05.4896550-08:00" endTime="2012-01-27T22:18:05.5176566-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f5af0671-0e02-43a5-a10a-0719e3389754">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.AreEqual failed. Expected:&lt;(null)&gt;. Actual:&lt;System.Collections.Generic.List`1[Microsoft.VisualStudio.TestTools.UnitTesting.GenericParameterHelper]&gt;. </Message>
+          <StackTrace>   at WarlordUnitTest.MultipriorityQueueTest.GetAndRemoveTestHelper[value,data]() in Z:\Data\C#\XNA\Warlord\WarlordUnitTest\MultipriorityQueueTest.cs:line 129
+   at WarlordUnitTest.MultipriorityQueueTest.GetAndRemoveTest() in Z:\Data\C#\XNA\Warlord\WarlordUnitTest\MultipriorityQueueTest.cs:line 136
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

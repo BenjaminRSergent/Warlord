@@ -1,0 +1,1 @@
+﻿All time is an interger number of miliseconds.

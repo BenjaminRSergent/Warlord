@@ -8,10 +8,14 @@ namespace Warlord.Event
 {
     class Event
     {       
-        Event( Optional<Object> sender )
+        public Event( Optional<Object> sender, String eventType, int delay )
         {
+            EventType = eventType;
             Sender = sender;
+            Delay = delay;
         }
+
+        public int Delay{ get; protected set; }
 
         public String EventType{ get; protected set; }
         public Optional<Object> Sender{ get; protected set; }

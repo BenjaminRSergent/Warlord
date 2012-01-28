@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="36a5d1a9-eb0f-46b4-90f0-aae863991a38" name="Labouts@LION-2011 2012-01-27 23:08:52" runUser="Lion-2011\Labouts" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="0986ac97-03c6-40d0-bcbd-a36784bd35d9">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="Labouts_LION-2011 2012-01-27 23_08_52">
+      <DeploymentItem filename="Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Warlord.exe" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2012-01-27T23:08:52.8839560-08:00" queuing="2012-01-27T23:08:53.7860076-08:00" start="2012-01-27T23:08:53.8660122-08:00" finish="2012-01-27T23:08:54.5810531-08:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="4" executed="4" passed="3" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="SendDelayedEventsTest" storage="z:\data\c#\xna\warlord\warlordunittest\bin\debug\warlordunittest.dll" id="120298f9-824b-c9f5-2939-c9f7cbec2c4a">
+      <Execution id="9840fbbc-6780-423a-88df-0bf0cb35bb4b" />
+      <TestMethod codeBase="Z:/Data/C#/XNA/Warlord/WarlordUnitTest/bin/Debug/WarlordUnitTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WarlordUnitTest.WarlordEventManagerTest, WarlordUnitTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="SendDelayedEventsTest" />
+    </UnitTest>
+    <UnitTest name="SendEventTest" storage="z:\data\c#\xna\warlord\warlordunittest\bin\debug\warlordunittest.dll" id="4fcb64ed-2d2d-8dfa-a098-9dc9c3270adb">
+      <Execution id="4157da1b-0a10-4189-a04a-13563d6537a8" />
+      <TestMethod codeBase="Z:/Data/C#/XNA/Warlord/WarlordUnitTest/bin/Debug/WarlordUnitTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WarlordUnitTest.WarlordEventManagerTest, WarlordUnitTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="SendEventTest" />
+    </UnitTest>
+    <UnitTest name="AddTest" storage="z:\data\c#\xna\warlord\warlordunittest\bin\debug\warlordunittest.dll" id="bf5428d9-601d-47f3-ada7-274e12dfab78">
+      <Execution id="7ebedcd7-3d52-4c1f-afdc-98f4252b622f" />
+      <TestMethod codeBase="Z:/Data/C#/XNA/Warlord/WarlordUnitTest/bin/Debug/WarlordUnitTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WarlordUnitTest.MultipriorityQueueTest, WarlordUnitTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="AddTest" />
+    </UnitTest>
+    <UnitTest name="GetAndRemoveTest" storage="z:\data\c#\xna\warlord\warlordunittest\bin\debug\warlordunittest.dll" id="eb643b59-127a-4d30-f789-e91b4c5ab446">
+      <Execution id="71514c36-417a-4030-82e6-d41cfcf816a0" />
+      <TestMethod codeBase="Z:/Data/C#/XNA/Warlord/WarlordUnitTest/bin/Debug/WarlordUnitTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WarlordUnitTest.MultipriorityQueueTest, WarlordUnitTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GetAndRemoveTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="bf5428d9-601d-47f3-ada7-274e12dfab78" executionId="7ebedcd7-3d52-4c1f-afdc-98f4252b622f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eb643b59-127a-4d30-f789-e91b4c5ab446" executionId="71514c36-417a-4030-82e6-d41cfcf816a0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="120298f9-824b-c9f5-2939-c9f7cbec2c4a" executionId="9840fbbc-6780-423a-88df-0bf0cb35bb4b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4fcb64ed-2d2d-8dfa-a098-9dc9c3270adb" executionId="4157da1b-0a10-4189-a04a-13563d6537a8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="7ebedcd7-3d52-4c1f-afdc-98f4252b622f" testId="bf5428d9-601d-47f3-ada7-274e12dfab78" testName="AddTest" computerName="LION-2011" duration="00:00:00.0150417" startTime="2012-01-27T23:08:53.8900135-08:00" endTime="2012-01-27T23:08:54.4420451-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7ebedcd7-3d52-4c1f-afdc-98f4252b622f">
+    </UnitTestResult>
+    <UnitTestResult executionId="71514c36-417a-4030-82e6-d41cfcf816a0" testId="eb643b59-127a-4d30-f789-e91b4c5ab446" testName="GetAndRemoveTest" computerName="LION-2011" duration="00:00:00.0006486" startTime="2012-01-27T23:08:54.4520457-08:00" endTime="2012-01-27T23:08:54.4610462-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="71514c36-417a-4030-82e6-d41cfcf816a0">
+    </UnitTestResult>
+    <UnitTestResult executionId="9840fbbc-6780-423a-88df-0bf0cb35bb4b" testId="120298f9-824b-c9f5-2939-c9f7cbec2c4a" testName="SendDelayedEventsTest" computerName="LION-2011" duration="00:00:00.0487886" startTime="2012-01-27T23:08:54.4720468-08:00" endTime="2012-01-27T23:08:54.5270500-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9840fbbc-6780-423a-88df-0bf0cb35bb4b">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method WarlordUnitTest.WarlordEventManagerTest.SendDelayedEventsTest threw exception: 
+System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index</Message>
+          <StackTrace>    at System.ThrowHelper.ThrowArgumentOutOfRangeException()
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at GameTools.MultipriorityQueue`2.GetAndRemove(value cieling) in Z:\Data\C#\XNA\Warlord\Warlord\Warlord\GameTools\MultipriorityQueue.cs:line 46
+   at Warlord.Event.WarlordEventManager.SendDelayedEvents(Int32 currentTime) in Z:\Data\C#\XNA\Warlord\Warlord\Warlord\Event\WarlordEventManager.cs:line 56
+   at WarlordUnitTest.WarlordEventManagerTest.SendDelayedEventsTest() in Z:\Data\C#\XNA\Warlord\WarlordUnitTest\WarlordEventManagerTest.cs:line 86
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4157da1b-0a10-4189-a04a-13563d6537a8" testId="4fcb64ed-2d2d-8dfa-a098-9dc9c3270adb" testName="SendEventTest" computerName="LION-2011" duration="00:00:00.0010074" startTime="2012-01-27T23:08:54.5300501-08:00" endTime="2012-01-27T23:08:54.5380506-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4157da1b-0a10-4189-a04a-13563d6537a8">
+    </UnitTestResult>
+  </Results>
+</TestRun>

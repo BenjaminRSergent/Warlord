@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="67893f85-a487-45e0-968d-cf0e5c416f8c" name="Labouts@LION-2011 2012-01-27 22:37:41" runUser="Lion-2011\Labouts" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="0986ac97-03c6-40d0-bcbd-a36784bd35d9">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="Labouts_LION-2011 2012-01-27 22_37_41">
+      <DeploymentItem filename="Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Warlord.exe" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2012-01-27T22:37:41.4719174-08:00" queuing="2012-01-27T22:37:42.4339724-08:00" start="2012-01-27T22:37:42.4899756-08:00" finish="2012-01-27T22:37:43.2660200-08:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="2" executed="2" passed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="AddTest" storage="z:\data\c#\xna\warlord\warlordunittest\bin\debug\warlordunittest.dll" id="bf5428d9-601d-47f3-ada7-274e12dfab78">
+      <Execution id="5a98be7a-cd97-4b4e-90c2-2340bccce92e" />
+      <TestMethod codeBase="Z:/Data/C#/XNA/Warlord/WarlordUnitTest/bin/Debug/WarlordUnitTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WarlordUnitTest.MultipriorityQueueTest, WarlordUnitTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="AddTest" />
+    </UnitTest>
+    <UnitTest name="GetAndRemoveTest" storage="z:\data\c#\xna\warlord\warlordunittest\bin\debug\warlordunittest.dll" id="eb643b59-127a-4d30-f789-e91b4c5ab446">
+      <Execution id="102e12ce-335f-463f-8a92-b4161fb34888" />
+      <TestMethod codeBase="Z:/Data/C#/XNA/Warlord/WarlordUnitTest/bin/Debug/WarlordUnitTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WarlordUnitTest.MultipriorityQueueTest, WarlordUnitTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GetAndRemoveTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="bf5428d9-601d-47f3-ada7-274e12dfab78" executionId="5a98be7a-cd97-4b4e-90c2-2340bccce92e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eb643b59-127a-4d30-f789-e91b4c5ab446" executionId="102e12ce-335f-463f-8a92-b4161fb34888" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="5a98be7a-cd97-4b4e-90c2-2340bccce92e" testId="bf5428d9-601d-47f3-ada7-274e12dfab78" testName="AddTest" computerName="LION-2011" duration="00:00:00.0211884" startTime="2012-01-27T22:37:42.5159771-08:00" endTime="2012-01-27T22:37:43.1190116-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5a98be7a-cd97-4b4e-90c2-2340bccce92e">
+    </UnitTestResult>
+    <UnitTestResult executionId="102e12ce-335f-463f-8a92-b4161fb34888" testId="eb643b59-127a-4d30-f789-e91b4c5ab446" testName="GetAndRemoveTest" computerName="LION-2011" duration="00:00:00.0428774" startTime="2012-01-27T22:37:43.1370126-08:00" endTime="2012-01-27T22:37:43.1870154-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="102e12ce-335f-463f-8a92-b4161fb34888">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method WarlordUnitTest.MultipriorityQueueTest.GetAndRemoveTest threw exception: 
+System.NullReferenceException: Object reference not set to an instance of an object.</Message>
+          <StackTrace>    at WarlordUnitTest.MultipriorityQueueTest.GetAndRemoveTestHelper[value,data]() in Z:\Data\C#\XNA\Warlord\WarlordUnitTest\MultipriorityQueueTest.cs:line 121
+   at WarlordUnitTest.MultipriorityQueueTest.GetAndRemoveTest() in Z:\Data\C#\XNA\Warlord\WarlordUnitTest\MultipriorityQueueTest.cs:line 129
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>
