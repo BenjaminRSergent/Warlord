@@ -15,6 +15,7 @@ namespace Warlord.View
     {
         private KeyboardState prevKeyboardState;
         private MouseState prevMouseState;
+
         private GameWindow gameWindow;
 
         public HumanInput( GameWindow gameWindow )
@@ -23,38 +24,46 @@ namespace Warlord.View
 
             WarlordApplication.GameEventManager.Subscribe( update, "update" );
         }
-        private void update( object gameTime )
+        private void update( object sender, object gameTime )
         {
             update( gameTime as GameTime );
         }
         private void update( GameTime gameTime )
         {
-            if( WarlordApplication.Active )
-                CameraMoveRequest( );
-        }
-        private void CameraMoveRequest( )
-        {
-            KeyboardState keyState = Keyboard.GetState( );
-            MouseState mouseState = Mouse.GetState( );
+            KeyboardState keyboardState;
+            MouseState mouseState;
 
+            if( WarlordApplication.Active )
+            {
+                keyboardState = Keyboard.GetState( );
+                mouseState = Mouse.GetState( );
+
+                CameraMoveRequest( keyboardState, mouseState );
+
+                prevKeyboardState = keyboardState;
+                prevMouseState = mouseState;
+            }
+        }
+        private void CameraMoveRequest( KeyboardState keyboardState, MouseState mouseState )
+        {
             Vector3f movement = Vector3.Zero;
             Vector2f facingRotation = Vector2.Zero;
 
             const float moveAmount = 0.25f;
 
-            if( keyState.IsKeyDown( Keys.D ) )
+            if( keyboardState.IsKeyDown( Keys.D ) )
                 movement.X+= moveAmount;
-            if( keyState.IsKeyDown( Keys.A ) )
+            if( keyboardState.IsKeyDown( Keys.A ) )
                 movement.X-= moveAmount;
 
-            if( keyState.IsKeyDown( Keys.W ) )
+            if( keyboardState.IsKeyDown( Keys.W ) )
                 movement.Z += moveAmount;
-            if( keyState.IsKeyDown( Keys.S ) )
+            if( keyboardState.IsKeyDown( Keys.S ) )
                 movement.Z-= moveAmount;
 
-            if( keyState.IsKeyDown( Keys.Q ) )
+            if( keyboardState.IsKeyDown( Keys.Q ) )
                 movement.Y+= moveAmount;
-            if( keyState.IsKeyDown( Keys.E ) )
+            if( keyboardState.IsKeyDown( Keys.E ) )
                 movement.Y-= moveAmount;
 
             facingRotation.X = 0.001f * (gameWindow.ClientBounds.Width/2 - mouseState.X);

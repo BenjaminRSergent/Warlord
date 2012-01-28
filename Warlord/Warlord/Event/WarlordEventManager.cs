@@ -37,17 +37,23 @@ namespace Warlord.Event
 
         public void Subscribe(EventReaction eventReaction, String eventType)
         {
+            if( !validEvents.Contains(eventType) )
+                throw( new ArgumentException("The event: " + eventType + " is not a valid event") );
+
             subscriberDirectory[eventType].Add(eventReaction);
         }
 
         public void SendEvent(GameEvent theEvent)
         {
+            if( !validEvents.Contains(theEvent.EventType) )
+                throw( new ArgumentException("The event: " + theEvent.EventType + " is not a valid event") );
+
             if( theEvent.Delay == 0 )
                 FireEvent( theEvent );
             else
                 eventQueue.Add( currentTime+theEvent.Delay, theEvent );
         }
-        public void Update( object currentGameTime )
+        public void Update( object sender, object currentGameTime )
         {
             GameTime gameTime = currentGameTime as GameTime;
             SendDelayedEvents( gameTime.ElapsedGameTime.Milliseconds );
@@ -71,7 +77,7 @@ namespace Warlord.Event
         {
             foreach( EventReaction eventReaction in subscriberDirectory[theEvent.EventType] )
             {
-                eventReaction( theEvent.AdditionalData );
+                eventReaction( theEvent.Sender, theEvent.AdditionalData );
             }
         }
     }

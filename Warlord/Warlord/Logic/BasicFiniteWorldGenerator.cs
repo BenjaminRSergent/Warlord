@@ -32,12 +32,12 @@ namespace Warlord.Logic
             int height;
 
             settings.frequencyMulti = 2;
-            settings.octaves = 4;
+            settings.octaves = 6;
             settings.persistence = 0.5;
             settings.seed = 1;
             settings.size = new Point( worldSize.X*RegionSize.X, worldSize.Y*RegionSize.Z );
             settings.startingPoint = Point.Zero;
-            settings.zoom = 200;            
+            settings.zoom = 300;            
             
             noise = PerlinNoise2D.GenPerlinNoise2D( settings, 4 );
 
@@ -45,7 +45,7 @@ namespace Warlord.Logic
             {
                 for( int z = 0; z < settings.size.Y-1; z++ )
                 {
-                    height = 64 + (int)(64*noise[x,z]);
+                    height = 64 + (int)(32*noise[x,z]);
 
                     height = Math.Max( height, 1 );
 

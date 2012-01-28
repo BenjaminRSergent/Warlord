@@ -48,7 +48,7 @@ namespace Warlord
         private void GenerateWorld( )
         {
             FiniteWorldGenerator generator = new BasicFiniteWorldGenerator( );
-            world = generator.GetSimpleWorld( new Vector2i( 8, 8 ), new Vector3i(16,128,16) );
+            world = generator.GetSimpleWorld( new Vector2i( 10, 10 ), new Vector3i(16,128,16) );
         }
 
         protected override void LoadContent()

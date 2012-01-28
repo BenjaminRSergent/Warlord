@@ -40,7 +40,7 @@ namespace Warlord.View
             WarlordApplication.GameEventManager.Subscribe( RotateCamera, "camera_rotate_request" );
         }
 
-        private void Draw(object gameTimeObject)
+        private void Draw(object sender, object gameTimeObject)
         {
             GameTime gameTime = gameTimeObject as GameTime;
             SetupEffects( );
@@ -56,7 +56,6 @@ namespace Warlord.View
                 }
             }
         }
-
         private void SetupEffects( )
         {
             effect.Parameters["World"].SetValue( Matrix.CreateRotationY( angle ) );
@@ -68,15 +67,16 @@ namespace Warlord.View
             effect.Parameters["FogColor"].SetValue(Color.SkyBlue.ToVector4());
             effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
         }
-        private void AddRegion( object regionObject )
+
+        private void AddRegion(object sender, object regionObject )
         {
             regionGraphics.Add( new RegionGraphics( device, regionObject as Region ) );
         }
-        private void RotateCamera(Object rotation)
+        private void RotateCamera(object sender, Object rotation)
         {
             RotateCamera( (rotation as Vector2f).ToVector2 );
         }
-        private void MoveCamera(Object movement)
+        private void MoveCamera(object sender, Object movement)
         {
             MoveCamera( (movement as Vector3f).ToVector3 );
         }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Warlord.Event
 {
-    delegate void EventReaction( object eventObject );
+    delegate void EventReaction( object sender, object eventObject );
     interface EventManager
     {
         void Subscribe( EventReaction eventReaction, String eventType );

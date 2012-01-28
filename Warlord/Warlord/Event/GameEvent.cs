@@ -5,7 +5,7 @@ using System.Text;
 using Warlord.GameTools;
 
 namespace Warlord.Event
-{
+{    
     class GameEvent
     {
         public GameEvent( Optional<Object> sender, String eventType, object additionalData, int delay )

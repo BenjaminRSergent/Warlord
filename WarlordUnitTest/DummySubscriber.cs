@@ -13,10 +13,10 @@ namespace WarlordUnitTest
 
         public DummySubscriber( EventManager theManager )
         {
-            theManager.Subscribe(this, "actor_moved");
+            theManager.Subscribe(RecieveEvent, "actor_moved");
         }
 
-        public void HandleEvent(GameEvent theEvent)
+        public void RecieveEvent(object theEvent)
         {
             RecievedEvent = true;
             TheEvent = theEvent;
