@@ -43,10 +43,6 @@ namespace Warlord.Logic.Data
                 {
                     for( int z = 0; z < regionSize.Z; z++ )
                     {
-                        int d;
-                        if( RegionOrigin.Z == 16 )
-                            d = 10;
-
                         blockLocation = regionOrigin + new Vector3i(x,y,z);
                         blocks[x,y,z] = new Block(blockLocation, BlockType.Air);
                         Altered = true;

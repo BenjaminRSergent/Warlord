@@ -109,7 +109,6 @@
   <ItemGroup>
     <Compile Include="Event\GameEvent.cs" />
     <Compile Include="Event\EventManager.cs" />
-    <Compile Include="Event\EventSubscriber.cs" />
     <Compile Include="Event\ValidEventInitializer.cs" />
     <Compile Include="GameStaticInitalizer.cs" />
     <Compile Include="GameTools\Camera3D.cs" />

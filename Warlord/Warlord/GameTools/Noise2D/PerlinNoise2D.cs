@@ -17,7 +17,6 @@ namespace GameTools.Noise2D
 
             return noise;
         }
-
         static public double[,] GenPerlinNoise2D( PerlinNoiseSettings2D settings, int numThreads )
         {            
             double[,] noise = new double[settings.size.X, settings.size.Y];
@@ -33,9 +32,7 @@ namespace GameTools.Noise2D
             Thread[] noiseGenThreads = new Thread[numThreads];            
 
             for( int thread = 0; thread < numThreads; thread++ )
-            {                
-                
-
+            {
                 int arrayStartX = rowsPerThread*thread;
 
                 if( thread == numThreads-1 )

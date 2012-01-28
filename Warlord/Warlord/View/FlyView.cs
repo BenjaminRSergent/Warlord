@@ -13,7 +13,7 @@ using GameTools.Graph;
 
 namespace Warlord.View
 {
-    class FlyView : GameView, EventSubscriber
+    class FlyView : GameView
     {
         Camera3D camera;
         GameWindow gameWindow;
@@ -33,15 +33,16 @@ namespace Warlord.View
             TextureRepository.BlockTextures = content.Load<Texture2D>("Textures/Blocks/block_textures");
             effect = content.Load<Effect>("Fxs/effects");
 
-            WarlordApplication.GameEventManager.Subscribe( this, "region_added" );
-            WarlordApplication.GameEventManager.Subscribe( this, "draw" );
+            WarlordApplication.GameEventManager.Subscribe( AddRegion, "region_added" );
+            WarlordApplication.GameEventManager.Subscribe( Draw, "draw" );
 
-            WarlordApplication.GameEventManager.Subscribe( this, "camera_move_request" );
-            WarlordApplication.GameEventManager.Subscribe( this, "camera_rotate_request" );
+            WarlordApplication.GameEventManager.Subscribe( MoveCamera, "camera_move_request" );
+            WarlordApplication.GameEventManager.Subscribe( RotateCamera, "camera_rotate_request" );
         }
 
-        private void Draw(GameTime gameTime)
+        private void Draw(object gameTimeObject)
         {
+            GameTime gameTime = gameTimeObject as GameTime;
             SetupEffects( );
 
             foreach( EffectPass pass in effect.CurrentTechnique.Passes )
@@ -67,24 +68,22 @@ namespace Warlord.View
             effect.Parameters["FogColor"].SetValue(Color.SkyBlue.ToVector4());
             effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
         }
-
-        public void HandleEvent(GameEvent theEvent)
+        private void AddRegion( object regionObject )
         {
-            if( theEvent.EventType == "region_added" )
-                regionGraphics.Add( new RegionGraphics( device, theEvent.AdditionalData as Region ) );
-            else if( theEvent.EventType == "draw" )
-                Draw( theEvent.AdditionalData as GameTime );
-            else if( theEvent.EventType == "camera_move_request" )
-                MoveCamera( theEvent.AdditionalData as Vector3f );
-            else if( theEvent.EventType == "camera_rotate_request" )
-                RotateCamera( theEvent.AdditionalData as Vector2f );
+            regionGraphics.Add( new RegionGraphics( device, regionObject as Region ) );
         }
-
+        private void RotateCamera(Object rotation)
+        {
+            RotateCamera( (rotation as Vector2f).ToVector2 );
+        }
+        private void MoveCamera(Object movement)
+        {
+            MoveCamera( (movement as Vector3f).ToVector3 );
+        }
         private void RotateCamera(Vector2f rotation)
         {
             camera.ForceChangeRotation( rotation.ToVector2 );
         }
-
         private void MoveCamera(Vector3f movement)
         {
             camera.ForceMoveFly( movement.ToVector3 );

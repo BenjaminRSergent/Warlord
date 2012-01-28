@@ -5,9 +5,10 @@ using System.Text;
 
 namespace Warlord.Event
 {
+    delegate void EventReaction( object eventObject );
     interface EventManager
     {
-        void Subscribe( EventSubscriber listener, String eventType );
+        void Subscribe( EventReaction eventReaction, String eventType );
         void SendEvent( GameEvent theEvent );        
         void SendDelayedEvents( int currentTime );
     }

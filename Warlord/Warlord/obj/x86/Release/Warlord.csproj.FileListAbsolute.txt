@@ -1,0 +1,8 @@
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Textures\Blocks\block_textures.xnb
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Fxs\effects.xnb
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Warlord.exe
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Warlord.pdb
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\obj\x86\Release\ResolveAssemblyReference.cache
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\obj\x86\Release\Warlord.exe
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\obj\x86\Release\Warlord.pdb

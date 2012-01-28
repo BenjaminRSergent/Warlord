@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GameTools.Graph;
 
 namespace Warlord.Logic
 {
@@ -9,6 +10,6 @@ namespace Warlord.Logic
     {
         FiniteWorld GetDefaultWorld( );
         FiniteWorld GetDebugWorld( );
-        FiniteWorld GetSimpleWorld( );
+        FiniteWorld GetSimpleWorld( Vector2i worldSize, Vector3i RegionSize );
     }
 }

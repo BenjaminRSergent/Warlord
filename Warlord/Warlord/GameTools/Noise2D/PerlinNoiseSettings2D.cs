@@ -15,7 +15,7 @@ namespace GameTools.Noise2D
         public Point startingPoint;
         public double frequencyMulti;
         public double persistence;
-        public int zoom;        
+        public float zoom;        
         public int octaves;      
         public int seed;
 

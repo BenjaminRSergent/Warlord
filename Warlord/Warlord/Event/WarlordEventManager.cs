@@ -8,11 +8,11 @@ using Microsoft.Xna.Framework;
 
 namespace Warlord.Event
 {
-    class WarlordEventManager : EventManager, EventSubscriber
+    class WarlordEventManager : EventManager
     {
         private HashSet<String> validEvents;
         private MultipriorityQueue<int, GameEvent> eventQueue;
-        private Dictionary<String, List<EventSubscriber>> subscriberDirectory;
+        private Dictionary<String, List<EventReaction>> subscriberDirectory;
 
         private int currentTime;
 
@@ -23,21 +23,21 @@ namespace Warlord.Event
 
             eventQueue = new MultipriorityQueue<int,GameEvent>( );
 
-            subscriberDirectory = new Dictionary<string,List<EventSubscriber>>( );
+            subscriberDirectory = new Dictionary<string,List<EventReaction>>( );
 
             currentTime = 0;
 
             foreach( String eventName in validEvents )
             {
-                subscriberDirectory.Add( eventName, new List<EventSubscriber>() );
+                subscriberDirectory.Add( eventName, new List<EventReaction>() );
             }
 
-            subscriberDirectory["update"].Add(this);
+            subscriberDirectory["update"].Add(Update);
         }
 
-        public void Subscribe(EventSubscriber listener, String eventType)
+        public void Subscribe(EventReaction eventReaction, String eventType)
         {
-            subscriberDirectory[eventType].Add(listener);
+            subscriberDirectory[eventType].Add(eventReaction);
         }
 
         public void SendEvent(GameEvent theEvent)
@@ -47,12 +47,14 @@ namespace Warlord.Event
             else
                 eventQueue.Add( currentTime+theEvent.Delay, theEvent );
         }
-
+        public void Update( object currentGameTime )
+        {
+            GameTime gameTime = currentGameTime as GameTime;
+            SendDelayedEvents( gameTime.ElapsedGameTime.Milliseconds );
+        }
         public void SendDelayedEvents( int currentTime )
         {
             List<GameEvent> eventsToFire;
-
-            this.currentTime = currentTime;
 
             if( eventQueue.Count > 0 )
             {
@@ -67,20 +69,9 @@ namespace Warlord.Event
 
         private void FireEvent( GameEvent theEvent )
         {
-            foreach( EventSubscriber subscriber in subscriberDirectory[theEvent.EventType] )
+            foreach( EventReaction eventReaction in subscriberDirectory[theEvent.EventType] )
             {
-                subscriber.HandleEvent( theEvent );
-            }
-        }
-
-        public void HandleEvent(GameEvent theEvent)
-        {
-            GameTime time;
-            if( theEvent.EventType == "update" )
-            {
-                time = theEvent.AdditionalData as GameTime;
-
-                SendDelayedEvents( time.TotalGameTime.Milliseconds );
+                eventReaction( theEvent.AdditionalData );
             }
         }
     }

@@ -22,12 +22,12 @@ namespace Warlord.Logic
             throw new NotImplementedException();
         }
 
-        public FiniteWorld GetSimpleWorld()
+        public FiniteWorld GetSimpleWorld( Vector2i worldSize, Vector3i RegionSize )
         {
             double[,] noise;
             PerlinNoiseSettings2D settings = new PerlinNoiseSettings2D( );
 
-            FiniteWorld world = new FiniteWorld( new Vector2i(8,8), new Vector3i(16,128,16) );
+            FiniteWorld world = new FiniteWorld( worldSize, RegionSize );
 
             int height;
 
@@ -35,11 +35,11 @@ namespace Warlord.Logic
             settings.octaves = 4;
             settings.persistence = 0.5;
             settings.seed = 1;
-            settings.size = new Point( 128, 128 );
+            settings.size = new Point( worldSize.X*RegionSize.X, worldSize.Y*RegionSize.Z );
             settings.startingPoint = Point.Zero;
             settings.zoom = 200;            
             
-            noise = PerlinNoise2D.GenPerlinNoise2D( settings, 1 );
+            noise = PerlinNoise2D.GenPerlinNoise2D( settings, 4 );
 
             for( int x = 0; x < settings.size.X-1; x++ )
             {

@@ -11,7 +11,7 @@ namespace Warlord.View
 {
     //Flagged for revise
 
-    class HumanInput : EventSubscriber
+    class HumanInput
     {
         private KeyboardState prevKeyboardState;
         private MouseState prevMouseState;
@@ -21,9 +21,12 @@ namespace Warlord.View
         {    
             this.gameWindow = gameWindow;
 
-            WarlordApplication.GameEventManager.Subscribe( this, "update" );
+            WarlordApplication.GameEventManager.Subscribe( update, "update" );
         }
-
+        private void update( object gameTime )
+        {
+            update( gameTime as GameTime );
+        }
         private void update( GameTime gameTime )
         {
             if( WarlordApplication.Active )
@@ -68,12 +71,6 @@ namespace Warlord.View
                                                            "camera_rotate_request",
                                                            facingRotation,
                                                            0 ));
-        }
-
-        public void HandleEvent(GameEvent theEvent)
-        {
-            if( theEvent.EventType == "update" )
-                update( theEvent.AdditionalData as GameTime );
         }
     }
 }

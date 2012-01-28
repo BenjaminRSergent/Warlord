@@ -12,6 +12,7 @@ using Warlord.Event;
 using Warlord.Logic;
 using Warlord.Logic.Data;
 using Warlord.View;
+using GameTools.Graph;
 
 namespace Warlord
 {
@@ -47,7 +48,7 @@ namespace Warlord
         private void GenerateWorld( )
         {
             FiniteWorldGenerator generator = new BasicFiniteWorldGenerator( );
-            world = generator.GetSimpleWorld( );
+            world = generator.GetSimpleWorld( new Vector2i( 8, 8 ), new Vector3i(16,128,16) );
         }
 
         protected override void LoadContent()
@@ -67,7 +68,11 @@ namespace Warlord
         protected override void Update(GameTime gameTime)
         {
             Active = IsActive;
-            eventManager.SendEvent( new GameEvent( new GameTools.Optional<object>(this), "update",gameTime, 0) );
+            eventManager.SendEvent( new GameEvent( new GameTools.Optional<object>(this), "update", gameTime, 0) );
+
+            if( Keyboard.GetState( ).IsKeyDown(Keys.Escape) )
+                Exit( );
+
             base.Update(gameTime);
         }
 

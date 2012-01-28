@@ -91,10 +91,6 @@ namespace Warlord.Logic
                 oppositeFacing = facingList[ (k > 2) ? k-3 : k+3 ];
 
                 containment = currentRegion.RegionBox.Contains( adjacentVector.ToVector3 );
-
-                int x;
-                if( currentBlockRelativePosition.Z == 16 )
-                    x=10;
                 
                 if( containment != ContainmentType.Contains )
                 {                    
