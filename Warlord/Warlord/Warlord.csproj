@@ -107,10 +107,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Event\Event.cs" />
+    <Compile Include="Event\GameEvent.cs" />
     <Compile Include="Event\EventManager.cs" />
     <Compile Include="Event\EventSubscriber.cs" />
     <Compile Include="Event\ValidEventInitializer.cs" />
+    <Compile Include="GameStaticInitalizer.cs" />
     <Compile Include="GameTools\Camera3D.cs" />
     <Compile Include="GameTools\Graph\GraphMath.cs" />
     <Compile Include="GameTools\MultipriorityQueue.cs" />
@@ -122,10 +123,11 @@
     <Compile Include="GameTools\Graph\Vector2i.cs" />
     <Compile Include="GameTools\Graph\Vector3f.cs" />
     <Compile Include="GameTools\Graph\Vector3i.cs" />
-    <Compile Include="Interfaces\Subsystems\Application.cs" />
+    <Compile Include="Interfaces\Subsystems\GameApplication.cs" />
     <Compile Include="Interfaces\Subsystems\GameData.cs" />
     <Compile Include="Interfaces\Subsystems\GameLogic.cs" />
     <Compile Include="Interfaces\Subsystems\GameView.cs" />
+    <Compile Include="Logic\BasicFiniteWorldGenerator.cs" />
     <Compile Include="Logic\Data\Block.cs" />
     <Compile Include="Logic\Data\BlockFaceField.cs" />
     <Compile Include="Logic\Data\BlockType.cs" />
@@ -137,14 +139,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="View\AIView.cs" />
+    <Compile Include="View\BlockTexture.cs" />
+    <Compile Include="View\FlyView.cs" />
     <Compile Include="View\HUD.cs" />
+    <Compile Include="View\HumanInput.cs" />
     <Compile Include="View\HumanView.cs" />
+    <Compile Include="View\RegionGraphics.cs" />
     <Compile Include="View\SoundRepository.cs" />
     <Compile Include="View\TextureRepository.cs" />
     <Compile Include="WarlordApplication.cs" />
     <Compile Include="Event\WarlordEventManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Event\EventDataMap.txt" />
     <Content Include="General Standards\Game Standards.txt" />
     <None Include="Event\EventRules.txt" />
     <Content Include="Game.ico" />

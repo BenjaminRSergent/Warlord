@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Warlord.View
 {
-    static class TextureRepository
+    enum BlockTexture
     {
-        static public Texture2D BlockTextures;
+        GrassTop,
+        GrassSide,
+        Dirt,
+        Stone
     }
 }

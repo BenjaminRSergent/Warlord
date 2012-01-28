@@ -6,12 +6,13 @@ using Warlord.GameTools;
 
 namespace Warlord.Event
 {
-    class Event
-    {       
-        public Event( Optional<Object> sender, String eventType, int delay )
+    class GameEvent
+    {
+        public GameEvent( Optional<Object> sender, String eventType, object additionalData, int delay )
         {
-            EventType = eventType;
             Sender = sender;
+            EventType = eventType;            
+            AdditionalData = additionalData;
             Delay = delay;
         }
 
@@ -20,6 +21,8 @@ namespace Warlord.Event
         public String EventType{ get; protected set; }
         public Optional<Object> Sender{ get; protected set; }
 
-        public Optional<List<Event>> NextEvents{ get; protected set; }
+        public object AdditionalData{ get; protected set; }
+
+        public Optional<List<GameEvent>> NextEvents{ get; protected set; }
     }
 }

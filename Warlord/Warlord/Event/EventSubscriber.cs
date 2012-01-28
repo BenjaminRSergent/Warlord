@@ -8,6 +8,6 @@ namespace Warlord.Event
 {
     interface EventSubscriber
     {       
-        void HandleEvent( Event theEvent );
+        void HandleEvent( GameEvent theEvent );
     }
 }

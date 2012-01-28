@@ -212,5 +212,13 @@ namespace GameTools.Graph
         public float X { get; set; }
         public float Y { get; set; }
         public float Z { get; set; }
+
+        public Vector3 ToVector3 
+        { 
+            get
+            { 
+                return new Vector3(this.X, this.Y, this.Z);
+            }
+        }
     }
 }

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 
 using GameTools;
+using Microsoft.Xna.Framework;
 
 namespace Warlord.Event
 {
-    class WarlordEventManager : EventManager
+    class WarlordEventManager : EventManager, EventSubscriber
     {
         private HashSet<String> validEvents;
-        private MultipriorityQueue<int, Event> eventQueue;
+        private MultipriorityQueue<int, GameEvent> eventQueue;
         private Dictionary<String, List<EventSubscriber>> subscriberDirectory;
 
         private int currentTime;
@@ -18,9 +19,9 @@ namespace Warlord.Event
         public WarlordEventManager( )
         {
             validEvents = new HashSet<string>( );
-            ValidEventInitializer.SetValidEvents( validEvents );
+            ValidEventInitializer.SetValidEvents( ref validEvents );
 
-            eventQueue = new MultipriorityQueue<int,Event>( );
+            eventQueue = new MultipriorityQueue<int,GameEvent>( );
 
             subscriberDirectory = new Dictionary<string,List<EventSubscriber>>( );
 
@@ -30,6 +31,8 @@ namespace Warlord.Event
             {
                 subscriberDirectory.Add( eventName, new List<EventSubscriber>() );
             }
+
+            subscriberDirectory["update"].Add(this);
         }
 
         public void Subscribe(EventSubscriber listener, String eventType)
@@ -37,7 +40,7 @@ namespace Warlord.Event
             subscriberDirectory[eventType].Add(listener);
         }
 
-        public void SendEvent(Event theEvent)
+        public void SendEvent(GameEvent theEvent)
         {
             if( theEvent.Delay == 0 )
                 FireEvent( theEvent );
@@ -47,7 +50,7 @@ namespace Warlord.Event
 
         public void SendDelayedEvents( int currentTime )
         {
-            List<Event> eventsToFire;
+            List<GameEvent> eventsToFire;
 
             this.currentTime = currentTime;
 
@@ -55,18 +58,29 @@ namespace Warlord.Event
             {
                 eventsToFire = eventQueue.GetAndRemove( currentTime );
 
-                foreach( Event theEvent in eventsToFire )
+                foreach( GameEvent theEvent in eventsToFire )
                 {
                     FireEvent( theEvent );
                 }
             }                        
         }
 
-        private void FireEvent( Event theEvent )
+        private void FireEvent( GameEvent theEvent )
         {
             foreach( EventSubscriber subscriber in subscriberDirectory[theEvent.EventType] )
             {
                 subscriber.HandleEvent( theEvent );
+            }
+        }
+
+        public void HandleEvent(GameEvent theEvent)
+        {
+            GameTime time;
+            if( theEvent.EventType == "update" )
+            {
+                time = theEvent.AdditionalData as GameTime;
+
+                SendDelayedEvents( time.TotalGameTime.Milliseconds );
             }
         }
     }

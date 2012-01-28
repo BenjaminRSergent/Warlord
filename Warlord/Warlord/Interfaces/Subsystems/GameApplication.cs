@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Warlord.Interfaces.Subsystems
 {
-    interface Application
+    interface GameApplication
     {
     }
 }

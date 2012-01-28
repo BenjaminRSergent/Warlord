@@ -72,22 +72,22 @@ namespace WarlordUnitTest
         public void AddTestHelper<value, data>()
             where value : IComparable
         {
-            MultipriorityQueue<int, Event> target = new MultipriorityQueue<int,Event>( );            
+            MultipriorityQueue<int, GameEvent> target = new MultipriorityQueue<int,GameEvent>( );            
             
-            Event[] testEvents = new Event[5];
+            GameEvent[] testEvents = new GameEvent[5];
 
             for( int k = 0; k < 5; k++ )
             {
-                testEvents[k] = new Event( new Optional<object>( ), "dummy_event", k );
+                testEvents[k] = new GameEvent( new Optional<object>( ), "dummy_event", k );
 
                 target.Add( testEvents[k].Delay, testEvents[k] );
             }           
             
-            List<Event> events = target.GetAndRemove( 3 );
+            List<GameEvent> events = target.GetAndRemove( 3 );
 
             Assert.AreEqual( 4, events.Count );
             
-            foreach( Event theEvent in events )
+            foreach( GameEvent theEvent in events )
             {
                 Assert.IsTrue( theEvent.Delay <= 3 );
             }
@@ -105,18 +105,18 @@ namespace WarlordUnitTest
         public void GetAndRemoveTestHelper<value, data>()
             where value : IComparable
         {
-            MultipriorityQueue<int, Event> target = new MultipriorityQueue<int,Event>( );            
+            MultipriorityQueue<int, GameEvent> target = new MultipriorityQueue<int,GameEvent>( );            
             
-            Event[] testEvents = new Event[5];
+            GameEvent[] testEvents = new GameEvent[5];
 
             for( int k = 0; k < 5; k++ )
             {
-                testEvents[k] = new Event( new Optional<object>( ), "dummy_event", k );
+                testEvents[k] = new GameEvent( new Optional<object>( ), "dummy_event", k );
 
                 target.Add( testEvents[k].Delay, testEvents[k] );
             }           
             
-            List<Event> events = target.GetAndRemove( 2 );
+            List<GameEvent> events = target.GetAndRemove( 2 );
 
             Assert.AreEqual( 2, target.Count );
         }

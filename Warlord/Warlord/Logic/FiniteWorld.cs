@@ -5,6 +5,9 @@ using System.Text;
 using Warlord.Logic.Data;
 using GameTools.Graph;
 using Microsoft.Xna.Framework;
+using Warlord.Event;
+
+//Flagged for removal
 
 namespace Warlord.Logic
 {
@@ -20,7 +23,11 @@ namespace Warlord.Logic
             {
                 for( int z = 0; z < worldSize.Y; z++ )
                 {
-                   regions[x,z] = new Region( new Vector3i(x,0,z), regionSize );
+                   regions[x,z] = new Region( new Vector3i(x*regionSize.X,0,z*regionSize.Z ), regionSize );
+                   WarlordApplication.GameEventManager.SendEvent( new GameEvent( new GameTools.Optional<object>(this),
+                                                                                 "region_added",
+                                                                                 regions[x,z],
+                                                                                 0));
                 }
             }
         }
@@ -29,10 +36,17 @@ namespace Warlord.Logic
         {
             Region currentRegion = GetOwnerRegion(absolutePosition);
             Vector3i currentBlockRelativePosition = absolutePosition - currentRegion.RegionOrigin;
-
+            
             currentRegion.AddBlock( currentBlockRelativePosition, type );
 
-            AddBlockUpdate( currentRegion.GetBlock( currentBlockRelativePosition ) );
+            Block theBlock = currentRegion.GetBlock(currentBlockRelativePosition);                            
+
+            AddBlockUpdate( theBlock );
+
+            WarlordApplication.GameEventManager.SendEvent( new GameEvent( new GameTools.Optional<object>( this ),
+                                                                          "block_added",
+                                                                          new KeyValuePair<Region,Block>( currentRegion, theBlock),
+                                                                          0 )) ;
         }
 
         public void RemoveBlock( Vector3i absolutePosition )
@@ -40,9 +54,16 @@ namespace Warlord.Logic
             Region currentRegion = GetOwnerRegion(absolutePosition);
             Vector3i currentBlockRelativePosition = absolutePosition - currentRegion.RegionOrigin;
 
+            Block theBlock = currentRegion.GetBlock(currentBlockRelativePosition);
+
             currentRegion.RemoveBlock( currentBlockRelativePosition );
 
-            RemoveBlockUpdate( currentRegion.GetBlock( currentBlockRelativePosition ) );
+            RemoveBlockUpdate( theBlock );
+
+            WarlordApplication.GameEventManager.SendEvent( new GameEvent( new GameTools.Optional<object>( this ),
+                                                                          "block_removed",
+                                                                          new KeyValuePair<Region,Block>( currentRegion, theBlock),
+                                                                          0 )) ;
         }
 
         private void AddBlockUpdate( Block currentBlock )
@@ -61,7 +82,7 @@ namespace Warlord.Logic
 
             currentBlockRelativePosition = position - currentRegion.RegionOrigin;
 
-            BlockFaceField oppositeFacing;
+            BlockFaceField oppositeFacing;            
 
             ContainmentType containment;
             for( int k = 0; k < 6; k++ )
@@ -69,25 +90,38 @@ namespace Warlord.Logic
                 Vector3i adjacentVector = (position + adjacencyOffsets[k]).ToVector3;                
                 oppositeFacing = facingList[ (k > 2) ? k-3 : k+3 ];
 
-                containment = currentRegion.RegionBox.Contains( adjacentVector.ToVector3 );                
+                containment = currentRegion.RegionBox.Contains( adjacentVector.ToVector3 );
 
-                if( containment != ContainmentType.Contains )                
+                int x;
+                if( currentBlockRelativePosition.Z == 16 )
+                    x=10;
+                
+                if( containment != ContainmentType.Contains )
+                {                    
+                    if( adjacentVector.X < 0 ||
+                        adjacentVector.Y < 0 ||
+                        adjacentVector.Z < 0 )
+                    {
+                        currentRegion.AddFace( currentBlockRelativePosition, facingList[k] );
+                        continue;
+                    }                        
                     regionOfAdjacentBlock = GetOwnerRegion( adjacentVector );
+                }
                 else
                     regionOfAdjacentBlock = currentRegion;
                 
-                adjacentBlockRelativePosition = adjacentVector - regionOfAdjacentBlock.RegionOrigin;                
+                adjacentBlockRelativePosition = adjacentVector - regionOfAdjacentBlock.RegionOrigin;
 
-                Block adjacentBlock = regionOfAdjacentBlock.GetBlock( position + adjacencyOffsets[k] );
+                Block adjacentBlock = regionOfAdjacentBlock.GetBlock( adjacentBlockRelativePosition );
 
                 if( adjacentBlock.Type != BlockType.Air )
                 {
-                    currentRegion.RemoveFace( position, facingList[k] );
+                    currentRegion.RemoveFace( currentBlockRelativePosition, facingList[k] );
                     regionOfAdjacentBlock.RemoveFace( adjacentBlockRelativePosition, oppositeFacing );
                 }
                 else
                 {
-                    currentRegion.AddFace( position, facingList[k] );
+                    currentRegion.AddFace( currentBlockRelativePosition, facingList[k] );
                 }
             }
         }
@@ -138,8 +172,8 @@ namespace Warlord.Logic
         {
             Vector3i regionLocation = Vector3i.Zero;
 
-            regionLocation.X = absolutePosition.X/RegionDimensions.X;
-            regionLocation.Y = absolutePosition.Y/RegionDimensions.Y;
+            regionLocation.X = (absolutePosition.X)/(RegionDimensions.X);
+            regionLocation.Y = (absolutePosition.Z)/(RegionDimensions.Y);
 
             return regions[regionLocation.X, regionLocation.Y];
         }
@@ -147,7 +181,7 @@ namespace Warlord.Logic
         {
             get
             {
-                return new Vector2i( regions[0,0].RegionSize.X, regions[0,0].RegionSize.X );
+                return new Vector2i( regions[0,0].RegionSize.X, regions[0,0].RegionSize.Z );
             }
         }
         public Vector2i WorldDimensions

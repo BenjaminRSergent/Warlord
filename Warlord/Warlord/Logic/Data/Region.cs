@@ -36,12 +36,17 @@ namespace Warlord.Logic.Data
         public void Init( )
         {
             Vector3i blockLocation;
+
             for( int x = 0; x < regionSize.X; x++ )
             {
                 for( int y = 0; y < regionSize.Y; y++ )
                 {
                     for( int z = 0; z < regionSize.Z; z++ )
                     {
+                        int d;
+                        if( RegionOrigin.Z == 16 )
+                            d = 10;
+
                         blockLocation = regionOrigin + new Vector3i(x,y,z);
                         blocks[x,y,z] = new Block(blockLocation, BlockType.Air);
                         Altered = true;
@@ -53,10 +58,10 @@ namespace Warlord.Logic.Data
         }
         public Block GetBlock( Vector3i relativePosition )
         {            
-            if( regionBox.Contains( relativePosition.ToVector3 ) == ContainmentType.Contains )
+            if( regionBox.Contains( regionOrigin.ToVector3 + relativePosition.ToVector3 ) == ContainmentType.Contains )
                 return blocks[relativePosition.X, relativePosition.Y, relativePosition.Z];
             else
-                return new Block( -1*Vector3i.One, BlockType.Air );
+                throw new ArgumentException( "Region does not have block" );
         }
         public void AddBlock( Vector3i relativePosition, BlockType type )
         {

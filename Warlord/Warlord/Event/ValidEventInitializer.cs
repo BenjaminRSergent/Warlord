@@ -25,7 +25,12 @@ namespace Warlord.Event
             validEvents.Add("actor_remove");
 
             validEvents.Add("actor_request_move");
-            validEvents.Add("actor_moved");            
+            validEvents.Add("actor_moved");           
+ 
+            validEvents.Add("region_added");
+
+            validEvents.Add("camera_move_request");
+            validEvents.Add("camera_rotate_request");
         }
     }
 }

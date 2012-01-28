@@ -1,0 +1,11 @@
+﻿EventType                  DataType
+
+"update"                   GameTime
+"draw"                     GameTime
+"block_added"              KeyValuePai<Region,Block>
+"block_removed"            KeyValuePai<Region,Block>
+
+"region_added"             Region
+
+"camera_move_request"      Vector3f
+"camera_rotate_request"    Vector2f

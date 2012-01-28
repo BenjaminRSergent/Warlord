@@ -8,6 +8,10 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Warlord.Event;
+using Warlord.Logic;
+using Warlord.Logic.Data;
+using Warlord.View;
 
 namespace Warlord
 {
@@ -15,21 +19,45 @@ namespace Warlord
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        FlyView flyView;
+        HumanInput input;
+
+        FiniteWorld world;
+
+        static WarlordEventManager eventManager;           
 
         public WarlordApplication()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            eventManager = new WarlordEventManager( );   
+        
+            GameStaticInitalizer.InitalizeStatics( );
+
+            RegionArrayMaps.Init( );
+            
         }
 
         protected override void Initialize()
+        {           
+            base.Initialize();            
+        }
+
+        private void GenerateWorld( )
         {
-            base.Initialize();
+            FiniteWorldGenerator generator = new BasicFiniteWorldGenerator( );
+            world = generator.GetSimpleWorld( );
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            flyView = new FlyView( Window, GraphicsDevice, Content );
+            input = new HumanInput( Window );
+
+            GenerateWorld( );
         }
 
         protected override void UnloadContent()
@@ -38,6 +66,8 @@ namespace Warlord
 
         protected override void Update(GameTime gameTime)
         {
+            Active = IsActive;
+            eventManager.SendEvent( new GameEvent( new GameTools.Optional<object>(this), "update",gameTime, 0) );
             base.Update(gameTime);
         }
 
@@ -45,7 +75,14 @@ namespace Warlord
         {
             GraphicsDevice.Clear(Color.SkyBlue);
 
+            eventManager.SendEvent( new GameEvent( new GameTools.Optional<object>(this), "draw", gameTime, 0) );
+
             base.Draw(gameTime);
+        }
+        static public bool Active{ get; private set; }
+        static internal EventManager GameEventManager
+        {
+            get { return WarlordApplication.eventManager; }
         }
     }
 }

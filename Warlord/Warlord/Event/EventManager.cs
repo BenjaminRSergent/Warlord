@@ -8,7 +8,7 @@ namespace Warlord.Event
     interface EventManager
     {
         void Subscribe( EventSubscriber listener, String eventType );
-        void SendEvent( Event theEvent );        
+        void SendEvent( GameEvent theEvent );        
         void SendDelayedEvents( int currentTime );
     }
 }

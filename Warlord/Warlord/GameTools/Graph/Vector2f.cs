@@ -155,5 +155,13 @@ namespace GameTools.Graph
 
         public float X { get; set; }
         public float Y { get; set; }
+
+        public Vector2 ToVector2 
+        { 
+            get
+            { 
+                return new Vector2(this.X, this.Y);
+            }
+        }
     }
 }

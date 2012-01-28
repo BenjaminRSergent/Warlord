@@ -69,7 +69,7 @@ namespace WarlordUnitTest
         public void SendDelayedEventsTest()
         {
             WarlordEventManager target = new WarlordEventManager(); 
-            Event theEvent = new Event(new Warlord.GameTools.Optional<object>( ), "actor_moved", 10 ); 
+            GameEvent theEvent = new GameEvent(new Warlord.GameTools.Optional<object>( ), "actor_moved", 10 ); 
 
             DummySubscriber dummy = new DummySubscriber( target );           
             Assert.IsFalse( dummy.RecievedEvent );
@@ -96,7 +96,7 @@ namespace WarlordUnitTest
         public void SendEventTest()
         {
             WarlordEventManager target = new WarlordEventManager(); 
-            Event theEvent = new Event(new Warlord.GameTools.Optional<object>( ), "actor_moved", 0 ); 
+            GameEvent theEvent = new GameEvent(new Warlord.GameTools.Optional<object>( ), "actor_moved", 0 ); 
 
             DummySubscriber dummy = new DummySubscriber( target );
             
