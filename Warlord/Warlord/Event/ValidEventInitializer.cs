@@ -7,7 +7,7 @@ namespace Warlord.Event
 {
     static class ValidEventInitializer
     {
-        static public void SetValidEvents( HashSet<String> validEvents )
+        static public void SetValidEvents( ref HashSet<String> validEvents )
         {
             validEvents.Add("update");
             validEvents.Add("draw");
