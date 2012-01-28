@@ -1,0 +1,2 @@
+﻿Naming
+- Event names are all lower case with underscores to seperate the words.

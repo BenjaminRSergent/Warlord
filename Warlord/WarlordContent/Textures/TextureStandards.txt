@@ -1,0 +1,7 @@
+﻿Block Textures
+
+- The block Texture Sheet is made to accomidate 64 (8 by 8) textures. Each block texture is 32 by 32.
+- The sides of a block should be sequential, with the up, sides and bottom close together
+
+- The side texture lines up how it would look head on
+- the top and bottom line up how it looks head on from the front
