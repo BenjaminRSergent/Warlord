@@ -59,7 +59,11 @@
   <ItemGroup>
     <Compile Include="DummySubscriber.cs" />
     <Compile Include="MultipriorityQueueTest.cs" />
+    <Compile Include="PerlinNoise2DTest.cs" />
+    <Compile Include="PerlinNoise3DTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleNoise2DTest.cs" />
+    <Compile Include="SimpleNoise3DTest.cs" />
     <Compile Include="WarlordEventManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +71,9 @@
       <Project>{A49069CC-B17F-4679-8D16-BC305A069BE6}</Project>
       <Name>Warlord</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Shadow Include="Test References\Warlord.accessor" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

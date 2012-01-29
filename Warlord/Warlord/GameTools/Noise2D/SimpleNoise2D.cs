@@ -12,9 +12,8 @@ namespace GameTools.Noise2D
         static public double GenDoubleNoise( int x, int y, int seed )
         {
             int n;
-            x += seed << 13;
-            y += seed << 13;
-            n = x + y * 57;
+            
+            n = x + y * 57 + seed * 97;
             n = (n<<13) ^ n;
 
             return ( 1.0 - ( (n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0);

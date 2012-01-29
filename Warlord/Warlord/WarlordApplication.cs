@@ -21,7 +21,7 @@ namespace Warlord
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         FlyView flyView;
-        HumanInput input;
+        FlyInput input;
 
         FiniteWorld world;
 
@@ -47,8 +47,8 @@ namespace Warlord
 
         private void GenerateWorld( )
         {
-            FiniteWorldGenerator generator = new BasicFiniteWorldGenerator( );
-            world = generator.GetSimpleWorld( new Vector2i( 10, 10 ), new Vector3i(16,128,16) );
+            BasicFiniteWorldGenerator generator = new BasicFiniteWorldGenerator( );
+            world = generator.GetSimpleWorldWith3D( new Vector2i( 9, 9 ), new Vector3i(16,128,16) );
         }
 
         protected override void LoadContent()
@@ -56,7 +56,7 @@ namespace Warlord
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             flyView = new FlyView( Window, GraphicsDevice, Content );
-            input = new HumanInput( Window );
+            input = new FlyInput( Window );
 
             GenerateWorld( );
         }
@@ -72,7 +72,7 @@ namespace Warlord
 
             if( Keyboard.GetState( ).IsKeyDown(Keys.Escape) )
                 Exit( );
-
+                        
             base.Update(gameTime);
         }
 

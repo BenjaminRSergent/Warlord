@@ -65,12 +65,9 @@ namespace Warlord.Logic.Data
             int y = relativePosition.Y;
             int z = relativePosition.Z;
 
-            if( blocks[x,y,z].Type == BlockType.Air )
-            {
-                blocks[x,y,z] = new Block( blocks[x,y,z].UpperLeftTopPosition, type);
+            blocks[x,y,z] = new Block( blocks[x,y,z].UpperLeftTopPosition, type);
 
-                Altered = true;
-            }
+            Altered = true;
         }
         public void RemoveBlock( Vector3i relativePosition )
         {            

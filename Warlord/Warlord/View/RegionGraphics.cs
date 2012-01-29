@@ -47,12 +47,15 @@ namespace Warlord.View
 
             BuildCubes( );
 
-            regionBuffer = new VertexBuffer( graphics,
-                                                VertexPositionTexture.VertexDeclaration,
-                                                regionMesh.Length,
-                                                BufferUsage.WriteOnly );
+            if( regionMesh.Length > 0 )
+            {
+                regionBuffer = new VertexBuffer( graphics,
+                                                 VertexPositionTexture.VertexDeclaration,
+                                                 regionMesh.Length,
+                                                 BufferUsage.WriteOnly );
 
-            regionBuffer.SetData(regionMesh);
+                regionBuffer.SetData(regionMesh);
+            }            
 
             masterRegion.Altered = false;
         }
@@ -76,13 +79,19 @@ namespace Warlord.View
             for( byte faceNum = 1; faceNum < (byte)BlockFaceField.MAXIMUM; faceNum*=2 )
             {
                 if( (faceNum  & FaceInfo) > 0 )
+                {
                     BuildFace( currentBlock.UpperLeftTopPosition, (BlockFaceField)faceNum, currentBlock.Type );
+                }
+    
             }
 
         }
 
         private void BuildFace( Vector3i bottomBackLeft, BlockFaceField faceDir, BlockType type )
         {
+            if( type == BlockType.Air )
+                throw new ApplicationException( "Air with visible face found" );
+
             BlockTexture faceTexture = GetTexture( faceDir, type );
             Vector2[] uvMap = UVMap[faceTexture][faceDir];
             Vector3i[] offsetMap = faceVertexOffsetMap[faceDir];

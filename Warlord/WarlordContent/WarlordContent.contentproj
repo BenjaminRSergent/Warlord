@@ -47,13 +47,23 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Fxs\skybox.fx">
+      <Name>skybox</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Fxs\warped_block_effects.fx">
+      <Name>warped_block_effects</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
     <None Include="Textures\TextureStandards.txt">
       <Name>TextureStandards</Name>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fxs\effects.fx">
-      <Name>effects</Name>
+    <Compile Include="Fxs\block_effects.fx">
+      <Name>block_effects</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>

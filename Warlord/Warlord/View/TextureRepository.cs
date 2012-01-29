@@ -9,5 +9,6 @@ namespace Warlord.View
     static class TextureRepository
     {
         static public Texture2D BlockTextures;
+        static public TextureCube skyboxTexture;
     }
 }

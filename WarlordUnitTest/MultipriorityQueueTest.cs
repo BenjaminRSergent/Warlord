@@ -78,7 +78,7 @@ namespace WarlordUnitTest
 
             for( int k = 0; k < 5; k++ )
             {
-                testEvents[k] = new GameEvent( new Optional<object>( ), "dummy_event", k );
+                testEvents[k] = new GameEvent( new Optional<object>( ), "dummy_event", null, k );
 
                 target.Add( testEvents[k].Delay, testEvents[k] );
             }           
@@ -111,7 +111,7 @@ namespace WarlordUnitTest
 
             for( int k = 0; k < 5; k++ )
             {
-                testEvents[k] = new GameEvent( new Optional<object>( ), "dummy_event", k );
+                testEvents[k] = new GameEvent( new Optional<object>( ), "dummy_event", null, k );
 
                 target.Add( testEvents[k].Delay, testEvents[k] );
             }           

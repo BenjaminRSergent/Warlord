@@ -39,9 +39,12 @@ namespace Warlord.Logic
             
             currentRegion.AddBlock( currentBlockRelativePosition, type );
 
-            Block theBlock = currentRegion.GetBlock(currentBlockRelativePosition);                            
+            Block theBlock = currentRegion.GetBlock(currentBlockRelativePosition);
 
-            AddBlockUpdate( theBlock );
+            if (theBlock.Type != BlockType.Air)
+                AddBlockUpdate(theBlock);
+            else
+                RemoveBlockUpdate(theBlock);
 
             WarlordApplication.GameEventManager.SendEvent( new GameEvent( new GameTools.Optional<object>( this ),
                                                                           "block_added",
@@ -64,6 +67,14 @@ namespace Warlord.Logic
                                                                           "block_removed",
                                                                           new KeyValuePair<Region,Block>( currentRegion, theBlock),
                                                                           0 )) ;
+        }
+
+        public Block GetBlock( Vector3i absolutePosition )
+        {
+            Region currentRegion = GetOwnerRegion(absolutePosition);
+            Vector3i currentBlockRelativePosition = absolutePosition - currentRegion.RegionOrigin;
+
+            return currentRegion.GetBlock(currentBlockRelativePosition);
         }
 
         private void AddBlockUpdate( Block currentBlock )
@@ -130,8 +141,8 @@ namespace Warlord.Logic
             Vector3i position = currentBlock.UpperLeftTopPosition;
 
             Vector3i[] adjacencyOffsets = RegionArrayMaps.AdjacencyOffsets;
-            BlockFaceField[] facingList  = RegionArrayMaps.FacingList;
-  
+            BlockFaceField[] facingList = RegionArrayMaps.FacingList;
+
             Vector3i currentBlockRelativePosition;
             Vector3i adjacentBlockRelativePosition;
 
@@ -140,27 +151,34 @@ namespace Warlord.Logic
             BlockFaceField oppositeFacing;
 
             ContainmentType containment;
-            for( int k = 0; k < 6; k++ )
+            for (int k = 0; k < 6; k++)
             {
-                Vector3i adjacentVector = (position + adjacencyOffsets[k]).ToVector3;                
-                oppositeFacing = facingList[ (k > 2) ? k-3 : k+3 ];
+                Vector3i adjacentVector = (position + adjacencyOffsets[k]).ToVector3;
+                oppositeFacing = facingList[(k > 2) ? k - 3 : k + 3];
 
-                containment = currentRegion.RegionBox.Contains( adjacentVector.ToVector3 );                
+                containment = currentRegion.RegionBox.Contains(adjacentVector.ToVector3);
 
-                if( containment != ContainmentType.Contains )                
-                    regionOfAdjacentBlock = GetOwnerRegion( adjacentVector );
+                currentRegion.RemoveFace(currentBlockRelativePosition, facingList[k]);
+                if (containment != ContainmentType.Contains)
+                {
+                    if (adjacentVector.X < 0 ||
+                        adjacentVector.Y < 0 ||
+                        adjacentVector.Z < 0)
+                    {
+                        continue;
+                    }
+                    regionOfAdjacentBlock = GetOwnerRegion(adjacentVector);
+                }
                 else
                     regionOfAdjacentBlock = currentRegion;
-                
-                adjacentBlockRelativePosition = adjacentVector - regionOfAdjacentBlock.RegionOrigin;                
 
-                Block adjacentBlock = regionOfAdjacentBlock.GetBlock( position + adjacencyOffsets[k] );
+                adjacentBlockRelativePosition = adjacentVector - regionOfAdjacentBlock.RegionOrigin;
 
-                currentRegion.RemoveFace( position, facingList[k] );
+                Block adjacentBlock = regionOfAdjacentBlock.GetBlock(adjacentBlockRelativePosition);                
 
-                if( adjacentBlock.Type != BlockType.Air )
+                if (adjacentBlock.Type != BlockType.Air)
                 {
-                    regionOfAdjacentBlock.AddFace( adjacentBlockRelativePosition, oppositeFacing );
+                    regionOfAdjacentBlock.AddFace(adjacentBlockRelativePosition, oppositeFacing);
                 }
             }
         }

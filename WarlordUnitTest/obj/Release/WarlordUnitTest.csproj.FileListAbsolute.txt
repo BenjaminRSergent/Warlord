@@ -1,1 +1,13 @@
+Z:\Data\C#\XNA\Warlord\WarlordUnitTest\bin\Release\Content\Textures\Blocks\block_textures.xnb
+Z:\Data\C#\XNA\Warlord\WarlordUnitTest\bin\Release\Content\Fxs\skybox.xnb
+Z:\Data\C#\XNA\Warlord\WarlordUnitTest\bin\Release\Content\Fxs\warped_block_effects.xnb
+Z:\Data\C#\XNA\Warlord\WarlordUnitTest\bin\Release\Content\Fxs\block_effects.xnb
+Z:\Data\C#\XNA\Warlord\WarlordUnitTest\bin\Release\WarlordUnitTest.dll
+Z:\Data\C#\XNA\Warlord\WarlordUnitTest\bin\Release\WarlordUnitTest.pdb
+Z:\Data\C#\XNA\Warlord\WarlordUnitTest\bin\Release\Warlord.exe
+Z:\Data\C#\XNA\Warlord\WarlordUnitTest\bin\Release\Warlord.pdb
+Z:\Data\C#\XNA\Warlord\WarlordUnitTest\bin\Release\Warlord_Accessor.exe
+Z:\Data\C#\XNA\Warlord\WarlordUnitTest\bin\Release\Warlord_Accessor.pdb
 Z:\Data\C#\XNA\Warlord\WarlordUnitTest\obj\Release\ResolveAssemblyReference.cache
+Z:\Data\C#\XNA\Warlord\WarlordUnitTest\obj\Release\WarlordUnitTest.dll
+Z:\Data\C#\XNA\Warlord\WarlordUnitTest\obj\Release\WarlordUnitTest.pdb

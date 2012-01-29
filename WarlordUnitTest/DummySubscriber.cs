@@ -6,20 +6,18 @@ using Warlord.Event;
 
 namespace WarlordUnitTest
 {
-    class DummySubscriber : EventSubscriber
+    class DummySubscriber
     {
         public bool RecievedEvent{ get; private set; }
-        public GameEvent TheEvent{ get; private set; }
 
         public DummySubscriber( EventManager theManager )
         {
             theManager.Subscribe(RecieveEvent, "actor_moved");
         }
 
-        public void RecieveEvent(object theEvent)
+        public void RecieveEvent(object theEvent, object data)
         {
             RecievedEvent = true;
-            TheEvent = theEvent;
         }
     }
 }

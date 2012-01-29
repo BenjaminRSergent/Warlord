@@ -10,6 +10,6 @@ namespace Warlord.Logic
     {
         FiniteWorld GetDefaultWorld( );
         FiniteWorld GetDebugWorld( );
-        FiniteWorld GetSimpleWorld( Vector2i worldSize, Vector3i RegionSize );
+        FiniteWorld GetSimpleWorldWith2D( Vector2i worldSize, Vector3i RegionSize );
     }
 }

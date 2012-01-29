@@ -31,6 +31,8 @@ namespace Warlord.Event
 
             validEvents.Add("camera_move_request");
             validEvents.Add("camera_rotate_request");
+
+            validEvents.Add("dummy_event");
         }
     }
 }
