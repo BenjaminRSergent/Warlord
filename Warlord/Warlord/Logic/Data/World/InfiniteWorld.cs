@@ -45,7 +45,13 @@ namespace Warlord.Logic.Data.World
         }
         public void Initalize()
         {
-            Update(new Vector3f(0, 0, 0));
+            Update(this, new Vector3f(0, 0, 0));
+
+            WarlordApplication.GameEventManager.Subscribe( Update, "actor_moved" );
+        }
+        public void Update(object sender, object playerPosition)
+        {
+            Update( playerPosition as Vector3f );
         }
         public void Update(Vector3f playerPosition)
         {
@@ -337,5 +343,8 @@ namespace Warlord.Logic.Data.World
         {
             get { return generating; }
         }
+
+
+        
     }
 }

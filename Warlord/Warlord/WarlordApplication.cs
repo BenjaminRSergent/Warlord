@@ -50,6 +50,7 @@ namespace Warlord
         private void GenerateWorld()
         {
             world = new InfiniteWorld(27, 8, new Vector3i(16, 128, 16));
+            world.Initalize();
         }
 
         protected override void LoadContent()
@@ -70,8 +71,6 @@ namespace Warlord
         {
             Active = IsActive;
             eventManager.SendEvent(new GameEvent(new GameTools.Optional<object>(this), "update", gameTime, 0));
-
-            world.Update( new Vector3f( 0, 0, 0 ));
 
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();

@@ -28,18 +28,17 @@ namespace Warlord.Logic.Data.World
         {
             generatorSettings = new GeneratorSettings( );
             generatorSettings.RegionSize = new Vector3i( 16, 128, 16 );
-            generatorSettings.DirtLevel = 36;
+            generatorSettings.DirtLevel = 32;
             generatorSettings.AirLevel = 110;
 
             noiseSettings = new PerlinNoiseSettings3D( );
-            noiseSettings.frequencyMulti = 2.1;
+            noiseSettings.frequencyMulti = 2;
             noiseSettings.octaves = 6;
             noiseSettings.persistence = 0.5;
             noiseSettings.seed = 3;
             noiseSettings.size = generatorSettings.RegionSize;
             noiseSettings.startingPoint = Vector3i.Zero;
             noiseSettings.zoom = 160;   
-            noiseSettings.numThreads = 4;
         }
         public RegionGenerator( int seed, PerlinNoiseSettings3D noiseSettings, GeneratorSettings generatorSettings )
         {
@@ -56,7 +55,7 @@ namespace Warlord.Logic.Data.World
 
             noiseSettings.startingPoint = origin;              
 
-            noise = PerlinNoise3D.GenPerlinNoise3D( noiseSettings );
+            noise = PerlinNoise3D.GenPerlinNoise3D( noiseSettings, 4);
 
             PlaceBlocks(ownerWorld, origin, noise);
 
@@ -75,7 +74,6 @@ namespace Warlord.Logic.Data.World
                     {
                         density = noise[x, y, z];
                         blockType = GetBlockFromNoise(density, y);
-
                         if(blockType != BlockType.Air)
                             ownerWorld.AddBlock(origin + new Vector3i(x, y, z), blockType);
                     }
@@ -131,10 +129,8 @@ namespace Warlord.Logic.Data.World
             float heightMod = -(height / (float)generatorSettings.DirtLevel);
             if (noise + heightMod > 0)
                 return BlockType.Stone;
-            else if(noise + heightMod < -0.3)
-                return BlockType.Dirt;
             else
-                return BlockType.Air;
+                return BlockType.Dirt;
         }
         public BlockType DirtLevelBlock(double noise, int height)
         {

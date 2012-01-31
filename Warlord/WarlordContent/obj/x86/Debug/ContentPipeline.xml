@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Textures\Blocks\block_textures.xnb</Output>
-      <Time>2012-01-31T03:10:27.9128801-08:00</Time>
+      <Time>2012-01-31T07:25:55.3185576-08:00</Time>
     </Item>
     <Item>
       <Source>Fxs\skybox.fx</Source>
@@ -35,7 +35,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Fxs\block_effects.xnb</Output>
-      <Time>2012-01-31T03:34:07.7010873-08:00</Time>
+      <Time>2012-01-31T07:25:55.3175575-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

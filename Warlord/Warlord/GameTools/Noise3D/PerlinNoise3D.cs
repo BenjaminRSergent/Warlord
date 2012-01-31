@@ -11,45 +11,41 @@ namespace GameTools.Noise3D
 {
     static class PerlinNoise3D
     {
-        static public double[,,] GenPerlinNoise3D( PerlinNoiseSettings3D settings)
+        static public double[,,] GenPerlinNoise3D( PerlinNoiseSettings3D settings )
+        {          
+            double[,,] noise = new double[settings.size.X, settings.size.Y, settings.size.Z];
+            MakePerlinNoise3D( noise, Vector3i.Zero, settings );
+
+            return noise;
+        }
+        static public double[,,] GenPerlinNoise3D( PerlinNoiseSettings3D settings, int numThreads )
         {            
             double[,,] noise = new double[settings.size.X, settings.size.Y, settings.size.Z];
 
-            if( settings.numThreads < 1 )
-                settings.numThreads = 1;
-
-            if(settings.numThreads == 1)
-            {
-                MakePerlinNoise3D( noise, Vector3i.Zero, settings );
-
-                return noise;
-            }
-
-            int rowsPerThread = settings.size.X / settings.numThreads;
-            int extraRows = settings.size.X % settings.numThreads;            
+            int rowsPerThread = settings.size.X / numThreads;
+            int extraRows = settings.size.X % numThreads;            
 
             PerlinNoiseSettings3D threadSettings = new PerlinNoiseSettings3D( settings );
 
             threadSettings.size.X = rowsPerThread;
             threadSettings.zoom = settings.zoom/4;
 
-            Thread[] noiseGenThreads = new Thread[settings.numThreads];            
+            Thread[] noiseGenThreads = new Thread[numThreads];            
 
-            for( int thread = 0; thread < settings.numThreads; thread++ )
+            for( int thread = 0; thread < numThreads; thread++ )
             {
                 int arrayStartX = rowsPerThread*thread;
 
-                if( thread == settings.numThreads-1 )
+                if( thread == numThreads-1 )
                 {
                     threadSettings.size.X += extraRows;
                 }
                 
                 noiseGenThreads[thread] = new Thread( () => MakePerlinNoise3D( noise, new Vector3i(arrayStartX,0,0), threadSettings ) );
-                noiseGenThreads[thread].Name = "PerlinNoise3D Thread " + thread;
                 noiseGenThreads[thread].Start( );
             }             
           
-            for( int thread = 0; thread < settings.numThreads; thread++ )
+            for( int thread = 0; thread < numThreads; thread++ )
             {
                 noiseGenThreads[thread].Join( );
             }
@@ -77,8 +73,8 @@ namespace GameTools.Noise3D
             length = settings.size.Z;
 
             regionSize.X = width / settings.zoom;
-            regionSize.Y = height / settings.zoom;
-            regionSize.Z = length / settings.zoom;
+            regionSize.Y = width / settings.zoom;
+            regionSize.Z = width / settings.zoom;
         
             for( int x = fillStart.X; x < fillStart.X+width; x++ )
             {
@@ -95,9 +91,9 @@ namespace GameTools.Noise3D
 
                         for( int oct = 0; oct < settings.octaves; oct++ )
                         {                    
-                            double noise = SimpleNoise3D.GenInterpolatedNoise(effectiveX * frequency,
-                                                                              effectiveY * frequency,
-                                                                              effectiveZ * frequency,
+                            double noise = SimpleNoise3D.GenInterpolatedNoise(effectiveX/(float)width * regionSize.X * frequency,
+                                                                              effectiveY/(float)width * regionSize.Y * frequency,
+                                                                              effectiveZ/(float)width * regionSize.Z * frequency,
                                                                               settings.seed);
                             toFill[x,y,z] += amplitude * noise;
 

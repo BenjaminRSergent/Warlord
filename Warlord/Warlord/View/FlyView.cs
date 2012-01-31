@@ -98,6 +98,7 @@ namespace Warlord.View
         {
             lock(regionGraphics)
             {
+                if( !regionGraphics.ContainsKey( regionObject as Region) )
                 regionGraphics.Add(regionObject as Region, new RegionGraphics(device, regionObject as Region));
             }
         }
@@ -123,6 +124,7 @@ namespace Warlord.View
         private void MoveCamera(Vector3f movement)
         {
             camera.ForceMoveFly(movement.ToVector3);
+            WarlordApplication.GameEventManager.SendEvent( new GameEvent(new GameTools.Optional<object>(this), "actor_moved", new Vector3f(camera.Position), 0 ));
         }
 
         public float angle { get; set; }
