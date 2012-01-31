@@ -10,16 +10,19 @@ namespace GameTools.Noise2D
 {
     static class PerlinNoise2D
     {
-        static public double[,] GenPerlinNoise2D( PerlinNoiseSettings2D settings )
-        {          
-            double[,] noise = new double[settings.size.X, settings.size.Y];
-            MakePerlinNoise2D( noise, new Point(0,0), settings );
-
-            return noise;
-        }
         static public double[,] GenPerlinNoise2D( PerlinNoiseSettings2D settings, int numThreads )
         {            
             double[,] noise = new double[settings.size.X, settings.size.Y];
+
+            if( settings.numThreads < 1 )
+                settings.numThreads = 1;
+
+            if(settings.numThreads == 1)
+            {
+                MakePerlinNoise2D( noise, Point.Zero, settings );
+
+                return noise;
+            }
 
             int rowsPerThread = settings.size.X / numThreads;
             int extraRows = settings.size.X % numThreads;            
@@ -41,6 +44,7 @@ namespace GameTools.Noise2D
                 }
                 
                 noiseGenThreads[thread] = new Thread( () => MakePerlinNoise2D( noise, new Point(arrayStartX,0), threadSettings ) );
+                noiseGenThreads[thread].Name = "PerlinNoise2D Thread " + thread;
                 noiseGenThreads[thread].Start( );
             }             
           

@@ -20,6 +20,8 @@ namespace GameTools.Noise3D
         public int octaves;      
         public int seed;
 
+        public int numThreads;
+
         public PerlinNoiseSettings3D( )
         {
             rng = new Random( );
@@ -31,7 +33,7 @@ namespace GameTools.Noise3D
             persistence = 0.5;
             zoom = 40;
             octaves = 6;            
-            seed = 0;   
+            numThreads = 4;
 
             GenerateNewSeed( );
         }

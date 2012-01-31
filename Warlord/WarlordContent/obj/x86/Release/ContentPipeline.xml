@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Textures\Blocks\block_textures.xnb</Output>
-      <Time>2012-01-29T02:19:25.1850412-08:00</Time>
+      <Time>2012-01-31T03:10:27.9128801-08:00</Time>
     </Item>
     <Item>
       <Source>Fxs\skybox.fx</Source>
@@ -17,7 +17,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Fxs\skybox.xnb</Output>
-      <Time>2012-01-28T06:47:52.4361283-08:00</Time>
+      <Time>2012-01-29T07:49:30.1108182-08:00</Time>
     </Item>
     <Item>
       <Source>Fxs\warped_block_effects.fx</Source>
@@ -26,7 +26,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Fxs\warped_block_effects.xnb</Output>
-      <Time>2012-01-28T10:58:13.5492868-08:00</Time>
+      <Time>2012-01-29T07:49:30.1108182-08:00</Time>
     </Item>
     <Item>
       <Source>Fxs\block_effects.fx</Source>
@@ -35,7 +35,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Fxs\block_effects.xnb</Output>
-      <Time>2012-01-28T12:10:51.5775518-08:00</Time>
+      <Time>2012-01-31T03:34:07.7010873-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

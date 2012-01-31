@@ -6,6 +6,7 @@
 "block_removed"            KeyValuePai<Region,Block>
 
 "region_added"             Region
+"region_removed"             Region
 
 "camera_move_request"      Vector3f
 "camera_rotate_request"    Vector2f

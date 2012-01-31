@@ -19,6 +19,8 @@ namespace GameTools.Noise2D
         public int octaves;      
         public int seed;
 
+        public int numThreads;
+
         public PerlinNoiseSettings2D( )
         {
             rng = new Random( );
@@ -29,8 +31,8 @@ namespace GameTools.Noise2D
             frequencyMulti = 2;
             persistence = 0.5;
             zoom = 40;
-            octaves = 6;            
-            seed = 0;   
+            octaves = 6;
+            numThreads = 4;
 
             GenerateNewSeed( );
         }

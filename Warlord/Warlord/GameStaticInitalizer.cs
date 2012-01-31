@@ -122,7 +122,7 @@ namespace Warlord
 
             Vector2[] uvVectors = new Vector2[6];
 
-            const float textureSize = 1/8.0f;
+            const float textureSize = 1/16.0f;
             
             float Xoffset = x*textureSize;
             float Yoffset = y*textureSize;

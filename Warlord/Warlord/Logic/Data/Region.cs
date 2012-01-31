@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-
-using GameTools;
-using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using GameTools.Graph;
+using Microsoft.Xna.Framework;
 
 namespace Warlord.Logic.Data
 {
@@ -19,7 +14,7 @@ namespace Warlord.Logic.Data
         private Block[,,] blocks;              
 
         private Byte[,,] visibleFaceBitField;
-        private int visibleFaces;       
+        private int visibleFaces;  
 
         public Region( Vector3i regionOrigin, Vector3i regionSize )
         {
@@ -29,7 +24,7 @@ namespace Warlord.Logic.Data
             regionBox = new BoundingBox( regionOrigin.ToVector3, (regionOrigin+regionSize-Vector3i.One).ToVector3 );
 
             blocks = new Block[regionSize.X, regionSize.Y, regionSize.Z];
-            visibleFaceBitField = new byte[regionSize.X, regionSize.Y, regionSize.Z];
+            visibleFaceBitField = new byte[regionSize.X, regionSize.Y, regionSize.Z];            
 
             Init( );
         }
@@ -44,11 +39,12 @@ namespace Warlord.Logic.Data
                     for( int z = 0; z < regionSize.Z; z++ )
                     {
                         blockLocation = regionOrigin + new Vector3i(x,y,z);
-                        blocks[x,y,z] = new Block(blockLocation, BlockType.Air);
-                        Altered = true;
+                        blocks[x,y,z] = new Block(blockLocation, BlockType.Air);                        
                     }
                 }
             }
+
+            Altered = true;            
 
             visibleFaces = 0;
         }
@@ -57,7 +53,7 @@ namespace Warlord.Logic.Data
             if( regionBox.Contains( regionOrigin.ToVector3 + relativePosition.ToVector3 ) == ContainmentType.Contains )
                 return blocks[relativePosition.X, relativePosition.Y, relativePosition.Z];
             else
-                throw new ArgumentException( "Region does not have block" );
+                throw new ArgumentException( "The relative position " + relativePosition + " is not within the region" );
         }
         public void AddBlock( Vector3i relativePosition, BlockType type )
         {
@@ -97,6 +93,13 @@ namespace Warlord.Logic.Data
                 visibleFaceBitField[position.X,position.Y,position.Z] ^= (byte)facing;
                 visibleFaces--;
             }
+        }
+        public void Save( BinaryWriter outStream )
+        {
+
+        }
+        public void Load( BinaryReader inStream )
+        {
         }
         public Vector3i RegionOrigin
         {

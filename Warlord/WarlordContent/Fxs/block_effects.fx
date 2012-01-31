@@ -7,8 +7,8 @@ float AmbientIntensity;
 
 float3 CameraPosition;
 
-float FogNear = 150;
-float FogFar = 200;
+float FogNear;
+float FogFar;
 float4 FogColor = {0.5,0.5,0.5,1.0};
 
 Texture BlockTexture;
@@ -45,7 +45,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     output.Position = mul(viewPosition, Projection);
 
     output.CameraView = normalize(CameraPosition - worldPosition);
-    output.Distance = length(CameraPosition - worldPosition);
+    output.Distance = length(CameraPosition.xz - worldPosition.xz);
     output.TexCoords = input.TexCoords;
 
     return output;
@@ -56,7 +56,9 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 texColor = tex2D(BlockTextureSampler, input.TexCoords);
 
 	float4 ambient = AmbientIntensity * AmbientColor;	    
-    float fog = 1 - (input.Distance-FogNear)/(FogFar-FogNear);
+
+    float fog = saturate((input.Distance - FogNear)/(FogNear - FogFar));
+
     float4 color =  texColor * ambient;
     
     return lerp(FogColor, color ,fog);

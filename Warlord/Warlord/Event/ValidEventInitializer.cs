@@ -28,6 +28,7 @@ namespace Warlord.Event
             validEvents.Add("actor_moved");           
  
             validEvents.Add("region_added");
+            validEvents.Add("region_removed");
 
             validEvents.Add("camera_move_request");
             validEvents.Add("camera_rotate_request");

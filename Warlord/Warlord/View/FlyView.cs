@@ -19,28 +19,29 @@ namespace Warlord.View
     {
         Camera3D camera;
         GameWindow gameWindow;
-        GraphicsDevice device;        
+        GraphicsDevice device;
 
-        List<RegionGraphics> regionGraphics;        
+        volatile Dictionary<Region, RegionGraphics> regionGraphics;
         Vector4 warpPoints;
 
         Effect effect;
 
-        public FlyView( GameWindow gameWindow, GraphicsDevice device, ContentManager content )
+        public FlyView(GameWindow gameWindow, GraphicsDevice device, ContentManager content)
         {
             this.gameWindow = gameWindow;
             this.device = device;
-            regionGraphics = new List<RegionGraphics>( );
-            camera = new Camera3D( gameWindow.ClientBounds, new Vector3( 20, 80, -20 ), new Vector2((float)Math.PI, 0), Vector3.Up );            
+            regionGraphics = new Dictionary<Region,RegionGraphics>( );
+            camera = new Camera3D(gameWindow.ClientBounds, new Vector3(-64, 128, -64), new Vector2((float)Math.PI, 0), Vector3.Up);
 
             TextureRepository.BlockTextures = content.Load<Texture2D>("Textures/Blocks/block_textures");
             effect = content.Load<Effect>("Fxs/block_effects");
 
-            WarlordApplication.GameEventManager.Subscribe( AddRegion, "region_added" );
-            WarlordApplication.GameEventManager.Subscribe( Draw, "draw" );
+            WarlordApplication.GameEventManager.Subscribe(AddRegion, "region_added");
+            WarlordApplication.GameEventManager.Subscribe(RemoveRegion, "region_removed");
+            WarlordApplication.GameEventManager.Subscribe(Draw, "draw");
 
-            WarlordApplication.GameEventManager.Subscribe( MoveCamera, "camera_move_request" );
-            WarlordApplication.GameEventManager.Subscribe( RotateCamera, "camera_rotate_request" );
+            WarlordApplication.GameEventManager.Subscribe(MoveCamera, "camera_move_request");
+            WarlordApplication.GameEventManager.Subscribe(RotateCamera, "camera_rotate_request");
 
             warpPoints = new Vector4(80, 64, 80, 1);
         }
@@ -48,25 +49,28 @@ namespace Warlord.View
         private void Draw(object sender, object gameTimeObject)
         {
             GameTime gameTime = gameTimeObject as GameTime;
-            SetupBlockEffects( );
+            SetupBlockEffects();
 
-            foreach( EffectPass pass in effect.CurrentTechnique.Passes )
+            foreach(EffectPass pass in effect.CurrentTechnique.Passes)
             {
-                pass.Apply( );
-                foreach( RegionGraphics region in regionGraphics )
-                {
-                    region.Update( );
-                    if( region.RegionMesh.Length > 0 )
+                pass.Apply();
+                lock(regionGraphics)
+                { 
+                    foreach(RegionGraphics region in regionGraphics.Values)
                     {
-                        device.SetVertexBuffer(region.RegionBuffer);
-                        device.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.RegionMesh.Length/3);
+                        region.Update();
+                        if(region.RegionMesh.Length > 0)
+                        {
+                            device.SetVertexBuffer(region.RegionBuffer);
+                            device.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.RegionMesh.Length / 3);
+                        }
                     }
                 }
             }
         }
-        private void SetupWarpEffects( )
+        private void SetupWarpEffects()
         {
-            effect.Parameters["World"].SetValue( Matrix.CreateRotationY( angle ) );
+            effect.Parameters["World"].SetValue(Matrix.CreateRotationY(angle));
             effect.Parameters["View"].SetValue(camera.View);
             effect.Parameters["Projection"].SetValue(camera.Projection);
             effect.Parameters["CameraPosition"].SetValue(camera.Position);
@@ -77,38 +81,48 @@ namespace Warlord.View
             effect.Parameters["FogFar"].SetValue(150);
             effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
         }
-        private void SetupBlockEffects( )
+        private void SetupBlockEffects()
         {
-            effect.Parameters["World"].SetValue( Matrix.CreateRotationY( angle ) );
+            effect.Parameters["World"].SetValue(Matrix.CreateRotationY(angle));
             effect.Parameters["View"].SetValue(camera.View);
             effect.Parameters["Projection"].SetValue(camera.Projection);
             effect.Parameters["CameraPosition"].SetValue(camera.Position);
             effect.Parameters["AmbientColor"].SetValue(Color.White.ToVector4());
             effect.Parameters["AmbientIntensity"].SetValue(0.8f);
-            effect.Parameters["FogColor"].SetValue(Color.Black.ToVector4());
-            effect.Parameters["FogNear"].SetValue(0);
-            effect.Parameters["FogFar"].SetValue(250);
+            effect.Parameters["FogColor"].SetValue(Color.SkyBlue.ToVector4());
+            effect.Parameters["FogNear"].SetValue(16 * 9.5f);
+            effect.Parameters["FogFar"].SetValue(16 * 10);
             effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
         }
-        private void AddRegion(object sender, object regionObject )
+        private void AddRegion(object sender, object regionObject)
         {
-            regionGraphics.Add( new RegionGraphics( device, regionObject as Region ) );
+            lock(regionGraphics)
+            {
+                regionGraphics.Add(regionObject as Region, new RegionGraphics(device, regionObject as Region));
+            }
+        }
+        private void RemoveRegion(object sender, object regionObject)
+        {
+            lock(regionGraphics)
+            {
+                regionGraphics.Remove(regionObject as Region);
+            }
         }
         private void RotateCamera(object sender, Object rotation)
         {
-            RotateCamera( (rotation as Vector2f).ToVector2 );
+            RotateCamera((rotation as Vector2f).ToVector2);
         }
         private void MoveCamera(object sender, Object movement)
         {
-            MoveCamera( (movement as Vector3f).ToVector3 );
+            MoveCamera((movement as Vector3f).ToVector3);
         }
         private void RotateCamera(Vector2f rotation)
         {
-           camera.ForceChangeRotation( rotation.ToVector2 );
+            camera.ForceChangeRotation(rotation.ToVector2);
         }
         private void MoveCamera(Vector3f movement)
         {
-            camera.ForceMoveFly( movement.ToVector3 );
+            camera.ForceMoveFly(movement.ToVector3);
         }
 
         public float angle { get; set; }
