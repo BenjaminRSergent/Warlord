@@ -8,7 +8,7 @@ namespace Warlord.Logic.Data.World
         void AddBlock(Vector3i absolutePosition, BlockType type);
         void RemoveBlock(Vector3i absolutePosition);
 
-        void Update( Vector3f playerPosition );
+        void CheckLoadedRegions( Vector3f playerPosition );
 
         Block GetBlock(Vector3i absolutePosition);
         Block HighestBlockAt(Vector2i location);  

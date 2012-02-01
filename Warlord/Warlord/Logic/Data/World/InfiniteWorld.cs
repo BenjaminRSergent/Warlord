@@ -31,8 +31,6 @@ namespace Warlord.Logic.Data.World
             createdWorlds = new HashSet<Vector2i>();
             regionMap = new Dictionary<Vector2i, Region>(new BasicComparer<Vector2i>());
 
-            createdWorlds = new HashSet<Vector2i>();
-
             createThread = new Thread(() => { });
             createThread.IsBackground = true;
             unloadThread = new Thread(() => { });
@@ -45,15 +43,15 @@ namespace Warlord.Logic.Data.World
         }
         public void Initalize()
         {
-            Update(this, new Vector3f(0, 0, 0));
+            CheckLoadedRegions(this, new Vector3f(0, 0, 0));
   
-            WarlordApplication.GameEventManager.Subscribe( Update, "actor_moved" );
+            WarlordApplication.GameEventManager.Subscribe( CheckLoadedRegions, "actor_moved" );
         }
-        public void Update(object sender, object playerPosition)
+        public void CheckLoadedRegions(object sender, object playerPosition)
         {
-            Update( playerPosition as Vector3f );
+            CheckLoadedRegions( playerPosition as Vector3f );
         }
-        public void Update(Vector3f playerPosition)
+        public void CheckLoadedRegions(Vector3f playerPosition)
         {
             Vector2i playerRegion = GetRegionCoordiantes(playerPosition.ToIntVector());
 

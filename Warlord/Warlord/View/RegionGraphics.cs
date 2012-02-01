@@ -34,6 +34,10 @@ namespace Warlord.View
         }        
         public void Update(  )
         {
+            int d;
+            if( masterRegion.RegionOrigin.X == -32 && masterRegion.RegionOrigin.Z == -32 )
+                d = 10;
+
             if( masterRegion.Altered )
                 RebuildMesh( );
         }
@@ -81,10 +85,8 @@ namespace Warlord.View
                 if( (faceNum  & FaceInfo) > 0 )
                 {
                     BuildFace( currentBlock.UpperLeftTopPosition, (BlockFaceField)faceNum, currentBlock.Type );
-                }
-    
+                }    
             }
-
         }
 
         private void BuildFace( Vector3i bottomBackLeft, BlockFaceField faceDir, BlockType type )

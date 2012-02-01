@@ -85,6 +85,7 @@ namespace Warlord.Logic.Data
             {
                 visibleFaceBitField[position.X,position.Y,position.Z] |= (byte)facing;
                 visibleFaces++;
+                Altered = true;
             }
         }
         public void RemoveFace( Vector3i position, BlockFaceField facing )
@@ -93,6 +94,7 @@ namespace Warlord.Logic.Data
             {
                 visibleFaceBitField[position.X,position.Y,position.Z] ^= (byte)facing;
                 visibleFaces--;
+                Altered = true;
             }
         }
         public void Save( BinaryWriter outStream )

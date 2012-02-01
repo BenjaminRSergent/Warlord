@@ -140,6 +140,7 @@
     <Compile Include="Logic\Data\Region.cs" />
     <Compile Include="Logic\Data\RegionArrayMaps.cs" />
     <Compile Include="Logic\Data\World\RegionGenerator.cs" />
+    <Compile Include="Logic\Process.cs" />
     <Compile Include="Logic\WarlordLogic.cs" />
     <Compile Include="Logic\Data\World\Obsolete\WorldGenerator.cs" />
     <Compile Include="Logic\Data\World\WorldBase.cs" />
