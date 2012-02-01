@@ -26,6 +26,7 @@ namespace Warlord.Event
 
             validEvents.Add("actor_request_move");
             validEvents.Add("actor_moved");           
+            validEvents.Add("player_moved");
  
             validEvents.Add("region_added");
             validEvents.Add("region_removed");

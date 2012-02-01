@@ -17,40 +17,43 @@ using Warlord.View;
 
 namespace Warlord
 {
-    public class WarlordApplication : Microsoft.Xna.Framework.Game
+    internal class WarlordApplication : Game, GameApplication
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        WarlordLogic logic;
+        ErrorLogger errorLogger;
         FlyView flyView;
         FlyInput input;
 
-        InfiniteWorld world;
+        GlobalApplication globalAccess;
 
         static WarlordEventManager eventManager;
 
         public WarlordApplication()
         {
+            globalAccess = new GlobalApplication(this);
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
             eventManager = new WarlordEventManager();
 
+            errorLogger = new ErrorLogger( );
+            errorLogger.Init("Error.log", true);
+
             GameStaticInitalizer.InitalizeStatics();
 
             RegionArrayMaps.Init();
 
-            Vector2i VectorOne = new Vector2i(-4,-4);
+            Vector2i VectorOne = new Vector2i(-4, -4);
+
+            logic = new WarlordLogic();
         }
 
         protected override void Initialize()
         {
             base.Initialize();
-        }
-
-        private void GenerateWorld()
-        {
-            world = new InfiniteWorld(27, 2, new Vector3i(16, 128, 16));
-            world.Initalize();
         }
 
         protected override void LoadContent()
@@ -60,7 +63,7 @@ namespace Warlord
             flyView = new FlyView(Window, GraphicsDevice, Content);
             input = new FlyInput(Window);
 
-            GenerateWorld();
+            logic.BeginGame( );
         }
 
         protected override void UnloadContent()
@@ -86,10 +89,25 @@ namespace Warlord
 
             base.Draw(gameTime);
         }
-        static public bool Active { get; private set; }
-        static internal EventManager GameEventManager
+        public void ReportError(string errorReport)
+        {
+            errorLogger.Write(errorReport);
+        }
+        public bool Active { get; private set; }
+        public EventManager GameEventManager
         {
             get { return WarlordApplication.eventManager; }
         }
+        public EntityManager EntityManager
+        {
+            get { return logic.EntityManager; }
+        }
+        public ProcessManager ProcessManager
+        {
+            get
+            {
+                return logic.ProcessManager;
+            }
+        }        
     }
 }

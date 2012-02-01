@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Warlord.Logic.Data;
 using GameTools.Graph;
 using Warlord.Event;
+using Warlord.Logic.Data.World;
 
 namespace Warlord.View
 {
@@ -34,10 +35,6 @@ namespace Warlord.View
         }        
         public void Update(  )
         {
-            int d;
-            if( masterRegion.RegionOrigin.X == -32 && masterRegion.RegionOrigin.Z == -32 )
-                d = 10;
-
             if( masterRegion.Altered )
                 RebuildMesh( );
         }

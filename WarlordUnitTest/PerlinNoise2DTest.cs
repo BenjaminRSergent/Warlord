@@ -118,8 +118,8 @@ namespace WarlordUnitTest
             }
 
 
-            Assert.Inconclusive( "The adverage between jumps was " + Statistics.Adverage(betweenGapList.ToArray( )) +
-                                 "The Std deviation was " + Statistics.StdDeviation(betweenGapList.ToArray( )) );
+            //Assert.Inconclusive( "The adverage between jumps was " + Statistics.Adverage(betweenGapList.ToArray( )) +
+            //                     "The Std deviation was " + Statistics.StdDeviation(betweenGapList.ToArray( )) );
         }
     }
 }

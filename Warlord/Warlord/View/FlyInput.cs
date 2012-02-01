@@ -22,7 +22,7 @@ namespace Warlord.View
         {    
             this.gameWindow = gameWindow;
 
-            WarlordApplication.GameEventManager.Subscribe( update, "update" );
+            GlobalApplication.Application.GameEventManager.Subscribe( update, "update" );
         }
         private void update( object sender, object gameTime )
         {
@@ -33,7 +33,7 @@ namespace Warlord.View
             KeyboardState keyboardState;
             MouseState mouseState;
 
-            if( WarlordApplication.Active )
+            if( GlobalApplication.Application.Active )
             {
                 keyboardState = Keyboard.GetState( );
                 mouseState = Mouse.GetState( );
@@ -71,12 +71,12 @@ namespace Warlord.View
             
             Mouse.SetPosition( gameWindow.ClientBounds.Width/2, gameWindow.ClientBounds.Height/2);
 
-            WarlordApplication.GameEventManager.SendEvent( new GameEvent( new GameTools.Optional<object>(this),
+            GlobalApplication.Application.GameEventManager.SendEvent( new GameEvent( new GameTools.Optional<object>(this),
                                                            "camera_move_request",
                                                            movement,
                                                            0 ));
 
-            WarlordApplication.GameEventManager.SendEvent( new GameEvent( new GameTools.Optional<object>(this),
+            GlobalApplication.Application.GameEventManager.SendEvent( new GameEvent( new GameTools.Optional<object>(this),
                                                            "camera_rotate_request",
                                                            facingRotation,
                                                            0 ));

@@ -49,7 +49,7 @@ namespace Warlord.Logic.Data.World
             noiseSettings.seed = seed;
         }
 
-        public void GenerateRegion( InfiniteWorld ownerWorld, Vector3i origin )
+        public void GenerateRegion( RegionUpdater ownerWorld, Vector3i origin )
         {
             double[,,] noise;
 
@@ -62,7 +62,7 @@ namespace Warlord.Logic.Data.World
             AddGrassToTop( ownerWorld, origin );
         }
 
-        private void PlaceBlocks(InfiniteWorld ownerWorld, Vector3i origin, double[,,] noise)
+        private void PlaceBlocks(RegionUpdater ownerWorld, Vector3i origin, double[,,] noise)
         {
             double density;
             BlockType blockType;
@@ -75,12 +75,12 @@ namespace Warlord.Logic.Data.World
                         density = noise[x, y, z];
                         blockType = GetBlockFromNoise(density, y);
                         if(blockType != BlockType.Air)
-                            ownerWorld.AddBlock(origin + new Vector3i(x, y, z), blockType);
+                            ownerWorld.ChangeBlock(origin + new Vector3i(x, y, z), blockType);
                     }
                 }
             }
         }
-        public void AddGrassToTop( InfiniteWorld ownerWorld, Vector3i origin )
+        public void AddGrassToTop( RegionUpdater ownerWorld, Vector3i origin )
         {
             Vector3i currentPosition;
             Block currentBlock;
@@ -100,7 +100,7 @@ namespace Warlord.Logic.Data.World
 
                         if( currentBlock.Type != BlockType.Air && recentAir )
                         {
-                            ownerWorld.AddBlock( currentPosition, BlockType.Grass );
+                            ownerWorld.ChangeBlock( currentPosition, BlockType.Grass );
                             recentAir = false;
                         }
                         else if( currentBlock.Type == BlockType.Air )

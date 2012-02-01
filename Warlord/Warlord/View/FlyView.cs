@@ -21,6 +21,8 @@ namespace Warlord.View
         GameWindow gameWindow;
         GraphicsDevice device;
 
+        Model testModel;
+
         volatile Dictionary<Region, RegionGraphics> regionGraphics;
         Vector4 warpPoints;
 
@@ -36,12 +38,14 @@ namespace Warlord.View
             TextureRepository.BlockTextures = content.Load<Texture2D>("Textures/Blocks/block_textures");
             effect = content.Load<Effect>("Fxs/block_effects");
 
-            WarlordApplication.GameEventManager.Subscribe(AddRegion, "region_added");
-            WarlordApplication.GameEventManager.Subscribe(RemoveRegion, "region_removed");
-            WarlordApplication.GameEventManager.Subscribe(Draw, "draw");
+            GlobalApplication.Application.GameEventManager.Subscribe(AddRegion, "region_added");
+            GlobalApplication.Application.GameEventManager.Subscribe(RemoveRegion, "region_removed");
+            GlobalApplication.Application.GameEventManager.Subscribe(Draw, "draw");
 
-            WarlordApplication.GameEventManager.Subscribe(MoveCamera, "camera_move_request");
-            WarlordApplication.GameEventManager.Subscribe(RotateCamera, "camera_rotate_request");
+            GlobalApplication.Application.GameEventManager.Subscribe(MoveCamera, "camera_move_request");
+            GlobalApplication.Application.GameEventManager.Subscribe(RotateCamera, "camera_rotate_request");
+
+            testModel = content.Load<Model>("Models/test_dude");
 
             warpPoints = new Vector4(0, 32, 0, 1);
         }
@@ -66,6 +70,19 @@ namespace Warlord.View
                         device.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.RegionMesh.Length / 3);
                     }
                 }
+                
+            }
+
+            foreach(ModelMesh mesh in testModel.Meshes)
+            {
+                foreach(IEffectMatrices meshEffect in mesh.Effects)
+                { 
+                    meshEffect.World = Matrix.CreateTranslation( new Vector3( 0, 80, 0 ) );
+                    meshEffect.View = camera.View;
+                    meshEffect.Projection = camera.Projection;
+                }
+
+                mesh.Draw( );
             }
             
         }
@@ -84,7 +101,7 @@ namespace Warlord.View
         }
         private void SetupBlockEffects()
         {
-            effect.Parameters["World"].SetValue(Matrix.CreateRotationY(angle));
+            effect.Parameters["World"].SetValue(Matrix.Identity);
             effect.Parameters["View"].SetValue(camera.View);
             effect.Parameters["Projection"].SetValue(camera.Projection);
             effect.Parameters["CameraPosition"].SetValue(camera.Position);
@@ -127,7 +144,7 @@ namespace Warlord.View
             if(movement != Vector3f.Zero)
             {
                 camera.ForceMoveFly(movement.ToVector3);
-                WarlordApplication.GameEventManager.SendEvent( new GameEvent(new GameTools.Optional<object>(this), "actor_moved", new Vector3f(camera.Position), 0 ));
+                GlobalApplication.Application.GameEventManager.SendEvent( new GameEvent(new GameTools.Optional<object>(this), "actor_moved", new Vector3f(camera.Position), 0 ));
             }
         }
 

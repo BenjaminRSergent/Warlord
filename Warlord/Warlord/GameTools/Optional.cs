@@ -17,7 +17,7 @@ namespace Warlord.GameTools
         public Optional( T data )
         {
             this.data = data;
-            valid = false;
+            valid = true;
         }
 
         public T Data

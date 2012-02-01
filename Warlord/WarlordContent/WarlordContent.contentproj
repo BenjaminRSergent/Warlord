@@ -57,6 +57,11 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>
+    <Compile Include="Models\test_dude.fbx">
+      <Name>test_dude</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
     <None Include="Textures\TextureStandards.txt">
       <Name>TextureStandards</Name>
     </None>
