@@ -19,7 +19,7 @@ namespace Warlord.Logic
         public WarlordLogic()
         {
             processManager = new ProcessManager();
-            regionUpdater = new RegionUpdater(5, 3, new Vector3i(16, 128, 16));
+            regionUpdater = new RegionUpdater(5, 3, new Vector3i(16, 128, 16), 1);
             entityManager = new WarlordEntityManager();
 
             entityManager.AddPlayer(new Vector3f(0, 80, 0));
@@ -30,6 +30,10 @@ namespace Warlord.Logic
         {
             entityManager.AddPlayer(new Vector3f(0, 80, 0));
             processManager.AttachProcess(regionUpdater);
+        }
+        public void ShutDown( )
+        {
+            processManager.ShutDown( );
         }
         public void Update( object sender, object data )
         {

@@ -17,6 +17,10 @@ namespace Warlord.Logic.Data
             this.id = id;
             this.position = position;
         }
+        public void Teleport( Vector3f location )
+        {
+            this.position = location;
+        }
         public uint ID
         {
             get { return id; }

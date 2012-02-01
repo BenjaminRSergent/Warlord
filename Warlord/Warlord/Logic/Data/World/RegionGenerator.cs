@@ -55,7 +55,7 @@ namespace Warlord.Logic.Data.World
 
             noiseSettings.startingPoint = origin;              
 
-            noise = PerlinNoise3D.GenPerlinNoise3D( noiseSettings );
+            noise = PerlinNoise3D.GenPerlinNoise3D( noiseSettings, 4 );
 
             PlaceBlocks(ownerWorld, origin, noise);
 

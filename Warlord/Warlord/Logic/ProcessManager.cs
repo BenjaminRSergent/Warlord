@@ -49,5 +49,13 @@ namespace Warlord.Logic
                 runningProcesses.Remove(process);
             }
         }
+
+        internal void ShutDown()
+        {
+            foreach(Process process in runningProcesses)
+            {
+                process.KillProcess( );
+            }
+        }
     }
 }

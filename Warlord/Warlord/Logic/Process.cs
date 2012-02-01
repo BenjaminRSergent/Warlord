@@ -17,12 +17,14 @@ namespace Warlord.Logic
 
         private EventWaitHandle waitHandle;
         private bool done;
+        private bool kill;        
 
         public Process()
         {
             waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
             started = false;
             done = false;
+            kill = false;
 
             this.timeAllocated = 0;
         }
@@ -36,7 +38,7 @@ namespace Warlord.Logic
         }
 
         public void Update(GameTime gameTime)
-        {
+        {            
             waitHandle.Set();
             if(processThread == null || (!started && !done))
             {
@@ -53,7 +55,21 @@ namespace Warlord.Logic
                 done = true;
         }
 
-        abstract public void UpdateBehavior(GameTime gameTime);
+        abstract protected void UpdateBehavior(GameTime gameTime);
+
+        protected void SafePointCheckIn( )
+        {
+            if( Kill )
+                Thread.CurrentThread.Abort( );
+
+                WaitHandle.WaitOne();
+        }
+
+        public void KillProcess()
+        {
+            kill = true;
+            waitHandle.Set( );
+        }
 
         public bool Done
         {
@@ -91,6 +107,12 @@ namespace Warlord.Logic
             {
                 return started;
             }
+        }
+
+        public bool Kill
+        {
+            get { return kill; }
+            set { kill = value; }
         }
     }
 }

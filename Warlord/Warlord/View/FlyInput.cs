@@ -66,6 +66,12 @@ namespace Warlord.View
             if( keyboardState.IsKeyDown( Keys.E ) )
                 movement.Y-= moveAmount;
 
+            if( keyboardState.IsKeyDown( Keys.LeftShift ) )
+                movement = 10 * movement;
+
+            if( keyboardState.IsKeyDown( Keys.LeftControl ) )
+                movement = 10 * movement;
+
             facingRotation.X = 0.001f * (gameWindow.ClientBounds.Width/2 - mouseState.X);
             facingRotation.Y = 0.001f * (gameWindow.ClientBounds.Height/2 - mouseState.Y);
             

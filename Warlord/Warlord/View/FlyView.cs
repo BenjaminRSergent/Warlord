@@ -101,6 +101,8 @@ namespace Warlord.View
         }
         private void SetupBlockEffects()
         {
+            GlobalApplication.Application.EntityManager.Player.Teleport(camera.Position);
+
             effect.Parameters["World"].SetValue(Matrix.Identity);
             effect.Parameters["View"].SetValue(camera.View);
             effect.Parameters["Projection"].SetValue(camera.Projection);

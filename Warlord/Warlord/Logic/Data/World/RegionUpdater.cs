@@ -13,7 +13,7 @@ namespace Warlord.Logic.Data.World
         RegionDatabase database;
         private int drawDistance;
 
-        public RegionUpdater(int drawDistance, int seed, Vector3i regionSize)
+        public RegionUpdater(int drawDistance, int seed, Vector3i regionSize, int timeAllocated) : base( timeAllocated )
         {
             this.drawDistance = drawDistance;
 
@@ -103,7 +103,7 @@ namespace Warlord.Logic.Data.World
             return database.GetBlock(absolutePosition);
         }
 
-        public override void UpdateBehavior(GameTime gameTime)
+        protected override void UpdateBehavior(GameTime gameTime)
         {
             const int unloadBuffer = 4;
             while( true )
@@ -111,20 +111,20 @@ namespace Warlord.Logic.Data.World
                 List<Vector2i> mustExist = GetRegionInArea( drawDistance );
                 List<Vector2i> mustUnload = GetRegionBetweenAreas( drawDistance, drawDistance + unloadBuffer );
 
-                WaitHandle.WaitOne();
+                SafePointCheckIn( );
 
                 foreach( Vector2i regionLocation in mustExist )
                 {
                     database.CreateRegion(this, regionLocation );
-                    WaitHandle.WaitOne();
+                    SafePointCheckIn( );
                 }
                 foreach( Vector2i regionLocation in mustUnload )
                 {
                     database.UnloadRegion(regionLocation);
-                    WaitHandle.WaitOne();
+                    SafePointCheckIn( );
                 }
 
-                WaitHandle.WaitOne();
+                SafePointCheckIn( );
             }
         }
         private List<Vector2i> GetRegionInArea( int radius )

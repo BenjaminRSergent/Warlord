@@ -68,6 +68,7 @@ namespace Warlord
 
         protected override void UnloadContent()
         {
+            logic.ShutDown( );
         }
 
         protected override void Update(GameTime gameTime)
