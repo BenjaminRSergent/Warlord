@@ -43,7 +43,7 @@ namespace Warlord.View
             WarlordApplication.GameEventManager.Subscribe(MoveCamera, "camera_move_request");
             WarlordApplication.GameEventManager.Subscribe(RotateCamera, "camera_rotate_request");
 
-            warpPoints = new Vector4(80, 64, 80, 1);
+            warpPoints = new Vector4(0, 32, 0, 1);
         }
 
         private void Draw(object sender, object gameTimeObject)
@@ -92,7 +92,7 @@ namespace Warlord.View
             effect.Parameters["AmbientIntensity"].SetValue(0.8f);
             effect.Parameters["FogColor"].SetValue(Color.SkyBlue.ToVector4());
             effect.Parameters["FogNear"].SetValue(16 * 6f);
-            effect.Parameters["FogFar"].SetValue(16 * 8f);
+            effect.Parameters["FogFar"].SetValue(16 * 7f);
             effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
         }
         private void AddRegion(object sender, object regionObject)

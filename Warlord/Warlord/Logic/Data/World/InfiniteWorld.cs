@@ -89,13 +89,21 @@ namespace Warlord.Logic.Data.World
             generating = false;
         }
         private void CheckUnloadRegions(Vector2i existanceBegin, Vector2i existanceEnd)
-        {            
-            const int UnloadBufferRadius = 4;
+        {   
+            const int UnloadRadius = 2;
+            const int UnloadRadiusBuffer = 4;
+            const int RadiusWithBuffer = UnloadRadius + UnloadRadiusBuffer;
 
-            for(int x = existanceBegin.X - UnloadBufferRadius; x < existanceEnd.X + UnloadBufferRadius; x++)
+            for(int x = existanceBegin.X - RadiusWithBuffer; x < existanceEnd.X + RadiusWithBuffer; x++)
             {
-                for(int y = existanceBegin.Y - UnloadBufferRadius; y < existanceEnd.Y + UnloadBufferRadius; y++)
+                if( x == existanceBegin.X - UnloadRadiusBuffer )
+                    x =  existanceEnd.X + UnloadRadiusBuffer;
+
+                for(int y = existanceBegin.Y - RadiusWithBuffer; y < existanceEnd.Y + RadiusWithBuffer; y++)
                 {
+                    if( y == existanceBegin.Y - UnloadRadiusBuffer )
+                        y =  existanceEnd.Y + UnloadRadiusBuffer;
+
                     if(regionMap.ContainsKey(new Vector2i(x, y)))
                         UnloadRegion(new Vector2i(x, y));
                 }

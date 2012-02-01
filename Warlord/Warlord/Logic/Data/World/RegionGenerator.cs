@@ -138,7 +138,7 @@ namespace Warlord.Logic.Data.World
 
             if(noise + heightMod > 1)
                 return BlockType.Stone;
-            else if(noise + heightMod > -0.1)
+            else if(noise + heightMod > -0.3)
                 return BlockType.Dirt;
             else
                 return BlockType.Air;            
