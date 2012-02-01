@@ -91,9 +91,9 @@ namespace GameTools.Noise3D
 
                         for( int oct = 0; oct < settings.octaves; oct++ )
                         {                    
-                            double noise = SimpleNoise3D.GenInterpolatedNoise(effectiveX/(float)width * regionSize.X * frequency,
-                                                                              effectiveY/(float)width * regionSize.Y * frequency,
-                                                                              effectiveZ/(float)width * regionSize.Z * frequency,
+                            double noise = SimpleNoise3D.GenInterpolatedNoise(effectiveX/settings.zoom * frequency,
+                                                                              effectiveY/settings.zoom * frequency,
+                                                                              effectiveZ/settings.zoom * frequency,
                                                                               settings.seed);
                             toFill[x,y,z] += amplitude * noise;
 

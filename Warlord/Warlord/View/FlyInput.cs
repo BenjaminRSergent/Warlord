@@ -49,7 +49,7 @@ namespace Warlord.View
             Vector3f movement = Vector3.Zero;
             Vector2f facingRotation = Vector2.Zero;
 
-            const float moveAmount = 0.9f;
+            const float moveAmount = 0.05f;
 
             if( keyboardState.IsKeyDown( Keys.D ) )
                 movement.X+= moveAmount;

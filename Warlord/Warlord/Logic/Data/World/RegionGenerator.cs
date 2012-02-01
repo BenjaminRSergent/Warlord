@@ -32,13 +32,13 @@ namespace Warlord.Logic.Data.World
             generatorSettings.AirLevel = 110;
 
             noiseSettings = new PerlinNoiseSettings3D( );
-            noiseSettings.frequencyMulti = 2;
+            noiseSettings.frequencyMulti = 2.2;
             noiseSettings.octaves = 6;
             noiseSettings.persistence = 0.5;
             noiseSettings.seed = 3;
             noiseSettings.size = generatorSettings.RegionSize;
             noiseSettings.startingPoint = Vector3i.Zero;
-            noiseSettings.zoom = 160;   
+            noiseSettings.zoom = 120;   
         }
         public RegionGenerator( int seed, PerlinNoiseSettings3D noiseSettings, GeneratorSettings generatorSettings )
         {
@@ -55,7 +55,7 @@ namespace Warlord.Logic.Data.World
 
             noiseSettings.startingPoint = origin;              
 
-            noise = PerlinNoise3D.GenPerlinNoise3D( noiseSettings, 4);
+            noise = PerlinNoise3D.GenPerlinNoise3D( noiseSettings );
 
             PlaceBlocks(ownerWorld, origin, noise);
 

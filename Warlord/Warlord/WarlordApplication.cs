@@ -49,7 +49,7 @@ namespace Warlord
 
         private void GenerateWorld()
         {
-            world = new InfiniteWorld(27, 8, new Vector3i(16, 128, 16));
+            world = new InfiniteWorld(27, 4, new Vector3i(16, 128, 16));
             world.Initalize();
         }
 

@@ -31,7 +31,7 @@ namespace Warlord.View
             this.gameWindow = gameWindow;
             this.device = device;
             regionGraphics = new Dictionary<Region,RegionGraphics>( );
-            camera = new Camera3D(gameWindow.ClientBounds, new Vector3(-64, 128, -64), new Vector2((float)Math.PI, 0), Vector3.Up);
+            camera = new Camera3D(gameWindow.ClientBounds, new Vector3(0, 80, 0), new Vector2((float)Math.PI, 0), Vector3.Up);
 
             TextureRepository.BlockTextures = content.Load<Texture2D>("Textures/Blocks/block_textures");
             effect = content.Load<Effect>("Fxs/block_effects");
@@ -51,22 +51,23 @@ namespace Warlord.View
             GameTime gameTime = gameTimeObject as GameTime;
             SetupBlockEffects();
 
+            List<RegionGraphics> threadSafeGraphics = new List<RegionGraphics>( regionGraphics.Values );
+
             foreach(EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                lock(regionGraphics)
-                { 
-                    foreach(RegionGraphics region in regionGraphics.Values)
+                
+                foreach(RegionGraphics region in threadSafeGraphics)
+                {
+                    region.Update();
+                    if(region.RegionMesh.Length > 0)
                     {
-                        region.Update();
-                        if(region.RegionMesh.Length > 0)
-                        {
-                            device.SetVertexBuffer(region.RegionBuffer);
-                            device.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.RegionMesh.Length / 3);
-                        }
+                        device.SetVertexBuffer(region.RegionBuffer);
+                        device.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.RegionMesh.Length / 3);
                     }
                 }
             }
+            
         }
         private void SetupWarpEffects()
         {
@@ -90,8 +91,8 @@ namespace Warlord.View
             effect.Parameters["AmbientColor"].SetValue(Color.White.ToVector4());
             effect.Parameters["AmbientIntensity"].SetValue(0.8f);
             effect.Parameters["FogColor"].SetValue(Color.SkyBlue.ToVector4());
-            effect.Parameters["FogNear"].SetValue(16 * 9.5f);
-            effect.Parameters["FogFar"].SetValue(16 * 10);
+            effect.Parameters["FogNear"].SetValue(16 * 6f);
+            effect.Parameters["FogFar"].SetValue(16 * 8f);
             effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
         }
         private void AddRegion(object sender, object regionObject)
@@ -123,8 +124,11 @@ namespace Warlord.View
         }
         private void MoveCamera(Vector3f movement)
         {
-            camera.ForceMoveFly(movement.ToVector3);
-            WarlordApplication.GameEventManager.SendEvent( new GameEvent(new GameTools.Optional<object>(this), "actor_moved", new Vector3f(camera.Position), 0 ));
+            if(movement != Vector3f.Zero)
+            {
+                camera.ForceMoveFly(movement.ToVector3);
+                WarlordApplication.GameEventManager.SendEvent( new GameEvent(new GameTools.Optional<object>(this), "actor_moved", new Vector3f(camera.Position), 0 ));
+            }
         }
 
         public float angle { get; set; }

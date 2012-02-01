@@ -15,8 +15,8 @@ namespace Warlord.Logic.Data.World
         Vector3i regionSize;
         RegionGenerator generator;
 
-        volatile HashSet<Vector2i> createdWorlds;
-        volatile Dictionary<Vector2i, Region> regionMap;
+        HashSet<Vector2i> createdWorlds;
+        Dictionary<Vector2i, Region> regionMap;
 
         Thread createThread;
         Thread unloadThread;
@@ -29,9 +29,9 @@ namespace Warlord.Logic.Data.World
         public InfiniteWorld(int seed, int existenceRadius, Vector3i regionSize)
         {
             createdWorlds = new HashSet<Vector2i>();
-            regionMap = new Dictionary<Vector2i, Region>();
+            regionMap = new Dictionary<Vector2i, Region>(new BasicComparer<Vector2i>());
 
-            createdWorlds = new HashSet<Vector2i>(new BasicComparer<Vector2i>());
+            createdWorlds = new HashSet<Vector2i>();
 
             createThread = new Thread(() => { });
             createThread.IsBackground = true;
@@ -46,7 +46,7 @@ namespace Warlord.Logic.Data.World
         public void Initalize()
         {
             Update(this, new Vector3f(0, 0, 0));
-
+  
             WarlordApplication.GameEventManager.Subscribe( Update, "actor_moved" );
         }
         public void Update(object sender, object playerPosition)
@@ -57,8 +57,8 @@ namespace Warlord.Logic.Data.World
         {
             Vector2i playerRegion = GetRegionCoordiantes(playerPosition.ToIntVector());
 
-            Vector2i existanceBegin = playerRegion - new Vector2i(existenceRadius / 2, existenceRadius / 2);
-            Vector2i existanceEnd = playerRegion + new Vector2i(existenceRadius / 2, existenceRadius / 2);
+            Vector2i existanceBegin = playerRegion - new Vector2i(existenceRadius, existenceRadius);
+            Vector2i existanceEnd = playerRegion + new Vector2i(existenceRadius, existenceRadius);
 
             if(!createThread.IsAlive)
             {
@@ -75,36 +75,26 @@ namespace Warlord.Logic.Data.World
         }
         private void CheckCreateRegions(Vector2i existanceBegin, Vector2i existanceEnd)
         {
+            generating = true;
             for(int x = existanceBegin.X; x < existanceEnd.X; x++)
             {
                 for(int y = existanceBegin.Y; y < existanceEnd.Y; y++)
                 {
-                    if(!createdWorlds.Contains(new Vector2i(x, y)))
+                    if(!regionMap.Keys.Contains(new Vector2i(x, y)))
                     {
                         CreateRegion(new Vector2i(x, y));
                     }
                 }
-            }
+            }            
+            generating = false;
         }
         private void CheckUnloadRegions(Vector2i existanceBegin, Vector2i existanceEnd)
-        {
-            generating = true;
+        {            
             const int UnloadBufferRadius = 4;
 
-            for(int x = existanceBegin.X - UnloadBufferRadius; x < existanceBegin.X; x++)
+            for(int x = existanceBegin.X - UnloadBufferRadius; x < existanceEnd.X + UnloadBufferRadius; x++)
             {
-                for(int y = existanceBegin.Y - UnloadBufferRadius; y < existanceBegin.Y; y++)
-                {
-                    if(regionMap.ContainsKey(new Vector2i(x, y)))
-                        UnloadRegion(new Vector2i(x, y));
-                }
-            }
-
-            generating = false;
-
-            for(int x = existanceEnd.X; x < existanceBegin.Y + UnloadBufferRadius; x++)
-            {
-                for(int y = existanceEnd.Y; y < existanceEnd.Y + UnloadBufferRadius; y++)
+                for(int y = existanceBegin.Y - UnloadBufferRadius; y < existanceEnd.Y + UnloadBufferRadius; y++)
                 {
                     if(regionMap.ContainsKey(new Vector2i(x, y)))
                         UnloadRegion(new Vector2i(x, y));
@@ -119,12 +109,16 @@ namespace Warlord.Logic.Data.World
             generator.GenerateRegion(this, regionOrigin);
             Region newRegion = GetRegionFromCoordiantes(regionCoordiantes).Data;
             WarlordApplication.GameEventManager.SendEvent(new GameEvent(new Optional<object>(this), "region_added", newRegion, 0));
+            newRegion.Active = true;
         }
         private void UnloadRegion(Vector2i regionCoordiantes)
         {
             Region deadRegion = GetRegionFromCoordiantes(regionCoordiantes).Data;
-            WarlordApplication.GameEventManager.SendEvent(new GameEvent(new GameTools.Optional<object>(this), "region_added", deadRegion, 0));
-            regionMap.Remove(regionCoordiantes);
+            if(deadRegion.Active)
+            { 
+                WarlordApplication.GameEventManager.SendEvent(new GameEvent(new GameTools.Optional<object>(this), "region_added", deadRegion, 0));
+                regionMap.Remove(regionCoordiantes);
+            }
         }
 
         public void AddBlock(Vector3i absolutePosition, BlockType type)
@@ -287,7 +281,7 @@ namespace Warlord.Logic.Data.World
         }
         private Optional<Region> GetRegionFromCoordiantes(Vector2i coordiantes)
         {
-            if(createdWorlds.Contains(coordiantes))
+            if(regionMap.Keys.Contains(coordiantes))
                 return new Optional<Region>(regionMap[coordiantes]);
             else
                 return new Optional<Region>();

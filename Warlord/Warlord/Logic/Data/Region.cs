@@ -44,7 +44,8 @@ namespace Warlord.Logic.Data
                 }
             }
 
-            Altered = true;            
+            Altered = true;           
+            Active = false;
 
             visibleFaces = 0;
         }
@@ -125,7 +126,7 @@ namespace Warlord.Logic.Data
         {
             get { return visibleFaces; }
         }       
-
+        public bool Active{ get; set; }
         public bool Altered{ get; set; }
     }
 }
