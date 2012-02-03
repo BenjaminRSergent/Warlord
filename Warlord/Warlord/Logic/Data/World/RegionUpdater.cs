@@ -108,27 +108,40 @@ namespace Warlord.Logic.Data.World
             const int unloadBuffer = 4;
             while( true )
             {
+                LoopExcuted = false;
 
-                for(int k = 0; k < drawDistance; k++)
-                { 
-                    List<Vector2i> mustExist = GetRegionInArea( k ).Where
+                int radius = 0;
+
+                List<Vector2i> mustExist = new List<Vector2i>( );
+
+                do
+                {           
+                    mustExist = GetRegionInArea( radius ).Where
                         ( vector => !database.RegionMap.ContainsKey(vector) ).ToList( );
+                    radius++;
+                }while( radius < drawDistance && mustExist.Count < 1);
 
-                    if( mustExist.Count > 0 )
-                    {
-                        database.CreateRegion(this, mustExist[0] );                        
-                        break;
-                    } 
-                }
+                if( mustExist.Count > 0 )
+                {
+                    foreach(Vector2i region in mustExist)
+                    { 
+                        bool regionDidNotPreviouslyExist = database.CreateRegion(this, region );
+                        if( regionDidNotPreviouslyExist )
+                            break;
+                    }                        
+                } 
+                SafePointCheckIn( );                
 
                 List<Vector2i> mustUnload = GetRegionBetweenAreas( drawDistance, drawDistance + unloadBuffer ).Where
-                    ( vector => database.RegionMap.ContainsKey(vector) ).ToList( );                
+                    ( vector => database.RegionMap.ContainsKey(vector) ).ToList( );
 
-                if( mustUnload.Count > 0 )
+                if(mustUnload.Count > 0)
+                {
                     database.UnloadRegion(mustUnload[0]);
                     SafePointCheckIn( );
+                }                
 
-                SafePointCheckIn( );
+                LoopExcuted = true;
             }
         }
         private List<Vector2i> GetRegionInArea( int radius )
@@ -142,9 +155,10 @@ namespace Warlord.Logic.Data.World
             {
                 for(int y = 0; y < radius; y++)
                 {
-                    regionCoordiantes.Add(playerRegion - new Vector2i( x,y ));
-
                     regionCoordiantes.Add(playerRegion + new Vector2i( x,y ));
+                    regionCoordiantes.Add(playerRegion + new Vector2i( x,-y ));
+                    regionCoordiantes.Add(playerRegion + new Vector2i( -x,y ));
+                    regionCoordiantes.Add(playerRegion + new Vector2i( -x,-y ));
                 }
             }
 

@@ -118,6 +118,7 @@
     <Compile Include="GameTools\Noise2D\PerlinNoise2D.cs" />
     <Compile Include="GameTools\Noise2D\PerlinNoiseSettings2D.cs" />
     <Compile Include="GameTools\Noise2D\SimpleNoise2D.cs" />
+    <Compile Include="GameTools\Noise3D\FastPerlinNoise.cs" />
     <Compile Include="GameTools\Noise3D\PancakePerlinNoise3D.cs" />
     <Compile Include="GameTools\Noise3D\PerlinNoise3D.cs" />
     <Compile Include="GameTools\Noise3D\PerlinNoiseSettings3D.cs" />

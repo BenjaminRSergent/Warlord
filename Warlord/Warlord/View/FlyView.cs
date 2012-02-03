@@ -20,16 +20,17 @@ namespace Warlord.View
         Camera3D camera;
         GameWindow gameWindow;
         GraphicsDevice device;
+        SpriteBatch spriteBatch;
+        SpriteFont spriteFont;
 
         Dictionary<Region, RegionGraphics> regionGraphics;
-        Vector4 warpPoints;
 
         Effect effect;
 
-        public FlyView(GameWindow gameWindow, GraphicsDevice device, ContentManager content)
+        public FlyView(GameWindow gameWindow, GraphicsDevice graphics, ContentManager content)
         {
             this.gameWindow = gameWindow;
-            this.device = device;
+            this.device = graphics;
             regionGraphics = new Dictionary<Region,RegionGraphics>( );
             camera = new Camera3D(gameWindow.ClientBounds, new Vector3(0, 80, 0), new Vector2((float)Math.PI, 0), Vector3.Up);
 
@@ -43,33 +44,58 @@ namespace Warlord.View
             GlobalApplication.Application.GameEventManager.Subscribe(MoveCamera, "camera_move_request");
             GlobalApplication.Application.GameEventManager.Subscribe(RotateCamera, "camera_rotate_request");
 
-            warpPoints = new Vector4(0, 32, 0, 1);
+            spriteBatch = new SpriteBatch(graphics);
+            spriteFont = content.Load<SpriteFont>("Font/DebugFont");
         }
-
         private void Draw(object sender, object gameTimeObject)
-        {
+        {           
             GameTime gameTime = gameTimeObject as GameTime;
+
+            if(regionGraphics.Count > 16)
+                DrawWorld();
+            else
+            {
+                RasterizerState rs = device.RasterizerState;
+                DepthStencilState ds = device.DepthStencilState;
+                BlendState bs = device.BlendState;
+                device.Clear(Color.Black);
+                spriteBatch.Begin( );
+                spriteBatch.DrawString( spriteFont, "starting the world..", new Vector2( gameWindow.ClientBounds.Width/3, gameWindow.ClientBounds.Height/2), Color.White);
+                spriteBatch.End( );
+                device.RasterizerState = rs;
+                device.DepthStencilState = ds;
+                device.BlendState = bs;
+                    
+            }
+        }            
+        private void DrawWorld( )
+        {
             SetupBlockEffects();
 
             List<RegionGraphics> threadSafeGraphics = new List<RegionGraphics>( regionGraphics.Values );
+
+            BoundingFrustum frustum = new BoundingFrustum( camera.View * camera.Projection );
 
             foreach(EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 
                 foreach(RegionGraphics region in threadSafeGraphics)
-                {
+                {                    
                     region.Update( );
+                    if(region.IsInVolume(frustum))
+                    { 
 
-                    if(region.Clean && region.RegionMesh.Length > 0)
-                    {
-                        device.SetVertexBuffer(region.RegionBuffer);
-                        device.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.RegionMesh.Length / 3);
+                        if(region.Clean && region.RegionMesh.Length > 0)
+                        {
+                            device.SetVertexBuffer(region.RegionBuffer);
+                            device.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.RegionMesh.Length / 3);
+                        }
                     }
                 }
                 
-            }            
-        }    
+            }    
+        }
         private void SetupBlockEffects()
         {
             GlobalApplication.Application.EntityManager.Player.Teleport(camera.Position);
@@ -81,8 +107,8 @@ namespace Warlord.View
             effect.Parameters["AmbientColor"].SetValue(Color.White.ToVector4());
             effect.Parameters["AmbientIntensity"].SetValue(0.8f);
             effect.Parameters["FogColor"].SetValue(Color.SkyBlue.ToVector4());
-            effect.Parameters["FogNear"].SetValue(16 * 6f);
-            effect.Parameters["FogFar"].SetValue(16 * 7f);
+            effect.Parameters["FogNear"].SetValue(16 * 5f);
+            effect.Parameters["FogFar"].SetValue(16 * 6f);
             effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
         }
         private void AddRegion(object sender, object regionObject)
@@ -120,7 +146,5 @@ namespace Warlord.View
                 GlobalApplication.Application.GameEventManager.SendEvent( new GameEvent(new GameTools.Optional<object>(this), "actor_moved", new Vector3f(camera.Position), 0 ));
             }
         }
-
-        public float angle { get; set; }
     }
 }

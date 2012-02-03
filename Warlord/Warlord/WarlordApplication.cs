@@ -14,6 +14,7 @@ using Warlord.Logic;
 using Warlord.Logic.Data;
 using Warlord.Logic.Data.World;
 using Warlord.View;
+using GameTools.Noise3D;
 
 namespace Warlord
 {
@@ -67,7 +68,7 @@ namespace Warlord
         }
 
         protected override void UnloadContent()
-        {
+        {            
             logic.ShutDown( );
         }
 

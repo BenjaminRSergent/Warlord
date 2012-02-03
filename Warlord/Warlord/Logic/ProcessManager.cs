@@ -23,7 +23,7 @@ namespace Warlord.Logic
                 if(process.Running || !process.Started)
                     process.Update(gameTime);
 
-                if(process.Done)
+                if(process.ReadyToDie)
                 {
                     FinishProcess(process);
                     toRemove.Add(process);

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using Microsoft.Xna.Framework;
 using Warlord.GameTools;
+using System.Diagnostics;
 
 namespace Warlord.Logic
 {
@@ -16,23 +17,29 @@ namespace Warlord.Logic
         Optional<Process> next;
 
         private EventWaitHandle waitHandle;
-        private bool done;
+        private bool loopExecuted;        
+        private bool readyToDie;
         private bool kill;        
+
+        private Stopwatch stopwatch;
 
         public Process()
         {
+             stopwatch = new Stopwatch( );
+
             waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
             started = false;
-            done = false;
+            readyToDie = false;
             kill = false;
 
             this.timeAllocated = 0;
         }
         public Process(int timeAllocated)
         {
+            stopwatch = new Stopwatch( );
             waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
             started = false;
-            done = false;
+            readyToDie = false;
 
             this.timeAllocated = timeAllocated;
         }
@@ -40,19 +47,25 @@ namespace Warlord.Logic
         public void Update(GameTime gameTime)
         {            
             waitHandle.Set();
-            if(processThread == null || (!started && !done))
+            if(processThread == null || (!started && !readyToDie))
             {
                 processThread = new Thread(() => UpdateBehavior(gameTime));
                 processThread.Start();
                 started = true;
             }
 
-            Thread.Sleep(timeAllocated);
+            stopwatch.Restart( );
+            stopwatch.Start( );
+
+            while(!loopExecuted && stopwatch.ElapsedMilliseconds < timeAllocated)
+            {
+                Thread.Sleep(1);
+            }
 
             if(processThread.IsAlive)
                 waitHandle.Reset();
             else if(started)
-                done = true;
+                readyToDie = true;
         }
 
         abstract protected void UpdateBehavior(GameTime gameTime);
@@ -64,19 +77,14 @@ namespace Warlord.Logic
 
                 WaitHandle.WaitOne();
         }
-
+        public void AttachNext(Process nextProcess)
+        {
+            next = new Optional<Process>(nextProcess);
+        }
         public void KillProcess()
         {
             kill = true;
             waitHandle.Set( );
-        }
-
-        public bool Done
-        {
-            get
-            {
-                return done;
-            }
         }
         public bool Running
         {
@@ -88,10 +96,29 @@ namespace Warlord.Logic
                 return processThread.IsAlive;
             }
         }
-        public void AttachNext(Process nextProcess)
+        public bool ReadyToDie
         {
-            next = new Optional<Process>(nextProcess);
+            get
+            {
+                return readyToDie;
+            }
+            protected set
+            {
+                loopExecuted = readyToDie;
+            }
         }
+        public bool LoopExcuted
+        {
+            get 
+            {
+                return loopExecuted; 
+            }
+            protected set
+            {
+                loopExecuted = value;
+            }
+        }        
+        
         public Optional<Process> Next
         {
             get { return next; }

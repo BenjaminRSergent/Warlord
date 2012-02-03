@@ -19,7 +19,7 @@ namespace Warlord.Logic
         public WarlordLogic()
         {
             processManager = new ProcessManager();
-            regionUpdater = new RegionUpdater(5, 3, new Vector3i(16, 128, 16), 0);
+            regionUpdater = new RegionUpdater(10, 27, new Vector3i(16, 128, 16), 5);
             entityManager = new WarlordEntityManager();
 
             entityManager.AddPlayer(new Vector3f(0, 80, 0));

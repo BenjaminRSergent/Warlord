@@ -17,52 +17,52 @@ namespace Warlord.View
         private Region masterRegion;
         private VertexPositionTexture[] regionMesh;
         private VertexBuffer regionBuffer;
-        
+
         private GraphicsDevice graphics;
 
         private int index;
 
-        private bool clean;        
+        private bool clean;
 
         static public Dictionary<BlockFaceField, Vector3i[]> faceVertexOffsetMap =
-                                                      new Dictionary<BlockFaceField,Vector3i[]>( );
+                                                      new Dictionary<BlockFaceField, Vector3i[]>();
 
-        static public Dictionary<BlockTexture, Dictionary<BlockFaceField, Vector2[]>> UVMap 
-                                                                = new Dictionary<BlockTexture,Dictionary<BlockFaceField,Vector2[]>>( );
+        static public Dictionary<BlockTexture, Dictionary<BlockFaceField, Vector2[]>> UVMap
+                                                                = new Dictionary<BlockTexture, Dictionary<BlockFaceField, Vector2[]>>();
 
-        public RegionGraphics( GraphicsDevice graphics, Region masterRegion )
+        public RegionGraphics(GraphicsDevice graphics, Region masterRegion)
         {
-            this.masterRegion = masterRegion;            
+            this.masterRegion = masterRegion;
             this.graphics = graphics;
 
             clean = false;
-        }        
-        public void Update(  )
+        }
+        public void Update()
         {
-            if( masterRegion.Altered )
-                RebuildMesh( );
+            if(masterRegion.Altered)
+                RebuildMesh();
         }
         private void RebuildMesh()
-        {   
+        {
             clean = false;
 
             const int VERTICES_PER_FACE = 6;
-            
-            regionMesh = new VertexPositionTexture[VERTICES_PER_FACE*masterRegion.VisibleFaces];
+
+            regionMesh = new VertexPositionTexture[VERTICES_PER_FACE * masterRegion.VisibleFaces];
 
             index = 0;
 
-            BuildCubes( );
+            BuildCubes();
 
-            if( regionMesh.Length > 0 )
+            if(regionMesh.Length > 0)
             {
-                regionBuffer = new VertexBuffer( graphics,
+                regionBuffer = new VertexBuffer(graphics,
                                                  VertexPositionTexture.VertexDeclaration,
                                                  regionMesh.Length,
-                                                 BufferUsage.WriteOnly );
+                                                 BufferUsage.WriteOnly);
 
                 regionBuffer.SetData(regionMesh);
-            }            
+            }
 
             clean = true;
             masterRegion.Altered = false;
@@ -70,9 +70,9 @@ namespace Warlord.View
 
         private void BuildCubes()
         {
-            foreach( Block currentBlock in masterRegion.Blocks )
+            foreach(Block currentBlock in masterRegion.Blocks)
             {
-                BuildBlockFaces( currentBlock );
+                BuildBlockFaces(currentBlock);
             }
         }
 
@@ -82,45 +82,45 @@ namespace Warlord.View
             int y = currentBlock.UpperLeftTopPosition.Y - masterRegion.RegionOrigin.Y;
             int z = currentBlock.UpperLeftTopPosition.Z - masterRegion.RegionOrigin.Z;
 
-            byte FaceInfo = masterRegion.VisibleFaceBitField[x,y,z];
+            byte FaceInfo = masterRegion.VisibleFaceBitField[x, y, z];
 
-            for( byte faceNum = 1; faceNum < (byte)BlockFaceField.MAXIMUM; faceNum*=2 )
+            for(byte faceNum = 1; faceNum < (byte)BlockFaceField.MAXIMUM; faceNum *= 2)
             {
-                if( (faceNum  & FaceInfo) > 0 )
+                if((faceNum & FaceInfo) > 0)
                 {
-                    BuildFace( currentBlock.UpperLeftTopPosition, (BlockFaceField)faceNum, currentBlock.Type );
-                }    
+                    BuildFace(currentBlock.UpperLeftTopPosition, (BlockFaceField)faceNum, currentBlock.Type);
+                }
             }
         }
 
-        private void BuildFace( Vector3i bottomBackLeft, BlockFaceField faceDir, BlockType type )
+        private void BuildFace(Vector3i bottomBackLeft, BlockFaceField faceDir, BlockType type)
         {
-            if( type == BlockType.Air )
-                throw new ApplicationException( "Air with visible face found" );
+            if(type == BlockType.Air)
+                throw new ApplicationException("Air with visible face found");
 
-            BlockTexture faceTexture = GetTexture( faceDir, type );
+            BlockTexture faceTexture = GetTexture(faceDir, type);
             Vector2[] uvMap = UVMap[faceTexture][faceDir];
             Vector3i[] offsetMap = faceVertexOffsetMap[faceDir];
 
             Vector3i currentFace;
-            for( int k = 0; k < 6; k++ )
+            for(int k = 0; k < 6; k++)
             {
                 currentFace = (bottomBackLeft + offsetMap[k]);
-                regionMesh[index+k] = new VertexPositionTexture( currentFace.ToVector3, uvMap[k] );
+                regionMesh[index + k] = new VertexPositionTexture(currentFace.ToVector3, uvMap[k]);
             }
 
             index += 6;
-        }        
+        }
 
-        private BlockTexture GetTexture( BlockFaceField faceDir, BlockType type )
+        private BlockTexture GetTexture(BlockFaceField faceDir, BlockType type)
         {
-            switch( type )
+            switch(type)
             {
                 case BlockType.Dirt:
                     return BlockTexture.Dirt;
                 case BlockType.Grass:
                     {
-                        switch( faceDir )
+                        switch(faceDir)
                         {
                             case BlockFaceField.YIncreasing:
                                 return BlockTexture.GrassTop;
@@ -131,7 +131,7 @@ namespace Warlord.View
                         }
                     }
                 case BlockType.Stone:
-                    return BlockTexture.Stone;                
+                    return BlockTexture.Stone;
 
                 default:
                     throw new ArgumentException("Unsupported Block Type");
@@ -153,7 +153,15 @@ namespace Warlord.View
 
         public void Dispose()
         {
-            regionBuffer.Dispose( );
+            regionBuffer.Dispose();
+        }
+
+        internal bool IsInVolume(BoundingFrustum frustum)
+        {
+            if(frustum.Contains(masterRegion.RegionBox) != ContainmentType.Disjoint)
+                return true;
+            else
+                return false;
         }
     }
 }

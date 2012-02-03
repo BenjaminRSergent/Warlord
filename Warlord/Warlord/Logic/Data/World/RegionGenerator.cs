@@ -12,11 +12,12 @@ namespace Warlord.Logic.Data.World
         private int seed;
         private GeneratorSettings generatorSettings;
         private PerlinNoiseSettings3D noiseSettings;
+        FastPerlinNoise fastNoise;
 
         public RegionGenerator( int seed )
         {
             this.seed = seed;
-            LoadDefaultSettings( );
+            LoadDefaultSettings( );            
         }
         public RegionGenerator( int seed, Vector3i regionSize )
         {
@@ -33,12 +34,14 @@ namespace Warlord.Logic.Data.World
 
             noiseSettings = new PerlinNoiseSettings3D( );
             noiseSettings.frequencyMulti = 2.2;
-            noiseSettings.octaves = 6;
+            noiseSettings.octaves = 4;
             noiseSettings.persistence = 0.5;
             noiseSettings.seed = 3;
             noiseSettings.size = generatorSettings.RegionSize;
             noiseSettings.startingPoint = Vector3i.Zero;
             noiseSettings.zoom = 120;   
+
+            fastNoise = new FastPerlinNoise(noiseSettings);
         }
         public RegionGenerator( int seed, PerlinNoiseSettings3D noiseSettings, GeneratorSettings generatorSettings )
         {
@@ -48,7 +51,21 @@ namespace Warlord.Logic.Data.World
 
             noiseSettings.seed = seed;
         }
+        public void FastGenerateRegion( RegionUpdater ownerWorld, Vector3i origin )
+        {
+            double[,,] noise = new double[generatorSettings.RegionSize.X,
+                                          generatorSettings.RegionSize.Y,
+                                          generatorSettings.RegionSize.Z];
 
+            noiseSettings.startingPoint = origin;            
+
+            fastNoise.FillWithPerlinNoise3D( noise );
+            
+
+            PlaceBlocks(ownerWorld, origin, noise);
+
+            AddGrassToTop( ownerWorld, origin );
+        }
         public void GenerateRegion( RegionUpdater ownerWorld, Vector3i origin )
         {
             double[,,] noise;

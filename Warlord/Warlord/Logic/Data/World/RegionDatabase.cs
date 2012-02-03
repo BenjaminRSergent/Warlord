@@ -31,21 +31,25 @@ namespace Warlord.Logic.Data.World
             this.regionSize = regionSize;
             generator = new RegionGenerator(seed, regionSize);
         }
-        public void CreateRegion(RegionUpdater updater, Vector2i regionCoordiants)
+        public bool CreateRegion(RegionUpdater updater, Vector2i regionCoordiants)
         {
             if(!regionMap.Keys.Contains(regionCoordiants))
             { 
                 generating = true;
                 Vector3i newOrigin = new Vector3i(regionCoordiants.X*regionSize.X, 0, regionCoordiants.Y*regionSize.Z);
                 regionMap.Add(regionCoordiants, new Region(newOrigin,  regionSize));
-                generator.GenerateRegion(updater, newOrigin );
+                generator.FastGenerateRegion(updater, newOrigin );
                 generating = false;
 
                 GlobalApplication.Application.GameEventManager.SendEvent( new GameEvent( new Optional<object>(this),
                                                                           "region_added",
                                                                           regionMap[regionCoordiants],
                                                                           0 ) );
+
+                return true;
             }
+
+            return false;
         }
         public void UnloadRegion(Vector2i regionCoordiants)
         {

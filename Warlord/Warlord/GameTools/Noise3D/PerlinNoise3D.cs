@@ -52,7 +52,6 @@ namespace GameTools.Noise3D
 
             return noise;
         }
-
         static void MakePerlinNoise3D( double[,,] toFill, Vector3i fillStart, PerlinNoiseSettings3D settings )
         {
             int width;
