@@ -45,6 +45,8 @@ namespace Warlord
 
             GameStaticInitalizer.InitalizeStatics();
 
+            IsMouseVisible = true;
+
             RegionArrayMaps.Init();
 
             Vector2i VectorOne = new Vector2i(-4, -4);
@@ -75,6 +77,10 @@ namespace Warlord
         protected override void Update(GameTime gameTime)
         {
             Active = IsActive;
+
+            Mouse.WindowHandle = Window.Handle;
+
+            eventManager.SendEvent(new GameEvent(new GameTools.Optional<object>(this), "read_input", null, 0));
             eventManager.SendEvent(new GameEvent(new GameTools.Optional<object>(this), "update", gameTime, 0));
 
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -90,12 +96,12 @@ namespace Warlord
             eventManager.SendEvent(new GameEvent(new GameTools.Optional<object>(this), "draw", gameTime, 0));
 
             base.Draw(gameTime);
-        }
+        }       
+        
         public void ReportError(string errorReport)
         {
             errorLogger.Write(errorReport);
         }
-        public bool Active { get; private set; }
         public EventManager GameEventManager
         {
             get { return WarlordApplication.eventManager; }
@@ -104,12 +110,7 @@ namespace Warlord
         {
             get { return logic.EntityManager; }
         }
-        public ProcessManager ProcessManager
-        {
-            get
-            {
-                return logic.ProcessManager;
-            }
-        }        
+
+        public bool Active { get; private set; }
     }
 }

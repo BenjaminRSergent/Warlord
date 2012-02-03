@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Textures\Blocks\block_textures.xnb</Output>
-      <Time>2012-01-31T08:19:55.5238867-08:00</Time>
+      <Time>2012-02-02T18:54:53.6458718-08:00</Time>
     </Item>
     <Item>
       <Source>Fxs\skybox.fx</Source>
@@ -35,7 +35,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Fxs\block_effects.xnb</Output>
-      <Time>2012-02-01T08:25:33.1515082-08:00</Time>
+      <Time>2012-02-02T18:54:53.6158701-08:00</Time>
     </Item>
     <Item>
       <Source>Font\DebugFont.spritefont</Source>
@@ -44,7 +44,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Font\DebugFont.xnb</Output>
-      <Time>2012-02-02T17:58:51.9395932-08:00</Time>
+      <Time>2012-02-02T18:54:53.6148701-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
