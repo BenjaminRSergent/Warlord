@@ -1,12 +1,20 @@
 ﻿EventType                  DataType
 
-"update"                   GameTime
-"draw"                     GameTime
-"block_added"              KeyValuePai<Region,Block>
-"block_removed"            KeyValuePai<Region,Block>
+"actor_created"            ActorEventData
+"actor_moved"              ActorEventData
+"actor_death"              ActorEventData
+"actor_removed"            ActorEventData
 
-"region_added"             Region
-"region_removed"             Region
+"camera_move_request"      CameraMoveEventData
+"camera_rotate_request"    CameraRotateEventData
 
-"camera_move_request"      Vector3f
-"camera_rotate_request"    Vector2f
+"read_input"               GameTimeEventData
+"update"                   GameTimeEventData
+"draw"                     GameTimeEventData
+
+"block_added"              BlockEventData
+"block_removed"            BlockEventData
+
+"region_added"             RegionEventData
+"region_removed"           RegionEventData
+

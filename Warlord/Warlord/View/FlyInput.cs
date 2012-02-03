@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using Warlord.Event;
 using Microsoft.Xna.Framework;
 using GameTools.Graph;
+using System.Runtime.InteropServices;
 
 namespace Warlord.View
 {
@@ -13,10 +14,14 @@ namespace Warlord.View
 
     class FlyInput
     {
+        [DllImport("user32.dll")]
+        static extern bool ClipCursor(ref System.Drawing.Rectangle lpRect);
+
         private KeyboardState prevKeyboardState;
         private MouseState prevMouseState;
 
         private GameWindow gameWindow;
+
 
         public FlyInput( GameWindow gameWindow )
         {    
@@ -74,8 +79,16 @@ namespace Warlord.View
 
             facingRotation.X = 0.001f * (gameWindow.ClientBounds.Width/2 - mouseState.X);
             facingRotation.Y = 0.001f * (gameWindow.ClientBounds.Height/2 - mouseState.Y);
+
+           // Mouse.SetPosition( gameWindow.ClientBounds.Width/2,
+             //                  gameWindow.ClientBounds.Height/2);
+
             
-            Mouse.SetPosition( gameWindow.ClientBounds.Width/2, gameWindow.ClientBounds.Height/2);
+            System.Drawing.Rectangle window = new System.Drawing.Rectangle( gameWindow.ClientBounds.Left,
+                                                                            gameWindow.ClientBounds.Top,
+                                                                            gameWindow.ClientBounds.Right,
+                                                                            gameWindow.ClientBounds.Bottom );
+            ClipCursor( ref window );
 
             GlobalApplication.Application.GameEventManager.SendEvent( new GameEvent( new GameTools.Optional<object>(this),
                                                            "camera_move_request",

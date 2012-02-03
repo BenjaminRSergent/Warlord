@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Textures\Blocks\block_textures.xnb</Output>
-      <Time>2012-01-31T08:19:55.5238867-08:00</Time>
+      <Time>2012-02-02T18:54:53.6458718-08:00</Time>
     </Item>
     <Item>
       <Source>Fxs\skybox.fx</Source>
@@ -35,27 +35,16 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Fxs\block_effects.xnb</Output>
-      <Time>2012-02-01T08:25:33.1515082-08:00</Time>
+      <Time>2012-02-02T18:54:53.6158701-08:00</Time>
     </Item>
     <Item>
-      <Source>Models\test_dude.fbx</Source>
-      <Name>Models\test_dude</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
+      <Source>Font\DebugFont.spritefont</Source>
+      <Name>Font\DebugFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Models\test_dude.xnb</Output>
-      <Time>2012-02-02T15:08:57.2894926-08:00</Time>
-      <Dependency>
-        <Key>obj\x86\Debug\Models\test_dude_0.xml</Key>
-        <Value>2012-02-02T15:51:07.4342086-08:00</Value>
-      </Dependency>
-    </Item>
-    <Item>
-      <Source>Models\test_dude.fbx</Source>
-      <Importer>FbxImporter</Importer>
-      <Options>IntermediateFile, DontCacheImportedData</Options>
-      <Output>obj\x86\Debug\Models\test_dude_0.xml</Output>
-      <Time>2012-02-02T15:08:57.2894926-08:00</Time>
+      <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Font\DebugFont.xnb</Output>
+      <Time>2012-02-02T18:54:53.6148701-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

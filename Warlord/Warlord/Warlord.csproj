@@ -93,6 +93,7 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -107,6 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Event\EventData\BaseEventDataStructs.cs" />
     <Compile Include="Event\GameEvent.cs" />
     <Compile Include="Event\EventManager.cs" />
     <Compile Include="Event\ValidEventInitializer.cs" />
@@ -135,6 +137,7 @@
     <Compile Include="Interfaces\Subsystems\GameLogic.cs" />
     <Compile Include="Interfaces\Subsystems\GameView.cs" />
     <Compile Include="Interfaces\Subsystems\GameApplication.cs" />
+    <Compile Include="KeyboardInput.cs" />
     <Compile Include="Logic\Data\BlockFaceField.cs" />
     <Compile Include="Logic\Data\BlockType.cs" />
     <Compile Include="Logic\Data\Entity.cs" />
@@ -152,6 +155,7 @@
     <Compile Include="Logic\Process.cs" />
     <Compile Include="Logic\ProcessManager.cs" />
     <Compile Include="Logic\WarlordLogic.cs" />
+    <Compile Include="MouseInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="View\AIView.cs" />
