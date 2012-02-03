@@ -35,7 +35,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Fxs\block_effects.xnb</Output>
-      <Time>2012-01-31T08:19:55.5228867-08:00</Time>
+      <Time>2012-02-01T08:25:33.1515082-08:00</Time>
     </Item>
     <Item>
       <Source>Models\test_dude.fbx</Source>
@@ -44,10 +44,10 @@
       <Processor>ModelProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Models\test_dude.xnb</Output>
-      <Time>2012-01-31T21:08:26.2987851-08:00</Time>
+      <Time>2012-02-02T15:08:57.2894926-08:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\Models\test_dude_0.xml</Key>
-        <Value>2012-01-31T22:40:41.7513949-08:00</Value>
+        <Value>2012-02-02T15:51:07.4342086-08:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -55,7 +55,7 @@
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Debug\Models\test_dude_0.xml</Output>
-      <Time>2012-01-31T21:08:26.2987851-08:00</Time>
+      <Time>2012-02-02T15:08:57.2894926-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

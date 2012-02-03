@@ -50,12 +50,13 @@ namespace Warlord.Logic.Data.World
         public void UnloadRegion(Vector2i regionCoordiants)
         {
             if(regionMap.Keys.Contains(regionCoordiants))
-            {
-                regionMap.Remove(regionCoordiants);
+            {                
                 GlobalApplication.Application.GameEventManager.SendEvent( new GameEvent( new Optional<object>(this),
                                                                           "region_removed",
                                                                           regionMap[regionCoordiants],
                                                                           0 ) );
+
+                regionMap.Remove(regionCoordiants);
             }
         }
         public void ChangeBlock(Vector3i absolutePosition, BlockType type)

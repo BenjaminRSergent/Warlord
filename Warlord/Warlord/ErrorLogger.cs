@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Warlord
 {
-    class ErrorLogger
+    class ErrorLogger : IDisposable
     {
         StreamWriter errorLog;
 
@@ -26,6 +26,11 @@ namespace Warlord
                 errorLog.WriteLine( errorReport );
                 errorLog.WriteLine( );
             }
+        }
+
+        public void Dispose()
+        {
+            errorLog.Dispose( );
         }
     }
 }

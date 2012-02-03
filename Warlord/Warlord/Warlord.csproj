@@ -159,7 +159,6 @@
     <Compile Include="View\HUD.cs" />
     <Compile Include="View\FlyInput.cs" />
     <Compile Include="View\HumanView.cs" />
-    <Compile Include="View\Player\FakePlayeDisplay.cs" />
     <Compile Include="View\RegionGraphics.cs" />
     <Compile Include="View\SoundRepository.cs" />
     <Compile Include="View\TextureRepository.cs" />

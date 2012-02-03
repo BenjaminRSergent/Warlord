@@ -21,9 +21,7 @@ namespace Warlord.View
         GameWindow gameWindow;
         GraphicsDevice device;
 
-        Model testModel;
-
-        volatile Dictionary<Region, RegionGraphics> regionGraphics;
+        Dictionary<Region, RegionGraphics> regionGraphics;
         Vector4 warpPoints;
 
         Effect effect;
@@ -45,8 +43,6 @@ namespace Warlord.View
             GlobalApplication.Application.GameEventManager.Subscribe(MoveCamera, "camera_move_request");
             GlobalApplication.Application.GameEventManager.Subscribe(RotateCamera, "camera_rotate_request");
 
-            testModel = content.Load<Model>("Models/test_dude");
-
             warpPoints = new Vector4(0, 32, 0, 1);
         }
 
@@ -63,42 +59,17 @@ namespace Warlord.View
                 
                 foreach(RegionGraphics region in threadSafeGraphics)
                 {
-                    region.Update();
-                    if(region.RegionMesh.Length > 0)
+                    region.Update( );
+
+                    if(region.Clean && region.RegionMesh.Length > 0)
                     {
                         device.SetVertexBuffer(region.RegionBuffer);
                         device.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.RegionMesh.Length / 3);
                     }
                 }
                 
-            }
-
-            foreach(ModelMesh mesh in testModel.Meshes)
-            {
-                foreach(IEffectMatrices meshEffect in mesh.Effects)
-                { 
-                    meshEffect.World = Matrix.CreateTranslation( new Vector3( 0, 80, 0 ) );
-                    meshEffect.View = camera.View;
-                    meshEffect.Projection = camera.Projection;
-                }
-
-                mesh.Draw( );
-            }
-            
-        }
-        private void SetupWarpEffects()
-        {
-            effect.Parameters["World"].SetValue(Matrix.CreateRotationY(angle));
-            effect.Parameters["View"].SetValue(camera.View);
-            effect.Parameters["Projection"].SetValue(camera.Projection);
-            effect.Parameters["CameraPosition"].SetValue(camera.Position);
-            effect.Parameters["AmbientColor"].SetValue(Color.White.ToVector4());
-            effect.Parameters["AmbientIntensity"].SetValue(0.8f);
-            effect.Parameters["FogColor"].SetValue(Color.Black.ToVector4());
-            effect.Parameters["FogNear"].SetValue(0);
-            effect.Parameters["FogFar"].SetValue(150);
-            effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
-        }
+            }            
+        }    
         private void SetupBlockEffects()
         {
             GlobalApplication.Application.EntityManager.Player.Teleport(camera.Position);

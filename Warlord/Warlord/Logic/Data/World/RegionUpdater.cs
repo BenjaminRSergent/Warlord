@@ -108,21 +108,25 @@ namespace Warlord.Logic.Data.World
             const int unloadBuffer = 4;
             while( true )
             {
-                List<Vector2i> mustExist = GetRegionInArea( drawDistance );
-                List<Vector2i> mustUnload = GetRegionBetweenAreas( drawDistance, drawDistance + unloadBuffer );
 
-                SafePointCheckIn( );
+                for(int k = 0; k < drawDistance; k++)
+                { 
+                    List<Vector2i> mustExist = GetRegionInArea( k ).Where
+                        ( vector => !database.RegionMap.ContainsKey(vector) ).ToList( );
 
-                foreach( Vector2i regionLocation in mustExist )
-                {
-                    database.CreateRegion(this, regionLocation );
-                    SafePointCheckIn( );
+                    if( mustExist.Count > 0 )
+                    {
+                        database.CreateRegion(this, mustExist[0] );                        
+                        break;
+                    } 
                 }
-                foreach( Vector2i regionLocation in mustUnload )
-                {
-                    database.UnloadRegion(regionLocation);
+
+                List<Vector2i> mustUnload = GetRegionBetweenAreas( drawDistance, drawDistance + unloadBuffer ).Where
+                    ( vector => database.RegionMap.ContainsKey(vector) ).ToList( );                
+
+                if( mustUnload.Count > 0 )
+                    database.UnloadRegion(mustUnload[0]);
                     SafePointCheckIn( );
-                }
 
                 SafePointCheckIn( );
             }
@@ -134,11 +138,13 @@ namespace Warlord.Logic.Data.World
 
             List<Vector2i> regionCoordiantes = new List<Vector2i>( );
 
-            for(int x = -radius; x < radius; x++)
+            for(int x = 0; x < radius; x++)
             {
-                for(int y = -radius; y < radius; y++)
+                for(int y = 0; y < radius; y++)
                 {
                     regionCoordiantes.Add(playerRegion - new Vector2i( x,y ));
+
+                    regionCoordiantes.Add(playerRegion + new Vector2i( x,y ));
                 }
             }
 

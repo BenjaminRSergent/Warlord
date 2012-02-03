@@ -12,7 +12,7 @@ using Warlord.Logic.Data.World;
 
 namespace Warlord.View
 {
-    class RegionGraphics
+    class RegionGraphics : IDisposable
     {
         private Region masterRegion;
         private VertexPositionTexture[] regionMesh;
@@ -21,6 +21,8 @@ namespace Warlord.View
         private GraphicsDevice graphics;
 
         private int index;
+
+        private bool clean;        
 
         static public Dictionary<BlockFaceField, Vector3i[]> faceVertexOffsetMap =
                                                       new Dictionary<BlockFaceField,Vector3i[]>( );
@@ -32,6 +34,8 @@ namespace Warlord.View
         {
             this.masterRegion = masterRegion;            
             this.graphics = graphics;
+
+            clean = false;
         }        
         public void Update(  )
         {
@@ -40,6 +44,8 @@ namespace Warlord.View
         }
         private void RebuildMesh()
         {   
+            clean = false;
+
             const int VERTICES_PER_FACE = 6;
             
             regionMesh = new VertexPositionTexture[VERTICES_PER_FACE*masterRegion.VisibleFaces];
@@ -58,6 +64,7 @@ namespace Warlord.View
                 regionBuffer.SetData(regionMesh);
             }            
 
+            clean = true;
             masterRegion.Altered = false;
         }
 
@@ -130,7 +137,10 @@ namespace Warlord.View
                     throw new ArgumentException("Unsupported Block Type");
             }
         }
-        
+        public bool Clean
+        {
+            get { return clean; }
+        }
         public VertexPositionTexture[] RegionMesh
         {
             get { return regionMesh; }
@@ -138,6 +148,12 @@ namespace Warlord.View
         public VertexBuffer RegionBuffer
         {
             get { return regionBuffer; }
+        }
+
+
+        public void Dispose()
+        {
+            regionBuffer.Dispose( );
         }
     }
 }

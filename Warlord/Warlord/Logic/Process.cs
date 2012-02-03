@@ -8,7 +8,7 @@ using Warlord.GameTools;
 
 namespace Warlord.Logic
 {
-    abstract class Process
+    abstract class Process : IDisposable
     {
         Thread processThread;
         int timeAllocated;
@@ -113,6 +113,11 @@ namespace Warlord.Logic
         {
             get { return kill; }
             set { kill = value; }
+        }
+
+        public void Dispose()
+        {
+            waitHandle.Dispose( );
         }
     }
 }
