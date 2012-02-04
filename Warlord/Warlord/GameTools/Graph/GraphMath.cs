@@ -9,10 +9,17 @@ namespace GameTools.Graph
 {
     static class GraphMath
     {
-        static public double DistanceBetweenVector2s( Point A, Point B )
+        static public double DistanceBetweenPoints( Point A, Point B )
         {
             int X = B.X - A.X;
             int Y = B.Y - A.Y;
+
+            return Math.Sqrt(Math.Pow(X,2) + Math.Pow(Y,2));
+        }
+        static public double DistanceBetweenVector2s( Vector2 A, Vector2 B )
+        {
+            double X = B.X - A.X;
+            double Y = B.Y - A.Y;
 
             return Math.Sqrt(Math.Pow(X,2) + Math.Pow(Y,2));
         }

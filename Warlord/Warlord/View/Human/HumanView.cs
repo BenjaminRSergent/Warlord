@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Warlord.Interfaces.Subsystems;
 
-namespace Warlord.View
+namespace Warlord.View.Human
 {
-    class HUD
+    class HumanView : GameView
     {
     }
 }

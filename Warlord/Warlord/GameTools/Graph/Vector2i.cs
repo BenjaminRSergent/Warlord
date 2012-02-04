@@ -129,7 +129,13 @@ namespace GameTools.Graph
                 return X*X + Y*Y;
             }
         }
-
+        public Vector2 ToVector2
+        {
+            get
+            {
+                return new Vector2(X, Y);
+            }
+        }
         static public Vector2i Zero
         {
             get

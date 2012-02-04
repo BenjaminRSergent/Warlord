@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 
 using Microsoft.Xna.Framework;
 using Warlord.Logic.Data;
 using GameTools.Graph;
-using Warlord.Event;
 using Warlord.Logic.Data.World;
 
-namespace Warlord.View
+namespace Warlord.View.Human.Display
 {
     class RegionGraphics : IDisposable
     {

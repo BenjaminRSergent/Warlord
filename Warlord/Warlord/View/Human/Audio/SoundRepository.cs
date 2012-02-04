@@ -5,7 +5,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework.Audio;
 
-namespace Warlord.View
+namespace Warlord.View.Human.Audio
 {
     class SoundRepository
     {

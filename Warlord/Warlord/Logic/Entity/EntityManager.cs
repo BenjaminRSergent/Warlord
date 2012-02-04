@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Warlord.Logic.Data
+namespace Warlord.Logic.Data.Entity
 {
     interface EntityManager
     {

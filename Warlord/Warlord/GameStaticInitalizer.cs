@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using GameTools.Graph;
 using Warlord.View;
 using Warlord.Logic.Data;
+using Warlord.Logic.Data.World;
+using Warlord.View.Human.Display;
 
 namespace Warlord
 {

@@ -8,11 +8,11 @@ using Microsoft.Xna.Framework;
 using GameTools.Graph;
 using System.Runtime.InteropServices;
 
-namespace Warlord.View
+namespace Warlord.View.Human.Input
 {
     //Flagged for revise
 
-    class FlyInput
+    class DebugInput
     {
         [DllImport("user32.dll")]
         static extern bool ClipCursor(ref System.Drawing.Rectangle lpRect);
@@ -23,7 +23,7 @@ namespace Warlord.View
         private GameWindow gameWindow;
 
 
-        public FlyInput( GameWindow gameWindow )
+        public DebugInput( GameWindow gameWindow )
         {    
             this.gameWindow = gameWindow;
 
@@ -80,8 +80,8 @@ namespace Warlord.View
             facingRotation.X = 0.001f * (gameWindow.ClientBounds.Width/2 - mouseState.X);
             facingRotation.Y = 0.001f * (gameWindow.ClientBounds.Height/2 - mouseState.Y);
 
-           // Mouse.SetPosition( gameWindow.ClientBounds.Width/2,
-             //                  gameWindow.ClientBounds.Height/2);
+            Mouse.SetPosition( gameWindow.ClientBounds.Width/2,
+                               gameWindow.ClientBounds.Height/2);
 
             
             System.Drawing.Rectangle window = new System.Drawing.Rectangle( gameWindow.ClientBounds.Left,

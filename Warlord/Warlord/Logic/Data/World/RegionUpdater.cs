@@ -5,6 +5,7 @@ using System.Text;
 using GameTools.Graph;
 using Microsoft.Xna.Framework;
 using System.Threading;
+using Warlord.GameTools;
 
 namespace Warlord.Logic.Data.World
 {
@@ -13,7 +14,8 @@ namespace Warlord.Logic.Data.World
         RegionDatabase database;
         private int drawDistance;
 
-        public RegionUpdater(int drawDistance, int seed, Vector3i regionSize, int timeAllocated) : base( timeAllocated )
+        public RegionUpdater(int drawDistance, int seed, Vector3i regionSize, int timeAllocated)
+            : base(timeAllocated)
         {
             this.drawDistance = drawDistance;
 
@@ -28,7 +30,7 @@ namespace Warlord.Logic.Data.World
 
         private void UpdateFacing(Block block)
         {
-            if( block.Type != BlockType.Air )
+            if(block.Type != BlockType.Air)
                 AddBlockFaces(block);
             else
                 RemoveBlockFace(block);
@@ -106,43 +108,62 @@ namespace Warlord.Logic.Data.World
         protected override void UpdateBehavior(GameTime gameTime)
         {
             const int unloadBuffer = 4;
-            while( true )
+            while(true)
             {
                 LoopExcuted = false;
 
                 int radius = 0;
 
-                List<Vector2i> mustExist = new List<Vector2i>( );
+                List<Vector2i> mustExist = new List<Vector2i>();
 
                 do
-                {           
-                    mustExist = GetRegionInArea( radius ).Where
-                        ( vector => !database.RegionMap.ContainsKey(vector) ).ToList( );
+                {
+                    mustExist = GetRegionInArea(radius).Where
+                        (vector => !database.RegionMap.ContainsKey(vector)).ToList();
                     radius++;
-                }while( radius < drawDistance && mustExist.Count < 1);
+                } while(radius < drawDistance && mustExist.Count < 1);
 
-                if( mustExist.Count > 0 )
+                if(mustExist.Count > 0)
                 {
                     foreach(Vector2i region in mustExist)
-                    { 
-                        bool regionDidNotPreviouslyExist = database.CreateRegion(this, region );
-                        if( regionDidNotPreviouslyExist )
+                    {
+                        bool regionDidNotPreviouslyExist = database.CreateRegion(this, region);
+                        if(regionDidNotPreviouslyExist)
                             break;
-                    }                        
-                } 
-                SafePointCheckIn( );                
+                    }
+                }
+                SafePointCheckIn();
 
-                List<Vector2i> mustUnload = GetRegionBetweenAreas( drawDistance, drawDistance + unloadBuffer ).Where
-                    ( vector => database.RegionMap.ContainsKey(vector) ).ToList( );
+                Optional<Vector2i> mustUnload = GetFirstCreatedRegionOutsideArea(drawDistance+unloadBuffer);
 
-                if(mustUnload.Count > 0)
+                if(mustUnload.Valid)
                 {
-                    database.UnloadRegion(mustUnload[0]);
-                    SafePointCheckIn( );
-                }                
+                    database.UnloadRegion(mustUnload.Data);
+                    SafePointCheckIn();
+                }
 
                 LoopExcuted = true;
             }
+        }
+        private Optional<Vector2i> GetFirstCreatedRegionOutsideArea(int maxDistance)
+        {
+            Vector3f playerPosition = GlobalApplication.Application.EntityManager.Player.Position;
+            Vector2i playerRegion = database.GetRegionCoordiantes(playerPosition.ToIntVector());
+
+            double distanceSq;
+            double maxDistanceSq = maxDistance*maxDistance;
+
+            List<Vector2i> regionsOutside = new List<Vector2i>();
+            foreach(Vector2i region in database.RegionMap.Keys)
+            {
+                distanceSq = (playerRegion.ToVector2 - region.ToVector2).LengthSquared( );
+                if( distanceSq > maxDistanceSq)
+                {
+                    return new Optional<Vector2i>(region);
+                }
+            }
+
+            return new Optional<Vector2i>( );
         }
         private List<Vector2i> GetRegionInArea( int radius )
         {
@@ -159,27 +180,6 @@ namespace Warlord.Logic.Data.World
                     regionCoordiantes.Add(playerRegion + new Vector2i( x,-y ));
                     regionCoordiantes.Add(playerRegion + new Vector2i( -x,y ));
                     regionCoordiantes.Add(playerRegion + new Vector2i( -x,-y ));
-                }
-            }
-
-            return regionCoordiantes;
-        }
-        private List<Vector2i> GetRegionBetweenAreas( int radiusNear, int radiusFar )
-        {
-            Vector3f playerPosition = GlobalApplication.Application.EntityManager.Player.Position;
-            Vector2i playerRegion = database.GetRegionCoordiantes( playerPosition.ToIntVector( ) );
-
-            List<Vector2i> regionCoordiantes = new List<Vector2i>( );
-
-            for(int x = -radiusFar; x < radiusFar; x++)
-            {
-                if( x == -radiusNear )
-                    x = radiusNear;
-                for(int y = -radiusFar; y < radiusFar; y++)
-                {
-                    if( y == -radiusNear )
-                        y = radiusNear;
-                    regionCoordiantes.Add(playerRegion - new Vector2i( x,y ));
                 }
             }
 

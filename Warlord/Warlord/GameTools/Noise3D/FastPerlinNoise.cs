@@ -8,7 +8,7 @@ namespace GameTools.Noise3D
 {
     class FastPerlinNoise
     {
-        private const int premutationSize = 100;
+        private const int premutationSize = 20;
         private Random rng;
         private double[,,] premutationList;
 
@@ -74,35 +74,40 @@ namespace GameTools.Noise3D
         {
             double corners, sides, center;
 
+            int adjustedX = x;
+            int adjustedY = y;
+            int adjustedZ = z;           
+
             // Offset based on division?
-            if( x < 1 )
-                x = premutationSize + x - 2;
-            if( y < 1 )
-                y = premutationSize + y - 2;
-            if( z < 1 )
-                z = premutationSize + z - 2;
+            adjustedX = adjustedX % (premutationSize-1);
+            adjustedY = adjustedY % (premutationSize-1);
+            adjustedZ = adjustedZ % (premutationSize-1);
 
-            x = x % (premutationSize-1);
-            y = y % (premutationSize-1);
-            z = z % (premutationSize-1);
+            // Offset based on division?
+            while( adjustedX < 1 )
+                adjustedX = premutationSize + adjustedX - 2;
+            while( adjustedY < 1 )
+                adjustedY = premutationSize + adjustedY - 2;
+            while( adjustedZ < 1 )
+                adjustedZ = premutationSize + adjustedZ - 2;
 
-            center = 3 * premutationList[x, y, z] / 8.0;
+            center = 3 * premutationList[adjustedX, adjustedY, adjustedZ] / 8.0;
 
-            sides = (  premutationList[x + 1, y, z] +
-                       premutationList[x - 1, y, z] +
-                       premutationList[x, y + 1, z] +
-                       premutationList[x, y - 1, z] +
-                       premutationList[x, y, z + 1] +
-                       premutationList[x, y, z - 1]) / 12.0;
+            sides = (  premutationList[adjustedX + 1, adjustedY, adjustedZ] +
+                       premutationList[adjustedX - 1, adjustedY, adjustedZ] +
+                       premutationList[adjustedX, adjustedY + 1, adjustedZ] +
+                       premutationList[adjustedX, adjustedY - 1, adjustedZ] +
+                       premutationList[adjustedX, adjustedY, adjustedZ + 1] +
+                       premutationList[adjustedX, adjustedY, adjustedZ - 1]) / 12.0;
 
-            corners = (premutationList[x + 1, y + 1, z + 1] +
-                       premutationList[x + 1, y + 1, z - 1] +
-                       premutationList[x + 1, y - 1, z + 1] +
-                       premutationList[x + 1, y - 1, z - 1] +
-                       premutationList[x - 1, y + 1, z + 1] +
-                       premutationList[x - 1, y + 1, z - 1] +
-                       premutationList[x - 1, y - 1, z + 1] +
-                       premutationList[x - 1, y - 1, z - 1]) / 64.0;
+            corners = (premutationList[adjustedX + 1, adjustedY + 1, adjustedZ + 1] +
+                       premutationList[adjustedX + 1, adjustedY + 1, adjustedZ - 1] +
+                       premutationList[adjustedX + 1, adjustedY - 1, adjustedZ + 1] +
+                       premutationList[adjustedX + 1, adjustedY - 1, adjustedZ - 1] +
+                       premutationList[adjustedX - 1, adjustedY + 1, adjustedZ + 1] +
+                       premutationList[adjustedX - 1, adjustedY + 1, adjustedZ - 1] +
+                       premutationList[adjustedX - 1, adjustedY - 1, adjustedZ + 1] +
+                       premutationList[adjustedX - 1, adjustedY - 1, adjustedZ - 1]) / 64.0;
 
             return corners + sides + center;
         }
@@ -144,6 +149,7 @@ namespace GameTools.Noise3D
         private void populatePremutations()
         {            
             premutationList = new double[premutationSize,premutationSize,premutationSize];
+
             for(int x = 0; x < premutationSize; x++)
             {
                 for(int y = 0; y < premutationSize; y++)
@@ -157,3 +163,4 @@ namespace GameTools.Noise3D
         }
     }
 }
+

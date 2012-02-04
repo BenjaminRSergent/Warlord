@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Warlord.View
+namespace Warlord.View.Human.Display
 {
     static class TextureRepository
     {

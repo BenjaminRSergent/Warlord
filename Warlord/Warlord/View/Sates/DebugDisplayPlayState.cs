@@ -2,44 +2,46 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Warlord.Interfaces.Subsystems;
-using GameTools;
-using Microsoft.Xna.Framework;
-using Warlord.Event;
 using Warlord.Logic.Data;
+using Warlord.View.Human.Display;
+using GameTools.State;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using GameTools;
 using Microsoft.Xna.Framework.Content;
 using GameTools.Graph;
+using Warlord.Event;
 
-// Flagged for refactoring
-
-namespace Warlord.View
+namespace Warlord.View.Sates
 {
-    class FlyView : GameView
+    class DebugDisplayPlayState : State<DebugDisplay>
     {
-        Camera3D camera;
+        Dictionary<Region, RegionGraphics> regionGraphics;
         GameWindow gameWindow;
-        GraphicsDevice device;
+        GraphicsDevice graphics;
+
+        Camera3D camera;
         SpriteBatch spriteBatch;
         SpriteFont spriteFont;
 
-        Dictionary<Region, RegionGraphics> regionGraphics;
-
         Effect effect;
 
-        public FlyView(GameWindow gameWindow, GraphicsDevice graphics, ContentManager content)
+        public DebugDisplayPlayState( DebugDisplay owner,
+                                      GameWindow gameWindow,
+                                      GraphicsDevice graphics,
+                                      SpriteBatch spriteBatch,
+                                      ContentManager content) : base( owner )
         {
             this.gameWindow = gameWindow;
-            this.device = graphics;
-            regionGraphics = new Dictionary<Region,RegionGraphics>( );
+            this.graphics = graphics;
+            this.spriteBatch = spriteBatch;
+            
             camera = new Camera3D(gameWindow.ClientBounds, new Vector3(0, 80, 0), new Vector2((float)Math.PI, 0), Vector3.Up);
 
-            TextureRepository.BlockTextures = content.Load<Texture2D>("Textures/Blocks/block_textures");
             effect = content.Load<Effect>("Fxs/block_effects");
 
             GlobalApplication.Application.GameEventManager.Subscribe(AddRegion, "region_added");
-            GlobalApplication.Application.GameEventManager.Subscribe(RemoveRegion, "region_removed");
-            GlobalApplication.Application.GameEventManager.Subscribe(Draw, "draw");
+            GlobalApplication.Application.GameEventManager.Subscribe(RemoveRegion, "region_removed");            
 
             GlobalApplication.Application.GameEventManager.Subscribe(MoveCamera, "camera_move_request");
             GlobalApplication.Application.GameEventManager.Subscribe(RotateCamera, "camera_rotate_request");
@@ -47,27 +49,53 @@ namespace Warlord.View
             spriteBatch = new SpriteBatch(graphics);
             spriteFont = content.Load<SpriteFont>("Font/DebugFont");
         }
-        private void Draw(object sender, object gameTimeObject)
-        {           
-            GameTime gameTime = gameTimeObject as GameTime;
+
+        public override void EnterState()
+        {
+            regionGraphics = new Dictionary<Region,RegionGraphics>( );
+        }
+
+        public override void Update()
+        {
+            graphics.Clear(Color.SkyBlue);
 
             if(regionGraphics.Count > 16)
                 DrawWorld();
             else
             {
-                RasterizerState rs = device.RasterizerState;
-                DepthStencilState ds = device.DepthStencilState;
-                BlendState bs = device.BlendState;
-                device.Clear(Color.Black);
+                RasterizerState rs = graphics.RasterizerState;
+                DepthStencilState ds = graphics.DepthStencilState;
+                BlendState bs = graphics.BlendState;
+                graphics.Clear(Color.Black);
                 spriteBatch.Begin( );
                 spriteBatch.DrawString( spriteFont, "starting the world..", new Vector2( gameWindow.ClientBounds.Width/3, gameWindow.ClientBounds.Height/2), Color.White);
                 spriteBatch.End( );
-                device.RasterizerState = rs;
-                device.DepthStencilState = ds;
-                device.BlendState = bs;
+                graphics.RasterizerState = rs;
+                graphics.DepthStencilState = ds;
+                graphics.BlendState = bs;
                     
             }
-        }            
+        }
+        public override void ExitState()
+        {
+            regionGraphics.Clear( );
+        }
+
+        private void SetupBlockEffects()
+        {
+            GlobalApplication.Application.EntityManager.Player.Teleport(camera.Position);
+
+            effect.Parameters["World"].SetValue(Matrix.Identity);
+            effect.Parameters["View"].SetValue(camera.View);
+            effect.Parameters["Projection"].SetValue(camera.Projection);
+            effect.Parameters["CameraPosition"].SetValue(camera.Position);
+            effect.Parameters["AmbientColor"].SetValue(Color.White.ToVector4());
+            effect.Parameters["AmbientIntensity"].SetValue(0.8f);
+            effect.Parameters["FogColor"].SetValue(Color.SkyBlue.ToVector4());
+            effect.Parameters["FogNear"].SetValue(16 * 5f);
+            effect.Parameters["FogFar"].SetValue(16 * 6f);
+            effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
+        }
         private void DrawWorld( )
         {
             SetupBlockEffects();
@@ -88,35 +116,19 @@ namespace Warlord.View
 
                         if(region.Clean && region.RegionMesh.Length > 0)
                         {
-                            device.SetVertexBuffer(region.RegionBuffer);
-                            device.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.RegionMesh.Length / 3);
+                            graphics.SetVertexBuffer(region.RegionBuffer);
+                            graphics.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.RegionMesh.Length / 3);
                         }
                     }
-                }
-                
-            }    
-        }
-        private void SetupBlockEffects()
-        {
-            GlobalApplication.Application.EntityManager.Player.Teleport(camera.Position);
-
-            effect.Parameters["World"].SetValue(Matrix.Identity);
-            effect.Parameters["View"].SetValue(camera.View);
-            effect.Parameters["Projection"].SetValue(camera.Projection);
-            effect.Parameters["CameraPosition"].SetValue(camera.Position);
-            effect.Parameters["AmbientColor"].SetValue(Color.White.ToVector4());
-            effect.Parameters["AmbientIntensity"].SetValue(0.8f);
-            effect.Parameters["FogColor"].SetValue(Color.SkyBlue.ToVector4());
-            effect.Parameters["FogNear"].SetValue(16 * 5f);
-            effect.Parameters["FogFar"].SetValue(16 * 6f);
-            effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
+                }        
+            }
         }
         private void AddRegion(object sender, object regionObject)
         {
             lock(regionGraphics)
             {
                 if( !regionGraphics.ContainsKey( regionObject as Region) )
-                regionGraphics.Add(regionObject as Region, new RegionGraphics(device, regionObject as Region));
+                regionGraphics.Add(regionObject as Region, new RegionGraphics(graphics, regionObject as Region));
             }
         }
         private void RemoveRegion(object sender, object regionObject)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using GameTools.Graph;
 
-namespace Warlord.Logic.Data
+namespace Warlord.Logic.Data.Entity
 {
     
     class Entity

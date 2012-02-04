@@ -1,45 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Warlord.Interfaces.Subsystems;
-using Warlord.Logic.Data.World;
-using GameTools.Graph;
-using Warlord.Logic.Data;
+﻿using GameTools.Graph;
+using GameTools.State;
 using Microsoft.Xna.Framework;
+using Warlord.Interfaces.Subsystems;
+using Warlord.Logic.Data.Entity;
+using Warlord.Logic.States;
 
 namespace Warlord.Logic
 {
     class WarlordLogic : GameLogic
     {
         ProcessManager processManager;
-        RegionUpdater regionUpdater;
         WarlordEntityManager entityManager;
+
+        StateMachine<WarlordLogic> stateMachine;
+        GameTime mostRecentGameTime;
 
         public WarlordLogic()
         {
+            Initialize();
+        }
+        private void Initialize()
+        {
             processManager = new ProcessManager();
-            regionUpdater = new RegionUpdater(10, 27, new Vector3i(16, 128, 16), 5);
             entityManager = new WarlordEntityManager();
 
             entityManager.AddPlayer(new Vector3f(0, 80, 0));
 
-            GlobalApplication.Application.GameEventManager.Subscribe( Update, "update");
-        }
-        public void BeginGame( )
-        {
-            entityManager.AddPlayer(new Vector3f(0, 80, 0));
-            processManager.AttachProcess(regionUpdater);
-        }
-        public void ShutDown( )
-        {
-            processManager.ShutDown( );
-        }
-        public void Update( object sender, object data )
-        {
-            GameTime gameTime = data as GameTime;
+            GlobalApplication.Application.GameEventManager.Subscribe(Update, "update");
 
-            processManager.Update( gameTime );
+            stateMachine = new StateMachine<WarlordLogic>(this);
+        }
+        public void BeginGame()
+        {
+            stateMachine.ChangeState(new DebugPlayingState(this, 10, new Vector3i(16, 128, 16)));
+        }
+        public void EndGame()
+        {
+            stateMachine.ChangeState(new NullState<WarlordLogic>(this));
+        }
+        public void Update(object sender, object data)
+        {
+            mostRecentGameTime = data as GameTime;
+
+            stateMachine.Update();
+        }
+        private void printDebugText()
+        {
+
         }
         public WarlordEntityManager EntityManager
         {
@@ -49,7 +56,13 @@ namespace Warlord.Logic
         {
             get { return processManager; }
         }
-
-        
+        public StateMachine<WarlordLogic> StateMachine
+        {
+            get { return stateMachine; }
+        }
+        public GameTime MostRecentGameTime
+        {
+            get { return mostRecentGameTime; }
+        }
     }
 }

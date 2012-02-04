@@ -5,9 +5,9 @@ using System.Text;
 using GameTools.Graph;
 using Warlord.GameTools;
 
-namespace Warlord.Logic.Data
+namespace Warlord.Logic.Data.Entity
 {
-    class WarlordEntityManager : Warlord.Logic.Data.EntityManager
+    class WarlordEntityManager : EntityManager
     {
         Player player;
         Dictionary<uint, Entity> entityMap;
@@ -42,6 +42,10 @@ namespace Warlord.Logic.Data
             uint id = nextID;
             nextID++;
             return id;            
+        }
+        public void ShutDown()
+        {
+            entityMap.Clear( );
         }
     }
 }
