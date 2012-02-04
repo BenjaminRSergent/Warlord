@@ -23,7 +23,7 @@ namespace Warlord.Logic.Data.World
 
         protected override void ProcessBehavior()
         {
-            const int unloadBuffer = 4;
+            const int unloadBuffer = 1;
             while(true)
             {
                 int radius = 0;
@@ -48,15 +48,15 @@ namespace Warlord.Logic.Data.World
                 }
                 SafePointCheckIn();
 
-                Optional<Vector2i> mustUnload = GetFirstCreatedRegionOutsideArea(drawDistance+unloadBuffer);
-
-                if(mustUnload.Valid)
+                List<Vector2i> mustUnload = GetFirstCreatedRegionOutsideArea(drawDistance+unloadBuffer);
+                SafePointCheckIn();
+                foreach( Vector2i region in mustUnload )
                 {
-                    database.UnloadRegion(mustUnload.Data);
-                    SafePointCheckIn();
+                    database.UnloadRegion(region);                    
                 }
+                SafePointCheckIn();
             }
-        }
+    }
 
         public void ChangeBlock(Vector3i absolutePosition, BlockType blockType)
         {
@@ -140,10 +140,10 @@ namespace Warlord.Logic.Data.World
         {
             return database.GetBlock(absolutePosition);
         }        
-        private Optional<Vector2i> GetFirstCreatedRegionOutsideArea(int maxDistance)
+        private List<Vector2i> GetFirstCreatedRegionOutsideArea(int maxDistance)
         {
             Vector3f playerPosition = GlobalApplication.Application.EntityManager.Player.Position;
-            Vector2i playerRegion = database.GetRegionCoordiantes(playerPosition.ToIntVector());
+            Vector2i playerRegion = database.GetRegionCoordiantes(playerPosition.ToIntVector());            
 
             double distanceSq;
             double maxDistanceSq = maxDistance*maxDistance;
@@ -154,12 +154,13 @@ namespace Warlord.Logic.Data.World
                 distanceSq = (playerRegion.ToVector2 - region.ToVector2).LengthSquared( );
                 if( distanceSq > maxDistanceSq)
                 {
-                    return new Optional<Vector2i>(region);
+                    regionsOutside.Add(region);
                 }
             }
 
-            return new Optional<Vector2i>( );
+            return regionsOutside;
         }
+        
         private List<Vector2i> GetRegionInArea( int radius )
         {
             Vector3f playerPosition = GlobalApplication.Application.EntityManager.Player.Position;

@@ -60,8 +60,6 @@ namespace Warlord.Logic.Data.World
             noiseSettings.startingPoint = origin;            
 
             fastNoise.FillWithPerlinNoise3D( noise );
-            
-
             PlaceBlocks(ownerWorld, origin, noise);
 
             AddGrassToTop( ownerWorld, origin );

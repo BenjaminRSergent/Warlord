@@ -17,8 +17,7 @@ namespace GameTools.Noise3D
         private PerlinNoiseSettings3D settings;
 
         public FastPerlinNoise(PerlinNoiseSettings3D settings)
-        {
-            calcLookup = new Dictionary<int,Dictionary<int,Dictionary<int,FastPerlinInterpolatedNoise3D>>>( premutationSize * premutationSize * premutationSize );
+        {            
             this.settings = settings;
             rng = new Random( settings.seed );
 
@@ -33,6 +32,8 @@ namespace GameTools.Noise3D
             int effectiveX;
             int effectiveY;
             int effectiveZ;
+
+            calcLookup = new Dictionary<int,Dictionary<int,Dictionary<int,FastPerlinInterpolatedNoise3D>>>( premutationSize );
 
             for(int x = 0; x < 0 + width; x++)
             {

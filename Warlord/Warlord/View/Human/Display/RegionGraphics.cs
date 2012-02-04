@@ -147,7 +147,6 @@ namespace Warlord.View.Human.Display
             get { return regionBuffer; }
         }
 
-
         public void Dispose()
         {
             regionBuffer.Dispose();
