@@ -59,7 +59,7 @@ namespace Warlord.View.Sates
         {
             graphics.Clear(Color.SkyBlue);
 
-            if(regionGraphics.Count > 100)
+            if(regionGraphics.Count > 16)
                 DrawWorld();
             else
             {

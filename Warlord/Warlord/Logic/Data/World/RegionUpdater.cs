@@ -21,6 +21,43 @@ namespace Warlord.Logic.Data.World
             database = new RegionDatabase(seed, regionSize);
         }
 
+        protected override void ProcessBehavior()
+        {
+            const int unloadBuffer = 4;
+            while(true)
+            {
+                int radius = 0;
+
+                List<Vector2i> mustExist = new List<Vector2i>();
+
+                do
+                {
+                    mustExist = GetRegionInArea(radius).Where
+                        (vector => !database.RegionMap.ContainsKey(vector)).ToList();
+                    radius++;
+                } while(radius < drawDistance && mustExist.Count < 1);
+
+                if(mustExist.Count > 0)
+                {
+                    foreach(Vector2i region in mustExist)
+                    {
+                        bool regionDidNotPreviouslyExist = database.CreateRegion(this, region);
+                        if(regionDidNotPreviouslyExist)
+                            break;
+                    }
+                }
+                SafePointCheckIn();
+
+                Optional<Vector2i> mustUnload = GetFirstCreatedRegionOutsideArea(drawDistance+unloadBuffer);
+
+                if(mustUnload.Valid)
+                {
+                    database.UnloadRegion(mustUnload.Data);
+                    SafePointCheckIn();
+                }
+            }
+        }
+
         public void ChangeBlock(Vector3i absolutePosition, BlockType blockType)
         {
             database.ChangeBlock(absolutePosition, blockType);
@@ -102,44 +139,7 @@ namespace Warlord.Logic.Data.World
         public Block GetBlock(Vector3i absolutePosition)
         {
             return database.GetBlock(absolutePosition);
-        }
-
-        protected override void ProcessBehavior()
-        {
-            const int unloadBuffer = 4;
-            while(true)
-            {
-                int radius = 0;
-
-                List<Vector2i> mustExist = new List<Vector2i>();
-
-                do
-                {
-                    mustExist = GetRegionInArea(radius).Where
-                        (vector => !database.RegionMap.ContainsKey(vector)).ToList();
-                    radius++;
-                } while(radius < drawDistance && mustExist.Count < 1);
-
-                if(mustExist.Count > 0)
-                {
-                    foreach(Vector2i region in mustExist)
-                    {
-                        bool regionDidNotPreviouslyExist = database.CreateRegion(this, region);
-                        if(regionDidNotPreviouslyExist)
-                            break;
-                    }
-                }
-                SafePointCheckIn();
-
-                Optional<Vector2i> mustUnload = GetFirstCreatedRegionOutsideArea(drawDistance+unloadBuffer);
-
-                if(mustUnload.Valid)
-                {
-                    database.UnloadRegion(mustUnload.Data);
-                    SafePointCheckIn();
-                }
-            }
-        }
+        }        
         private Optional<Vector2i> GetFirstCreatedRegionOutsideArea(int maxDistance)
         {
             Vector3f playerPosition = GlobalApplication.Application.EntityManager.Player.Position;
