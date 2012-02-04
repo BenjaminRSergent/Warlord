@@ -104,6 +104,8 @@ namespace Warlord.View.Sates
 
             BoundingFrustum frustum = new BoundingFrustum( camera.View * camera.Projection );
 
+            threadSafeGraphics = threadSafeGraphics.Where( region => region.IsInVolume(frustum) ).ToList( );
+
             foreach(EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
@@ -111,16 +113,14 @@ namespace Warlord.View.Sates
                 foreach(RegionGraphics region in threadSafeGraphics)
                 {                    
                     region.Update( );
-                    if(region.IsInVolume(frustum))
-                    { 
 
-                        if(region.Clean && region.RegionMesh.Length > 0)
-                        {
-                            graphics.SetVertexBuffer(region.RegionBuffer);
-                            graphics.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.RegionMesh.Length / 3);
-                        }
+                    if(region.Clean && region.RegionMesh.Length > 0)
+                    {
+                        graphics.SetVertexBuffer(region.RegionBuffer);
+                        graphics.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.RegionMesh.Length / 3);
                     }
-                }        
+                }
+            
             }
         }
         private void AddRegion(object sender, object regionObject)

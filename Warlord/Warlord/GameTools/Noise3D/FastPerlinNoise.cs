@@ -10,15 +10,15 @@ namespace GameTools.Noise3D
     {
         private const int premutationSize = 100;
         private Random rng;
-        private double[] premutationList;
+        private double[] flatPremutationList;
+
+        private Dictionary<int, Dictionary<int, Dictionary< int, FastPerlinInterpolatedNoise3D>>> calcLookup;
 
         private PerlinNoiseSettings3D settings;
 
-        double[] prevZCalcs;
-        bool useLastZAsPrevZ;
-
         public FastPerlinNoise(PerlinNoiseSettings3D settings)
         {
+            calcLookup = new Dictionary<int,Dictionary<int,Dictionary<int,FastPerlinInterpolatedNoise3D>>>( premutationSize * premutationSize * premutationSize );
             this.settings = settings;
             rng = new Random( settings.seed );
 
@@ -72,6 +72,54 @@ namespace GameTools.Noise3D
             }
 
             return result;
+        }
+        private double GenInterpolatedNoise(double x, double y, double z)
+        {
+            int floorX = (x > 0) ? (int)x : (int)x - 1;
+            int floorY = (y > 0) ? (int)y : (int)y - 1;
+            int floorZ = (z > 0) ? (int)z : (int)z - 1;
+
+            double fractionalX = x - floorX;
+            double fractionalY = y - floorY;
+            double fractionalZ = z - floorZ;
+
+            double centerInter, bottomInter, belowInter, aboveInter;
+
+            FastPerlinInterpolatedNoise3D noise = new FastPerlinInterpolatedNoise3D( );
+
+            if(!calcLookup.ContainsKey(floorX))                
+                calcLookup.Add(floorX, new Dictionary<int,Dictionary<int,FastPerlinInterpolatedNoise3D>>( ));
+
+            if(!calcLookup[floorX].ContainsKey(floorY))
+                calcLookup[floorX].Add(floorY, new Dictionary<int,FastPerlinInterpolatedNoise3D>( ));
+
+            calcLookup[floorX][floorY].TryGetValue( floorZ, out noise );
+
+            if(noise == null)
+            { 
+                noise = new FastPerlinInterpolatedNoise3D( );
+                noise.center = GenSmoothNoise(floorX, floorY, floorZ);
+                noise.bottom = GenSmoothNoise(floorX, floorY + 1, floorZ);
+                noise.centerRight = GenSmoothNoise(floorX + 1, floorY, floorZ);
+                noise.bottomRight = GenSmoothNoise(floorX + 1, floorY + 1, floorZ);
+
+                noise.centerAbove = GenSmoothNoise(floorX, floorY, floorZ + 1);
+                noise.bottomAbove = GenSmoothNoise(floorX, floorY + 1, floorZ + 1);
+                noise.centerRightAbove = GenSmoothNoise(floorX + 1, floorY, floorZ + 1);
+                noise.bottomRightAbove = GenSmoothNoise(floorX + 1, floorY + 1, floorZ + 1);
+    
+                 calcLookup[floorX][floorY].Add(floorZ, noise);
+            }  
+
+            centerInter = GraphMath.CosineInterpolate(noise.center, noise.centerRight, fractionalX);
+            bottomInter = GraphMath.CosineInterpolate(noise.bottom, noise.bottomRight, fractionalX);
+            belowInter = GraphMath.CosineInterpolate(centerInter, bottomInter, fractionalY);
+
+            centerInter = GraphMath.CosineInterpolate(noise.centerAbove, noise.centerRightAbove, fractionalX);
+            bottomInter = GraphMath.CosineInterpolate(noise.bottomAbove, noise.bottomRightAbove, fractionalX);
+            aboveInter = GraphMath.CosineInterpolate(centerInter, bottomInter, fractionalY);
+
+            return GraphMath.CosineInterpolate(belowInter, aboveInter, fractionalZ);
         }
         private double GenSmoothNoise(int x, int y, int z)
         {
@@ -138,45 +186,11 @@ namespace GameTools.Noise3D
 
         private double ThreeIndexIntoArray(int x, int y, int z)
         {
-            return premutationList[x * premutationSize * premutationSize + y * premutationSize + z];
-        }
-        private double GenInterpolatedNoise(double x, double y, double z)
-        {
-            int floorX = (x > 0) ? (int)x : (int)Math.Floor(x);
-            int floorY = (y > 0) ? (int)y : (int)Math.Floor(y);
-            int floorZ = (z > 0) ? (int)z : (int)Math.Floor(z);
-
-            double fractionalX = x - floorX;
-            double fractionalY = y - floorY;
-            double fractionalZ = z - floorZ;
-
-            double center, centerRight, bottom, bottomRight;
-            double centerAbove, centerRightAbove, bottomAbove, bottomRightAbove;
-            double centerInter, bottomInter, belowInter, aboveInter;
-
-            center = GenSmoothNoise(floorX, floorY, floorZ);
-            bottom = GenSmoothNoise(floorX, floorY + 1, floorZ);
-            centerRight = GenSmoothNoise(floorX + 1, floorY, floorZ);
-            bottomRight = GenSmoothNoise(floorX + 1, floorY + 1, floorZ);
-
-            centerAbove = GenSmoothNoise(floorX, floorY, floorZ + 1);
-            bottomAbove = GenSmoothNoise(floorX, floorY + 1, floorZ + 1);
-            centerRightAbove = GenSmoothNoise(floorX + 1, floorY, floorZ + 1);
-            bottomRightAbove = GenSmoothNoise(floorX + 1, floorY + 1, floorZ + 1);
-
-            centerInter = GraphMath.CosineInterpolate(center, centerRight, fractionalX);
-            bottomInter = GraphMath.CosineInterpolate(bottom, bottomRight, fractionalX);
-            belowInter = GraphMath.CosineInterpolate(centerInter, bottomInter, fractionalY);
-
-            centerInter = GraphMath.CosineInterpolate(centerAbove, centerRightAbove, fractionalX);
-            bottomInter = GraphMath.CosineInterpolate(bottomAbove, bottomRightAbove, fractionalX);
-            aboveInter = GraphMath.CosineInterpolate(centerInter, bottomInter, fractionalY);
-
-            return GraphMath.CosineInterpolate(belowInter, aboveInter, fractionalZ);
-        }
+            return flatPremutationList[x * premutationSize * premutationSize + y * premutationSize + z];
+        }        
         private void populatePremutations()
         {
-            premutationList = new double[premutationSize * premutationSize * premutationSize];
+            flatPremutationList = new double[premutationSize * premutationSize * premutationSize];
             int index;
             for(int x = 0; x < premutationSize; x++)
             {
@@ -185,7 +199,7 @@ namespace GameTools.Noise3D
                     for(int z = 0; z < premutationSize; z++)
                     {
                         index = x * premutationSize * premutationSize + y * premutationSize + z;
-                        premutationList[index] = SimpleNoise3D.GenDoubleNoise(rng.Next(), rng.Next(), rng.Next(), settings.seed);
+                        flatPremutationList[index] = SimpleNoise3D.GenDoubleNoise(rng.Next(), rng.Next(), rng.Next(), settings.seed);
                     }
                 }
             }
