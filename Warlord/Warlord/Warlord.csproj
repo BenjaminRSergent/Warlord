@@ -141,6 +141,7 @@
     <Compile Include="Interfaces\Subsystems\GameView.cs" />
     <Compile Include="Interfaces\Subsystems\GameApplication.cs" />
     <Compile Include="KeyboardInput.cs" />
+    <Compile Include="Logic\ContinuousProcess.cs" />
     <Compile Include="Logic\Data\World\BlockFaceField.cs" />
     <Compile Include="Logic\Data\World\BlockType.cs" />
     <Compile Include="Logic\Entity\Entity.cs" />
@@ -155,8 +156,9 @@
     <Compile Include="Logic\Data\World\RegionGenerator.cs" />
     <None Include="Logic\Data\World\RegionManager.cs" />
     <Compile Include="Logic\Data\World\RegionUpdater.cs" />
-    <Compile Include="Logic\Process.cs" />
+    <Compile Include="Logic\TemporaryProcess.cs" />
     <Compile Include="Logic\ProcessManager.cs" />
+    <Compile Include="Logic\ProcessType.cs" />
     <Compile Include="Logic\States\DebugPlayingState.cs" />
     <Compile Include="Logic\WarlordLogic.cs" />
     <Compile Include="MouseInput.cs" />

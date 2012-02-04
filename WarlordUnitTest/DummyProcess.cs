@@ -6,7 +6,7 @@ using Warlord.Logic;
 
 namespace WarlordUnitTest
 {
-    class DummyProcess : Process
+    class DummyProcess : TemporaryProcess
     {
         
         public DummyProcess( int timeAllocated ) : base(timeAllocated)

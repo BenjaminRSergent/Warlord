@@ -15,7 +15,7 @@ namespace Warlord.Logic.States
         public DebugPlayingState(WarlordLogic owner, int drawDistance, Vector3i regionSize)
             : base(owner)
         {
-            regionUpdater = new RegionUpdater(drawDistance, 27, regionSize, 0);
+            regionUpdater = new RegionUpdater(drawDistance, 27, regionSize);
         }
         public override void EnterState()
         {

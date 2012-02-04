@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using System.Threading;
 
 namespace Warlord.Logic
 {
     class ProcessManager
     {
-        List<Process> runningProcesses;
+        List<TemporaryProcess> temporaryProcesses;
+        List<ContinuousProcess> continuousProcesses;
 
         public ProcessManager()
         {
-            runningProcesses = new List<Process>();            
+            temporaryProcesses = new List<TemporaryProcess>();   
+            continuousProcesses = new List<ContinuousProcess>( );
         }
 
         public void Update(GameTime gameTime)
         {
-            List<Process> toRemove = new List<Process>();
-            foreach(Process process in runningProcesses)
+            List<TemporaryProcess> toRemove = new List<TemporaryProcess>();
+            foreach(TemporaryProcess process in temporaryProcesses)
             {
                 if(process.Running || !process.Started)
                     process.Update(gameTime);
@@ -30,29 +33,37 @@ namespace Warlord.Logic
                 }
             }
 
-            RemoveProcesses(toRemove);
+            RemoveTemporaryProcesses(toRemove);
         }
 
-        public void AttachProcess(Process process)
+        public void AttachProcess(TemporaryProcess process)
         {
-            runningProcesses.Add(process);
+            temporaryProcesses.Add(process);
         }
-        private void FinishProcess(Process process)
+        public void AttachProcess(ContinuousProcess process)
+        {
+            continuousProcesses.Add(process);
+            process.Start( );
+        }
+        private void FinishProcess(TemporaryProcess process)
         {
             if(process.Next.Valid)
-                runningProcesses.Add(process.Next.Data);
+                temporaryProcesses.Add(process.Next.Data);
         }
-        private void RemoveProcesses(List<Process> toRemove)
+        private void RemoveTemporaryProcesses(List<TemporaryProcess> toRemove)
         {
-            foreach(Process process in toRemove)
+            foreach(TemporaryProcess process in toRemove)
             {
-                runningProcesses.Remove(process);
+                temporaryProcesses.Remove(process);
             }
         }
-
         internal void ShutDown()
         {
-            foreach(Process process in runningProcesses)
+            foreach(TemporaryProcess process in temporaryProcesses)
+            {
+                process.KillProcess( );
+            }
+            foreach(ContinuousProcess process in continuousProcesses)
             {
                 process.KillProcess( );
             }

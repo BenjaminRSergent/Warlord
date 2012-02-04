@@ -32,7 +32,7 @@ namespace Warlord.Logic
         }
         public void BeginGame()
         {
-            stateMachine.ChangeState(new DebugPlayingState(this, 10, new Vector3i(16, 128, 16)));
+            stateMachine.ChangeState(new DebugPlayingState(this, 12, new Vector3i(16, 128, 16)));
         }
         public void EndGame()
         {

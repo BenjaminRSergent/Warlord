@@ -24,7 +24,7 @@ namespace Warlord.Logic.Data.World
         public RegionDatabase(int seed, Vector3i regionSize)
         {
             createdWorlds = new HashSet<Vector2i>();
-            regionMap = new Dictionary<Vector2i, Region>(new BasicComparer<Vector2i>());
+            regionMap = new Dictionary<Vector2i, Region>();
             generating = false;
 
             this.seed = seed;
@@ -101,19 +101,6 @@ namespace Warlord.Logic.Data.World
                                                            " does not exist and something tried to ask for a block from it");
                 throw new NullReferenceException("Invalid operation on a null region");
             }            
-        }
-        public Block HighestBlockAt(Vector2i location)
-        {
-            Block highestBlock;
-            int y = regionSize.Z - 1;
-
-            do
-            {
-                highestBlock = GetBlock(new Vector3i(location.X, y, location.Y));
-                y--;
-            } while(highestBlock.Type == BlockType.Air && y > -1);
-
-            return highestBlock;
         }
         public void ChangeFacing(Vector3i absolutePosition, BlockFaceField facing, bool active)
         {

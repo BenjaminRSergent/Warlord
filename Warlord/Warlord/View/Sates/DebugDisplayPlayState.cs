@@ -59,7 +59,7 @@ namespace Warlord.View.Sates
         {
             graphics.Clear(Color.SkyBlue);
 
-            if(regionGraphics.Count > 16)
+            if(regionGraphics.Count > 100)
                 DrawWorld();
             else
             {
@@ -92,8 +92,8 @@ namespace Warlord.View.Sates
             effect.Parameters["AmbientColor"].SetValue(Color.White.ToVector4());
             effect.Parameters["AmbientIntensity"].SetValue(0.8f);
             effect.Parameters["FogColor"].SetValue(Color.SkyBlue.ToVector4());
-            effect.Parameters["FogNear"].SetValue(16 * 5f);
-            effect.Parameters["FogFar"].SetValue(16 * 6f);
+            effect.Parameters["FogNear"].SetValue(16 * 7f);
+            effect.Parameters["FogFar"].SetValue(16 * 8f);
             effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
         }
         private void DrawWorld( )

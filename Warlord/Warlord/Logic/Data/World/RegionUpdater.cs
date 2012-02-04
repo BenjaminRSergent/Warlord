@@ -9,13 +9,12 @@ using Warlord.GameTools;
 
 namespace Warlord.Logic.Data.World
 {
-    class RegionUpdater : Process
+    class RegionUpdater : ContinuousProcess
     {
         RegionDatabase database;
         private int drawDistance;
 
-        public RegionUpdater(int drawDistance, int seed, Vector3i regionSize, int timeAllocated)
-            : base(timeAllocated)
+        public RegionUpdater(int drawDistance, int seed, Vector3i regionSize)
         {
             this.drawDistance = drawDistance;
 
@@ -30,7 +29,7 @@ namespace Warlord.Logic.Data.World
 
         private void UpdateFacing(Block block)
         {
-            if(block.Type != BlockType.Air)
+            if( block.Type != BlockType.Air )
                 AddBlockFaces(block);
             else
                 RemoveBlockFace(block);
@@ -38,7 +37,7 @@ namespace Warlord.Logic.Data.World
 
         private void RemoveBlockFace(Block block)
         {
-            //throw new NotImplementedException();
+            throw new NotImplementedException();
         }
         private void AddBlockFaces(Block addedBlock)
         {
@@ -105,13 +104,11 @@ namespace Warlord.Logic.Data.World
             return database.GetBlock(absolutePosition);
         }
 
-        protected override void UpdateBehavior(GameTime gameTime)
+        protected override void ProcessBehavior()
         {
             const int unloadBuffer = 4;
             while(true)
             {
-                LoopExcuted = false;
-
                 int radius = 0;
 
                 List<Vector2i> mustExist = new List<Vector2i>();
@@ -141,8 +138,6 @@ namespace Warlord.Logic.Data.World
                     database.UnloadRegion(mustUnload.Data);
                     SafePointCheckIn();
                 }
-
-                LoopExcuted = true;
             }
         }
         private Optional<Vector2i> GetFirstCreatedRegionOutsideArea(int maxDistance)

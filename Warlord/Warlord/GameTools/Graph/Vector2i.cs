@@ -107,8 +107,8 @@ namespace GameTools.Graph
                 return false;
         }
         public override int GetHashCode()
-        {
-            return ToString().GetHashCode();
+        {            
+            return X.GetHashCode() ^ Y.GetHashCode( );
         }
         public override string ToString()
         {

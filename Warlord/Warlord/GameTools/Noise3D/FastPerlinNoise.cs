@@ -8,9 +8,9 @@ namespace GameTools.Noise3D
 {
     class FastPerlinNoise
     {
-        private const int premutationSize = 20;
+        private const int premutationSize = 100;
         private Random rng;
-        private double[,,] premutationList;
+        private double[] premutationList;
 
         private PerlinNoiseSettings3D settings;
 
@@ -91,28 +91,31 @@ namespace GameTools.Noise3D
             while( adjustedZ < 1 )
                 adjustedZ = premutationSize + adjustedZ - 2;
 
-            center = 3 * premutationList[adjustedX, adjustedY, adjustedZ] / 8.0;
+            center = 3 * ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ) / 8.0;
 
-            sides = (  premutationList[adjustedX + 1, adjustedY, adjustedZ] +
-                       premutationList[adjustedX - 1, adjustedY, adjustedZ] +
-                       premutationList[adjustedX, adjustedY + 1, adjustedZ] +
-                       premutationList[adjustedX, adjustedY - 1, adjustedZ] +
-                       premutationList[adjustedX, adjustedY, adjustedZ + 1] +
-                       premutationList[adjustedX, adjustedY, adjustedZ - 1]) / 12.0;
+            sides = (  ThreeIndexIntoArray(adjustedX + 1, adjustedY, adjustedZ) +
+                       ThreeIndexIntoArray(adjustedX - 1, adjustedY, adjustedZ) +
+                       ThreeIndexIntoArray(adjustedX, adjustedY + 1, adjustedZ) +
+                       ThreeIndexIntoArray(adjustedX, adjustedY - 1, adjustedZ) +
+                       ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ + 1) +
+                       ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ - 1)) / 12.0;
 
-            corners = (premutationList[adjustedX + 1, adjustedY + 1, adjustedZ + 1] +
-                       premutationList[adjustedX + 1, adjustedY + 1, adjustedZ - 1] +
-                       premutationList[adjustedX + 1, adjustedY - 1, adjustedZ + 1] +
-                       premutationList[adjustedX + 1, adjustedY - 1, adjustedZ - 1] +
-                       premutationList[adjustedX - 1, adjustedY + 1, adjustedZ + 1] +
-                       premutationList[adjustedX - 1, adjustedY + 1, adjustedZ - 1] +
-                       premutationList[adjustedX - 1, adjustedY - 1, adjustedZ + 1] +
-                       premutationList[adjustedX - 1, adjustedY - 1, adjustedZ - 1]) / 64.0;
+            corners = (ThreeIndexIntoArray(adjustedX + 1, adjustedY + 1, adjustedZ + 1) +
+                       ThreeIndexIntoArray(adjustedX + 1, adjustedY + 1, adjustedZ - 1) +
+                       ThreeIndexIntoArray(adjustedX + 1, adjustedY - 1, adjustedZ + 1) +
+                       ThreeIndexIntoArray(adjustedX + 1, adjustedY - 1, adjustedZ - 1) +
+                       ThreeIndexIntoArray(adjustedX - 1, adjustedY + 1, adjustedZ + 1) +
+                       ThreeIndexIntoArray(adjustedX - 1, adjustedY + 1, adjustedZ - 1) +
+                       ThreeIndexIntoArray(adjustedX - 1, adjustedY - 1, adjustedZ + 1) +
+                       ThreeIndexIntoArray(adjustedX - 1, adjustedY - 1, adjustedZ - 1)) / 64.0;
 
             return corners + sides + center;
         }
-
-        public double GenInterpolatedNoise(double x, double y, double z)
+        private double ThreeIndexIntoArray( int x, int y, int z )
+        {
+            return premutationList[x*premutationSize*premutationSize+y*premutationSize+z];
+        }
+        private double GenInterpolatedNoise(double x, double y, double z)
         {
             int floorX = (x > 0) ? (int)x : (int)Math.Floor(x);
             int floorY = (y > 0) ? (int)y : (int)Math.Floor(y);
@@ -148,15 +151,16 @@ namespace GameTools.Noise3D
         }
         private void populatePremutations()
         {            
-            premutationList = new double[premutationSize,premutationSize,premutationSize];
-
+            premutationList = new double[premutationSize*premutationSize*premutationSize];
+            int index;
             for(int x = 0; x < premutationSize; x++)
             {
                 for(int y = 0; y < premutationSize; y++)
                 {
                     for(int z = 0; z < premutationSize; z++)
                     {
-                        premutationList[x,y,z] = SimpleNoise3D.GenDoubleNoise( rng.Next( ), rng.Next( ), rng.Next( ), settings.seed );
+                        index = x*premutationSize*premutationSize+y*premutationSize+z;
+                        premutationList[index] = SimpleNoise3D.GenDoubleNoise( rng.Next( ), rng.Next( ), rng.Next( ), settings.seed );
                     }
                 }
             }

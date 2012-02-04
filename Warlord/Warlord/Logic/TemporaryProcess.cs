@@ -9,21 +9,21 @@ using System.Diagnostics;
 
 namespace Warlord.Logic
 {
-    abstract class Process : IDisposable
+    abstract class TemporaryProcess : IDisposable
     {
-        Thread processThread;
-        int timeAllocated;
-        bool started;
-        Optional<Process> next;
-
-        private EventWaitHandle waitHandle;
+        private Thread processThread;
+        private int timeAllocated;               
+        
+        private bool started;
         private bool loopExecuted;        
         private bool readyToDie;
-        private bool kill;        
-
+        private bool kill;
+        private EventWaitHandle waitHandle;
         private Stopwatch stopwatch;
+        private Optional<TemporaryProcess> next;
 
-        public Process()
+
+        public TemporaryProcess()
         {
              stopwatch = new Stopwatch( );
 
@@ -34,7 +34,7 @@ namespace Warlord.Logic
 
             this.timeAllocated = 0;
         }
-        public Process(int timeAllocated)
+        public TemporaryProcess(int timeAllocated)
         {
             stopwatch = new Stopwatch( );
             waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
@@ -77,9 +77,9 @@ namespace Warlord.Logic
 
                 WaitHandle.WaitOne();
         }
-        public void AttachNext(Process nextProcess)
+        public void AttachNext(TemporaryProcess nextProcess)
         {
-            next = new Optional<Process>(nextProcess);
+            next = new Optional<TemporaryProcess>(nextProcess);
         }
         public void KillProcess()
         {
@@ -119,7 +119,7 @@ namespace Warlord.Logic
             }
         }        
         
-        public Optional<Process> Next
+        public Optional<TemporaryProcess> Next
         {
             get { return next; }
         }
