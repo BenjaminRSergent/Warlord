@@ -15,30 +15,46 @@ namespace Warlord.Logic
         private bool started;   
         private bool kill;
 
+        EventWaitHandle waitHandle;
+        private bool waiting;
+
         public ContinuousProcess()
         {
             started = false;
             kill = false;
-
+            waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
         }
 
         public void Start( )
         {            
+            Unpause( );
             processThread = new Thread(() => ProcessBehavior());
             processThread.Start();
             started = true;
         }
-
+        public void Pause( )
+        {
+            waitHandle.Reset( );
+        }
+        public void Unpause( )
+        {
+            waitHandle.Set( );
+        }
         abstract protected void ProcessBehavior();
 
         protected void SafePointCheckIn( )
-        {
+        {            
             if( Kill )
-                Thread.CurrentThread.Abort( );
+                Thread.CurrentThread.Abort( );                        
+
+            waiting = true;
+            waitHandle.WaitOne( );
+            waiting = false;
         }
         public void KillProcess()
         {
             kill = true;
+            waitHandle.Set( );
         }
         public bool Running
         {
@@ -57,11 +73,16 @@ namespace Warlord.Logic
                 return started;
             }
         }
-
+        public bool Waiting 
+        { 
+            get
+            {
+                return waiting;
+            }
+        }
         public bool Kill
         {
             get { return kill; }
-            set { kill = value; }
         }
     }
 }

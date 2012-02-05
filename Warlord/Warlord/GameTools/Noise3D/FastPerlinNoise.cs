@@ -85,7 +85,7 @@ namespace GameTools.Noise3D
 
             float centerInter, bottomInter, belowInter, aboveInter;
 
-            FastPerlinInterpolatedNoise3D noise = new FastPerlinInterpolatedNoise3D( );
+            FastPerlinInterpolatedNoise3D noise;
 
             Vector3 key = new Vector3(floorX, floorY, floorZ);
 

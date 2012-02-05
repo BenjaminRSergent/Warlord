@@ -40,8 +40,8 @@ namespace Warlord.Logic
         }
         public void Update(object sender, object data)
         {
-            mostRecentGameTime = data as GameTime;
-
+            mostRecentGameTime = data as GameTime;            
+            
             stateMachine.Update();
         }
         public WarlordEntityManager EntityManager

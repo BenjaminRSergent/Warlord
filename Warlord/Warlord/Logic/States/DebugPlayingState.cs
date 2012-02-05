@@ -8,6 +8,9 @@ using GameTools.Graph;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using System.IO;
+using System.Threading;
 
 namespace Warlord.Logic.States
 {
@@ -16,6 +19,7 @@ namespace Warlord.Logic.States
         RegionUpdater regionUpdater;
         Stopwatch stopWatch;
 
+        KeyboardState prevkeyState;
         public DebugPlayingState(WarlordLogic owner, int drawDistance, Vector3i regionSize)
             : base(owner)
         {
@@ -33,6 +37,34 @@ namespace Warlord.Logic.States
         {
             stopWatch.Restart( );
             owner.ProcessManager.Update( owner.MostRecentGameTime );
+
+            KeyboardState keyState = Keyboard.GetState( );
+
+            if( !prevkeyState.IsKeyDown( Keys.P ) && keyState.IsKeyDown( Keys.P ) )
+            {                
+                regionUpdater.Pause( );
+
+                while( !regionUpdater.Waiting )
+                    Thread.Sleep(1);
+
+                using( BinaryWriter writer = new BinaryWriter(File.Open("testSave", FileMode.Create)))
+                regionUpdater.Save( writer );          
+
+                regionUpdater.Unpause( );
+            }
+            if( !prevkeyState.IsKeyDown( Keys.L ) && keyState.IsKeyDown( Keys.L ) )
+            {   
+                regionUpdater.Pause( );
+                
+                while( !regionUpdater.Waiting )
+                    Thread.Sleep(1);
+
+                using( BinaryReader reader = new BinaryReader(File.Open("testSave", FileMode.Open)))
+                regionUpdater.Load( reader ); 
+
+                regionUpdater.Unpause( );
+            }
+            prevkeyState = keyState;
         }
         public override void ExitState()
         {

@@ -149,7 +149,8 @@ namespace Warlord.View.Human.Display
 
         public void Dispose()
         {
-            regionBuffer.Dispose();
+            if( regionBuffer != null )
+                regionBuffer.Dispose();
         }
 
         internal bool IsInVolume(BoundingFrustum frustum)

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using System.Threading;
 using Warlord.GameTools;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
 
 namespace Warlord.Logic.Data.World
 {
@@ -24,8 +25,6 @@ namespace Warlord.Logic.Data.World
 
         protected override void ProcessBehavior()
         {
-            const int unloadBuffer = 1;
-
             while(true)
             {
                 int radius = 0;
@@ -47,19 +46,18 @@ namespace Warlord.Logic.Data.World
                         if(regionDidNotPreviouslyExist)
                             break;
                     }
-                }
-                SafePointCheckIn();
+                }              
 
-                List<Vector2i> mustUnload = GetFirstCreatedRegionOutsideArea(drawDistance+unloadBuffer);
-                SafePointCheckIn();
+                List<Vector2i> mustUnload = GetCreatedRegionsOutsideArea(drawDistance);
                 foreach( Vector2i region in mustUnload )
                 {
                     database.UnloadRegion(region);                    
                 }
+
                 SafePointCheckIn();
             }
         }
-
+        
         public void ChangeBlock(Vector3i absolutePosition, BlockType blockType)
         {
             database.ChangeBlock(absolutePosition, blockType);
@@ -142,19 +140,19 @@ namespace Warlord.Logic.Data.World
         {
             return database.GetBlock(absolutePosition);
         }        
-        private List<Vector2i> GetFirstCreatedRegionOutsideArea(int maxDistance)
+        private List<Vector2i> GetCreatedRegionsOutsideArea(int maxDistance)
         {
             Vector3f playerPosition = GlobalApplication.Application.EntityManager.Player.Position;
             Vector2i playerRegion = database.GetRegionCoordiantes(playerPosition.ToIntVector());            
 
-            double distanceSq;
-            double maxDistanceSq = maxDistance*maxDistance;
+            Vector2i distance;
 
             List<Vector2i> regionsOutside = new List<Vector2i>();
             foreach(Vector2i region in database.RegionMap.Keys)
-            {
-                distanceSq = (playerRegion.ToVector2 - region.ToVector2).LengthSquared( );
-                if( distanceSq > maxDistanceSq)
+            {   
+                distance = playerRegion - region;
+                if( Math.Abs(distance.X) > maxDistance || 
+                    Math.Abs(distance.Y) > maxDistance )
                 {
                     regionsOutside.Add(region);
                 }
@@ -183,5 +181,13 @@ namespace Warlord.Logic.Data.World
 
             return regionCoordiantes;
         }
+        public void Save( BinaryWriter outStream )
+        {
+            database.Save( outStream );
+        }
+        public void Load( BinaryReader inStream )
+        {
+            database.Load(inStream);
+        }        
     }
 }

@@ -147,8 +147,9 @@ namespace Warlord.View.Sates
             lock(toRemove)
             { 
                 while(toRemove.Count > 0)
-                {
+                {                    
                     currentPair = toRemove.Dequeue( );
+                    currentPair.Value.Dispose( );
                     regionGraphics.Remove(currentPair.Key);
                 }
             }

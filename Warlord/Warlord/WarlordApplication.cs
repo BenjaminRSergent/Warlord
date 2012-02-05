@@ -92,7 +92,6 @@ namespace Warlord
 
             base.Draw(gameTime);
         }       
-        
         public void ReportError(string errorReport)
         {
             errorLogger.Write(errorReport);

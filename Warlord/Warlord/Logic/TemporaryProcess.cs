@@ -25,7 +25,7 @@ namespace Warlord.Logic
 
         public TemporaryProcess()
         {
-             stopwatch = new Stopwatch( );
+            stopwatch = new Stopwatch( );
 
             waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
             started = false;
@@ -75,7 +75,7 @@ namespace Warlord.Logic
             if( Kill )
                 Thread.CurrentThread.Abort( );
 
-                WaitHandle.WaitOne();
+            WaitHandle.WaitOne();
         }
         public void AttachNext(TemporaryProcess nextProcess)
         {

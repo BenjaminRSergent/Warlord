@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 using GameTools.Graph;
+using System.IO;
 
 namespace Warlord.Logic.Data.World
 {
@@ -18,7 +19,22 @@ namespace Warlord.Logic.Data.World
             this.upperLeftTopPosition = upperLeftTopPosition;
             this.type = (byte)blockType;
         }
+        public void Save( BinaryWriter outStream )
+        {
+            outStream.Write(UpperLeftTopPosition.X);
+            outStream.Write(UpperLeftTopPosition.Y);
+            outStream.Write(UpperLeftTopPosition.Z);
 
+            outStream.Write(type);
+        }
+        public void Load( BinaryReader inStream )
+        {
+            UpperLeftTopPosition.X = inStream.ReadInt32( );
+            UpperLeftTopPosition.Y = inStream.ReadInt32( );
+            UpperLeftTopPosition.Z = inStream.ReadInt32( );
+
+            type = inStream.ReadByte( );
+        }
         public Vector3i UpperLeftTopPosition
         {
             get { return upperLeftTopPosition; }

@@ -9,8 +9,8 @@ namespace Warlord.Logic
 {
     class ProcessManager
     {
-        List<TemporaryProcess> temporaryProcesses;
-        List<ContinuousProcess> continuousProcesses;
+        private List<TemporaryProcess> temporaryProcesses;
+        private List<ContinuousProcess> continuousProcesses;
 
         public ProcessManager()
         {

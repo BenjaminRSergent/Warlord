@@ -6,6 +6,7 @@ using GameTools.Graph;
 using System.Threading;
 using Warlord.GameTools;
 using Warlord.Event;
+using System.IO;
 
 namespace Warlord.Logic.Data.World
 {
@@ -154,6 +155,41 @@ namespace Warlord.Logic.Data.World
 
             return regionCoordinates;
         }
+        public void Save( BinaryWriter outStream )
+        {
+            outStream.Write(regionMap.Count);
+            foreach(Vector2i region in regionMap.Keys)
+            {
+                outStream.Write(region.X);
+                outStream.Write(region.Y);
+                regionMap[region].Save(outStream);
+            }
+        }
+        public void Load( BinaryReader inStream )
+        {
+            Vector2i[] keys = regionMap.Keys.ToArray( );
+            foreach( Vector2i regionCo in keys )
+                UnloadRegion(regionCo);
+
+            int numRegions = inStream.ReadInt32( );
+            Vector2i position;
+            Region region;
+            for(int k = 0; k < numRegions; k++)
+            {
+                position = new Vector2i( );
+                position.X = inStream.ReadInt32( );
+                position.Y = inStream.ReadInt32( );
+
+                region = new Region(new Vector3i(position.X*16, 0, position.Y*16), regionSize);
+                region.Load(inStream);
+                regionMap.Add(position, region);                
+
+                GlobalApplication.Application.GameEventManager.SendEvent( new GameEvent( new Optional<object>(this),
+                                                                          "region_added",
+                                                                          region,
+                                                                          0 ) );
+            }
+        }
         public Vector3i RegionSize
         {
             get { return regionSize; }
@@ -169,3 +205,4 @@ namespace Warlord.Logic.Data.World
         }
     }
 }
+

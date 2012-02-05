@@ -100,10 +100,35 @@ namespace Warlord.Logic.Data
         }
         public void Save( BinaryWriter outStream )
         {
-
+            outStream.Write(visibleFaces);
+            for( int x = 0; x < regionSize.X; x++ )
+            {
+                for( int y = 0; y < regionSize.Y; y++ )
+                {
+                    for( int z = 0; z < regionSize.Z; z++ )
+                    {
+                        outStream.Write(visibleFaceBitField[x,y,z]);
+                        blocks[x,y,z].Save(outStream);
+                    }
+                }
+            }
         }
         public void Load( BinaryReader inStream )
         {
+            visibleFaces = inStream.ReadInt32( );
+            for( int x = 0; x < regionSize.X; x++ )
+            {
+                for( int y = 0; y < regionSize.Y; y++ )
+                {
+                    for( int z = 0; z < regionSize.Z; z++ )
+                    {
+                        visibleFaceBitField[x,y,z] = inStream.ReadByte( );
+                        blocks[x,y,z].Load(inStream);
+                    }
+                }
+            }
+
+            Altered = true;            
         }
         public Vector3i RegionOrigin
         {
