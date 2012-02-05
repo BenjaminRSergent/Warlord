@@ -11,12 +11,12 @@ namespace Warlord.Logic.Data.World
     class Block
     {
         private Vector3i upperLeftTopPosition;
-        private BlockType type;        
+        private byte type;        
 
         public Block( Vector3i upperLeftTopPosition, BlockType blockType )
         {
             this.upperLeftTopPosition = upperLeftTopPosition;
-            this.type = blockType;
+            this.type = (byte)blockType;
         }
 
         public Vector3i UpperLeftTopPosition
@@ -25,7 +25,7 @@ namespace Warlord.Logic.Data.World
         }
         public BlockType Type
         {
-            get { return type; }            
+            get { return (BlockType)type; }            
         }
     }
 }
