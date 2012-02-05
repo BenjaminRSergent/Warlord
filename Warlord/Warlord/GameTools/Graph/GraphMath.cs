@@ -32,9 +32,9 @@ namespace GameTools.Graph
             return a * (1.0 - weightOfB) + b*weightOfB;
         }
 
-        static public double LinearInterpolate( double a, double b )
+        static public double LinearInterpolate( double a, double b, double amountGreaterThanA )
         {
-            return (a + b)/2.0;
+            return a*(1-amountGreaterThanA) + b*amountGreaterThanA;
         }
     }
 }

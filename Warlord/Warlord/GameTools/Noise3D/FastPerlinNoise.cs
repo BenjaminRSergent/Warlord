@@ -111,15 +111,15 @@ namespace GameTools.Noise3D
                 calcLookup.Add(key, noise);
             }  
 
-            centerInter = GraphMath.CosineInterpolate(noise.center, noise.centerRight, fractionalX);
-            bottomInter = GraphMath.CosineInterpolate(noise.bottom, noise.bottomRight, fractionalX);
-            belowInter = GraphMath.CosineInterpolate(centerInter, bottomInter, fractionalY);
+            centerInter = GraphMath.LinearInterpolate(noise.center, noise.centerRight, fractionalX);
+            bottomInter = GraphMath.LinearInterpolate(noise.bottom, noise.bottomRight, fractionalX);
+            belowInter = GraphMath.LinearInterpolate(centerInter, bottomInter, fractionalY);
 
-            centerInter = GraphMath.CosineInterpolate(noise.centerAbove, noise.centerRightAbove, fractionalX);
-            bottomInter = GraphMath.CosineInterpolate(noise.bottomAbove, noise.bottomRightAbove, fractionalX);
-            aboveInter = GraphMath.CosineInterpolate(centerInter, bottomInter, fractionalY);
+            centerInter = GraphMath.LinearInterpolate(noise.centerAbove, noise.centerRightAbove, fractionalX);
+            bottomInter = GraphMath.LinearInterpolate(noise.bottomAbove, noise.bottomRightAbove, fractionalX);
+            aboveInter = GraphMath.LinearInterpolate(centerInter, bottomInter, fractionalY);
 
-            return GraphMath.CosineInterpolate(belowInter, aboveInter, fractionalZ);
+            return GraphMath.LinearInterpolate(belowInter, aboveInter, fractionalZ);
         }
         private double GenSmoothNoise(int x, int y, int z)
         {
