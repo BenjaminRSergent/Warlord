@@ -33,9 +33,9 @@ namespace Warlord.Logic.Data.World
             generatorSettings.AirLevel = 110;
 
             noiseSettings = new PerlinNoiseSettings3D( );
-            noiseSettings.frequencyMulti = 2.2;
+            noiseSettings.frequencyMulti = 2.2f;
             noiseSettings.octaves = 4;
-            noiseSettings.persistence = 0.5;
+            noiseSettings.persistence = 0.5f;
             noiseSettings.seed = 3;
             noiseSettings.size = generatorSettings.RegionSize;
             noiseSettings.startingPoint = Vector3i.Zero;
@@ -59,14 +59,14 @@ namespace Warlord.Logic.Data.World
 
             noise = PerlinNoise3D.GenPerlinNoise3D( noiseSettings, 2 );
 
-            PlaceBlocks(ownerWorld, origin, noise);
+            //PlaceBlocks(ownerWorld, origin, noise);
 
             AddGrassToTop( ownerWorld, origin );
         }
 
         public void FastGenerateRegion( RegionUpdater ownerWorld, Vector3i origin )
         {
-            double[,,] noise = new double[generatorSettings.RegionSize.X,
+            float[,,] noise = new float[generatorSettings.RegionSize.X,
                                           generatorSettings.RegionSize.Y,
                                           generatorSettings.RegionSize.Z];
 
@@ -79,7 +79,7 @@ namespace Warlord.Logic.Data.World
         }
         public void FakeGenerator( RegionUpdater ownerWorld, Vector3i origin )
         {
-            double density;
+            float density;
             BlockType blockType;
             for(int x = 0; x < generatorSettings.RegionSize.X; x++)
             {
@@ -95,9 +95,9 @@ namespace Warlord.Logic.Data.World
                 }
             }
         }        
-        private void PlaceBlocks(RegionUpdater ownerWorld, Vector3i origin, double[,,] noise)
+        private void PlaceBlocks(RegionUpdater ownerWorld, Vector3i origin, float[,,] noise)
         {
-            double density;
+            float density;
             BlockType blockType;
             for(int x = 0; x < generatorSettings.RegionSize.X; x++)
             {
@@ -142,7 +142,7 @@ namespace Warlord.Logic.Data.World
                 }
             }        
         }
-        public BlockType GetBlockFromNoise(double noise, int height)
+        public BlockType GetBlockFromNoise(float noise, int height)
         {           
             if (height < generatorSettings.DirtLevel)
             {

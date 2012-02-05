@@ -38,8 +38,7 @@ namespace Warlord.Logic.Data.World
                 generating = true;
                 Vector3i newOrigin = new Vector3i(regionCoordiants.X*regionSize.X, 0, regionCoordiants.Y*regionSize.Z);
                 regionMap.Add(regionCoordiants, new Region(newOrigin,  regionSize));
-                //generator.FastGenerateRegion(updater, newOrigin );
-                generator.FakeGenerator( updater, newOrigin );
+                generator.FastGenerateRegion(updater, newOrigin );
                 generating = false;
 
                 GlobalApplication.Application.GameEventManager.SendEvent( new GameEvent( new Optional<object>(this),

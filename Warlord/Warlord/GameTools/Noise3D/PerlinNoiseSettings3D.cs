@@ -14,8 +14,8 @@ namespace GameTools.Noise3D
 
         public Vector3i size;
         public Vector3i startingPoint;
-        public double frequencyMulti;
-        public double persistence;
+        public float frequencyMulti;
+        public float persistence;
         public float zoom;        
         public int octaves;      
         public int seed;
@@ -28,7 +28,7 @@ namespace GameTools.Noise3D
             startingPoint = Vector3i.Zero;  
           
             frequencyMulti = 2;
-            persistence = 0.5;
+            persistence = 0.5f;
             zoom = 40;
             octaves = 6;            
             seed = 0;   

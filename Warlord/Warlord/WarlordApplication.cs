@@ -45,6 +45,8 @@ namespace Warlord
 
             Vector2i VectorOne = new Vector2i(-4, -4);
 
+            IsFixedTimeStep = false;
+
             logic = new WarlordLogic();
         }
 

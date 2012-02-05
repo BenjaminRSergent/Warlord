@@ -11,7 +11,7 @@ namespace GameTools.Noise3D
     {
         private const int premutationSize = 100;
         private Random rng;
-        private double[] flatPremutationList;
+        private float[] flatPremutationList;
 
         private Dictionary<Vector3, FastPerlinInterpolatedNoise3D> calcLookup;
 
@@ -24,7 +24,7 @@ namespace GameTools.Noise3D
 
             populatePremutations( );
         }
-        public void FillWithPerlinNoise3D(double[,,] toFill)
+        public void FillWithPerlinNoise3D(float[,,] toFill)
         {
             int width = settings.size.X;
             int height = settings.size.Y;
@@ -51,12 +51,12 @@ namespace GameTools.Noise3D
                 }
             }
         }
-        public double GetPerlinNoise3D(double x, double y, double z)
+        public float GetPerlinNoise3D(float x, float y, float z)
         {
-            double result;
+            float result;
 
-            double frequency = 1;
-            double amplitude = 1;
+            float frequency = 1;
+            float amplitude = 1;
 
             const int testZoomDivisor = 100;
 
@@ -75,17 +75,17 @@ namespace GameTools.Noise3D
 
             return result;
         }
-        private double GenInterpolatedNoise(double x, double y, double z)
+        private float GenInterpolatedNoise(float x, float y, float z)
         {
             int floorX = (x > 0) ? (int)x : (int)x - 1;
             int floorY = (y > 0) ? (int)y : (int)y - 1;
             int floorZ = (z > 0) ? (int)z : (int)z - 1;
 
-            double fractionalX = x - floorX;
-            double fractionalY = y - floorY;
-            double fractionalZ = z - floorZ;
+            float fractionalX = x - floorX;
+            float fractionalY = y - floorY;
+            float fractionalZ = z - floorZ;
 
-            double centerInter, bottomInter, belowInter, aboveInter;
+            float centerInter, bottomInter, belowInter, aboveInter;
 
             FastPerlinInterpolatedNoise3D noise = new FastPerlinInterpolatedNoise3D( );
 
@@ -111,19 +111,19 @@ namespace GameTools.Noise3D
                 calcLookup.Add(key, noise);
             }  
 
-            centerInter = GraphMath.LinearInterpolate(noise.center, noise.centerRight, fractionalX);
-            bottomInter = GraphMath.LinearInterpolate(noise.bottom, noise.bottomRight, fractionalX);
-            belowInter = GraphMath.LinearInterpolate(centerInter, bottomInter, fractionalY);
+            centerInter = (float)GraphMath.LinearInterpolate(noise.center, noise.centerRight, fractionalX);
+            bottomInter = (float)GraphMath.LinearInterpolate(noise.bottom, noise.bottomRight, fractionalX);
+            belowInter = (float)GraphMath.LinearInterpolate(centerInter, bottomInter, fractionalY);
 
-            centerInter = GraphMath.LinearInterpolate(noise.centerAbove, noise.centerRightAbove, fractionalX);
-            bottomInter = GraphMath.LinearInterpolate(noise.bottomAbove, noise.bottomRightAbove, fractionalX);
-            aboveInter = GraphMath.LinearInterpolate(centerInter, bottomInter, fractionalY);
+            centerInter = (float)GraphMath.LinearInterpolate(noise.centerAbove, noise.centerRightAbove, fractionalX);
+            bottomInter = (float)GraphMath.LinearInterpolate(noise.bottomAbove, noise.bottomRightAbove, fractionalX);
+            aboveInter = (float)GraphMath.LinearInterpolate(centerInter, bottomInter, fractionalY);
 
-            return GraphMath.LinearInterpolate(belowInter, aboveInter, fractionalZ);
+            return (float)GraphMath.LinearInterpolate(belowInter, aboveInter, fractionalZ);
         }
-        private double GenSmoothNoise(int x, int y, int z)
+        private float GenSmoothNoise(int x, int y, int z)
         {
-            double corners, sides, center;
+            float corners, sides, center;
 
             int adjustedX = x;
             int adjustedY = y;
@@ -152,45 +152,45 @@ namespace GameTools.Noise3D
             return corners + sides + center;
         }       
 
-        private double GetCenter(int adjustedX, int adjustedY, int adjustedZ)
+        private float GetCenter(int adjustedX, int adjustedY, int adjustedZ)
         {
            return 3 * ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ);
         }        
-        private double GetSides(int adjustedX, int adjustedY, int adjustedZ)
+        private float GetSides(int adjustedX, int adjustedY, int adjustedZ)
         {
-            double right = ThreeIndexIntoArray(adjustedX + 1, adjustedY, adjustedZ);
-            double left = ThreeIndexIntoArray(adjustedX - 1, adjustedY, adjustedZ);
-            double up = ThreeIndexIntoArray(adjustedX, adjustedY + 1, adjustedZ);
-            double down = ThreeIndexIntoArray(adjustedX, adjustedY - 1, adjustedZ);
+            float right = ThreeIndexIntoArray(adjustedX + 1, adjustedY, adjustedZ);
+            float left = ThreeIndexIntoArray(adjustedX - 1, adjustedY, adjustedZ);
+            float up = ThreeIndexIntoArray(adjustedX, adjustedY + 1, adjustedZ);
+            float down = ThreeIndexIntoArray(adjustedX, adjustedY - 1, adjustedZ);
 
-            double forward = ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ + 1);
-            double back = ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ - 1);
+            float forward = ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ + 1);
+            float back = ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ - 1);
 
-            return (right + left + up + down + forward + back) / 12.0;
+            return (right + left + up + down + forward + back) / 12f;
         }
-        private double GetCorners(int adjustedX, int adjustedY, int adjustedZ)
+        private float GetCorners(int adjustedX, int adjustedY, int adjustedZ)
         {
-            double rightUpForward = ThreeIndexIntoArray(adjustedX + 1, adjustedY + 1, adjustedZ + 1);
-            double rightUpBack = ThreeIndexIntoArray(adjustedX + 1, adjustedY + 1, adjustedZ - 1);
-            double rightDownForward = ThreeIndexIntoArray(adjustedX + 1, adjustedY - 1, adjustedZ + 1);
-            double rightDownBack = ThreeIndexIntoArray(adjustedX + 1, adjustedY - 1, adjustedZ - 1);
+            float rightUpForward = ThreeIndexIntoArray(adjustedX + 1, adjustedY + 1, adjustedZ + 1);
+            float rightUpBack = ThreeIndexIntoArray(adjustedX + 1, adjustedY + 1, adjustedZ - 1);
+            float rightDownForward = ThreeIndexIntoArray(adjustedX + 1, adjustedY - 1, adjustedZ + 1);
+            float rightDownBack = ThreeIndexIntoArray(adjustedX + 1, adjustedY - 1, adjustedZ - 1);
 
-            double leftUpForward = ThreeIndexIntoArray(adjustedX - 1, adjustedY + 1, adjustedZ + 1);
-            double leftUpBack = ThreeIndexIntoArray(adjustedX - 1, adjustedY + 1, adjustedZ - 1);
-            double leftDownForward = ThreeIndexIntoArray(adjustedX - 1, adjustedY - 1, adjustedZ + 1);
-            double leftDownBack = ThreeIndexIntoArray(adjustedX - 1, adjustedY - 1, adjustedZ - 1);
+            float leftUpForward = ThreeIndexIntoArray(adjustedX - 1, adjustedY + 1, adjustedZ + 1);
+            float leftUpBack = ThreeIndexIntoArray(adjustedX - 1, adjustedY + 1, adjustedZ - 1);
+            float leftDownForward = ThreeIndexIntoArray(adjustedX - 1, adjustedY - 1, adjustedZ + 1);
+            float leftDownBack = ThreeIndexIntoArray(adjustedX - 1, adjustedY - 1, adjustedZ - 1);
 
             return (rightUpForward + rightUpBack + rightDownForward + rightDownBack +
                     leftUpForward + leftUpBack + leftDownForward + leftDownBack)/32;
         }
 
-        private double ThreeIndexIntoArray(int x, int y, int z)
+        private float ThreeIndexIntoArray(int x, int y, int z)
         {
             return flatPremutationList[x * premutationSize * premutationSize + y * premutationSize + z];
         }        
         private void populatePremutations()
         {
-            flatPremutationList = new double[premutationSize * premutationSize * premutationSize];
+            flatPremutationList = new float[premutationSize * premutationSize * premutationSize];
             int index;
             for(int x = 0; x < premutationSize; x++)
             {
@@ -199,7 +199,7 @@ namespace GameTools.Noise3D
                     for(int z = 0; z < premutationSize; z++)
                     {
                         index = x * premutationSize * premutationSize + y * premutationSize + z;
-                        flatPremutationList[index] = SimpleNoise3D.GenDoubleNoise(rng.Next(), rng.Next(), rng.Next(), settings.seed);
+                        flatPremutationList[index] = SimpleNoise3D.GenFloatNoise(rng.Next(), rng.Next(), rng.Next(), settings.seed);
                     }
                 }
             }

@@ -9,6 +9,15 @@ namespace GameTools.Noise3D
 {
     static class SimpleNoise3D
     {
+        static public float GenFloatNoise(int x, int y, int z, int seed)
+        {
+            int n;
+
+            n = x + y * 9194 + z * 72217 + seed * 211;
+            n = (n << 13) ^ n;
+
+            return (1.0f - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0f);
+        }
         static public double GenDoubleNoise(int x, int y, int z, int seed)
         {
             int n;

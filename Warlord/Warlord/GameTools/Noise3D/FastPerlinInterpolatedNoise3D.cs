@@ -7,14 +7,14 @@ namespace GameTools.Noise3D
 {
     class FastPerlinInterpolatedNoise3D
     {
-        public double center;
-        public double bottom;
-        public double centerRight;
-        public double bottomRight;
+        public float center;
+        public float bottom;
+        public float centerRight;
+        public float bottomRight;
 
-        public double centerAbove;
-        public double bottomAbove;
-        public double centerRightAbove;
-        public double bottomRightAbove;
+        public float centerAbove;
+        public float bottomAbove;
+        public float centerRightAbove;
+        public float bottomRightAbove;
     }
 }

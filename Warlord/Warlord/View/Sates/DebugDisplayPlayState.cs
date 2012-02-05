@@ -27,6 +27,9 @@ namespace Warlord.View.Sates
         private Effect effect;
         private bool started;
 
+        Queue<KeyValuePair<Region, RegionGraphics>> toAdd;
+        Queue<KeyValuePair<Region, RegionGraphics>> toRemove;
+
         public DebugDisplayPlayState( DebugDisplay owner,
                                       GameWindow gameWindow,
                                       GraphicsDevice graphics,
@@ -36,6 +39,9 @@ namespace Warlord.View.Sates
             this.gameWindow = gameWindow;
             this.graphics = graphics;
             this.spriteBatch = spriteBatch;
+
+            toAdd = new Queue<KeyValuePair<Region,RegionGraphics>>( );
+            toRemove = new Queue<KeyValuePair<Region,RegionGraphics>>( );
             
             camera = new Camera3D(gameWindow.ClientBounds, new Vector3(0, 40, 0), new Vector2((float)Math.PI, 0), Vector3.Up);
 
@@ -78,9 +84,10 @@ namespace Warlord.View.Sates
                 spriteBatch.End( );
                 graphics.RasterizerState = rs;
                 graphics.DepthStencilState = ds;
-                graphics.BlendState = bs;
-                    
+                graphics.BlendState = bs;                    
             }
+            
+            UpdateRegionGraphicsPairs( );
         }
         public override void ExitState()
         {
@@ -105,18 +112,14 @@ namespace Warlord.View.Sates
         private void DrawWorld( )
         {
             SetupBlockEffects();
-
-            List<RegionGraphics> threadSafeGraphics = new List<RegionGraphics>( regionGraphics.Values );
-
-            BoundingFrustum frustum = new BoundingFrustum( camera.View * camera.Projection );
-
-            threadSafeGraphics = threadSafeGraphics.Where( region => (region != null && region.IsInVolume(frustum)) ).ToList( );
+                       
+            BoundingFrustum frustum = new BoundingFrustum( camera.View * camera.Projection );            
 
             foreach(EffectPass pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 
-                foreach(RegionGraphics region in threadSafeGraphics)
+                foreach(RegionGraphics region in regionGraphics.Values)
                 {                    
                     region.Update( );
 
@@ -129,19 +132,51 @@ namespace Warlord.View.Sates
             
             }
         }
-        private void AddRegion(object sender, object regionObject)
+        private void UpdateRegionGraphicsPairs( )
         {
-            lock(regionGraphics)
-            {
-                if( !regionGraphics.ContainsKey( regionObject as Region) )
-                regionGraphics.Add(regionObject as Region, new RegionGraphics(graphics, regionObject as Region));
+            KeyValuePair<Region, RegionGraphics> currentPair;
+
+            lock(toAdd)
+            { 
+                while(toAdd.Count > 0)
+                {
+                    currentPair = toAdd.Dequeue( );
+                    regionGraphics.Add(currentPair.Key, currentPair.Value);
+                }
             }
+            lock(toRemove)
+            { 
+                while(toRemove.Count > 0)
+                {
+                    currentPair = toRemove.Dequeue( );
+                    regionGraphics.Remove(currentPair.Key);
+                }
+            }
+        }
+        private void AddRegion(object sender, object regionObject)
+        {   
+            KeyValuePair<Region, RegionGraphics> newRegionGraphicsPair;
+            newRegionGraphicsPair = new KeyValuePair<Region, RegionGraphics>
+                (regionObject as Region, new RegionGraphics(graphics, regionObject as Region));
+
+            if(!regionGraphics.ContainsKey(regionObject as Region))
+            {
+                lock(toAdd)
+                { 
+                    toAdd.Enqueue(newRegionGraphicsPair);
+                }
+            }
+            
         }
         private void RemoveRegion(object sender, object regionObject)
         {
-            lock(regionGraphics)
-            {
-                regionGraphics.Remove(regionObject as Region);
+            KeyValuePair<Region, RegionGraphics> deadRegionGraphicsPair;
+            deadRegionGraphicsPair = new KeyValuePair<Region, RegionGraphics>
+                (regionObject as Region, new RegionGraphics(graphics, regionObject as Region));
+
+            lock(toRemove)
+            { 
+                toRemove.Enqueue(new KeyValuePair<Region, RegionGraphics>(regionObject as Region, new RegionGraphics(graphics, regionObject as Region)));
             }
         }
         private void RotateCamera(object sender, Object rotation)
