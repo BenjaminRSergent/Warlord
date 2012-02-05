@@ -28,7 +28,7 @@ namespace Warlord
         static WarlordEventManager eventManager;
 
         public WarlordApplication()
-        {
+        {            
             globalAccess = new GlobalApplication(this);
 
             graphics = new GraphicsDeviceManager(this);

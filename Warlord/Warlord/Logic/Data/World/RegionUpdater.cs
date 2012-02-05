@@ -6,6 +6,7 @@ using GameTools.Graph;
 using Microsoft.Xna.Framework;
 using System.Threading;
 using Warlord.GameTools;
+using Microsoft.Xna.Framework.Input;
 
 namespace Warlord.Logic.Data.World
 {
@@ -24,6 +25,7 @@ namespace Warlord.Logic.Data.World
         protected override void ProcessBehavior()
         {
             const int unloadBuffer = 1;
+
             while(true)
             {
                 int radius = 0;
@@ -56,7 +58,7 @@ namespace Warlord.Logic.Data.World
                 }
                 SafePointCheckIn();
             }
-    }
+        }
 
         public void ChangeBlock(Vector3i absolutePosition, BlockType blockType)
         {
@@ -98,10 +100,10 @@ namespace Warlord.Logic.Data.World
 
             for(int k = 0; k < 6; k++)
             {
-                Vector3i adjacentVector = (position + adjacencyOffsets[k]).ToVector3;
+                Vector3 adjacentVector = (position + adjacencyOffsets[k]).ToVector3;
                 oppositeFacing = facingList[(k > 2) ? k - 3 : k + 3];
 
-                containment = currentRegion.RegionBox.Contains(adjacentVector.ToVector3);
+                containment = currentRegion.RegionBox.Contains(adjacentVector);
 
                 if(containment != ContainmentType.Contains)
                 {

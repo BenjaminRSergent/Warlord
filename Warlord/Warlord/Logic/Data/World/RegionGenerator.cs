@@ -51,19 +51,6 @@ namespace Warlord.Logic.Data.World
 
             noiseSettings.seed = seed;
         }
-        public void FastGenerateRegion( RegionUpdater ownerWorld, Vector3i origin )
-        {
-            double[,,] noise = new double[generatorSettings.RegionSize.X,
-                                          generatorSettings.RegionSize.Y,
-                                          generatorSettings.RegionSize.Z];
-
-            noiseSettings.startingPoint = origin;            
-
-            fastNoise.FillWithPerlinNoise3D( noise );
-            PlaceBlocks(ownerWorld, origin, noise);
-
-            AddGrassToTop( ownerWorld, origin );
-        }
         public void GenerateRegion( RegionUpdater ownerWorld, Vector3i origin )
         {
             double[,,] noise;
@@ -77,6 +64,37 @@ namespace Warlord.Logic.Data.World
             AddGrassToTop( ownerWorld, origin );
         }
 
+        public void FastGenerateRegion( RegionUpdater ownerWorld, Vector3i origin )
+        {
+            double[,,] noise = new double[generatorSettings.RegionSize.X,
+                                          generatorSettings.RegionSize.Y,
+                                          generatorSettings.RegionSize.Z];
+
+            noiseSettings.startingPoint = origin;            
+
+            fastNoise.FillWithPerlinNoise3D( noise );
+            PlaceBlocks(ownerWorld, origin, noise);
+
+            AddGrassToTop( ownerWorld, origin );
+        }
+        public void FakeGenerator( RegionUpdater ownerWorld, Vector3i origin )
+        {
+            double density;
+            BlockType blockType;
+            for(int x = 0; x < generatorSettings.RegionSize.X; x++)
+            {
+                for(int y = 0; y < generatorSettings.RegionSize.Y-1; y++)
+                {
+                    for(int z = 0; z < generatorSettings.RegionSize.Z; z++)
+                    {
+                        density = 0;
+                        blockType = GetBlockFromNoise(density, y);
+                        if(blockType != BlockType.Air)
+                            ownerWorld.ChangeBlock(origin + new Vector3i(x, y, z), blockType);
+                    }
+                }
+            }
+        }        
         private void PlaceBlocks(RegionUpdater ownerWorld, Vector3i origin, double[,,] noise)
         {
             double density;

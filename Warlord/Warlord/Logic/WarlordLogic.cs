@@ -44,10 +44,6 @@ namespace Warlord.Logic
 
             stateMachine.Update();
         }
-        private void printDebugText()
-        {
-
-        }
         public WarlordEntityManager EntityManager
         {
             get { return entityManager; }

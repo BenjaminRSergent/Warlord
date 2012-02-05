@@ -10,8 +10,9 @@ namespace Warlord
         /// </summary>
         static void Main(string[] args)
         {
+            
             using (WarlordApplication game = new WarlordApplication())
-            {
+            {                
                 game.Run();
             }
         }

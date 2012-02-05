@@ -23,7 +23,7 @@ namespace Warlord.Logic.Data.World
 
         int seed;
         int existenceRadius;
-
+        
         bool generating;
 
         public RegionUpdater(int seed, int existenceRadius, Vector3i regionSize)
