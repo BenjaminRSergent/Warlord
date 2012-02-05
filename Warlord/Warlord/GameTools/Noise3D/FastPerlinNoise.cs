@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameTools.Graph;
+using Microsoft.Xna.Framework;
 
 namespace GameTools.Noise3D
 {
@@ -12,7 +13,7 @@ namespace GameTools.Noise3D
         private Random rng;
         private double[] flatPremutationList;
 
-        private Dictionary<int, Dictionary<int, Dictionary< int, FastPerlinInterpolatedNoise3D>>> calcLookup;
+        private Dictionary<Vector3, FastPerlinInterpolatedNoise3D> calcLookup;
 
         private PerlinNoiseSettings3D settings;
 
@@ -33,7 +34,7 @@ namespace GameTools.Noise3D
             int effectiveY;
             int effectiveZ;
 
-            calcLookup = new Dictionary<int,Dictionary<int,Dictionary<int,FastPerlinInterpolatedNoise3D>>>( premutationSize );
+            calcLookup = new Dictionary<Vector3,FastPerlinInterpolatedNoise3D>( premutationSize );
 
             for(int x = 0; x < 0 + width; x++)
             {
@@ -88,17 +89,15 @@ namespace GameTools.Noise3D
 
             FastPerlinInterpolatedNoise3D noise = new FastPerlinInterpolatedNoise3D( );
 
-            if(!calcLookup.ContainsKey(floorX))                
-                calcLookup.Add(floorX, new Dictionary<int,Dictionary<int,FastPerlinInterpolatedNoise3D>>( ));
+            Vector3 key = new Vector3(floorX, floorY, floorZ);
 
-            if(!calcLookup[floorX].ContainsKey(floorY))
-                calcLookup[floorX].Add(floorY, new Dictionary<int,FastPerlinInterpolatedNoise3D>( ));
-
-            calcLookup[floorX][floorY].TryGetValue( floorZ, out noise );
-
-            if(noise == null)
-            { 
-                noise = new FastPerlinInterpolatedNoise3D( );
+            if(calcLookup.ContainsKey(key))
+            {
+                noise = calcLookup[key];
+            }
+            else
+            {
+                noise = new FastPerlinInterpolatedNoise3D();
                 noise.center = GenSmoothNoise(floorX, floorY, floorZ);
                 noise.bottom = GenSmoothNoise(floorX, floorY + 1, floorZ);
                 noise.centerRight = GenSmoothNoise(floorX + 1, floorY, floorZ);
@@ -108,8 +107,8 @@ namespace GameTools.Noise3D
                 noise.bottomAbove = GenSmoothNoise(floorX, floorY + 1, floorZ + 1);
                 noise.centerRightAbove = GenSmoothNoise(floorX + 1, floorY, floorZ + 1);
                 noise.bottomRightAbove = GenSmoothNoise(floorX + 1, floorY + 1, floorZ + 1);
-    
-                 calcLookup[floorX][floorY].Add(floorZ, noise);
+
+                calcLookup.Add(key, noise);
             }  
 
             centerInter = GraphMath.CosineInterpolate(noise.center, noise.centerRight, fractionalX);
