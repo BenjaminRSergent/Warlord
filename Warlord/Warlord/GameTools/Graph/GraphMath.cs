@@ -36,5 +36,9 @@ namespace GameTools.Graph
         {
             return a*(1-amountGreaterThanA) + b*amountGreaterThanA;
         }
+        static public float LinearInterpolateFloat( float a, float b, float amountGreaterThanA )
+        {
+            return a*(1-amountGreaterThanA) + b*amountGreaterThanA;
+        }
     }
 }

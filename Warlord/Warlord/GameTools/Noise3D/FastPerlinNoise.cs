@@ -32,9 +32,9 @@ namespace GameTools.Noise3D
 
             int effectiveX;
             int effectiveY;
-            int effectiveZ;
+            int effectiveZ;           
 
-            calcLookup = new Dictionary<Vector3,FastPerlinInterpolatedNoise3D>( premutationSize );
+            calcLookup = new Dictionary<Vector3,FastPerlinInterpolatedNoise3D>( );
 
             for(int x = 0; x < 0 + width; x++)
             {
@@ -91,11 +91,9 @@ namespace GameTools.Noise3D
 
             Vector3 key = new Vector3(floorX, floorY, floorZ);
 
-            if(calcLookup.ContainsKey(key))
-            {
-                noise = calcLookup[key];
-            }
-            else
+            calcLookup.TryGetValue( key, out noise );
+
+            if(noise == null)
             {
                 noise = new FastPerlinInterpolatedNoise3D();
                 noise.center = GenSmoothNoise(floorX, floorY, floorZ);
@@ -111,15 +109,15 @@ namespace GameTools.Noise3D
                 calcLookup.Add(key, noise);
             }  
 
-            centerInter = (float)GraphMath.LinearInterpolate(noise.center, noise.centerRight, fractionalX);
-            bottomInter = (float)GraphMath.LinearInterpolate(noise.bottom, noise.bottomRight, fractionalX);
-            belowInter = (float)GraphMath.LinearInterpolate(centerInter, bottomInter, fractionalY);
+            centerInter = GraphMath.LinearInterpolateFloat(noise.center, noise.centerRight, fractionalX);
+            bottomInter = GraphMath.LinearInterpolateFloat(noise.bottom, noise.bottomRight, fractionalX);
+            belowInter = GraphMath.LinearInterpolateFloat(centerInter, bottomInter, fractionalY);
 
-            centerInter = (float)GraphMath.LinearInterpolate(noise.centerAbove, noise.centerRightAbove, fractionalX);
-            bottomInter = (float)GraphMath.LinearInterpolate(noise.bottomAbove, noise.bottomRightAbove, fractionalX);
-            aboveInter = (float)GraphMath.LinearInterpolate(centerInter, bottomInter, fractionalY);
+            centerInter = GraphMath.LinearInterpolateFloat(noise.centerAbove, noise.centerRightAbove, fractionalX);
+            bottomInter = GraphMath.LinearInterpolateFloat(noise.bottomAbove, noise.bottomRightAbove, fractionalX);
+            aboveInter = GraphMath.LinearInterpolateFloat(centerInter, bottomInter, fractionalY);
 
-            return (float)GraphMath.LinearInterpolate(belowInter, aboveInter, fractionalZ);
+            return GraphMath.LinearInterpolateFloat(belowInter, aboveInter, fractionalZ);
         }
         private float GenSmoothNoise(int x, int y, int z)
         {
