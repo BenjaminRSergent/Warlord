@@ -66,9 +66,9 @@ namespace Warlord.Logic.Data.World
 
         public void FastGenerateRegion( RegionUpdater ownerWorld, Vector3i origin )
         {
-            float[,,] noise = new float[generatorSettings.RegionSize.X,
-                                          generatorSettings.RegionSize.Y,
-                                          generatorSettings.RegionSize.Z];
+            float[] noise = new float[generatorSettings.RegionSize.X *
+                                      generatorSettings.RegionSize.Y *
+                                      generatorSettings.RegionSize.Z];
 
             noiseSettings.startingPoint = origin;            
 
@@ -95,7 +95,7 @@ namespace Warlord.Logic.Data.World
                 }
             }
         }        
-        private void PlaceBlocks(RegionUpdater ownerWorld, Vector3i origin, float[,,] noise)
+        private void PlaceBlocks(RegionUpdater ownerWorld, Vector3i origin, float[] noise)
         {
             float density;
             BlockType blockType;
@@ -105,7 +105,10 @@ namespace Warlord.Logic.Data.World
                 {
                     for(int z = 0; z < generatorSettings.RegionSize.Z; z++)
                     {
-                        density = noise[x, y, z];
+                        density = noise[x * generatorSettings.RegionSize.Y * generatorSettings.RegionSize.Z +
+                                        y * generatorSettings.RegionSize.Z +
+                                        z];
+
                         blockType = GetBlockFromNoise(density, y);
                         if(blockType != BlockType.Air)
                             ownerWorld.ChangeBlock(origin + new Vector3i(x, y, z), blockType);

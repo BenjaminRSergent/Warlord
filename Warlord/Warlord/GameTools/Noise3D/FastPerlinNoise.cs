@@ -24,7 +24,7 @@ namespace GameTools.Noise3D
 
             populatePremutations( );
         }
-        public void FillWithPerlinNoise3D(float[,,] toFill)
+        public void FillWithPerlinNoise3D(float[] toFill)
         {
             int width = settings.size.X;
             int height = settings.size.Y;
@@ -46,7 +46,7 @@ namespace GameTools.Noise3D
                         effectiveY = y + settings.startingPoint.Y;
                         effectiveZ = z + settings.startingPoint.Z;
 
-                        toFill[x, y, z] = GetPerlinNoise3D(effectiveX, effectiveY, effectiveZ);
+                        toFill[x * height * length + y * length + z] = GetPerlinNoise3D(effectiveX, effectiveY, effectiveZ);
                     }
                 }
             }
@@ -58,11 +58,9 @@ namespace GameTools.Noise3D
             float frequency = 1;
             float amplitude = 1;
 
-            const int testZoomDivisor = 100;
-
-            x /= testZoomDivisor;
-            y /= testZoomDivisor;
-            z /= testZoomDivisor;
+            x /= settings.zoom;
+            y /= settings.zoom;
+            z /= settings.zoom;
 
             result = 0;
             for(int oct = 0; oct < settings.octaves; oct++)
@@ -126,13 +124,11 @@ namespace GameTools.Noise3D
             int adjustedX = x;
             int adjustedY = y;
             int adjustedZ = z;
-
-            // Offset based on division?
+                        
             adjustedX = adjustedX % (premutationSize - 1);
             adjustedY = adjustedY % (premutationSize - 1);
             adjustedZ = adjustedZ % (premutationSize - 1);
 
-            // Offset based on division?
             while(adjustedX < 1)
                 adjustedX = premutationSize + adjustedX - 2;
             while(adjustedY < 1)
@@ -142,9 +138,7 @@ namespace GameTools.Noise3D
 
 
             center = GetCenter(adjustedX, adjustedY, adjustedZ);
-
             sides = GetSides(adjustedX, adjustedY, adjustedZ);
-
             corners = GetCorners(adjustedX, adjustedY, adjustedZ);
 
             return corners + sides + center;
