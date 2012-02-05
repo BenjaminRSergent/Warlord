@@ -16,15 +16,16 @@ namespace Warlord.View.Sates
 {
     class DebugDisplayPlayState : State<DebugDisplay>
     {
-        Dictionary<Region, RegionGraphics> regionGraphics;
-        GameWindow gameWindow;
-        GraphicsDevice graphics;
+        private Dictionary<Region, RegionGraphics> regionGraphics;
+        private GameWindow gameWindow;
+        private GraphicsDevice graphics;
 
-        Camera3D camera;
-        SpriteBatch spriteBatch;
-        SpriteFont spriteFont;
+        private Camera3D camera;
+        private SpriteBatch spriteBatch;
+        private SpriteFont spriteFont;
 
-        Effect effect;
+        private Effect effect;
+        private bool started;
 
         public DebugDisplayPlayState( DebugDisplay owner,
                                       GameWindow gameWindow,
@@ -36,7 +37,7 @@ namespace Warlord.View.Sates
             this.graphics = graphics;
             this.spriteBatch = spriteBatch;
             
-            camera = new Camera3D(gameWindow.ClientBounds, new Vector3(0, 80, 0), new Vector2((float)Math.PI, 0), Vector3.Up);
+            camera = new Camera3D(gameWindow.ClientBounds, new Vector3(0, 40, 0), new Vector2((float)Math.PI, 0), Vector3.Up);
 
             effect = content.Load<Effect>("Fxs/block_effects");
 
@@ -48,6 +49,8 @@ namespace Warlord.View.Sates
 
             spriteBatch = new SpriteBatch(graphics);
             spriteFont = content.Load<SpriteFont>("Font/DebugFont");
+
+            started = false;
         }
 
         public override void EnterState()
@@ -59,7 +62,10 @@ namespace Warlord.View.Sates
         {
             graphics.Clear(Color.SkyBlue);
 
-            if(regionGraphics.Count > 16)
+            if(regionGraphics.Count > 64)
+                started = true;
+
+            if( started )
                 DrawWorld();
             else
             {
@@ -104,7 +110,7 @@ namespace Warlord.View.Sates
 
             BoundingFrustum frustum = new BoundingFrustum( camera.View * camera.Projection );
 
-            threadSafeGraphics = threadSafeGraphics.Where( region => region.IsInVolume(frustum) ).ToList( );
+            threadSafeGraphics = threadSafeGraphics.Where( region => (region != null && region.IsInVolume(frustum)) ).ToList( );
 
             foreach(EffectPass pass in effect.CurrentTechnique.Passes)
             {
