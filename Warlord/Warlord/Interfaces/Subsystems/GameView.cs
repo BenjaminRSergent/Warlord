@@ -18,7 +18,7 @@ namespace Warlord.Interfaces.Subsystems
         {
             actorID = new Optional<uint>( id );
         }
-        public Optional<uint> ActorID
+        public Optional<uint> ActoractorID
         {
             get { return actorID; }
         }

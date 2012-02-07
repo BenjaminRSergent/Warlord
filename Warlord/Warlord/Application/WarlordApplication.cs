@@ -18,8 +18,7 @@ namespace Warlord
         SpriteBatch spriteBatch;
 
         WarlordLogic logic;
-        DebugDisplay debugDisplay;
-        DebugInput debugInput;
+        DebugView debugView;
 
         ErrorLogger errorLogger;
 
@@ -59,10 +58,9 @@ namespace Warlord
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            debugDisplay = new DebugDisplay(Window, GraphicsDevice, Content);
-            debugInput = new DebugInput(Window);
+            debugView = new DebugView(Window, GraphicsDevice, Content);
 
-            debugDisplay.BeginGame( );
+            debugView.BeginGame( );
             logic.BeginGame( );
         }
 
@@ -77,8 +75,8 @@ namespace Warlord
 
             Mouse.WindowHandle = Window.Handle;
 
-            eventManager.SendEvent(new GameEvent(new GameTools.Optional<object>(this), "read_input", null, 0));
-            eventManager.SendEvent(new GameEvent(new GameTools.Optional<object>(this), "update", gameTime, 0));
+            logic.Update( gameTime );
+            debugView.HandleInput( );
 
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -88,7 +86,7 @@ namespace Warlord
 
         protected override void Draw(GameTime gameTime)
         {           
-            eventManager.SendEvent(new GameEvent(new GameTools.Optional<object>(this), "draw", gameTime, 0));
+            debugView.Draw(gameTime);
 
             base.Draw(gameTime);
         }       

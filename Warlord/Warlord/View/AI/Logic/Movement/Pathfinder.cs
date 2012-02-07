@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Warlord.View.Sates
+namespace Warlord.View.AI.Logic
 {
-    class DebugInputPlayState
+    class Pathfinder
     {
     }
 }

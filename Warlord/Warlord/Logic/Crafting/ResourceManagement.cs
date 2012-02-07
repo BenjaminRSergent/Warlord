@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Warlord.Interfaces.Subsystems;
 
-namespace Warlord.View.Human
+namespace Warlord.Logic.Crafting
 {
-    class HumanView : GameView
+    class ResourceManagement
     {
     }
 }

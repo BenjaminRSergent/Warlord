@@ -113,11 +113,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DebugTools\SaveFormatTest.cs" />
-    <Compile Include="Event\EventData\BaseEventDataStructs.cs" />
-    <Compile Include="Event\GameEvent.cs" />
+    <Compile Include="Event\BaseGameEvent.cs" />
     <Compile Include="Event\EventManager.cs" />
+    <Compile Include="Event\EventTypes\ActorCreatedEvent.cs" />
+    <Compile Include="Event\EventTypes\ActorMovedEvent.cs" />
+    <Compile Include="Event\EventTypes\ActorRemovedEvent.cs" />
+    <Compile Include="Event\EventTypes\BlockChangedEvent.cs" />
+    <Compile Include="Event\EventTypes\RegionCreatedEvent.cs" />
+    <Compile Include="Event\EventTypes\RegionRemovedEvent.cs" />
     <Compile Include="Event\ValidEventInitializer.cs" />
-    <Compile Include="GameStaticInitalizer.cs" />
+    <Compile Include="Application\GameStaticInitalizer.cs" />
     <Compile Include="GameTools\Camera3D.cs" />
     <Compile Include="GameTools\Graph\GraphMath.cs" />
     <Compile Include="GameTools\Graph\BasicComparer.cs" />
@@ -140,18 +145,22 @@
     <Compile Include="GameTools\State\State.cs" />
     <Compile Include="GameTools\State\StateMachine.cs" />
     <Compile Include="GameTools\Statistics\Statistics.cs" />
-    <Compile Include="GlobalApplication.cs" />
-    <Compile Include="ErrorLogger.cs" />
-    <Compile Include="Interfaces\Subsystems\GameData.cs" />
+    <Compile Include="Application\GlobalApplication.cs" />
+    <Compile Include="Application\ErrorLogger.cs" />
     <Compile Include="Interfaces\Subsystems\GameLogic.cs" />
     <Compile Include="Interfaces\Subsystems\GameView.cs" />
     <Compile Include="Interfaces\Subsystems\GameApplication.cs" />
-    <Compile Include="KeyboardInput.cs" />
-    <Compile Include="Logic\ContinuousProcess.cs" />
+    <Compile Include="GameTools\Process\ThreadProcess.cs" />
+    <Compile Include="Logic\Civilization\CiviliationGenerator.cs" />
+    <Compile Include="Logic\Civilization\Civilization.cs" />
+    <Compile Include="Logic\Civilization\CivilizationUpdater.cs" />
+    <Compile Include="Logic\Crafting\CraftingLogic.cs" />
+    <Compile Include="Logic\Crafting\ResourceManagement.cs" />
     <Compile Include="Logic\Data\World\BlockFaceField.cs" />
     <Compile Include="Logic\Data\World\BlockType.cs" />
     <Compile Include="Logic\Entity\Entity.cs" />
     <Compile Include="Logic\Entity\EntityManager.cs" />
+    <Compile Include="Logic\Entity\Faction.cs" />
     <Compile Include="Logic\Entity\WarlordEntityManager.cs" />
     <Compile Include="Logic\Entity\Player.cs" />
     <Compile Include="Logic\Data\World\RegionArrayMaps.cs" />
@@ -161,32 +170,43 @@
     <Compile Include="Logic\Data\World\RegionDatabase.cs" />
     <Compile Include="Logic\Data\World\RegionGenerator.cs" />
     <Compile Include="Logic\Data\World\RegionUpdater.cs" />
-    <Compile Include="Logic\TemporaryProcess.cs" />
-    <Compile Include="Logic\ProcessManager.cs" />
-    <Compile Include="Logic\ProcessType.cs" />
+    <Compile Include="GameTools\Process\MultiTickProcess.cs" />
+    <Compile Include="GameTools\Process\ProcessManager.cs" />
+    <Compile Include="Logic\Physics\CollisionDetection.cs" />
+    <Compile Include="Logic\Physics\EntityMover.cs" />
+    <Compile Include="Logic\Physics\NaturalForces.cs" />
+    <Compile Include="Logic\Physics\PenetrationHandler.cs" />
     <Compile Include="Logic\States\DebugPlayingState.cs" />
     <Compile Include="Logic\WarlordLogic.cs" />
-    <Compile Include="MouseInput.cs" />
+    <Compile Include="Logic\Zones\Zone.cs" />
+    <Compile Include="Logic\Zones\ZoneManager.cs" />
+    <Compile Include="Logic\Zones\ZoneRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="View\AI\AIView.cs" />
+    <Compile Include="View\AI\Logic\Movement\Pathfinder.cs" />
+    <Compile Include="View\Human\Audio\MusicPlayer.cs" />
+    <Compile Include="View\Human\Audio\Song.cs" />
+    <Compile Include="View\Human\Audio\SoundEffect.cs" />
     <Compile Include="View\Human\Display\BlockTexture.cs" />
-    <Compile Include="View\Human\Display\DebugDisplay.cs" />
+    <Compile Include="View\Human\Display\DebugView.cs" />
+    <Compile Include="View\Human\Display\EntityGraphics.cs" />
+    <Compile Include="View\Human\Display\HumanView.cs" />
     <Compile Include="View\Human\Display\HUD.cs" />
-    <Compile Include="View\Human\Input\DebugInput.cs" />
-    <Compile Include="View\Human\HumanView.cs" />
+    <Compile Include="View\Human\Display\ParticleSystem.cs" />
     <Compile Include="View\Human\Display\RegionGraphics.cs" />
     <Compile Include="View\Human\Audio\SoundRepository.cs" />
     <Compile Include="View\Human\Display\TextureRepository.cs" />
-    <Compile Include="View\Sates\DebugDisplayPlayState.cs" />
-    <Compile Include="View\Sates\DebugInputPlayState.cs" />
-    <Compile Include="WarlordApplication.cs" />
+    <Compile Include="View\Human\Input\DebugMovementController.cs" />
+    <Compile Include="View\Human\Display\ScreenElement.cs" />
+    <Compile Include="View\Human\Input\KeyboardListener.cs" />
+    <Compile Include="View\Human\Input\MouseListener.cs" />
+    <Compile Include="View\Human\Display\WorldGraphics.cs" />
+    <Compile Include="Application\WarlordApplication.cs" />
     <Compile Include="Event\WarlordEventManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Event\EventDataMap.txt" />
     <Content Include="General Standards\Game Standards.txt" />
-    <None Include="Event\EventRules.txt" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
@@ -224,7 +244,15 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Logic\Data\Items\" />
+    <Folder Include="Logic\Settings\" />
+    <Folder Include="View\Actuators\" />
+    <Folder Include="View\AI\Logic\Decisions\" />
+    <Folder Include="View\AI\Logic\Movement\Flocking\" />
+    <Folder Include="View\Human\Display\Entity\Animation\" />
+    <Folder Include="View\Human\Display\UI\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <PropertyGroup>

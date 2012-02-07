@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Warlord.Interfaces.Subsystems;
 using Warlord.Logic.Data.Entity;
 using Warlord.Logic.States;
+using GameTools.Process;
 
 namespace Warlord.Logic
 {
@@ -24,9 +25,7 @@ namespace Warlord.Logic
             processManager = new ProcessManager();
             entityManager = new WarlordEntityManager();
 
-            entityManager.AddPlayer(new Vector3f(0, 80, 0));
-
-            GlobalApplication.Application.GameEventManager.Subscribe(Update, "update");
+            entityManager.AddPlayer(new Vector3(0, 80, 0));
 
             stateMachine = new StateMachine<WarlordLogic>(this);
         }
@@ -38,9 +37,9 @@ namespace Warlord.Logic
         {
             stateMachine.ChangeState(new NullState<WarlordLogic>(this));
         }
-        public void Update(object sender, object data)
+        public void Update(GameTime gameTime)
         {
-            mostRecentGameTime = data as GameTime;            
+            mostRecentGameTime = gameTime;
             
             stateMachine.Update();
         }

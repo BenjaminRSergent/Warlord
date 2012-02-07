@@ -8,10 +8,11 @@ using System.Threading;
 using Warlord.GameTools;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
+using GameTools.Process;
 
 namespace Warlord.Logic.Data.World
 {
-    class RegionUpdater : ContinuousProcess
+    class RegionUpdater : ThreadProcess
     {
         RegionDatabase database;
         private int drawDistance;

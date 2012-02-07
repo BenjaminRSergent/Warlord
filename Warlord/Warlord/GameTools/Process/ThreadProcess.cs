@@ -6,9 +6,9 @@ using System.Threading;
 using System.Diagnostics;
 using Warlord.GameTools;
 
-namespace Warlord.Logic
+namespace GameTools.Process
 {
-    abstract class ContinuousProcess
+    abstract class ThreadProcess
     {
         private Thread processThread;        
         
@@ -18,7 +18,7 @@ namespace Warlord.Logic
         EventWaitHandle waitHandle;
         private bool waiting;
 
-        public ContinuousProcess()
+        public ThreadProcess()
         {
             started = false;
             kill = false;

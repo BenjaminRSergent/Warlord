@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GameTools.Graph;
 using Warlord.GameTools;
+using Microsoft.Xna.Framework;
 
 namespace Warlord.Logic.Data.Entity
 {
@@ -11,12 +12,12 @@ namespace Warlord.Logic.Data.Entity
     {
         Player player;
         Dictionary<uint, Entity> entityMap;
-        uint nextID;
+        uint nextactorID;
 
         public WarlordEntityManager( )
         {
             entityMap = new Dictionary<uint,Entity>( );
-            nextID = 0;
+            nextactorID = 0;
         }
         public Optional<Entity> GetEntity( uint id )
         {
@@ -25,10 +26,10 @@ namespace Warlord.Logic.Data.Entity
             else
                 return new Optional<Entity>();
         }
-        public void AddPlayer( Vector3f vector3f)
+        public void AddPlayer( Vector3 position)
         {
-            player = new Player( GetNextID(), vector3f );
-            entityMap.Add( player.ID, player );
+            player = new Player( GetNextactorID(), position );
+            entityMap.Add( player.actorID, player );
         }
         public Entity Player
         {
@@ -37,10 +38,10 @@ namespace Warlord.Logic.Data.Entity
                 return player;
             }
         }
-        private uint GetNextID()
+        private uint GetNextactorID()
         {
-            uint id = nextID;
-            nextID++;
+            uint id = nextactorID;
+            nextactorID++;
             return id;            
         }
         public void ShutDown()

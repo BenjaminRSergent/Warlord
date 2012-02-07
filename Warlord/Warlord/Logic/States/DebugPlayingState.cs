@@ -30,7 +30,7 @@ namespace Warlord.Logic.States
         }
         public override void EnterState()
         {
-            owner.EntityManager.AddPlayer(new Vector3f(0, 80, 0));
+            owner.EntityManager.AddPlayer(new Vector3(0, 80, 0));
             owner.ProcessManager.AttachProcess( regionUpdater );
         }
         public override void Update()
