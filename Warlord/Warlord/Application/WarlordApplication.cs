@@ -24,7 +24,7 @@ namespace Warlord
 
         GlobalApplication globalAccess;
 
-        static WarlordEventManager eventManager;
+        WarlordEventManager eventManager;
 
         public WarlordApplication()
         {            
@@ -96,7 +96,7 @@ namespace Warlord
         }
         public EventManager GameEventManager
         {
-            get { return WarlordApplication.eventManager; }
+            get { return eventManager; }
         }
         public EntityManager EntityManager
         {

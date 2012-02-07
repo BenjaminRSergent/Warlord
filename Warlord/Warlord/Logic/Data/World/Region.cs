@@ -26,11 +26,11 @@ namespace Warlord.Logic.Data
 
             blocks = new Block[regionSize.X, regionSize.Y, regionSize.Z];
             visibleFaceBitField = new byte[regionSize.X, regionSize.Y, regionSize.Z];            
-
+            
             Init( );
         }
         public void Init( )
-        {
+        {            
             Vector3i blockLocation;
 
             for( int x = 0; x < regionSize.X; x++ )
@@ -40,15 +40,39 @@ namespace Warlord.Logic.Data
                     for( int z = 0; z < regionSize.Z; z++ )
                     {
                         blockLocation = regionOrigin + new Vector3i(x,y,z);
-                        blocks[x,y,z] = new Block(blockLocation, BlockType.Air);                        
+                        blocks[x,y,z] = new Block(blockLocation, BlockType.Air);       
+                        visibleFaceBitField[x,y,z] = 0;
                     }
                 }
             }
 
-            Altered = true;           
-            Active = false;
-
+            Altered = true;
             visibleFaces = 0;
+            Active = true;
+        }
+        public void Reinit(Vector3i newOrigin, Vector3i regionSize)
+        {
+            lock(this)
+            { 
+                this.regionOrigin = newOrigin;
+
+                if(this.regionSize != regionSize)
+                {
+                    this.regionSize = regionSize;                
+
+                    blocks = new Block[regionSize.X, regionSize.Y, regionSize.Z];
+                    visibleFaceBitField = new byte[regionSize.X, regionSize.Y, regionSize.Z];
+                }
+
+                regionBox = new BoundingBox( regionOrigin.ToVector3, (regionOrigin+regionSize-Vector3i.One).ToVector3 );
+
+                Init( );
+            }
+        }
+        public void Deactivate( )
+        {
+            Active = false;
+            Altered = false;
         }
         public Block GetBlock( Vector3i relativePosition )
         {            
@@ -154,7 +178,7 @@ namespace Warlord.Logic.Data
         {
             get { return visibleFaces; }
         }       
-        public bool Active{ get; set; }
-        public bool Altered{ get; set; }
+        public bool Active{ get; private set; }
+        public bool Altered{ get; set; }        
     }
 }

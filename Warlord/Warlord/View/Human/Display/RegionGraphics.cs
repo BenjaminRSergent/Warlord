@@ -45,6 +45,8 @@ namespace Warlord.View.Human.Display
 
             const int VERTICES_PER_FACE = 6;
 
+            int numFaces = VERTICES_PER_FACE * masterRegion.VisibleFaces;
+
             regionMesh = new VertexPositionTexture[VERTICES_PER_FACE * masterRegion.VisibleFaces];
 
             index = 0;
@@ -102,6 +104,9 @@ namespace Warlord.View.Human.Display
             Vector3i currentFace;
             for(int k = 0; k < 6; k++)
             {
+                if( regionMesh.Length < index + k + 1 )
+                    break;
+
                 currentFace = (bottomBackLeft + offsetMap[k]);
                 regionMesh[index + k] = new VertexPositionTexture(currentFace.ToVector3, uvMap[k]);
             }

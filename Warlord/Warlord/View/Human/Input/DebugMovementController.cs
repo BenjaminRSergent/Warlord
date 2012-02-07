@@ -29,7 +29,7 @@ namespace Warlord.View.Human.Input
             // a real controller tells its actor where to try to move;
             // it's the brains not the legs.
 
-            float moveSpeed = 0.3f;
+            float moveSpeed = 0.1f;
 
             if( shiftIsDown )
                 moveSpeed *= 10;
@@ -75,23 +75,26 @@ namespace Warlord.View.Human.Input
         }
         public bool OnMouseMove(Vector2 prevPosition, Microsoft.Xna.Framework.Vector2 currentPosition)
         {
-            Vector2 facingRotation;
-            Vector2 mouseMove = currentPosition - prevPosition;
+            if(GlobalApplication.Application.Active)
+            { 
+                Vector2 facingRotation;
+                Vector2 mouseMove = currentPosition - prevPosition;
 
-            facingRotation.X = 0.001f * (gameWindow.ClientBounds.Width/2 - mouseMove.X);
-            facingRotation.Y = 0.001f * (gameWindow.ClientBounds.Height/2 - mouseMove.Y);
+                facingRotation.X = 0.001f * (gameWindow.ClientBounds.Width/2 - mouseMove.X);
+                facingRotation.Y = 0.001f * (gameWindow.ClientBounds.Height/2 - mouseMove.Y);
 
-            Mouse.SetPosition( gameWindow.ClientBounds.Width/2,
-                               gameWindow.ClientBounds.Height/2);
+                Mouse.SetPosition( gameWindow.ClientBounds.Width/2,
+                                   gameWindow.ClientBounds.Height/2);
 
             
-            System.Drawing.Rectangle window = new System.Drawing.Rectangle( gameWindow.ClientBounds.Left,
-                                                                            gameWindow.ClientBounds.Top,
-                                                                            gameWindow.ClientBounds.Right,
-                                                                            gameWindow.ClientBounds.Bottom );
-            ClipCursor( ref window );
+                System.Drawing.Rectangle window = new System.Drawing.Rectangle( gameWindow.ClientBounds.Left,
+                                                                                gameWindow.ClientBounds.Top,
+                                                                                gameWindow.ClientBounds.Right,
+                                                                                gameWindow.ClientBounds.Bottom );
+                ClipCursor( ref window );
 
-            camera.ForceChangeRotation(facingRotation);
+                camera.ForceChangeRotation(facingRotation);
+            }
 
             return true;
         }

@@ -15,6 +15,7 @@ namespace Warlord.Logic.Data.World
     {
         Vector3i regionSize;
         RegionGenerator generator;
+        Stack<Region> RegionPool;
 
         HashSet<Vector2i> createdWorlds;
         Dictionary<Vector2i, Region> regionMap;
@@ -29,6 +30,8 @@ namespace Warlord.Logic.Data.World
             regionMap = new Dictionary<Vector2i, Region>();
             generating = false;
 
+            RegionPool = new Stack<Region>( );
+
             this.seed = seed;
             this.regionSize = regionSize;
             generator = new RegionGenerator(seed, regionSize);
@@ -38,8 +41,8 @@ namespace Warlord.Logic.Data.World
             if(!regionMap.Keys.Contains(regionCoordiants))
             { 
                 generating = true;                
-                Vector3i newOrigin = new Vector3i(regionCoordiants.X*regionSize.X, 0, regionCoordiants.Y*regionSize.Z);
-                Region newRegion = new Region(newOrigin,  regionSize);
+                Vector3i newOrigin = new Vector3i(regionCoordiants.X*regionSize.X, 0, regionCoordiants.Y*regionSize.Z);             
+                Region newRegion = GetNewRegion(newOrigin,  regionSize);
                 regionMap.Add(regionCoordiants, newRegion );
                 generator.FastGenerateRegion(updater, newOrigin );
                 generating = false;
@@ -55,16 +58,35 @@ namespace Warlord.Logic.Data.World
 
             return false;
         }
+
+        private Region GetNewRegion(Vector3i newOrigin, Vector3i regionSize)
+        {
+            Region newRegion;
+
+            if(RegionPool.Count == 0)
+                newRegion = new Region(newOrigin, regionSize);
+            else
+            { 
+                newRegion = RegionPool.Pop( );
+                newRegion.Reinit(newOrigin, regionSize);
+            }
+
+            return newRegion;
+        }
         public void UnloadRegion(Vector2i regionCoordiants)
         {
             if(regionMap.Keys.Contains(regionCoordiants))
             {
+                Region theRegion = regionMap[regionCoordiants];
                 RegionRemovedData removedData = new RegionRemovedData(regionMap[regionCoordiants]);
                 GlobalApplication.Application.GameEventManager.SendEvent(new RegionRemovedEvent(new Optional<object>(this),
                                                                           0,
                                                                           removedData));
 
                 regionMap.Remove(regionCoordiants);
+
+                theRegion.Deactivate( );
+                RegionPool.Push(theRegion);
             }
         }
         public void ChangeBlock(Vector3i absolutePosition, BlockType type)
@@ -129,7 +151,6 @@ namespace Warlord.Logic.Data.World
         {
             Vector2i coordinates = GetRegionCoordiantes(absolutePosition);
             return GetRegionFromCoordiantes(coordinates);
-
         }
         public Optional<Region> GetRegionFromCoordiantes(Vector2i coordiantes)
         {
@@ -174,6 +195,8 @@ namespace Warlord.Logic.Data.World
             Vector2i[] keys = regionMap.Keys.ToArray();
             foreach(Vector2i regionCo in keys)
                 UnloadRegion(regionCo);
+
+            RegionPool.Clear( );
 
             int numRegions = inStream.ReadInt32();
             Vector2i position;
