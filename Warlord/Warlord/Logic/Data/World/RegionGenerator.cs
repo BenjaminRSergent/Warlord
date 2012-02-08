@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GameTools.Graph;
 using GameTools.Noise3D;
+using System.Diagnostics;
 
 namespace Warlord.Logic.Data.World
 {
@@ -14,76 +15,57 @@ namespace Warlord.Logic.Data.World
         private PerlinNoiseSettings3D noiseSettings;
         FastPerlinNoise fastNoise;
 
-        public RegionGenerator( int seed )
+        float[] flatNoise;
+
+        public RegionGenerator(int seed)
         {
             this.seed = seed;
-            LoadDefaultSettings( );            
+            LoadDefaultSettings();
         }
-        public RegionGenerator( int seed, Vector3i regionSize )
+        public RegionGenerator(int seed, Vector3i regionSize)
         {
             this.seed = seed;
-            LoadDefaultSettings( );
-            generatorSettings.RegionSize = regionSize;            
+            LoadDefaultSettings();
+            generatorSettings.RegionSize = regionSize;
+
+            flatNoise = new float[generatorSettings.RegionSize.X *
+                              generatorSettings.RegionSize.Y *
+                              generatorSettings.RegionSize.Z];
         }
         private void LoadDefaultSettings()
         {
-            generatorSettings = new GeneratorSettings( );
-            generatorSettings.RegionSize = new Vector3i( 16, 128, 16 );
-            generatorSettings.DirtLevel = 32;
-            generatorSettings.AirLevel = 110;
+            generatorSettings = new GeneratorSettings();
+            generatorSettings.RegionSize = new Vector3i(16, 128, 16);
+            generatorSettings.DirtLevel = 10;
+            generatorSettings.AirLevel = 120;
 
-            noiseSettings = new PerlinNoiseSettings3D( );
-            noiseSettings.frequencyMulti = 2.2f;
+            noiseSettings = new PerlinNoiseSettings3D();
+            noiseSettings.frequencyMulti = 2.0f;
             noiseSettings.octaves = 4;
             noiseSettings.persistence = 0.5f;
             noiseSettings.seed = 3;
             noiseSettings.size = generatorSettings.RegionSize;
             noiseSettings.startingPoint = Vector3i.Zero;
-            noiseSettings.zoom = 120;   
+            noiseSettings.zoom = 120;
 
             fastNoise = new FastPerlinNoise(noiseSettings);
         }
-        public RegionGenerator( int seed, PerlinNoiseSettings3D noiseSettings, GeneratorSettings generatorSettings )
+        public void FastGenerateRegion(RegionUpdater ownerWorld, Vector3i origin)
         {
-            this.seed = seed;
-            this.noiseSettings = noiseSettings;
-            this.generatorSettings = generatorSettings;
+            noiseSettings.startingPoint = origin;
 
-            noiseSettings.seed = seed;
+            fastNoise.FillWithPerlinNoise3D(flatNoise);
+            PlaceBlocks(ownerWorld, origin, flatNoise);
+
+            AddGrassToTop(ownerWorld, origin);
         }
-        public void GenerateRegion( RegionUpdater ownerWorld, Vector3i origin )
-        {
-            double[,,] noise;
-
-            noiseSettings.startingPoint = origin;              
-
-            noise = PerlinNoise3D.GenPerlinNoise3D( noiseSettings, 2 );
-
-            //PlaceBlocks(ownerWorld, origin, noise);
-
-            AddGrassToTop( ownerWorld, origin );
-        }
-
-        public void FastGenerateRegion( RegionUpdater ownerWorld, Vector3i origin )
-        {
-            float[] noise = new float[generatorSettings.RegionSize.X *
-                                      generatorSettings.RegionSize.Y *
-                                      generatorSettings.RegionSize.Z];
-
-            noiseSettings.startingPoint = origin;            
-
-            fastNoise.FillWithPerlinNoise3D( noise );
-            PlaceBlocks(ownerWorld, origin, noise);
-
-            AddGrassToTop( ownerWorld, origin );
-        }
-        public void FakeGenerator( RegionUpdater ownerWorld, Vector3i origin )
+        public void FakeGenerator(RegionUpdater ownerWorld, Vector3i origin)
         {
             float density;
             BlockType blockType;
             for(int x = 0; x < generatorSettings.RegionSize.X; x++)
             {
-                for(int y = 0; y < generatorSettings.RegionSize.Y-1; y++)
+                for(int y = 0; y < generatorSettings.RegionSize.Y - 1; y++)
                 {
                     for(int z = 0; z < generatorSettings.RegionSize.Z; z++)
                     {
@@ -94,14 +76,14 @@ namespace Warlord.Logic.Data.World
                     }
                 }
             }
-        }        
+        }
         private void PlaceBlocks(RegionUpdater ownerWorld, Vector3i origin, float[] noise)
         {
             float density;
             BlockType blockType;
             for(int x = 0; x < generatorSettings.RegionSize.X; x++)
             {
-                for(int y = 0; y < generatorSettings.RegionSize.Y-1; y++)
+                for(int y = 0; y < generatorSettings.RegionSize.Y - 1; y++)
                 {
                     for(int z = 0; z < generatorSettings.RegionSize.Z; z++)
                     {
@@ -116,7 +98,7 @@ namespace Warlord.Logic.Data.World
                 }
             }
         }
-        public void AddGrassToTop( RegionUpdater ownerWorld, Vector3i origin )
+        public void AddGrassToTop(RegionUpdater ownerWorld, Vector3i origin)
         {
             Vector3i currentPosition;
             Block currentBlock;
@@ -124,46 +106,48 @@ namespace Warlord.Logic.Data.World
             bool recentAir;
 
             recentAir = false;
-            for( int x = 0; x < generatorSettings.RegionSize.X; x++ )
+            for(int x = 0; x < generatorSettings.RegionSize.X; x++)
             {
-                for( int z = 0; z < generatorSettings.RegionSize.Z; z++ )
+                for(int z = 0; z < generatorSettings.RegionSize.Z; z++)
                 {
-                    for( int y = generatorSettings.RegionSize.Y - 1; y > 0; y-- )
+                    for(int y = generatorSettings.RegionSize.Y - 1; y > 0; y--)
                     {
-                        currentPosition = origin + new Vector3i(x,y,z);
+                        currentPosition = origin + new Vector3i(x, y, z);
 
-                        currentBlock = ownerWorld.GetBlock( currentPosition );
+                        currentBlock = ownerWorld.GetBlock(currentPosition);
 
-                        if( currentBlock.Type != BlockType.Air && recentAir )
+                        if(currentBlock.Type != BlockType.Air && recentAir)
                         {
-                            ownerWorld.ChangeBlock( currentPosition, BlockType.Grass );
+                            ownerWorld.ChangeBlock(currentPosition, BlockType.Grass);
                             recentAir = false;
                         }
-                        else if( currentBlock.Type == BlockType.Air )
+                        else if(currentBlock.Type == BlockType.Air)
                             recentAir = true;
                     }
                 }
-            }        
+            }
         }
         public BlockType GetBlockFromNoise(float noise, int height)
-        {           
-            if (height < generatorSettings.DirtLevel)
+        {
+            Debug.Assert(Math.Abs(noise) <= 1.1);
+
+            if(height < generatorSettings.DirtLevel)
             {
-                return StoneLevelBlock( noise, height );
+                return StoneLevelBlock(noise, height);
             }
             else if(height < generatorSettings.AirLevel)
             {
-                return DirtLevelBlock( noise, height );
+                return DirtLevelBlock(noise, height);
             }
             else
             {
-                return AirLevelBlock( noise, height );
+                return AirLevelBlock(noise, height);
             }
         }
         public BlockType StoneLevelBlock(double noise, int height)
         {
             float heightMod = -(height / (float)generatorSettings.DirtLevel);
-            if (noise + heightMod > 0)
+            if(noise + heightMod > 0)
                 return BlockType.Stone;
             else
                 return BlockType.Dirt;
@@ -177,8 +161,8 @@ namespace Warlord.Logic.Data.World
             else if(noise + heightMod > -0.3)
                 return BlockType.Dirt;
             else
-                return BlockType.Air;            
-        }        
+                return BlockType.Air;
+        }
         public BlockType AirLevelBlock(double noise, int height)
         {
             float heightMod = -(height - generatorSettings.AirLevel) / (float)generatorSettings.AirLevel;
@@ -191,6 +175,6 @@ namespace Warlord.Logic.Data.World
         public int Seed
         {
             get { return seed; }
-        }        
+        }
     }
 }

@@ -7,46 +7,46 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Warlord.View.Human.Display
 {
-    abstract class HumanView 
+    abstract class HumanView
         : GameView
     {
         // Screen class?
-        private Stack<ScreenElement> screenElements = new Stack<ScreenElement>( );
+        private Stack<ScreenElement> screenElements = new Stack<ScreenElement>();
 
         private List<KeyboardListener> keyboardListeners = new List<KeyboardListener>();
-        private List<MouseListener> mouseListeners = new List<MouseListener>( );
+        private List<MouseListener> mouseListeners = new List<MouseListener>();
 
         protected MouseState prevMouseState;
         protected Keys[] keysDown = new Keys[0];
 
         public virtual void Draw(GameTime gameTime)
         {
-            foreach( ScreenElement element in screenElements )
+            foreach(ScreenElement element in screenElements)
             {
                 element.Draw(gameTime);
             }
         }
 
-        protected void PushScreenElement( ScreenElement element )
+        protected void PushScreenElement(ScreenElement element)
         {
-            screenElements.Push( element );
+            screenElements.Push(element);
         }
-        protected ScreenElement PopScreenElement( )
+        protected ScreenElement PopScreenElement()
         {
-            return screenElements.Pop( );
+            return screenElements.Pop();
         }
 
         abstract public void Update(GameTime gameTime);
-        
+
         virtual public void HandleInput()
         {
-            HandleKeyboard( );
-            HandleMouse( );
+            HandleKeyboard();
+            HandleMouse();
         }
 
-        private void HandleKeyboard( )
+        private void HandleKeyboard()
         {
-            KeyboardState keyboardState = Keyboard.GetState( );
+            KeyboardState keyboardState = Keyboard.GetState();
 
             foreach(Keys key in keysDown)
             {
@@ -54,42 +54,42 @@ namespace Warlord.View.Human.Display
                 {
                     foreach(ScreenElement element in screenElements)
                     {
-                        if( element.OnKeyUp(key) )
+                        if(element.OnKeyUp(key))
                             continue;
                     }
 
                     foreach(KeyboardListener listener in keyboardListeners)
                     {
-                        if( listener.OnKeyUp(key) )
+                        if(listener.OnKeyUp(key))
                             continue;
                     }
                 }
 
             }
 
-            keysDown = keyboardState.GetPressedKeys( );
+            keysDown = keyboardState.GetPressedKeys();
 
             foreach(Keys key in keysDown)
             {
                 foreach(ScreenElement element in screenElements)
                 {
-                    if( element.OnKeyDown(key) )
+                    if(element.OnKeyDown(key))
                         continue;
                 }
 
                 foreach(KeyboardListener listener in keyboardListeners)
                 {
-                    if( listener.OnKeyDown(key) )
+                    if(listener.OnKeyDown(key))
                         continue;
                 }
             }
         }
-        private void HandleMouse( )
+        private void HandleMouse()
         {
-            MouseState state = Mouse.GetState( );
+            MouseState state = Mouse.GetState();
 
-            Vector2 prevMouseLoc = new Vector2(prevMouseState.X,prevMouseState.Y);
-            Vector2 currMouseLoc = new Vector2(state.X,state.Y);
+            Vector2 prevMouseLoc = new Vector2(prevMouseState.X, prevMouseState.Y);
+            Vector2 currMouseLoc = new Vector2(state.X, state.Y);
 
             if(prevMouseLoc != currMouseLoc)
             {

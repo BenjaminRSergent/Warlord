@@ -7,31 +7,29 @@ using Microsoft.Xna.Framework;
 
 namespace GameTools.Graph
 {
-    class Vector3i
-    {     
-        public Vector3i( )
-        {
-            this.X = 0;
-            this.Y = 0;
-            this.Z = 0;
-        }
+    struct Vector3i
+    {
+        int x;
+        int y;
+        int z;
+
         public Vector3i( int X, int Y, int Z )
         {
-            this.X = X;
-            this.Y = Y;
-            this.Z = Z;
+            x = X;
+            y = Y;
+            z = Z;
         }
         public Vector3i( Vector3i source )
         {
-            this.X = source.X;
-            this.Y = source.Y;
-            this.Z = source.Z;
+            x = source.X;
+            y = source.Y;
+            z = source.Z;
         }
         public Vector3i( Vector3 source )
         {
-            this.X = (int)source.X;
-            this.Y = (int)source.Y;
-            this.Z = (int)source.Z;
+            x = (int)source.X;
+            y = (int)source.Y;
+            z = (int)source.Z;
         }
         public static implicit operator Vector3i( Vector3 source )
         {
@@ -44,9 +42,9 @@ namespace GameTools.Graph
         }
         public float AngleBetween( Vector3i otherVector )
         {
-            Vector3f thisNorm = GetNormalized( );
-            Vector3f otherNorm = otherVector.GetNormalized( );
-            float dot = thisNorm.DotProduct( otherNorm );
+            Vector3 thisNorm = GetNormalized( );
+            Vector3 otherNorm = otherVector.GetNormalized( );
+            float dot = GraphMath.Dot( thisNorm, otherNorm );
 
             return (float)Math.Acos(dot);
         }
@@ -54,9 +52,9 @@ namespace GameTools.Graph
         {
             return this.X * otherVector.X + this.Y * otherVector.Y + this.Z * otherVector.Z;
         }  
-        public Vector3f GetNormalized( )
+        public Vector3 GetNormalized( )
         {
-            Vector3f normVec = new Vector3f( X, Y, Z );
+            Vector3 normVec = new Vector3( X, Y, Z );
             normVec.Normalize( );
 
             return normVec;
@@ -204,8 +202,8 @@ namespace GameTools.Graph
             }
         }
 
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Z { get; set; }
+        public int X { get{ return x;} set{ x = value; } }
+        public int Y { get{ return y;} set{ y = value; } }
+        public int Z { get{ return z;} set{ z = value; } }
     }
 }

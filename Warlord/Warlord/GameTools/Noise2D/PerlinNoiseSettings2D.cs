@@ -15,44 +15,44 @@ namespace GameTools.Noise2D
         public Point startingPoint;
         public double frequencyMulti;
         public double persistence;
-        public float zoom;        
-        public int octaves;      
+        public float zoom;
+        public int octaves;
         public int seed;
 
         public int numThreads;
 
-        public PerlinNoiseSettings2D( )
+        public PerlinNoiseSettings2D()
         {
-            rng = new Random( );
+            rng = new Random();
 
-            size = new Point( 100, 100 );
-            startingPoint = Point.Zero;  
-          
+            size = new Point(100, 100);
+            startingPoint = Point.Zero;
+
             frequencyMulti = 2;
             persistence = 0.5;
             zoom = 40;
             octaves = 6;
             numThreads = 4;
 
-            GenerateNewSeed( );
+            GenerateNewSeed();
         }
 
         public PerlinNoiseSettings2D(PerlinNoiseSettings2D settings)
         {
             size = settings.size;
             startingPoint = settings.startingPoint;
-          
+
             frequencyMulti = settings.frequencyMulti;
             persistence = settings.persistence;
             zoom = settings.zoom;
-            octaves = settings.octaves;            
-            seed = settings.seed;   
+            octaves = settings.octaves;
+            seed = settings.seed;
         }
 
-        public void GenerateNewSeed( )
+        public void GenerateNewSeed()
         {
-            seed = rng.Next( );
+            seed = rng.Next();
         }
-        
+
     }
 }

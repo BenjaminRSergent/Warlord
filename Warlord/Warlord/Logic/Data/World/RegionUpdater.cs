@@ -47,18 +47,18 @@ namespace Warlord.Logic.Data.World
                         if(regionDidNotPreviouslyExist)
                             break;
                     }
-                }              
+                }
 
                 List<Vector2i> mustUnload = GetCreatedRegionsOutsideArea(drawDistance);
-                foreach( Vector2i region in mustUnload )
+                foreach(Vector2i region in mustUnload)
                 {
-                    database.UnloadRegion(region);                    
+                    database.UnloadRegion(region);
                 }
 
                 SafePointCheckIn();
             }
         }
-        
+
         public void ChangeBlock(Vector3i absolutePosition, BlockType blockType)
         {
             database.ChangeBlock(absolutePosition, blockType);
@@ -67,7 +67,7 @@ namespace Warlord.Logic.Data.World
 
         private void UpdateFacing(Block block)
         {
-            if( block.Type != BlockType.Air )
+            if(block.Type != BlockType.Air)
                 AddBlockFaces(block);
             else
                 RemoveBlockFace(block);
@@ -140,20 +140,20 @@ namespace Warlord.Logic.Data.World
         public Block GetBlock(Vector3i absolutePosition)
         {
             return database.GetBlock(absolutePosition);
-        }        
+        }
         private List<Vector2i> GetCreatedRegionsOutsideArea(int maxDistance)
         {
-            Vector3f playerPosition = GlobalApplication.Application.EntityManager.Player.Position;
-            Vector2i playerRegion = database.GetRegionCoordiantes(playerPosition.ToIntVector());            
+            Vector3 playerPosition = GlobalSystems.EntityManager.Player.CurrentPosition;
+            Vector2i playerRegion = database.GetRegionCoordiantes(playerPosition);
 
             Vector2i distance;
 
             List<Vector2i> regionsOutside = new List<Vector2i>();
             foreach(Vector2i region in database.RegionMap.Keys)
-            {   
+            {
                 distance = playerRegion - region;
-                if( Math.Abs(distance.X) > maxDistance || 
-                    Math.Abs(distance.Y) > maxDistance )
+                if(Math.Abs(distance.X) > maxDistance ||
+                    Math.Abs(distance.Y) > maxDistance)
                 {
                     regionsOutside.Add(region);
                 }
@@ -161,34 +161,34 @@ namespace Warlord.Logic.Data.World
 
             return regionsOutside;
         }
-        
-        private List<Vector2i> GetRegionInArea( int radius )
-        {
-            Vector3f playerPosition = GlobalApplication.Application.EntityManager.Player.Position;
-            Vector2i playerRegion = database.GetRegionCoordiantes( playerPosition.ToIntVector( ) );
 
-            List<Vector2i> regionCoordiantes = new List<Vector2i>( );
+        private List<Vector2i> GetRegionInArea(int radius)
+        {
+            Vector3 playerPosition = GlobalSystems.EntityManager.Player.CurrentPosition;
+            Vector2i playerRegion = database.GetRegionCoordiantes(playerPosition);
+
+            List<Vector2i> regionCoordiantes = new List<Vector2i>();
 
             for(int x = 0; x < radius; x++)
             {
                 for(int y = 0; y < radius; y++)
                 {
-                    regionCoordiantes.Add(playerRegion + new Vector2i( x,y ));
-                    regionCoordiantes.Add(playerRegion + new Vector2i( x,-y ));
-                    regionCoordiantes.Add(playerRegion + new Vector2i( -x,y ));
-                    regionCoordiantes.Add(playerRegion + new Vector2i( -x,-y ));
+                    regionCoordiantes.Add(playerRegion + new Vector2i(x, y));
+                    regionCoordiantes.Add(playerRegion + new Vector2i(x, -y));
+                    regionCoordiantes.Add(playerRegion + new Vector2i(-x, y));
+                    regionCoordiantes.Add(playerRegion + new Vector2i(-x, -y));
                 }
             }
 
             return regionCoordiantes;
         }
-        public void Save( BinaryWriter outStream )
+        public void Save(BinaryWriter outStream)
         {
-            database.Save( outStream );
+            database.Save(outStream);
         }
-        public void Load( BinaryReader inStream )
+        public void Load(BinaryReader inStream)
         {
             database.Load(inStream);
-        }        
+        }
     }
 }

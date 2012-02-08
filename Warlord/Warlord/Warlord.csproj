@@ -138,31 +138,32 @@
     <Compile Include="GameTools\Noise3D\SimpleNoise3D.cs" />
     <Compile Include="GameTools\State\NullState.cs" />
     <Compile Include="GameTools\Optional.cs" />
-    <Compile Include="GameTools\Graph\Vector2f.cs" />
     <Compile Include="GameTools\Graph\Vector2i.cs" />
-    <Compile Include="GameTools\Graph\Vector3f.cs" />
     <Compile Include="GameTools\Graph\Vector3i.cs" />
     <Compile Include="GameTools\State\State.cs" />
     <Compile Include="GameTools\State\StateMachine.cs" />
     <Compile Include="GameTools\Statistics\Statistics.cs" />
-    <Compile Include="Application\GlobalApplication.cs" />
+    <Compile Include="Application\GlobalSystems.cs" />
     <Compile Include="Application\ErrorLogger.cs" />
     <Compile Include="Interfaces\Subsystems\GameLogic.cs" />
     <Compile Include="Interfaces\Subsystems\GameView.cs" />
-    <Compile Include="Interfaces\Subsystems\GameApplication.cs" />
     <Compile Include="GameTools\Process\ThreadProcess.cs" />
     <Compile Include="Logic\Civilization\CiviliationGenerator.cs" />
     <Compile Include="Logic\Civilization\Civilization.cs" />
     <Compile Include="Logic\Civilization\CivilizationUpdater.cs" />
     <Compile Include="Logic\Crafting\CraftingLogic.cs" />
     <Compile Include="Logic\Crafting\ResourceManagement.cs" />
+    <Compile Include="Logic\Data\Items\Item.cs" />
+    <Compile Include="Logic\Data\Items\ItemManager.cs" />
+    <Compile Include="Logic\Data\Items\WarlordItemManager.cs" />
     <Compile Include="Logic\Data\World\BlockFaceField.cs" />
     <Compile Include="Logic\Data\World\BlockType.cs" />
-    <Compile Include="Logic\Entity\Entity.cs" />
-    <Compile Include="Logic\Entity\EntityManager.cs" />
-    <Compile Include="Logic\Entity\Faction.cs" />
-    <Compile Include="Logic\Entity\WarlordEntityManager.cs" />
-    <Compile Include="Logic\Entity\Player.cs" />
+    <Compile Include="Logic\Data\Entity\Entity.cs" />
+    <Compile Include="Logic\Data\Entity\EntityManager.cs" />
+    <Compile Include="Logic\Data\Entity\Faction.cs" />
+    <Compile Include="Logic\Data\Entity\MovingEntity.cs" />
+    <Compile Include="Logic\Data\Entity\WarlordEntityManager.cs" />
+    <Compile Include="Logic\Data\Entity\Player.cs" />
     <Compile Include="Logic\Data\World\RegionArrayMaps.cs" />
     <Compile Include="Logic\Data\World\Block.cs" />
     <Compile Include="Logic\Data\World\GeneratorSettings.cs" />
@@ -173,8 +174,10 @@
     <Compile Include="GameTools\Process\MultiTickProcess.cs" />
     <Compile Include="GameTools\Process\ProcessManager.cs" />
     <Compile Include="Logic\Physics\CollisionDetection.cs" />
-    <Compile Include="Logic\Physics\EntityMover.cs" />
-    <Compile Include="Logic\Physics\NaturalForces.cs" />
+    <Compile Include="Logic\Physics\SimpleDrag.cs" />
+    <Compile Include="Logic\Physics\ForceGenerator.cs" />
+    <Compile Include="Logic\Physics\ConstantDirectionalForce.cs" />
+    <Compile Include="Logic\Physics\WarlordPhysics.cs" />
     <Compile Include="Logic\Physics\PenetrationHandler.cs" />
     <Compile Include="Logic\States\DebugPlayingState.cs" />
     <Compile Include="Logic\WarlordLogic.cs" />
@@ -245,7 +248,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Logic\Data\Items\" />
     <Folder Include="Logic\Settings\" />
     <Folder Include="View\Actuators\" />
     <Folder Include="View\AI\Logic\Decisions\" />

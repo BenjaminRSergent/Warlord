@@ -4,34 +4,23 @@ using System.Linq;
 using System.Text;
 using Warlord.GameTools;
 using Microsoft.Xna.Framework;
+using Warlord.Logic.Data.Entity;
 
 namespace Warlord.Event.EventTypes
 {
-    class ActorCreatedData
-    {
-        public uint actorID;
-        public Vector3 location;
-
-        public ActorCreatedData(uint actorID, Vector3 location)
-        {
-            this.actorID = actorID;
-            this.location = location;
-        }        
-    }
-
     class ActorCreatedEvent : BaseGameEvent
     {
-        ActorCreatedData data;        
+        GameEntity newEntity;
 
-        public ActorCreatedEvent( Optional<Object> sender, int delay, ActorCreatedData data )
+        public ActorCreatedEvent(Optional<Object> sender, int delay, GameEntity newEntity)
             : base(sender, "actor_created", delay)
         {
-            this.data = data;
+            this.newEntity = newEntity;
         }
 
-        public ActorCreatedData Data
+        public GameEntity NewEntity
         {
-            get { return data; }
+            get { return newEntity; }
         }
     }
 }

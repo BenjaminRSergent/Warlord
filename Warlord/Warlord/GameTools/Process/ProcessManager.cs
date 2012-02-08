@@ -14,15 +14,15 @@ namespace GameTools.Process
 
         public ProcessManager()
         {
-            temporaryProcesses = new List<MultiTickProcess>();   
-            continuousProcesses = new List<ThreadProcess>( );
+            temporaryProcesses = new List<MultiTickProcess>();
+            continuousProcesses = new List<ThreadProcess>();
         }
 
         public void Update(GameTime gameTime)
         {
             List<MultiTickProcess> toRemove = new List<MultiTickProcess>();
             foreach(MultiTickProcess process in temporaryProcesses)
-            {                
+            {
                 process.Update(gameTime);
 
                 if(process.Dead)
@@ -39,11 +39,11 @@ namespace GameTools.Process
         public void AttachProcess(ThreadProcess process)
         {
             continuousProcesses.Add(process);
-            process.Start( );
+            process.Start();
         }
         public void KillThread(ThreadProcess process)
         {
-            process.KillProcess( );
+            process.KillProcess();
             continuousProcesses.Remove(process);
         }
         private void FinishProcess(MultiTickProcess process)
@@ -62,11 +62,11 @@ namespace GameTools.Process
         {
             foreach(MultiTickProcess process in temporaryProcesses)
             {
-                process.KillProcess( );
+                process.KillProcess();
             }
             foreach(ThreadProcess process in continuousProcesses)
             {
-                process.KillProcess( );
+                process.KillProcess();
             }
         }
     }

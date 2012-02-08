@@ -10,9 +10,9 @@ namespace GameTools.Process
 {
     abstract class ThreadProcess
     {
-        private Thread processThread;        
-        
-        private bool started;   
+        private Thread processThread;
+
+        private bool started;
         private bool kill;
 
         EventWaitHandle waitHandle;
@@ -25,36 +25,36 @@ namespace GameTools.Process
             waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
         }
 
-        public void Start( )
-        {            
-            Unpause( );
+        public void Start()
+        {
+            Unpause();
             processThread = new Thread(() => ProcessBehavior());
             processThread.Start();
             started = true;
         }
-        public void Pause( )
+        public void Pause()
         {
-            waitHandle.Reset( );
+            waitHandle.Reset();
         }
-        public void Unpause( )
+        public void Unpause()
         {
-            waitHandle.Set( );
+            waitHandle.Set();
         }
         abstract protected void ProcessBehavior();
 
-        protected void SafePointCheckIn( )
-        {            
-            if( Kill )
-                Thread.CurrentThread.Abort( );                        
+        protected void SafePointCheckIn()
+        {
+            if(Kill)
+                Thread.CurrentThread.Abort();
 
             waiting = true;
-            waitHandle.WaitOne( );
+            waitHandle.WaitOne();
             waiting = false;
         }
         public void KillProcess()
         {
             kill = true;
-            waitHandle.Set( );
+            waitHandle.Set();
         }
         public bool Running
         {
@@ -65,7 +65,7 @@ namespace GameTools.Process
 
                 return processThread.IsAlive;
             }
-        }                
+        }
         public bool Started
         {
             get
@@ -73,8 +73,8 @@ namespace GameTools.Process
                 return started;
             }
         }
-        public bool Waiting 
-        { 
+        public bool Waiting
+        {
             get
             {
                 return waiting;

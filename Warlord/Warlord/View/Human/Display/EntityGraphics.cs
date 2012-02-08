@@ -9,7 +9,7 @@ namespace Warlord.View.Human.Display
         : ScreenElement
     {
         uint actorID;
-        EntityGraphics( uint actorID )
+        EntityGraphics(uint actorID)
         {
             this.actorID = actorID;
         }

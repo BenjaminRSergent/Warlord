@@ -15,11 +15,11 @@ namespace Warlord.Event
 
         private int currentTime;
 
-        public WarlordEventManager( )
+        public WarlordEventManager()
         {
-            eventQueue = new MultipriorityQueue<int,BaseGameEvent>( );
+            eventQueue = new MultipriorityQueue<int, BaseGameEvent>();
 
-            subscriberDirectory = new Dictionary<string,List<EventReaction>>( );
+            subscriberDirectory = new Dictionary<string, List<EventReaction>>();
 
             currentTime = 0;
         }
@@ -28,7 +28,7 @@ namespace Warlord.Event
         {
             if(!subscriberDirectory.ContainsKey(eventType))
             {
-                subscriberDirectory.Add(eventType, new List<EventReaction>( ));
+                subscriberDirectory.Add(eventType, new List<EventReaction>());
             }
 
             subscriberDirectory[eventType].Add(eventReaction);
@@ -37,37 +37,37 @@ namespace Warlord.Event
         public void SendEvent(BaseGameEvent theEvent)
         {
             if(subscriberDirectory.ContainsKey(theEvent.EventType))
-            { 
-                if( theEvent.Delay == 0 )
-                    FireEvent( theEvent );
+            {
+                if(theEvent.Delay == 0)
+                    FireEvent(theEvent);
                 else
-                    eventQueue.Add( currentTime+theEvent.Delay, theEvent );
+                    eventQueue.Add(currentTime + theEvent.Delay, theEvent);
             }
         }
-        public void Update( GameTime gameTime )
+        public void Update(GameTime gameTime)
         {
-            SendDelayedEvents( gameTime.ElapsedGameTime.Milliseconds );
+            SendDelayedEvents(gameTime.ElapsedGameTime.Milliseconds);
         }
-        public void SendDelayedEvents( int currentTime )
+        public void SendDelayedEvents(int currentTime)
         {
             List<BaseGameEvent> eventsToFire;
 
-            if( eventQueue.Count > 0 )
+            if(eventQueue.Count > 0)
             {
-                eventsToFire = eventQueue.GetAndRemove( currentTime );
+                eventsToFire = eventQueue.GetAndRemove(currentTime);
 
-                foreach( BaseGameEvent theEvent in eventsToFire )
+                foreach(BaseGameEvent theEvent in eventsToFire)
                 {
-                    FireEvent( theEvent );
+                    FireEvent(theEvent);
                 }
-            }                        
+            }
         }
 
-        private void FireEvent( BaseGameEvent theEvent )
+        private void FireEvent(BaseGameEvent theEvent)
         {
-            foreach( EventReaction eventReaction in subscriberDirectory[theEvent.EventType] )
+            foreach(EventReaction eventReaction in subscriberDirectory[theEvent.EventType])
             {
-                eventReaction( theEvent );
+                eventReaction(theEvent);
             }
         }
     }

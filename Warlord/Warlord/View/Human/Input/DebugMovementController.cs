@@ -19,7 +19,7 @@ namespace Warlord.View.Human.Input
 
         bool shiftIsDown;
 
-        public DebugMovementController( Camera3D camera, GameWindow gameWindow )
+        public DebugMovementController(Camera3D camera, GameWindow gameWindow)
         {
             this.camera = camera;
             this.gameWindow = gameWindow;
@@ -31,7 +31,7 @@ namespace Warlord.View.Human.Input
 
             float moveSpeed = 0.1f;
 
-            if( shiftIsDown )
+            if(shiftIsDown)
                 moveSpeed *= 10;
 
             switch(key)
@@ -40,23 +40,23 @@ namespace Warlord.View.Human.Input
                     shiftIsDown = true;
                     return true;
                 case Keys.W:
-                    camera.ForceMoveFly(new Vector3(0,0,moveSpeed));
+                    camera.ForceMoveFly(new Vector3(0, 0, moveSpeed));
                     return true;
                 case Keys.A:
-                    camera.ForceMoveFly(new Vector3(-moveSpeed,0,0));
+                    camera.ForceMoveFly(new Vector3(-moveSpeed, 0, 0));
                     return true;
                 case Keys.S:
-                    camera.ForceMoveFly(new Vector3(0,0,0-moveSpeed));
+                    camera.ForceMoveFly(new Vector3(0, 0, 0 - moveSpeed));
                     return true;
                 case Keys.D:
-                    camera.ForceMoveFly(new Vector3(moveSpeed,0,0));
+                    camera.ForceMoveFly(new Vector3(moveSpeed, 0, 0));
                     return true;
 
                 case Keys.Q:
-                    camera.ForceMoveFly(new Vector3(0,-moveSpeed,0));
+                    camera.ForceMoveFly(new Vector3(0, -moveSpeed, 0));
                     return true;
                 case Keys.E:
-                    camera.ForceMoveFly(new Vector3(0,moveSpeed,0));
+                    camera.ForceMoveFly(new Vector3(0, moveSpeed, 0));
                     return true;
             }
 
@@ -75,23 +75,23 @@ namespace Warlord.View.Human.Input
         }
         public bool OnMouseMove(Vector2 prevPosition, Microsoft.Xna.Framework.Vector2 currentPosition)
         {
-            if(GlobalApplication.Application.Active)
-            { 
+            if(GlobalSystems.GameWindowHasFocus)
+            {
                 Vector2 facingRotation;
                 Vector2 mouseMove = currentPosition - prevPosition;
 
-                facingRotation.X = 0.001f * (gameWindow.ClientBounds.Width/2 - mouseMove.X);
-                facingRotation.Y = 0.001f * (gameWindow.ClientBounds.Height/2 - mouseMove.Y);
+                facingRotation.X = 0.001f * (gameWindow.ClientBounds.Width / 2 - mouseMove.X);
+                facingRotation.Y = 0.001f * (gameWindow.ClientBounds.Height / 2 - mouseMove.Y);
 
-                Mouse.SetPosition( gameWindow.ClientBounds.Width/2,
-                                   gameWindow.ClientBounds.Height/2);
+                Mouse.SetPosition(gameWindow.ClientBounds.Width / 2,
+                                   gameWindow.ClientBounds.Height / 2);
 
-            
-                System.Drawing.Rectangle window = new System.Drawing.Rectangle( gameWindow.ClientBounds.Left,
+
+                System.Drawing.Rectangle window = new System.Drawing.Rectangle(gameWindow.ClientBounds.Left,
                                                                                 gameWindow.ClientBounds.Top,
                                                                                 gameWindow.ClientBounds.Right,
-                                                                                gameWindow.ClientBounds.Bottom );
-                ClipCursor( ref window );
+                                                                                gameWindow.ClientBounds.Bottom);
+                ClipCursor(ref window);
 
                 camera.ForceChangeRotation(facingRotation);
             }

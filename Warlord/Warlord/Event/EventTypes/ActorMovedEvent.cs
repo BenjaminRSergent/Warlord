@@ -4,36 +4,24 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Warlord.GameTools;
+using Warlord.Logic.Data.Entity;
 
 namespace Warlord.Event.EventTypes
 {
-    class ActorMovedData
-    {
-        public uint actorID;
-        public Vector3 oldLocation;
-        public Vector3 newLocation;
-
-        public ActorMovedData(uint actorID, Vector3 oldLocation, Vector3 newLocation)
-        {
-            this.actorID = actorID;
-            this.oldLocation = oldLocation;
-            this.newLocation = newLocation;
-        }        
-    }
-
     class ActorMovedEvent : BaseGameEvent
     {
-        ActorMovedData data;        
+        MovingEntity movedEntity;
 
-        public ActorMovedEvent( Optional<Object> sender, int delay, ActorMovedData data )
+        public ActorMovedEvent(Optional<Object> sender, int delay, MovingEntity movedEntity)
             : base(sender, "actor_moved", delay)
         {
-            this.data = data;
+            this.movedEntity = movedEntity;
         }
 
-        public ActorMovedData Data
+        public MovingEntity MovedEntity
         {
-            get { return data; }
+            get { return movedEntity; }
+            set { movedEntity = value; }
         }
     }
 }

@@ -10,29 +10,19 @@ using Warlord.Logic.Data;
 
 namespace Warlord.Event.EventTypes
 {
-    class RegionRemovedData
-    {
-        public Region deadRegion;
-
-        public RegionRemovedData(Region deadRegion)
-        {
-            this.deadRegion = deadRegion;
-        }        
-    }
-
     class RegionRemovedEvent : BaseGameEvent
     {
-        RegionRemovedData data;        
+        private Region deadRegion;
 
-        public RegionRemovedEvent( Optional<Object> sender, int delay, RegionRemovedData data )
+        public RegionRemovedEvent(Optional<Object> sender, int delay, Region deadRegion)
             : base(sender, "region_removed", delay)
         {
-            this.data = data;
+            this.deadRegion = deadRegion;
         }
 
-        public RegionRemovedData Data
+        public Region DeadRegion
         {
-            get { return data; }
+            get { return deadRegion; }
         }
     }
 }

@@ -12,14 +12,14 @@ namespace Warlord.Logic.Data.World
     class Block
     {
         private Vector3i upperLeftTopPosition;
-        private byte type;        
+        private byte type;
 
-        public Block( Vector3i upperLeftTopPosition, BlockType blockType )
+        public Block(Vector3i upperLeftTopPosition, BlockType blockType)
         {
             this.upperLeftTopPosition = upperLeftTopPosition;
             this.type = (byte)blockType;
         }
-        public void Save( BinaryWriter outStream )
+        public void Save(BinaryWriter outStream)
         {
             outStream.Write(UpperLeftTopPosition.X);
             outStream.Write(UpperLeftTopPosition.Y);
@@ -27,13 +27,13 @@ namespace Warlord.Logic.Data.World
 
             outStream.Write(type);
         }
-        public void Load( BinaryReader inStream )
+        public void Load(BinaryReader inStream)
         {
-            UpperLeftTopPosition.X = inStream.ReadInt32( );
-            UpperLeftTopPosition.Y = inStream.ReadInt32( );
-            UpperLeftTopPosition.Z = inStream.ReadInt32( );
+            upperLeftTopPosition.X = inStream.ReadInt32();
+            upperLeftTopPosition.Y = inStream.ReadInt32();
+            upperLeftTopPosition.Z = inStream.ReadInt32();
 
-            type = inStream.ReadByte( );
+            type = inStream.ReadByte();
         }
         public Vector3i UpperLeftTopPosition
         {
@@ -41,7 +41,7 @@ namespace Warlord.Logic.Data.World
         }
         public BlockType Type
         {
-            get { return (BlockType)type; }            
+            get { return (BlockType)type; }
         }
     }
 }

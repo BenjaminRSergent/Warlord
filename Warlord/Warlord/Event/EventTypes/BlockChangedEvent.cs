@@ -18,14 +18,14 @@ namespace Warlord.Event.EventTypes
         {
             this.oldBlock = oldBlock;
             this.newBlock = newBlock;
-        }        
+        }
     }
 
     class BlockChangedEvent : BaseGameEvent
     {
-        BlockChangedData data;        
+        BlockChangedData data;
 
-        public BlockChangedEvent( Optional<Object> sender, int delay, BlockChangedData data )
+        public BlockChangedEvent(Optional<Object> sender, int delay, BlockChangedData data)
             : base(sender, "block_changed", delay)
         {
             this.data = data;

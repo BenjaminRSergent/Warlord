@@ -7,14 +7,14 @@ namespace Warlord.GameTools
 {
     class Optional<T>
     {
-        private T data;        
+        private T data;
         private bool valid;
-        
-        public Optional( )
+
+        public Optional()
         {
             valid = false;
         }
-        public Optional( T data )
+        public Optional(T data)
         {
             this.data = data;
             valid = true;
@@ -23,8 +23,8 @@ namespace Warlord.GameTools
         public T Data
         {
             get { return data; }
-            set 
-            { 
+            set
+            {
                 data = value;
                 valid = true;
             }

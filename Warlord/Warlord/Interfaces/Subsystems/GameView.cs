@@ -10,13 +10,13 @@ namespace Warlord.Interfaces.Subsystems
     {
         Optional<uint> actorID;
 
-        public GameView( )
+        public GameView()
         {
-            actorID = new Optional<uint>( );
+            actorID = new Optional<uint>();
         }
-        public GameView( uint id)
+        public GameView(uint id)
         {
-            actorID = new Optional<uint>( id );
+            actorID = new Optional<uint>(id);
         }
         public Optional<uint> ActoractorID
         {

@@ -12,17 +12,17 @@ namespace Warlord.View.Human.Display
     {
         private int zOrder;
 
-        public ScreenElement( )
-        {            
+        public ScreenElement()
+        {
             this.zOrder = 0;
         }
-        public ScreenElement( int zOrder )
-        {            
+        public ScreenElement(int zOrder)
+        {
             this.zOrder = zOrder;
         }
 
-        abstract public void Draw( GameTime gameTime );      
-        
+        abstract public void Draw(GameTime gameTime);
+
         virtual public bool OnKeyDown(Keys key)
         {
             return false;
@@ -65,7 +65,7 @@ namespace Warlord.View.Human.Display
 
         public int ZOrder
         {
-            get { return zOrder; }            
+            get { return zOrder; }
         }
 
     }

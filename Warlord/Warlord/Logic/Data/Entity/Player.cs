@@ -7,11 +7,12 @@ using Microsoft.Xna.Framework;
 
 namespace Warlord.Logic.Data.Entity
 {
-    class Player : Entity
+    class Player : MovingEntity
     {
-        public Player( uint id, Vector3 position ) : base( id, position )
+        public Player(Vector3 position)
+            : base(position)
         {
-    
+
         }
     }
 }

@@ -40,5 +40,15 @@ namespace GameTools.Graph
         {
             return a*(1-amountGreaterThanA) + b*amountGreaterThanA;
         }
+
+        internal static float Dot(Vector2 firstVector, Vector2 secondVector)
+        {
+            return firstVector.X * secondVector.X + firstVector.Y * secondVector.Y;
+        }
+
+        internal static float Dot(Vector3 firstVector, Vector3 secondVector)
+        {
+            return firstVector.X * secondVector.X + firstVector.Y * secondVector.Y + firstVector.Z + secondVector.Z;
+        }
     }
 }

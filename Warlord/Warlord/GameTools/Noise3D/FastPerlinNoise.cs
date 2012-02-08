@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GameTools.Graph;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace GameTools.Noise3D
 {
@@ -18,11 +19,11 @@ namespace GameTools.Noise3D
         private PerlinNoiseSettings3D settings;
 
         public FastPerlinNoise(PerlinNoiseSettings3D settings)
-        {            
+        {
             this.settings = settings;
-            rng = new Random( settings.seed );
+            rng = new Random(settings.seed);
 
-            populatePremutations( );
+            populatePremutations();
         }
         public void FillWithPerlinNoise3D(float[] toFill)
         {
@@ -32,9 +33,9 @@ namespace GameTools.Noise3D
 
             int effectiveX;
             int effectiveY;
-            int effectiveZ;           
+            int effectiveZ;
 
-            calcLookup = new Dictionary<Vector3,FastPerlinInterpolatedNoise3D>( );
+            calcLookup = new Dictionary<Vector3, FastPerlinInterpolatedNoise3D>();
 
             for(int x = 0; x < 0 + width; x++)
             {
@@ -44,7 +45,7 @@ namespace GameTools.Noise3D
                     {
                         effectiveX = x + settings.startingPoint.X;
                         effectiveY = y + settings.startingPoint.Y;
-                        effectiveZ = z + settings.startingPoint.Z;
+                        effectiveZ = z + settings.startingPoint.Z;                       
 
                         toFill[x * height * length + y * length + z] = GetPerlinNoise3D(effectiveX, effectiveY, effectiveZ);
                     }
@@ -60,12 +61,14 @@ namespace GameTools.Noise3D
 
             x /= settings.zoom;
             y /= settings.zoom;
-            z /= settings.zoom;
+            z /= settings.zoom;    
+       
+   
 
             result = 0;
             for(int oct = 0; oct < settings.octaves; oct++)
             {
-                result += GenInterpolatedNoise(x * frequency, y * frequency, z * frequency);
+                result += amplitude * GenInterpolatedNoise(x * frequency, y * frequency, z * frequency);
 
                 frequency *= settings.frequencyMulti;
                 amplitude *= settings.persistence;
@@ -89,7 +92,7 @@ namespace GameTools.Noise3D
 
             Vector3 key = new Vector3(floorX, floorY, floorZ);
 
-            calcLookup.TryGetValue( key, out noise );
+            calcLookup.TryGetValue(key, out noise);
 
             if(noise == null)
             {
@@ -105,7 +108,7 @@ namespace GameTools.Noise3D
                 noise.bottomRightAbove = GenSmoothNoise(floorX + 1, floorY + 1, floorZ + 1);
 
                 calcLookup.Add(key, noise);
-            }  
+            }
 
             centerInter = GraphMath.LinearInterpolateFloat(noise.center, noise.centerRight, fractionalX);
             bottomInter = GraphMath.LinearInterpolateFloat(noise.bottom, noise.bottomRight, fractionalX);
@@ -124,7 +127,7 @@ namespace GameTools.Noise3D
             int adjustedX = x;
             int adjustedY = y;
             int adjustedZ = z;
-                        
+
             adjustedX = adjustedX % (premutationSize - 1);
             adjustedY = adjustedY % (premutationSize - 1);
             adjustedZ = adjustedZ % (premutationSize - 1);
@@ -134,20 +137,24 @@ namespace GameTools.Noise3D
             while(adjustedY < 1)
                 adjustedY = premutationSize + adjustedY - 2;
             while(adjustedZ < 1)
-                adjustedZ = premutationSize + adjustedZ - 2;         
+                adjustedZ = premutationSize + adjustedZ - 2;
 
 
             center = GetCenter(adjustedX, adjustedY, adjustedZ);
             sides = GetSides(adjustedX, adjustedY, adjustedZ);
             corners = GetCorners(adjustedX, adjustedY, adjustedZ);
 
+            Debug.Assert( Math.Abs(center) < 5/8.0);
+            Debug.Assert( Math.Abs(sides) < 1/4.0);
+            Debug.Assert( Math.Abs(corners) < 1/8.0);
+
             return corners + sides + center;
-        }       
+        }
 
         private float GetCenter(int adjustedX, int adjustedY, int adjustedZ)
         {
-           return 3 * ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ);
-        }        
+            return 5*ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ)/8;
+        }
         private float GetSides(int adjustedX, int adjustedY, int adjustedZ)
         {
             float right = ThreeIndexIntoArray(adjustedX + 1, adjustedY, adjustedZ);
@@ -158,7 +165,7 @@ namespace GameTools.Noise3D
             float forward = ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ + 1);
             float back = ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ - 1);
 
-            return (right + left + up + down + forward + back) / 12f;
+            return (right + left + up + down + forward + back) / 24f;
         }
         private float GetCorners(int adjustedX, int adjustedY, int adjustedZ)
         {
@@ -173,13 +180,13 @@ namespace GameTools.Noise3D
             float leftDownBack = ThreeIndexIntoArray(adjustedX - 1, adjustedY - 1, adjustedZ - 1);
 
             return (rightUpForward + rightUpBack + rightDownForward + rightDownBack +
-                    leftUpForward + leftUpBack + leftDownForward + leftDownBack)/32;
+                    leftUpForward + leftUpBack + leftDownForward + leftDownBack) / 64;
         }
 
         private float ThreeIndexIntoArray(int x, int y, int z)
         {
             return flatPremutationList[x * premutationSize * premutationSize + y * premutationSize + z];
-        }        
+        }
         private void populatePremutations()
         {
             flatPremutationList = new float[premutationSize * premutationSize * premutationSize];

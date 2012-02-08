@@ -8,6 +8,7 @@ using Warlord.GameTools;
 using Warlord.Event;
 using System.IO;
 using Warlord.Event.EventTypes;
+using System.Diagnostics;
 
 namespace Warlord.Logic.Data.World
 {
@@ -26,11 +27,13 @@ namespace Warlord.Logic.Data.World
 
         public RegionDatabase(int seed, Vector3i regionSize)
         {
+            Debug.Assert(regionSize.X > 0 && regionSize.Y > 0 && regionSize.Z > 0);
+
             createdWorlds = new HashSet<Vector2i>();
             regionMap = new Dictionary<Vector2i, Region>();
             generating = false;
 
-            RegionPool = new Stack<Region>( );
+            RegionPool = new Stack<Region>();
 
             this.seed = seed;
             this.regionSize = regionSize;
@@ -39,19 +42,19 @@ namespace Warlord.Logic.Data.World
         public bool CreateRegion(RegionUpdater updater, Vector2i regionCoordiants)
         {
             if(!regionMap.Keys.Contains(regionCoordiants))
-            { 
-                generating = true;                
-                Vector3i newOrigin = new Vector3i(regionCoordiants.X*regionSize.X, 0, regionCoordiants.Y*regionSize.Z);             
-                Region newRegion = GetNewRegion(newOrigin,  regionSize);
-                regionMap.Add(regionCoordiants, newRegion );
-                generator.FastGenerateRegion(updater, newOrigin );
+            {
+                generating = true;
+                Vector3i newOrigin = new Vector3i(regionCoordiants.X * regionSize.X, 0, regionCoordiants.Y * regionSize.Z);
+                Region newRegion = GetNewRegion(newOrigin, regionSize);
+                regionMap.Add(regionCoordiants, newRegion);
+                generator.FastGenerateRegion(updater, newOrigin);
                 generating = false;
 
                 RegionCreatedData creationData = new RegionCreatedData(newRegion);
 
-                GlobalApplication.Application.GameEventManager.SendEvent( new RegionCreatedEvent( new Optional<object>(this),                                                                          
-                                                                          0,
-                                                                          creationData ) );
+                GlobalSystems.EventManager.SendEvent(new RegionCreatedEvent(new Optional<object>(this),
+                                                      0,
+                                                      creationData));
 
                 return true;
             }
@@ -66,8 +69,8 @@ namespace Warlord.Logic.Data.World
             if(RegionPool.Count == 0)
                 newRegion = new Region(newOrigin, regionSize);
             else
-            { 
-                newRegion = RegionPool.Pop( );
+            {
+                newRegion = RegionPool.Pop();
                 newRegion.Reinit(newOrigin, regionSize);
             }
 
@@ -78,14 +81,13 @@ namespace Warlord.Logic.Data.World
             if(regionMap.Keys.Contains(regionCoordiants))
             {
                 Region theRegion = regionMap[regionCoordiants];
-                RegionRemovedData removedData = new RegionRemovedData(regionMap[regionCoordiants]);
-                GlobalApplication.Application.GameEventManager.SendEvent(new RegionRemovedEvent(new Optional<object>(this),
-                                                                          0,
-                                                                          removedData));
+                GlobalSystems.EventManager.SendEvent(new RegionRemovedEvent(new Optional<object>(this),
+                                                     0,
+                                                     theRegion));
 
                 regionMap.Remove(regionCoordiants);
 
-                theRegion.Deactivate( );
+                theRegion.Deactivate();
                 RegionPool.Push(theRegion);
             }
         }
@@ -93,58 +95,41 @@ namespace Warlord.Logic.Data.World
         {
             Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);
 
-            if(currentRegion.Valid)
-            {
-                Vector3i currentBlockRelativePosition = absolutePosition - currentRegion.Data.RegionOrigin;
+            Debug.Assert(currentRegion.Valid);
 
-                Block oldBlock = currentRegion.Data.GetBlock(currentBlockRelativePosition);                
-                currentRegion.Data.AddBlock(currentBlockRelativePosition, type);
-                Block newBlock = currentRegion.Data.GetBlock(currentBlockRelativePosition);
+            Vector3i currentBlockRelativePosition = absolutePosition - currentRegion.Data.RegionOrigin;
 
-                BlockChangedData blockChangedData = new BlockChangedData(oldBlock, newBlock);
+            Block oldBlock = currentRegion.Data.GetBlock(currentBlockRelativePosition);
+            currentRegion.Data.AddBlock(currentBlockRelativePosition, type);
+            Block newBlock = currentRegion.Data.GetBlock(currentBlockRelativePosition);
 
-                GlobalApplication.Application.GameEventManager.SendEvent(new BlockChangedEvent(new GameTools.Optional<object>(this),
-                                                                         0,
-                                                                         blockChangedData));
-            }
-            else
-            {
-                GlobalApplication.Application.ReportError("The region at absolute position " + absolutePosition +
-                                                           " does not exist and something tried to change one of its block from it");
-                throw new NullReferenceException("Invalid operation on a null region");
-            }
+            BlockChangedData blockChangedData = new BlockChangedData(oldBlock, newBlock);
+
+            GlobalSystems.EventManager.SendEvent(new BlockChangedEvent(new GameTools.Optional<object>(this),
+                                                                       0,
+                                                                       blockChangedData));
         }
         public Block GetBlock(Vector3i absolutePosition)
         {
             Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);
-            if(currentRegion.Valid)
-            {
-                Vector3i currentBlockRelativePosition = absolutePosition - currentRegion.Data.RegionOrigin;
-                return currentRegion.Data.GetBlock(currentBlockRelativePosition);
-            }
-            else
-            {
-                GlobalApplication.Application.ReportError("The region at absolute position " + absolutePosition +
-                                                           " does not exist and something tried to ask for a block from it");
-                throw new NullReferenceException("Invalid operation on a null region");
-            }
+
+            Debug.Assert(currentRegion.Valid);
+
+            Vector3i currentBlockRelativePosition = absolutePosition - currentRegion.Data.RegionOrigin;
+            return currentRegion.Data.GetBlock(currentBlockRelativePosition);
+
         }
         public void ChangeFacing(Vector3i absolutePosition, BlockFaceField facing, bool active)
         {
-            Optional<Region> region = GetRegionFromAbsolute(absolutePosition);
-            if(region.Valid)
-            {
-                Vector3i relativePosition = absolutePosition - region.Data.RegionOrigin;
-                if(active)
-                    region.Data.AddFace(relativePosition, facing);
-                else
-                    region.Data.RemoveFace(relativePosition, facing);
-            }
+            Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);
+
+            Debug.Assert(currentRegion.Valid);
+
+            Vector3i relativePosition = absolutePosition - currentRegion.Data.RegionOrigin;
+            if(active)
+                currentRegion.Data.AddFace(relativePosition, facing);
             else
-            {
-                GlobalApplication.Application.ReportError("The region at absolute position " + absolutePosition +
-                                                           " does not exist and something tried to change it's facing");
-            }
+                currentRegion.Data.RemoveFace(relativePosition, facing);
 
         }
         public Optional<Region> GetRegionFromAbsolute(Vector3i absolutePosition)
@@ -196,7 +181,7 @@ namespace Warlord.Logic.Data.World
             foreach(Vector2i regionCo in keys)
                 UnloadRegion(regionCo);
 
-            RegionPool.Clear( );
+            RegionPool.Clear();
 
             int numRegions = inStream.ReadInt32();
             Vector2i position;
@@ -213,9 +198,9 @@ namespace Warlord.Logic.Data.World
 
                 RegionCreatedData creationData = new RegionCreatedData(region);
 
-                GlobalApplication.Application.GameEventManager.SendEvent( new RegionCreatedEvent( new Optional<object>(this),                                                                          
-                                                                          0,
-                                                                          creationData ) );
+                GlobalSystems.EventManager.SendEvent(new RegionCreatedEvent(new Optional<object>(this),
+                                                                              0,
+                                                                              creationData));
             }
         }
         public Vector3i RegionSize

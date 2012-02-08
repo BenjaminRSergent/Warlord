@@ -22,9 +22,9 @@ namespace Warlord.Event.EventTypes
 
     class RegionCreatedEvent : BaseGameEvent
     {
-        RegionCreatedData data;        
+        RegionCreatedData data;
 
-        public RegionCreatedEvent( Optional<Object> sender, int delay, RegionCreatedData data )
+        public RegionCreatedEvent(Optional<Object> sender, int delay, RegionCreatedData data)
             : base(sender, "region_created", delay)
         {
             this.data = data;

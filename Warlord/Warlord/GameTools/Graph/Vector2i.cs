@@ -39,9 +39,9 @@ namespace GameTools.Graph
         }
         public float AngleBetween( Vector2i otherVector )
         {
-            Vector2f thisNorm = GetNormalized( );
-            Vector2f otherNorm = otherVector.GetNormalized( );
-            float dot = thisNorm.DotProduct( otherNorm );
+            Vector2 thisNorm = GetNormalized( );
+            Vector2 otherNorm = otherVector.GetNormalized( );
+            float dot = GraphMath.Dot(thisNorm, otherNorm );
 
             return (float)Math.Acos(dot);
         }
@@ -49,9 +49,9 @@ namespace GameTools.Graph
         {
             return this.X * otherVector.X + this.Y * otherVector.Y;
         }  
-        public Vector2f GetNormalized( )
+        public Vector2 GetNormalized( )
         {
-            Vector2f normVec = new Vector2f( this.X, this.Y );
+            Vector2 normVec = new Vector2( this.X, this.Y );
             normVec.Normalize( );
 
             return normVec;

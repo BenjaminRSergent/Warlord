@@ -10,6 +10,6 @@ namespace Warlord.Logic.Data.World
         Air,
         Grass,
         Dirt,
-        Stone        
+        Stone
     }
 }

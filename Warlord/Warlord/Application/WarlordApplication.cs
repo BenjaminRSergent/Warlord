@@ -9,11 +9,14 @@ using Warlord.Logic.Data.World;
 using Warlord.View;
 using Warlord.View.Human.Input;
 using Warlord.View.Human.Display;
+using System;
 
 namespace Warlord
 {
-    internal class WarlordApplication : Game, GameApplication
+    internal class WarlordApplication : Game
     {
+        private const long MEMORY_THRESHOLD = 1536000000;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -22,20 +25,18 @@ namespace Warlord
 
         ErrorLogger errorLogger;
 
-        GlobalApplication globalAccess;
-
-        WarlordEventManager eventManager;
+        WarlordEventManager eventManager;        
 
         public WarlordApplication()
-        {            
-            globalAccess = new GlobalApplication(this);
+        {
+            GlobalSystems.SetCurrentApplication(this);
 
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
             eventManager = new WarlordEventManager();
 
-            errorLogger = new ErrorLogger( );
+            errorLogger = new ErrorLogger();
             errorLogger.Init("Error.log", true);
 
             GameStaticInitalizer.InitalizeStatics();
@@ -60,23 +61,25 @@ namespace Warlord
 
             debugView = new DebugView(Window, GraphicsDevice, Content);
 
-            debugView.BeginGame( );
-            logic.BeginGame( );
+            debugView.BeginGame();
+            logic.BeginGame();
         }
 
         protected override void UnloadContent()
-        {            
-            logic.EndGame( );
+        {
+            logic.EndGame();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            Active = IsActive;
-
             Mouse.WindowHandle = Window.Handle;
 
-            logic.Update( gameTime );
-            debugView.HandleInput( );
+            logic.Update(gameTime);
+            debugView.HandleInput();
+
+            if( GC.GetTotalMemory(false) > MEMORY_THRESHOLD )
+                GC.Collect( );
+
 
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -85,24 +88,22 @@ namespace Warlord
         }
 
         protected override void Draw(GameTime gameTime)
-        {           
+        {
             debugView.Draw(gameTime);
 
             base.Draw(gameTime);
-        }       
+        }
         public void ReportError(string errorReport)
         {
             errorLogger.Write(errorReport);
         }
-        public EventManager GameEventManager
+        public WarlordEventManager EventManager
         {
             get { return eventManager; }
         }
-        public EntityManager EntityManager
+        public WarlordEntityManager EntityManager
         {
             get { return logic.EntityManager; }
         }
-
-        public bool Active { get; private set; }
     }
 }

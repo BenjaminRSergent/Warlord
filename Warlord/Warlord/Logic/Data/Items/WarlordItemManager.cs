@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Warlord.Logic.Physics
+namespace Warlord.Logic.Data.Items
 {
-    class NaturalForces
+    class WarlordItemManager
     {
     }
 }

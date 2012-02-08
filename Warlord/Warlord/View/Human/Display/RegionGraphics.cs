@@ -104,7 +104,7 @@ namespace Warlord.View.Human.Display
             Vector3i currentFace;
             for(int k = 0; k < 6; k++)
             {
-                if( regionMesh.Length < index + k + 1 )
+                if(regionMesh.Length < index + k + 1)
                     break;
 
                 currentFace = (bottomBackLeft + offsetMap[k]);
@@ -154,7 +154,7 @@ namespace Warlord.View.Human.Display
 
         public void Dispose()
         {
-            if( regionBuffer != null )
+            if(regionBuffer != null)
                 regionBuffer.Dispose();
         }
 

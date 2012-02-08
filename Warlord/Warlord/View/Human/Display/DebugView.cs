@@ -26,21 +26,21 @@ namespace Warlord.View.Human.Display
         SpriteBatch spriteBatch;
         SpriteFont spriteFont;
 
-        ContentManager content;                   
+        ContentManager content;
 
         public DebugView(GameWindow gameWindow, GraphicsDevice graphics, ContentManager content)
         {
             this.gameWindow = gameWindow;
-            this.graphics = graphics;           
+            this.graphics = graphics;
             this.content = content;
-            
+
             TextureRepository.BlockTextures = content.Load<Texture2D>("Textures/Blocks/block_textures");
             spriteBatch = new SpriteBatch(graphics);
-            spriteFont = content.Load<SpriteFont>("Font/DebugFont");    
-            
-            camera = new Camera3D( gameWindow.ClientBounds, new Vector3( 0, 80, 0), Vector2.Zero, Vector3.Up );
+            spriteFont = content.Load<SpriteFont>("Font/DebugFont");
+
+            camera = new Camera3D(gameWindow.ClientBounds, new Vector3(0, 80, 0), Vector2.Zero, Vector3.Up);
         }
-        public void BeginGame( )
+        public void BeginGame()
         {
             DebugMovementController controller = new DebugMovementController(camera, gameWindow);
             PushScreenElement(new WorldGraphics(graphics, gameWindow, content, camera));
@@ -48,13 +48,13 @@ namespace Warlord.View.Human.Display
             MouseListeners.Add(controller);
         }
         public override void Draw(GameTime gameTime)
-        {           
+        {
             graphics.Clear(Color.SkyBlue);
-            base.Draw( gameTime );
+            base.Draw(gameTime);
         }
         public override void HandleInput()
         {
-            base.HandleInput( );   
+            base.HandleInput();
         }
         public override void Update(GameTime gameTime)
         {

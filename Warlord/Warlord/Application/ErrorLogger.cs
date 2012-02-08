@@ -10,27 +10,27 @@ namespace Warlord
     {
         StreamWriter errorLog;
 
-        public ErrorLogger( )
+        public ErrorLogger()
         {
 
         }
         public void Init(String fileName, bool append)
         {
-            errorLog = new StreamWriter(File.Open(fileName, (append) ? FileMode.Append : FileMode.Create ));
+            errorLog = new StreamWriter(File.Open(fileName, (append) ? FileMode.Append : FileMode.Create));
         }
-        public void Write( string errorReport )
+        public void Write(string errorReport)
         {
             if(errorLog != null)
-            {                
-                errorLog.Write( DateTime.Now.TimeOfDay + ": ");
-                errorLog.WriteLine( errorReport );
-                errorLog.WriteLine( );
+            {
+                errorLog.Write(DateTime.Now.TimeOfDay + ": ");
+                errorLog.WriteLine(errorReport);
+                errorLog.WriteLine();
             }
         }
 
         public void Dispose()
         {
-            errorLog.Dispose( );
+            errorLog.Dispose();
         }
     }
 }

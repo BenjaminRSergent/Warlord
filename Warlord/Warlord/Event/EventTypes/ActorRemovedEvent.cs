@@ -8,34 +8,20 @@ using Warlord.GameTools;
 
 namespace Warlord.Event.EventTypes
 {
-    class ActorRemovedData
-    {
-        public uint actorID;
-        public Entity actor;
-        public Vector3 location;
-
-        public ActorRemovedData(uint actorID, Entity actor, Vector3 location)
-        {
-            this.actorID = actorID;
-            this.actor = actor;
-            this.location = location;
-        }        
-    }
-
-    class ActorRemovedEvent 
+    class ActorRemovedEvent
         : BaseGameEvent
     {
-        ActorRemovedData data;        
+        GameEntity deadEntity;
 
-        public ActorRemovedEvent( Optional<Object> sender, int delay, ActorRemovedData data )
+        public ActorRemovedEvent(Optional<Object> sender, int delay, GameEntity deadEntity)
             : base(sender, "actor_removed", delay)
         {
-            this.data = data;
+            this.deadEntity = deadEntity;
         }
 
-        public ActorRemovedData Data
+        public GameEntity DeadEntity
         {
-            get { return data; }
+            get { return deadEntity; }
         }
     }
 }

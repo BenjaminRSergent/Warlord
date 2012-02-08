@@ -11,7 +11,7 @@ namespace GameTools.Process
 {
     abstract class MultiTickProcess
     {
-        private int timeLeft; 
+        private int timeLeft;
         private Optional<MultiTickProcess> next;
 
         public MultiTickProcess(int timeToLive)
@@ -26,7 +26,7 @@ namespace GameTools.Process
         }
 
         public void Update(GameTime gameTime)
-        {            
+        {
             timeLeft -= gameTime.ElapsedGameTime.Milliseconds;
 
             UpdateBehavior(gameTime);
@@ -46,7 +46,7 @@ namespace GameTools.Process
         public void KillProcess()
         {
         }
-    
+
         public bool Dead
         {
             get;
