@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace Warlord
+namespace Warlord.Application
 {
     class ErrorLogger : IDisposable
     {

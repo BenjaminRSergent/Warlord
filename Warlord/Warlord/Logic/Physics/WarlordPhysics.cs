@@ -7,10 +7,10 @@ using Warlord.Logic.Data.Entity;
 using Warlord.GameTools;
 using Warlord.Event;
 using Warlord.Event.EventTypes;
+using Warlord.Application;
 
 namespace Warlord.Logic.Physics
 {
-    // Needs a method of adding local temporary forces
     class WarlordPhysics
     {
         Dictionary<uint, MovingEntity> movingEntityMap;

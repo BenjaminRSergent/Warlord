@@ -12,26 +12,21 @@ using Warlord.View.Human.Display;
 using System;
 using System.Diagnostics;
 using Warlord.GameTools.Statistics;
+using GameTools.Process;
 
-namespace Warlord
+namespace Warlord.Application
 {
     internal class WarlordApplication : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch debugSpriteBatch;
+        GraphicsDeviceManager graphics;       
 
         WarlordLogic logic;
         DebugView debugView;
+        DebugFpsHelper fpsHelper;
 
         ErrorLogger errorLogger;
-
-        WarlordEventManager eventManager;        
-
-        Stopwatch stopWatch;
-        double[] fps = new double[60];
-        int advFps = 60;
-        int fpsIndex;
-        private SpriteFont debugFont;
+        WarlordEventManager eventManager;
+        ThreadManager threadManager;        
 
         public WarlordApplication()
         {
@@ -44,6 +39,7 @@ namespace Warlord
         protected override void Initialize()
         {
             eventManager = new WarlordEventManager();
+            threadManager = new ThreadManager( );
 
             errorLogger = new ErrorLogger();
             errorLogger.Init("Error.log", true);
@@ -54,20 +50,14 @@ namespace Warlord
 
             logic = new WarlordLogic();
 
-            stopWatch = new Stopwatch( );
-
-            stopWatch.Start( );
+            fpsHelper = new DebugFpsHelper( GraphicsDevice, Content );
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            debugSpriteBatch = new SpriteBatch(GraphicsDevice);
-
             debugView = new DebugView(Window, GraphicsDevice, Content);
-
-            debugFont = Content.Load<SpriteFont>("Font/DebugFont");
 
             debugView.BeginGame();
             logic.BeginGame();
@@ -76,6 +66,7 @@ namespace Warlord
         protected override void UnloadContent()
         {
             logic.EndGame();
+            threadManager.ShutDown( );
         }
 
         protected override void Update(GameTime gameTime)
@@ -85,7 +76,7 @@ namespace Warlord
             logic.Update(gameTime);
             debugView.HandleInput();
 
-            CalcFPS( );
+            fpsHelper.CalcFPS( );
 
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -94,44 +85,13 @@ namespace Warlord
         }
         protected override void Draw(GameTime gameTime)
         {           
-            debugView.Draw(gameTime);            
-            
-            DrawFPS( );
+            debugView.Draw(gameTime);          
+  
+            fpsHelper.DrawFPS( );
 
             base.Draw(gameTime);
         }
-        protected void CalcFPS( )
-        {
-            if(fpsIndex > fps.Length-1)
-                fpsIndex = 0;
-
-            long realDeltaTime = stopWatch.ElapsedMilliseconds;
-            if( realDeltaTime > 0)
-                fps[fpsIndex] = 1000/realDeltaTime;
-            stopWatch.Restart( );
-
-            fpsIndex++;
-
-        }        
-        private void DrawFPS( )
-        {
-            RasterizerState rs = GraphicsDevice.RasterizerState;
-            DepthStencilState ds = GraphicsDevice.DepthStencilState;
-            BlendState bs = GraphicsDevice.BlendState;
-
-            int smoothFps = (int)Statistics.Adverage(fps);
-            advFps += smoothFps;
-            advFps /= 2;
-
-            debugSpriteBatch.Begin( );
-            debugSpriteBatch.DrawString( debugFont, "Current FPS: " + smoothFps, new Vector2( 20, 20), Color.Yellow);
-            debugSpriteBatch.DrawString( debugFont, "Adverage FPS: " + advFps, new Vector2( 20, 40), Color.Yellow);
-            debugSpriteBatch.End( );
-
-            GraphicsDevice.RasterizerState = rs;
-            GraphicsDevice.DepthStencilState = ds;
-            GraphicsDevice.BlendState = bs;
-        }
+        
         public void ReportError(string errorReport)
         {
             errorLogger.Write(errorReport);
@@ -143,6 +103,10 @@ namespace Warlord
         public WarlordEntityManager EntityManager
         {
             get { return logic.EntityManager; }
+        }
+        public ThreadManager ThreadManager
+        {
+            get { return threadManager; }
         }
     }
 }

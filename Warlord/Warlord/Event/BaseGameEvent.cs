@@ -10,7 +10,7 @@ namespace Warlord.Event
     {
         private int hash;
 
-        public BaseGameEvent(Optional<Object> sender, String eventType, int delay)
+        protected BaseGameEvent(Optional<Object> sender, String eventType, int delay)
         {
             Sender = sender;
             EventType = eventType;

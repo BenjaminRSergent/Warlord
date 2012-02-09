@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using GameTools;
 using System.Runtime.InteropServices;
+using Warlord.Application;
 
 namespace Warlord.View.Human.Input
 {
@@ -27,7 +28,7 @@ namespace Warlord.View.Human.Input
         public bool OnKeyDown(Keys key)
         {
             // a real controller tells its actor where to try to move;
-            // it's the brains not the legs.
+            // it's the brains not the legs.            
 
             float moveSpeed = 0.06f;
 
@@ -73,28 +74,25 @@ namespace Warlord.View.Human.Input
 
             return false;
         }
-        public bool OnMouseMove(Vector2 prevPosition, Microsoft.Xna.Framework.Vector2 currentPosition)
+        public bool OnMouseMove(Vector2 prevPosition, Vector2 currentPosition)
         {
-            if(GlobalSystems.GameWindowHasFocus)
-            {
-                Vector2 facingRotation;
-                Vector2 mouseMove = currentPosition - prevPosition;
+            Vector2 centerOfScreen = new Vector2( gameWindow.ClientBounds.Width / 2,
+                                                  gameWindow.ClientBounds.Height / 2 );
+            Vector2 facingRotation;
+            Vector2 mouseMove = centerOfScreen - currentPosition;
 
-                facingRotation.X = 0.001f * (gameWindow.ClientBounds.Width / 2 - mouseMove.X);
-                facingRotation.Y = 0.001f * (gameWindow.ClientBounds.Height / 2 - mouseMove.Y);
+            facingRotation.X = 0.001f * mouseMove.X;
+            facingRotation.Y = 0.001f * mouseMove.Y;
 
-                Mouse.SetPosition(gameWindow.ClientBounds.Width / 2,
-                                   gameWindow.ClientBounds.Height / 2);
+            Mouse.SetPosition((int)centerOfScreen.X,(int)centerOfScreen.Y);
 
+            System.Drawing.Rectangle window = new System.Drawing.Rectangle(gameWindow.ClientBounds.Left,
+                                                                            gameWindow.ClientBounds.Top,
+                                                                            gameWindow.ClientBounds.Right,
+                                                                            gameWindow.ClientBounds.Bottom);
+            ClipCursor(ref window);
 
-                System.Drawing.Rectangle window = new System.Drawing.Rectangle(gameWindow.ClientBounds.Left,
-                                                                                gameWindow.ClientBounds.Top,
-                                                                                gameWindow.ClientBounds.Right,
-                                                                                gameWindow.ClientBounds.Bottom);
-                ClipCursor(ref window);
-
-                camera.ForceChangeRotation(facingRotation);
-            }
+            camera.ForceChangeRotation(facingRotation);            
 
             return true;
         }

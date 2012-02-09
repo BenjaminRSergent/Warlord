@@ -36,15 +36,27 @@ namespace Warlord.Logic.Data.World
         private void LoadDefaultSettings()
         {            
             noiseSettings = new PerlinNoiseSettings3D();
-            noiseSettings.frequencyMulti = 2.2f;
+            noiseSettings.frequencyMulti = 2.0f;
             noiseSettings.octaves = 4;
             noiseSettings.persistence = 0.5f;
             noiseSettings.seed = 3;
             noiseSettings.size = generatorSettings.RegionSize;
             noiseSettings.startingPoint = Vector3i.Zero;
-            noiseSettings.zoom = 120;
+            noiseSettings.zoom = 60;
 
-            fastNoise = new FastPerlinNoise(noiseSettings);
+            fastNoise = new FastPerlinNoise(noiseSettings);                       
+
+            generatorSettings.midLevel = generatorSettings.RegionSize.Y/10;
+            generatorSettings.highLevel = (6*generatorSettings.RegionSize.Y)/7;
+            
+            generatorSettings.lowLevelZone = new ZoneBlockSettings(-1,-0.7f, GetDefaultHeightMod(0, generatorSettings.midLevel));
+            generatorSettings.midLevelZone = new ZoneBlockSettings(0.1f, 1, GetDefaultHeightMod(generatorSettings.midLevel,generatorSettings.highLevel));
+            generatorSettings.highLevelZone = new ZoneBlockSettings(0.6f, 1, GetDefaultHeightMod(generatorSettings.highLevel, generatorSettings.RegionSize.Y));
+        }
+        private ZoneBlockSettings.ModifyDensity GetDefaultHeightMod(int heightZoneStart, int heightZoneEnd)
+        {
+            return ( (float density, float height) => 
+                density - ((height-heightZoneStart)/(heightZoneEnd - heightZoneStart))/2 );
         }
         public void FastGenerateRegion(RegionUpdater ownerWorld, Vector3i origin)
         {
@@ -127,15 +139,13 @@ namespace Warlord.Logic.Data.World
         {
             Debug.Assert(Math.Abs(noise) <= 1.1);
 
-            if( height == 0 )
-                return BlockType.Stone;
+            if( height < generatorSettings.midLevel )
+                return generatorSettings.lowLevelZone.GetBlockFromDensity(noise, height);
 
-            if( noise > 0.5 )
-                return BlockType.Stone;
-            if( noise > 0 )
-                return BlockType.Dirt;
+            if( height < generatorSettings.highLevel )
+                return generatorSettings.midLevelZone.GetBlockFromDensity(noise, height);
 
-            return BlockType.Air;
+            return generatorSettings.highLevelZone.GetBlockFromDensity(noise, height);
         }
 
         public int Seed

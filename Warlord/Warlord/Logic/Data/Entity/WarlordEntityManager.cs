@@ -7,6 +7,7 @@ using Warlord.GameTools;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
 using Warlord.Event.EventTypes;
+using Warlord.Application;
 
 namespace Warlord.Logic.Data.Entity
 {

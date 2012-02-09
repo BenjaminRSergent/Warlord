@@ -8,7 +8,7 @@ using GameTools.Process;
 
 namespace Warlord.Logic
 {
-    class WarlordLogic : GameLogic
+    class WarlordLogic
     {
         ProcessManager processManager;
         WarlordEntityManager entityManager;

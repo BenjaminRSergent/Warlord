@@ -10,7 +10,7 @@ using Warlord.Logic.Data;
 using Warlord.Logic.Data.World;
 using Warlord.View.Human.Display;
 
-namespace Warlord
+namespace Warlord.Application
 {
     class GameStaticInitalizer
     {

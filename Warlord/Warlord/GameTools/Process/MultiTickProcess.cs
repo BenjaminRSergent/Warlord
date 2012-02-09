@@ -11,33 +11,28 @@ namespace GameTools.Process
 {
     abstract class MultiTickProcess
     {
-        private int timeLeft;
         private Optional<MultiTickProcess> next;
 
-        public MultiTickProcess(int timeToLive)
+        public MultiTickProcess()
         {
-            this.timeLeft = timeToLive;
             next = new Optional<MultiTickProcess>();
         }
         public MultiTickProcess(int timeToLive, MultiTickProcess nextProcess)
         {
-            this.timeLeft = timeToLive;
             next = new Optional<MultiTickProcess>(nextProcess);
         }
 
         public void Update(GameTime gameTime)
         {
-            timeLeft -= gameTime.ElapsedGameTime.Milliseconds;
+            bool done = UpdateBehavior(gameTime);
 
-            UpdateBehavior(gameTime);
-
-            if(timeLeft < 1)
+            if(done)
             {
                 Dead = true;
             }
         }
 
-        abstract protected void UpdateBehavior(GameTime gameTime);
+        abstract protected bool UpdateBehavior(GameTime gameTime);
 
         public void AttachNext(MultiTickProcess nextProcess)
         {

@@ -112,7 +112,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DebugTools\SaveFormatTest.cs" />
+    <Compile Include="Application\DebugFpsHelper.cs" />
     <Compile Include="Event\BaseGameEvent.cs" />
     <Compile Include="Event\EventManager.cs" />
     <Compile Include="Event\EventTypes\ActorCreatedEvent.cs" />
@@ -121,11 +121,9 @@
     <Compile Include="Event\EventTypes\BlockChangedEvent.cs" />
     <Compile Include="Event\EventTypes\RegionCreatedEvent.cs" />
     <Compile Include="Event\EventTypes\RegionRemovedEvent.cs" />
-    <Compile Include="Event\ValidEventInitializer.cs" />
     <Compile Include="Application\GameStaticInitalizer.cs" />
     <Compile Include="GameTools\Camera3D.cs" />
     <Compile Include="GameTools\Graph\GraphMath.cs" />
-    <Compile Include="GameTools\Graph\BasicComparer.cs" />
     <Compile Include="GameTools\MultipriorityQueue.cs" />
     <Compile Include="GameTools\Noise2D\PerlinNoise2D.cs" />
     <Compile Include="GameTools\Noise2D\PerlinNoiseSettings2D.cs" />
@@ -136,6 +134,7 @@
     <Compile Include="GameTools\Noise3D\PerlinNoise3D.cs" />
     <Compile Include="GameTools\Noise3D\PerlinNoiseSettings3D.cs" />
     <Compile Include="GameTools\Noise3D\SimpleNoise3D.cs" />
+    <Compile Include="GameTools\Process\ThreadManager.cs" />
     <Compile Include="GameTools\State\NullState.cs" />
     <Compile Include="GameTools\Optional.cs" />
     <Compile Include="GameTools\Graph\Vector2i.cs" />
@@ -145,9 +144,8 @@
     <Compile Include="GameTools\Statistics\Statistics.cs" />
     <Compile Include="Application\GlobalSystems.cs" />
     <Compile Include="Application\ErrorLogger.cs" />
-    <Compile Include="Interfaces\Subsystems\GameLogic.cs" />
     <Compile Include="Interfaces\Subsystems\GameView.cs" />
-    <Compile Include="GameTools\Process\ThreadProcess.cs" />
+    <Compile Include="GameTools\Process\ThreadWrapper.cs" />
     <Compile Include="Logic\Civilization\CiviliationGenerator.cs" />
     <Compile Include="Logic\Civilization\Civilization.cs" />
     <Compile Include="Logic\Civilization\CivilizationUpdater.cs" />
@@ -173,6 +171,7 @@
     <Compile Include="Logic\Data\World\RegionUpdater.cs" />
     <Compile Include="GameTools\Process\MultiTickProcess.cs" />
     <Compile Include="GameTools\Process\ProcessManager.cs" />
+    <Compile Include="Logic\Data\World\ZoneBlockSettings.cs" />
     <Compile Include="Logic\Physics\CollisionDetection.cs" />
     <Compile Include="Logic\Physics\SimpleDrag.cs" />
     <Compile Include="Logic\Physics\ForceGenerator.cs" />
@@ -191,9 +190,10 @@
     <Compile Include="View\Human\Audio\MusicPlayer.cs" />
     <Compile Include="View\Human\Audio\Song.cs" />
     <Compile Include="View\Human\Audio\SoundEffect.cs" />
+    <Compile Include="View\Screens\DebugPlayScreen.cs" />
     <Compile Include="View\Human\Display\BlockTexture.cs" />
     <Compile Include="View\Human\Display\DebugView.cs" />
-    <Compile Include="View\Human\Display\EntityGraphics.cs" />
+    <Compile Include="View\Screens\EntityGraphics.cs" />
     <Compile Include="View\Human\Display\HumanView.cs" />
     <Compile Include="View\Human\Display\HUD.cs" />
     <Compile Include="View\Human\Display\ParticleSystem.cs" />
@@ -201,12 +201,15 @@
     <Compile Include="View\Human\Audio\SoundRepository.cs" />
     <Compile Include="View\Human\Display\TextureRepository.cs" />
     <Compile Include="View\Human\Input\DebugMovementController.cs" />
-    <Compile Include="View\Human\Display\ScreenElement.cs" />
+    <Compile Include="View\Screens\ScreenElement.cs" />
+    <Compile Include="View\Human\Input\ScreenKeyboardHandler.cs" />
     <Compile Include="View\Human\Input\KeyboardListener.cs" />
+    <Compile Include="View\Human\Input\ScreenMouseHandler.cs" />
     <Compile Include="View\Human\Input\MouseListener.cs" />
-    <Compile Include="View\Human\Display\WorldGraphics.cs" />
+    <Compile Include="View\Screens\WorldGraphics.cs" />
     <Compile Include="Application\WarlordApplication.cs" />
     <Compile Include="Event\WarlordEventManager.cs" />
+    <Compile Include="View\Screens\Screen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="General Standards\Game Standards.txt" />

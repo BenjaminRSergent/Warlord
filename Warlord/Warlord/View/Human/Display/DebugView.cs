@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Content;
 using GameTools.Graph;
 using GameTools.State;
 using Warlord.View.Human.Input;
+using Warlord.View.Human.Screens;
 
 // Flagged for refactoring
 
@@ -21,7 +22,6 @@ namespace Warlord.View.Human.Display
     {
         GameWindow gameWindow;
         GraphicsDevice graphics;
-        Camera3D camera;
 
         SpriteBatch spriteBatch;
         SpriteFont spriteFont;
@@ -36,16 +36,11 @@ namespace Warlord.View.Human.Display
 
             TextureRepository.BlockTextures = content.Load<Texture2D>("Textures/Blocks/block_textures");
             spriteBatch = new SpriteBatch(graphics);
-            spriteFont = content.Load<SpriteFont>("Font/DebugFont");
-
-            camera = new Camera3D(gameWindow.ClientBounds, new Vector3(0, 12, 0), Vector2.Zero, Vector3.Up);
+            spriteFont = content.Load<SpriteFont>("Font/DebugFont");                        
         }
         public void BeginGame()
         {
-            DebugMovementController controller = new DebugMovementController(camera, gameWindow);
-            PushScreenElement(new WorldGraphics(graphics, gameWindow, content, camera));
-            KeyboardListeners.Add(controller);
-            MouseListeners.Add(controller);
+            CurrentScreen = new DebugPlayScreen(graphics, gameWindow, content);
         }
         public override void Draw(GameTime gameTime)
         {

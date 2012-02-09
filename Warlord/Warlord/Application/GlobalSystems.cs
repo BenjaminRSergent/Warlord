@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using Warlord.Logic.Data.Entity;
 using Warlord.Event;
+using GameTools.Process;
 
-namespace Warlord
+namespace Warlord.Application
 {
     static class GlobalSystems
     {
@@ -22,6 +23,10 @@ namespace Warlord
         static public WarlordEventManager EventManager
         {
             get { return application.EventManager; }
+        }
+        static public ThreadManager ThreadManager
+        {
+            get{ return application.ThreadManager; }
         }
         static public bool GameWindowHasFocus
         {

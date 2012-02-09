@@ -9,22 +9,23 @@ using Warlord.GameTools;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 using GameTools.Process;
+using Warlord.Application;
 
 namespace Warlord.Logic.Data.World
 {
-    class RegionUpdater : ThreadProcess
+    class RegionUpdater : ThreadWrapper
     {
         RegionDatabase database;
         private int drawDistance;
 
-        public RegionUpdater(int drawDistance, int seed, Vector3i regionSize)
+        public RegionUpdater(int drawDistance, int seed, Vector3i regionSize) : base("Region Updater")
         {
             this.drawDistance = drawDistance;
 
             database = new RegionDatabase(seed, regionSize);
         }
 
-        protected override void ProcessBehavior()
+        protected override void ThreadBehavior()
         {
             while(true)
             {

@@ -9,19 +9,17 @@ namespace GameTools.Process
 {
     class ProcessManager
     {
-        private List<MultiTickProcess> temporaryProcesses;
-        private List<ThreadProcess> continuousProcesses;
+        private List<MultiTickProcess> processes;
 
         public ProcessManager()
         {
-            temporaryProcesses = new List<MultiTickProcess>();
-            continuousProcesses = new List<ThreadProcess>();
+            processes = new List<MultiTickProcess>();
         }
 
         public void Update(GameTime gameTime)
         {
             List<MultiTickProcess> toRemove = new List<MultiTickProcess>();
-            foreach(MultiTickProcess process in temporaryProcesses)
+            foreach(MultiTickProcess process in processes)
             {
                 process.Update(gameTime);
 
@@ -34,40 +32,27 @@ namespace GameTools.Process
 
         public void AttachProcess(MultiTickProcess process)
         {
-            temporaryProcesses.Add(process);
+            processes.Add(process);
         }
-        public void AttachProcess(ThreadProcess process)
-        {
-            continuousProcesses.Add(process);
-            process.Start();
-        }
-        public void KillThread(ThreadProcess process)
-        {
-            process.KillProcess();
-            continuousProcesses.Remove(process);
-        }
+
         private void FinishProcess(MultiTickProcess process)
         {
             if(process.Next.Valid)
-                temporaryProcesses.Add(process.Next.Data);
+                processes.Add(process.Next.Data);
         }
         private void RemoveTemporaryProcesses(List<MultiTickProcess> toRemove)
         {
             foreach(MultiTickProcess process in toRemove)
             {
-                temporaryProcesses.Remove(process);
+                processes.Remove(process);
             }
         }
         internal void ShutDown()
         {
-            foreach(MultiTickProcess process in temporaryProcesses)
+            foreach(MultiTickProcess process in processes)
             {
                 process.KillProcess();
-            }
-            foreach(ThreadProcess process in continuousProcesses)
-            {
-                process.KillProcess();
-            }
+            }            
         }
     }
 }
