@@ -1,5 +1,3 @@
 Content\Textures\Blocks\block_textures.xnb
-Content\Fxs\skybox.xnb
-Content\Fxs\warped_block_effects.xnb
-Content\Fxs\block_effects.xnb
 Content\Font\DebugFont.xnb
+Content\Fxs\block_effects.xnb

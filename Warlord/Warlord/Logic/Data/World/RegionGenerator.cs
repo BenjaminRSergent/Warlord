@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using GameTools.Graph;
 using GameTools.Noise3D;
+using GameTools.Noise2D;
 
 namespace Warlord.Logic.Data.World
 {
@@ -11,85 +10,72 @@ namespace Warlord.Logic.Data.World
     {
         private int seed;
         private GeneratorSettings generatorSettings;
-        private PerlinNoiseSettings3D noiseSettings;
-        FastPerlinNoise fastNoise;
+        private PerlinNoiseSettings3D noiseSettings3D;
+        private FastPerlinNoise3D fastNoise3D;
 
-        public RegionGenerator( int seed )
+        private float[] flatNoise;
+
+        public RegionGenerator(int seed)
         {
             this.seed = seed;
-            LoadDefaultSettings( );            
+            LoadDefaultSettings();
         }
-        public RegionGenerator( int seed, Vector3i regionSize )
+        public RegionGenerator(int seed, Vector3i regionSize)
         {
             this.seed = seed;
-            LoadDefaultSettings( );
-            generatorSettings.RegionSize = regionSize;            
+            generatorSettings = new GeneratorSettings();
+            generatorSettings.RegionSize = regionSize;
+            LoadDefaultSettings();
+
+            flatNoise = new float[generatorSettings.RegionSize.X *
+                                  generatorSettings.RegionSize.Y *
+                                  generatorSettings.RegionSize.Z];
         }
         private void LoadDefaultSettings()
         {
-            generatorSettings = new GeneratorSettings( );
-            generatorSettings.RegionSize = new Vector3i( 16, 128, 16 );
-            generatorSettings.DirtLevel = 32;
-            generatorSettings.AirLevel = 110;
+            noiseSettings3D = new PerlinNoiseSettings3D();
+            noiseSettings3D.frequencyMulti = 2.0f;
+            noiseSettings3D.octaves = 4;
+            noiseSettings3D.persistence = 0.5f;
+            noiseSettings3D.seed = 3;
+            noiseSettings3D.size = generatorSettings.RegionSize;
+            noiseSettings3D.startingPoint = Vector3i.Zero;
+            noiseSettings3D.zoom = 60;
 
-            noiseSettings = new PerlinNoiseSettings3D( );
-            noiseSettings.frequencyMulti = 2.2;
-            noiseSettings.octaves = 4;
-            noiseSettings.persistence = 0.5;
-            noiseSettings.seed = 3;
-            noiseSettings.size = generatorSettings.RegionSize;
-            noiseSettings.startingPoint = Vector3i.Zero;
-            noiseSettings.zoom = 120;   
+            fastNoise3D = new FastPerlinNoise3D(noiseSettings3D);
 
-            fastNoise = new FastPerlinNoise(noiseSettings);
+            generatorSettings.midLevel = generatorSettings.RegionSize.Y / 10;
+            generatorSettings.highLevel = (6 * generatorSettings.RegionSize.Y) / 7;
+
+            generatorSettings.lowLevelZone = new ZoneBlockSettings(-1, -0.7f, GetDefaultHeightMod(0, generatorSettings.midLevel));
+            generatorSettings.midLevelZone = new ZoneBlockSettings(0.1f, 1, GetDefaultHeightMod(generatorSettings.midLevel, generatorSettings.highLevel));
+            generatorSettings.highLevelZone = new ZoneBlockSettings(0.6f, 1, GetDefaultHeightMod(generatorSettings.highLevel, generatorSettings.RegionSize.Y));
         }
-        public RegionGenerator( int seed, PerlinNoiseSettings3D noiseSettings, GeneratorSettings generatorSettings )
+        private ZoneBlockSettings.ModifyDensity GetDefaultHeightMod(int heightZoneStart, int heightZoneEnd)
         {
-            this.seed = seed;
-            this.noiseSettings = noiseSettings;
-            this.generatorSettings = generatorSettings;
-
-            noiseSettings.seed = seed;
+            return ((float density, float height) =>
+                density - ((height - heightZoneStart) / (heightZoneEnd - heightZoneStart)) / 2);
         }
-        public void FastGenerateRegion( RegionUpdater ownerWorld, Vector3i origin )
+        public void FastGenerateRegion3D(RegionController ownerWorld, Vector3i origin)
         {
-            double[,,] noise = new double[generatorSettings.RegionSize.X,
-                                          generatorSettings.RegionSize.Y,
-                                          generatorSettings.RegionSize.Z];
+            noiseSettings3D.startingPoint = origin;
 
-            noiseSettings.startingPoint = origin;            
+            fastNoise3D.FillWithPerlinNoise3D(flatNoise);
+            PlaceBlocks(ownerWorld, origin, flatNoise);
 
-            fastNoise.FillWithPerlinNoise3D( noise );
-            
-
-            PlaceBlocks(ownerWorld, origin, noise);
-
-            AddGrassToTop( ownerWorld, origin );
+            AddGrassToTop(ownerWorld, origin);
         }
-        public void GenerateRegion( RegionUpdater ownerWorld, Vector3i origin )
+        public void FakeGenerator(RegionController ownerWorld, Vector3i origin)
         {
-            double[,,] noise;
-
-            noiseSettings.startingPoint = origin;              
-
-            noise = PerlinNoise3D.GenPerlinNoise3D( noiseSettings, 2 );
-
-            PlaceBlocks(ownerWorld, origin, noise);
-
-            AddGrassToTop( ownerWorld, origin );
-        }
-
-        private void PlaceBlocks(RegionUpdater ownerWorld, Vector3i origin, double[,,] noise)
-        {
-            double density;
+            float density;
             BlockType blockType;
             for(int x = 0; x < generatorSettings.RegionSize.X; x++)
             {
-                for(int y = 0; y < generatorSettings.RegionSize.Y-1; y++)
+                for(int y = 0; y < generatorSettings.RegionSize.Y - 1; y++)
                 {
                     for(int z = 0; z < generatorSettings.RegionSize.Z; z++)
                     {
-                        density = noise[x, y, z];
+                        density = 0;
                         blockType = GetBlockFromNoise(density, y);
                         if(blockType != BlockType.Air)
                             ownerWorld.ChangeBlock(origin + new Vector3i(x, y, z), blockType);
@@ -97,7 +83,28 @@ namespace Warlord.Logic.Data.World
                 }
             }
         }
-        public void AddGrassToTop( RegionUpdater ownerWorld, Vector3i origin )
+        private void PlaceBlocks(RegionController ownerWorld, Vector3i origin, float[] noise)
+        {
+            float density;
+            BlockType blockType;
+            for(int x = 0; x < generatorSettings.RegionSize.X; x++)
+            {
+                for(int y = 0; y < generatorSettings.RegionSize.Y - 1; y++)
+                {
+                    for(int z = 0; z < generatorSettings.RegionSize.Z; z++)
+                    {
+                        density = noise[x * generatorSettings.RegionSize.Y * generatorSettings.RegionSize.Z +
+                                        y * generatorSettings.RegionSize.Z +
+                                        z];
+
+                        blockType = GetBlockFromNoise(density, y);
+                        if(blockType != BlockType.Air)
+                            ownerWorld.ChangeBlock(origin + new Vector3i(x, y, z), blockType);
+                    }
+                }
+            }
+        }
+        public void AddGrassToTop(RegionController ownerWorld, Vector3i origin)
         {
             Vector3i currentPosition;
             Block currentBlock;
@@ -105,73 +112,43 @@ namespace Warlord.Logic.Data.World
             bool recentAir;
 
             recentAir = false;
-            for( int x = 0; x < generatorSettings.RegionSize.X; x++ )
+            for(int x = 0; x < generatorSettings.RegionSize.X; x++)
             {
-                for( int z = 0; z < generatorSettings.RegionSize.Z; z++ )
+                for(int z = 0; z < generatorSettings.RegionSize.Z; z++)
                 {
-                    for( int y = generatorSettings.RegionSize.Y - 1; y > 0; y-- )
+                    for(int y = generatorSettings.RegionSize.Y - 1; y > 0; y--)
                     {
-                        currentPosition = origin + new Vector3i(x,y,z);
+                        currentPosition = origin + new Vector3i(x, y, z);
 
-                        currentBlock = ownerWorld.GetBlock( currentPosition );
+                        currentBlock = ownerWorld.GetBlock(currentPosition);
 
-                        if( currentBlock.Type != BlockType.Air && recentAir )
+                        if(currentBlock.Type != BlockType.Air && recentAir)
                         {
-                            ownerWorld.ChangeBlock( currentPosition, BlockType.Grass );
+                            ownerWorld.ChangeBlock(currentPosition, BlockType.Grass);
                             recentAir = false;
                         }
-                        else if( currentBlock.Type == BlockType.Air )
+                        else if(currentBlock.Type == BlockType.Air)
                             recentAir = true;
                     }
                 }
-            }        
-        }
-        public BlockType GetBlockFromNoise(double noise, int height)
-        {           
-            if (height < generatorSettings.DirtLevel)
-            {
-                return StoneLevelBlock( noise, height );
-            }
-            else if(height < generatorSettings.AirLevel)
-            {
-                return DirtLevelBlock( noise, height );
-            }
-            else
-            {
-                return AirLevelBlock( noise, height );
             }
         }
-        public BlockType StoneLevelBlock(double noise, int height)
+        public BlockType GetBlockFromNoise(float noise, int height)
         {
-            float heightMod = -(height / (float)generatorSettings.DirtLevel);
-            if (noise + heightMod > 0)
-                return BlockType.Stone;
-            else
-                return BlockType.Dirt;
-        }
-        public BlockType DirtLevelBlock(double noise, int height)
-        {
-            float heightMod = -(height - generatorSettings.DirtLevel) / (float)(generatorSettings.AirLevel - generatorSettings.DirtLevel);
+            Debug.Assert(Math.Abs(noise) <= 1.1);
 
-            if(noise + heightMod > 1)
-                return BlockType.Stone;
-            else if(noise + heightMod > -0.3)
-                return BlockType.Dirt;
-            else
-                return BlockType.Air;            
-        }        
-        public BlockType AirLevelBlock(double noise, int height)
-        {
-            float heightMod = -(height - generatorSettings.AirLevel) / (float)generatorSettings.AirLevel;
+            if(height < generatorSettings.midLevel)
+                return generatorSettings.lowLevelZone.GetBlockFromDensity(noise, height);
 
-            if(noise + heightMod > 0.6)
-                return BlockType.Dirt;
-            else
-                return BlockType.Air;
+            if(height < generatorSettings.highLevel)
+                return generatorSettings.midLevelZone.GetBlockFromDensity(noise, height);
+
+            return generatorSettings.highLevelZone.GetBlockFromDensity(noise, height);
         }
+
         public int Seed
         {
             get { return seed; }
-        }        
+        }
     }
 }

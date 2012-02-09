@@ -57,11 +57,11 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
 	float4 ambient = AmbientIntensity * AmbientColor;	    
 
-    float fog = saturate((input.Distance - FogNear)/(FogNear - FogFar));
+    float fog = saturate((input.Distance - FogNear)/(FogFar - FogNear));
 
     float4 color =  texColor * ambient;
     
-    return lerp(FogColor, color ,fog);
+    return lerp(color, FogColor,fog);
 }
 
 technique BlockTechnique

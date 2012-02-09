@@ -108,34 +108,52 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Event\EventData\BaseEventDataStructs.cs" />
     <Compile Include="Event\GameEvent.cs" />
+=======
+    <Compile Include="Application\DebugFpsHelper.cs" />
+    <Compile Include="Event\BaseGameEvent.cs" />
+>>>>>>> refactor
     <Compile Include="Event\EventManager.cs" />
-    <Compile Include="Event\ValidEventInitializer.cs" />
-    <Compile Include="GameStaticInitalizer.cs" />
+    <Compile Include="Event\EventTypes\ActorCreatedEvent.cs" />
+    <Compile Include="Event\EventTypes\ActorMovedEvent.cs" />
+    <Compile Include="Event\EventTypes\ActorRemovedEvent.cs" />
+    <Compile Include="Event\EventTypes\BlockChangedEvent.cs" />
+    <Compile Include="Event\EventTypes\RefreshRegionGraphicsEvent.cs" />
+    <Compile Include="Event\EventTypes\RegionCreatedEvent.cs" />
+    <Compile Include="Event\EventTypes\RegionRemovedEvent.cs" />
+    <Compile Include="Application\GameStaticInitalizer.cs" />
+    <Compile Include="Event\EventTypes\SendingRegionListEvent.cs" />
     <Compile Include="GameTools\Camera3D.cs" />
+    <Compile Include="GameTools\Noise2D\FastPerlinInterpolatedNoise2D.cs" />
+    <Compile Include="GameTools\Noise2D\FastPerlinNoise2D.cs" />
+    <Compile Include="GameTools\Noise2D\PerlinNoiseSetting2D.cs" />
+    <Compile Include="GameTools\VectorSmoother3.cs" />
+    <Compile Include="GameTools\Direction.cs" />
     <Compile Include="GameTools\Graph\GraphMath.cs" />
-    <Compile Include="GameTools\Graph\BasicComparer.cs" />
+    <Compile Include="GameTools\Graph\Transformation.cs" />
     <Compile Include="GameTools\MultipriorityQueue.cs" />
-    <Compile Include="GameTools\Noise2D\PerlinNoise2D.cs" />
-    <Compile Include="GameTools\Noise2D\PerlinNoiseSettings2D.cs" />
     <Compile Include="GameTools\Noise2D\SimpleNoise2D.cs" />
-    <Compile Include="GameTools\Noise3D\FastPerlinNoise.cs" />
-    <Compile Include="GameTools\Noise3D\PancakePerlinNoise3D.cs" />
+    <Compile Include="GameTools\Noise3D\FastPerlinInterpolatedNoise3D.cs" />
+    <Compile Include="GameTools\Noise3D\FastPerlinNoise3D.cs" />
     <Compile Include="GameTools\Noise3D\PerlinNoise3D.cs" />
     <Compile Include="GameTools\Noise3D\PerlinNoiseSettings3D.cs" />
     <Compile Include="GameTools\Noise3D\SimpleNoise3D.cs" />
+    <Compile Include="GameTools\Process\ThreadManager.cs" />
+    <Compile Include="GameTools\FloatSmoother.cs" />
+    <Compile Include="GameTools\SpiralProducer.cs" />
+    <Compile Include="GameTools\State\NullState.cs" />
     <Compile Include="GameTools\Optional.cs" />
-    <Compile Include="GameTools\Graph\Vector2f.cs" />
     <Compile Include="GameTools\Graph\Vector2i.cs" />
-    <Compile Include="GameTools\Graph\Vector3f.cs" />
     <Compile Include="GameTools\Graph\Vector3i.cs" />
+    <Compile Include="GameTools\State\State.cs" />
+    <Compile Include="GameTools\State\StateMachine.cs" />
     <Compile Include="GameTools\Statistics\Statistics.cs" />
-    <Compile Include="GlobalApplication.cs" />
-    <Compile Include="ErrorLogger.cs" />
-    <Compile Include="Interfaces\Subsystems\GameData.cs" />
-    <Compile Include="Interfaces\Subsystems\GameLogic.cs" />
+    <Compile Include="Application\GlobalSystems.cs" />
+    <Compile Include="Application\ErrorLogger.cs" />
     <Compile Include="Interfaces\Subsystems\GameView.cs" />
+<<<<<<< HEAD
     <Compile Include="Interfaces\Subsystems\GameApplication.cs" />
     <Compile Include="KeyboardInput.cs" />
     <Compile Include="Logic\Data\BlockFaceField.cs" />
@@ -145,35 +163,84 @@
     <Compile Include="Logic\Data\WarlordEntityManager.cs" />
     <Compile Include="Logic\Data\Player.cs" />
     <Compile Include="Logic\Data\RegionArrayMaps.cs" />
+=======
+    <Compile Include="GameTools\Process\ThreadWrapper.cs" />
+    <Compile Include="Logic\Civilization\CiviliationGenerator.cs" />
+    <Compile Include="Logic\Civilization\Civilization.cs" />
+    <Compile Include="Logic\Civilization\CivilizationUpdater.cs" />
+    <Compile Include="Logic\Crafting\CraftingLogic.cs" />
+    <Compile Include="Logic\Crafting\ResourceManagement.cs" />
+    <Compile Include="Logic\Data\Items\Item.cs" />
+    <Compile Include="Logic\Data\Items\ItemManager.cs" />
+    <Compile Include="Logic\Data\Items\WarlordItemManager.cs" />
+    <Compile Include="Logic\Data\World\BlockFaceField.cs" />
+    <Compile Include="Logic\Data\World\BlockType.cs" />
+    <Compile Include="Logic\Data\Entity\Entity.cs" />
+    <Compile Include="Logic\Data\Entity\EntityManager.cs" />
+    <Compile Include="Logic\Data\Entity\Faction.cs" />
+    <Compile Include="Logic\Data\Entity\MovingEntity.cs" />
+    <Compile Include="Logic\Data\Entity\WarlordEntityManager.cs" />
+    <Compile Include="Logic\Data\Entity\Player.cs" />
+    <Compile Include="Logic\Data\World\RegionArrayMaps.cs" />
+>>>>>>> refactor
     <Compile Include="Logic\Data\World\Block.cs" />
     <Compile Include="Logic\Data\World\GeneratorSettings.cs" />
     <Compile Include="Logic\Data\World\Region.cs" />
     <Compile Include="Logic\Data\World\RegionDatabase.cs" />
     <Compile Include="Logic\Data\World\RegionGenerator.cs" />
-    <None Include="Logic\Data\World\RegionManager.cs" />
-    <Compile Include="Logic\Data\World\RegionUpdater.cs" />
-    <Compile Include="Logic\Process.cs" />
-    <Compile Include="Logic\ProcessManager.cs" />
+    <Compile Include="Logic\Data\World\RegionController.cs" />
+    <Compile Include="GameTools\Process\MultiTickProcess.cs" />
+    <Compile Include="GameTools\Process\ProcessManager.cs" />
+    <Compile Include="Logic\Data\World\ZoneBlockSettings.cs" />
+    <Compile Include="Logic\Physics\CollisionDetection.cs" />
+    <Compile Include="Logic\Physics\SimpleDrag.cs" />
+    <Compile Include="Logic\Physics\ForceGenerator.cs" />
+    <Compile Include="Logic\Physics\ConstantDirectionalForce.cs" />
+    <Compile Include="Logic\Physics\WarlordPhysics.cs" />
+    <Compile Include="Logic\Physics\PenetrationHandler.cs" />
+    <Compile Include="Logic\States\DebugPlayingState.cs" />
     <Compile Include="Logic\WarlordLogic.cs" />
+<<<<<<< HEAD
     <Compile Include="MouseInput.cs" />
+=======
+    <Compile Include="Logic\Zones\Zone.cs" />
+    <Compile Include="Logic\Zones\ZoneManager.cs" />
+    <Compile Include="Logic\Zones\ZoneRules.cs" />
+>>>>>>> refactor
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="View\AIView.cs" />
-    <Compile Include="View\BlockTexture.cs" />
-    <Compile Include="View\FlyView.cs" />
-    <Compile Include="View\HUD.cs" />
-    <Compile Include="View\FlyInput.cs" />
-    <Compile Include="View\HumanView.cs" />
-    <Compile Include="View\RegionGraphics.cs" />
-    <Compile Include="View\SoundRepository.cs" />
-    <Compile Include="View\TextureRepository.cs" />
-    <Compile Include="WarlordApplication.cs" />
+    <Compile Include="View\AI\AIView.cs" />
+    <Compile Include="View\AI\Logic\Movement\Pathfinder.cs" />
+    <Compile Include="View\Human\Audio\MusicPlayer.cs" />
+    <Compile Include="View\Human\Audio\Song.cs" />
+    <Compile Include="View\Human\Audio\SoundEffect.cs" />
+    <Compile Include="View\Human\Display\FontRepository.cs" />
+    <Compile Include="View\Human\Display\TextDrawer.cs" />
+    <Compile Include="View\Human\Input\DebugFogController.cs" />
+    <Compile Include="View\Human\State\DebugPlayingState.cs" />
+    <Compile Include="View\Screens\DebugPlayScreen.cs" />
+    <Compile Include="View\Human\Display\BlockTexture.cs" />
+    <Compile Include="View\Human\DebugView.cs" />
+    <Compile Include="View\Screens\EntityGraphics.cs" />
+    <Compile Include="View\Human\HumanView.cs" />
+    <Compile Include="View\Human\Display\HUD.cs" />
+    <Compile Include="View\Human\Display\ParticleSystem.cs" />
+    <Compile Include="View\Human\Display\RegionGraphics.cs" />
+    <Compile Include="View\Human\Audio\SoundRepository.cs" />
+    <Compile Include="View\Human\Display\TextureRepository.cs" />
+    <Compile Include="View\Human\Input\DebugMovementController.cs" />
+    <Compile Include="View\Screens\ScreenElement.cs" />
+    <Compile Include="View\Human\Input\ScreenKeyboardHandler.cs" />
+    <Compile Include="View\Human\Input\KeyboardListener.cs" />
+    <Compile Include="View\Human\Input\ScreenMouseHandler.cs" />
+    <Compile Include="View\Human\Input\MouseListener.cs" />
+    <Compile Include="View\Screens\WorldGraphics.cs" />
+    <Compile Include="Application\WarlordApplication.cs" />
     <Compile Include="Event\WarlordEventManager.cs" />
+    <Compile Include="View\Screens\Screen.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Event\EventDataMap.txt" />
     <Content Include="General Standards\Game Standards.txt" />
-    <None Include="Event\EventRules.txt" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
@@ -211,9 +278,21 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Logic\Settings\" />
+    <Folder Include="View\Actuators\" />
+    <Folder Include="View\AI\Logic\Decisions\" />
+    <Folder Include="View\AI\Logic\Movement\Flocking\" />
+    <Folder Include="View\Human\Display\Entity\Animation\" />
+    <Folder Include="View\Human\Display\UI\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>call "$(DevEnvDir)..\tools\vsvars32.bat"
+editbin /LARGEADDRESSAWARE "$(TargetPath)"
+</PostBuildEvent>
+  </PropertyGroup>
   <!--
       To modify your build process, add your task inside one of the targets below and uncomment it. 
       Other similar extension points exist, see Microsoft.Common.targets.

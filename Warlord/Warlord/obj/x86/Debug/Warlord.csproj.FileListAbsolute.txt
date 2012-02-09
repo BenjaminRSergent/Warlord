@@ -1,6 +1,4 @@
 Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Textures\Blocks\block_textures.xnb
-Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Fxs\skybox.xnb
-Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Fxs\warped_block_effects.xnb
 Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Fxs\block_effects.xnb
 Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Warlord.exe
 Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Warlord.pdb

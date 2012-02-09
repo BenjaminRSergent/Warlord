@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using GameTools;
 using Microsoft.Xna.Framework;
@@ -10,74 +8,64 @@ namespace Warlord.Event
 {
     class WarlordEventManager : EventManager
     {
-        private HashSet<String> validEvents;
-        private MultipriorityQueue<int, GameEvent> eventQueue;
-        private Dictionary<String, List<EventReaction>> subscriberDirectory;
+        private MultipriorityQueue<int, BaseGameEvent> eventQueue;
+        private Dictionary<string, List<EventReaction>> subscriberDirectory;
 
         private int currentTime;
 
-        public WarlordEventManager( )
+        public WarlordEventManager()
         {
-            validEvents = new HashSet<string>( );
-            ValidEventInitializer.SetValidEvents( ref validEvents );
+            eventQueue = new MultipriorityQueue<int, BaseGameEvent>();
 
-            eventQueue = new MultipriorityQueue<int,GameEvent>( );
-
-            subscriberDirectory = new Dictionary<string,List<EventReaction>>( );
+            subscriberDirectory = new Dictionary<string, List<EventReaction>>();
 
             currentTime = 0;
-
-            foreach( String eventName in validEvents )
-            {
-                subscriberDirectory.Add( eventName, new List<EventReaction>() );
-            }
-
-            subscriberDirectory["update"].Add(Update);
         }
 
-        public void Subscribe(EventReaction eventReaction, String eventType)
+        public void Subscribe(EventReaction eventReaction, string eventType)
         {
-            if( !validEvents.Contains(eventType) )
-                throw( new ArgumentException("The event: " + eventType + " is not a valid event") );
+            if(!subscriberDirectory.ContainsKey(eventType))
+            {
+                subscriberDirectory.Add(eventType, new List<EventReaction>());
+            }
 
             subscriberDirectory[eventType].Add(eventReaction);
         }
 
-        public void SendEvent(GameEvent theEvent)
+        public void SendEvent(BaseGameEvent theEvent)
         {
-            if( !validEvents.Contains(theEvent.EventType) )
-                throw( new ArgumentException("The event: " + theEvent.EventType + " is not a valid event") );
-
-            if( theEvent.Delay == 0 )
-                FireEvent( theEvent );
-            else
-                eventQueue.Add( currentTime+theEvent.Delay, theEvent );
-        }
-        public void Update( object sender, object currentGameTime )
-        {
-            GameTime gameTime = currentGameTime as GameTime;
-            SendDelayedEvents( gameTime.ElapsedGameTime.Milliseconds );
-        }
-        public void SendDelayedEvents( int currentTime )
-        {
-            List<GameEvent> eventsToFire;
-
-            if( eventQueue.Count > 0 )
+            if(subscriberDirectory.ContainsKey(theEvent.EventType))
             {
-                eventsToFire = eventQueue.GetAndRemove( currentTime );
+                if(theEvent.Delay == 0)
+                    FireEvent(theEvent);
+                else
+                    eventQueue.Add(currentTime + theEvent.Delay, theEvent);
+            }
+        }
+        public void Update(GameTime gameTime)
+        {
+            SendDelayedEvents(gameTime.ElapsedGameTime.Milliseconds);
+        }
+        public void SendDelayedEvents(int currentTime)
+        {
+            List<BaseGameEvent> eventsToFire;
 
-                foreach( GameEvent theEvent in eventsToFire )
+            if(eventQueue.Count > 0)
+            {
+                eventsToFire = eventQueue.GetAndRemove(currentTime);
+
+                foreach(BaseGameEvent theEvent in eventsToFire)
                 {
-                    FireEvent( theEvent );
+                    FireEvent(theEvent);
                 }
-            }                        
+            }
         }
 
-        private void FireEvent( GameEvent theEvent )
+        private void FireEvent(BaseGameEvent theEvent)
         {
-            foreach( EventReaction eventReaction in subscriberDirectory[theEvent.EventType] )
+            foreach(EventReaction eventReaction in subscriberDirectory[theEvent.EventType])
             {
-                eventReaction( theEvent.Sender, theEvent.AdditionalData );
+                eventReaction(theEvent);
             }
         }
     }

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace GameTools
 {
@@ -11,30 +8,41 @@ namespace GameTools
         private Vector3 up;
 
         private Vector2 rotation;
-                
-        public Camera3D( Rectangle clientBounds, Vector3 position, Vector2 initalFacingRotation, Vector3 up )
-        {
-            this.position = position;
-            this.rotation = initalFacingRotation;
-            this.up = up;                     
 
-            Projection = Matrix.CreatePerspectiveFieldOfView( MathHelper.PiOver4,
-                                                              (float)clientBounds.Width/(float)clientBounds.Height,
-                                                              1,
-                                                              1000 );
-        }
-        public Camera3D( Rectangle clientBounds, Vector3 position, Vector2 initalFacingRotation, Vector3 up, Matrix projection )
+        private float aspectRatio;
+        private float fov;
+        private Vector2 drawDistance;
+
+        public Camera3D(Rectangle clientBounds, Vector3 position, Vector2 initalFacingRotation, Vector3 up)
         {
             this.position = position;
             this.rotation = initalFacingRotation;
-            this.up = up;                     
+            this.up = up;
+
+            aspectRatio = (float)clientBounds.Width / (float)clientBounds.Height;
+            fov = 45;
+            drawDistance = new Vector2(1, 300);
+
+            BuildProjection();
+        }
+        public Camera3D(Rectangle clientBounds, Vector3 position, Vector2 initalFacingRotation, Vector3 up, Matrix projection)
+        {
+            this.position = position;
+            this.rotation = initalFacingRotation;
+            this.up = up;
 
             Projection = projection;
         }
-
-        public void ForceMoveNoFly( Vector3 movement )
-        {            
-            Matrix frontToSize = Matrix.CreateRotationY( -MathHelper.PiOver2 );
+        private void BuildProjection()
+        {
+            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fov),
+                                                             aspectRatio,
+                                                             drawDistance.X,
+                                                             drawDistance.Y);
+        }
+        public void ForceMoveNoFly(Vector3 movement)
+        {
+            Matrix frontToSize = Matrix.CreateRotationY(-MathHelper.PiOver2);
 
             Vector3 effectiveFacing = Facing;
             effectiveFacing.Y = 0;
@@ -47,14 +55,14 @@ namespace GameTools
 
             position.Y += movement.Y;
         }
-        public void ForceMoveFly( Vector3 movement )
-        {            
-            Matrix frontToSize = Matrix.CreateRotationY( -MathHelper.PiOver2 );
+        public void ForceMoveFly(Vector3 movement)
+        {
+            Matrix frontToSide = Matrix.CreateRotationY(-MathHelper.PiOver2);
 
             Vector3 effectiveFacing = Facing;
 
             Vector3 forwardMove = movement.Z * effectiveFacing;
-            Vector3 sidewaysdMove = movement.X * Vector3.Transform(effectiveFacing, frontToSize);
+            Vector3 sidewaysdMove = movement.X * Vector3.Transform(effectiveFacing, frontToSide);
 
             position += forwardMove;
             position += sidewaysdMove;
@@ -62,35 +70,35 @@ namespace GameTools
             position.Y += movement.Y;
         }
         public void ForceChangeRotation(Vector2 facingChange)
-        {           
+        {
             const float cameraPadding = 0.2f;
 
             rotation += facingChange;
 
-            if( rotation.Y > MathHelper.PiOver2-cameraPadding )
-                rotation.Y = MathHelper.PiOver2-cameraPadding;
+            if(rotation.Y > MathHelper.PiOver2 - cameraPadding)
+                rotation.Y = MathHelper.PiOver2 - cameraPadding;
 
-            if( rotation.Y < -MathHelper.PiOver2+cameraPadding )
-                rotation.Y = -MathHelper.PiOver2+cameraPadding;
+            if(rotation.Y < -MathHelper.PiOver2 + cameraPadding)
+                rotation.Y = -MathHelper.PiOver2 + cameraPadding;
         }
 
         public void Teleport(Vector3 position)
         {
             this.position = position;
         }
-        public void ResetView( )
+        public void ResetView()
         {
-            rotation = new Vector2( 0, 0 );
+            rotation = new Vector2(0, 0);
         }
 
         public Vector3 Position
         {
             get { return position; }
-        }       
+        }
         public Vector3 Facing
         {
-            get { return Vector3.Transform( Vector3.Forward, Matrix.CreateRotationX( rotation.Y ) * Matrix.CreateRotationY( rotation.X ) ); }
-        }       
+            get { return Vector3.Transform(Vector3.Forward, Matrix.CreateRotationX(rotation.Y) * Matrix.CreateRotationY(rotation.X)); }
+        }
         public Vector3 Up
         {
             get { return up; }
@@ -98,14 +106,41 @@ namespace GameTools
         }
 
         public Matrix View
-        { 
+        {
             get
-            {                
-                return Matrix.CreateLookAt( position, position+Facing, up );
-            }          
+            {
+                return Matrix.CreateLookAt(position, position + Facing, up);
+            }
         }
 
-        public Matrix Projection{ get; set; }        
+        public float AspectRatio
+        {
+            get { return aspectRatio; }
+            set
+            {
+                aspectRatio = value;
+                BuildProjection();
+            }
+        }
+        public float Fov
+        {
+            get { return fov; }
+            set
+            {
+                fov = value;
+                BuildProjection();
+            }
+        }
+        public Vector2 DrawDistance
+        {
+            get { return drawDistance; }
+            set
+            {
+                drawDistance = value;
+                BuildProjection();
+            }
+        }
+        public Matrix Projection { get; set; }
     }
 }
 

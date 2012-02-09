@@ -1,0 +1,12 @@
+Z:\Data\C#\XNA\Warlord\WarlordTests\bin\Debug\Content\Textures\Blocks\block_textures.xnb
+Z:\Data\C#\XNA\Warlord\WarlordTests\bin\Debug\Content\Fxs\block_effects.xnb
+Z:\Data\C#\XNA\Warlord\WarlordTests\bin\Debug\Content\Font\DebugFont.xnb
+Z:\Data\C#\XNA\Warlord\WarlordTests\bin\Debug\WarlordTests.dll
+Z:\Data\C#\XNA\Warlord\WarlordTests\bin\Debug\WarlordTests.pdb
+Z:\Data\C#\XNA\Warlord\WarlordTests\bin\Debug\Warlord.exe
+Z:\Data\C#\XNA\Warlord\WarlordTests\bin\Debug\Warlord.pdb
+Z:\Data\C#\XNA\Warlord\WarlordTests\obj\Debug\ResolveAssemblyReference.cache
+Z:\Data\C#\XNA\Warlord\WarlordTests\obj\Debug\WarlordTests.dll
+Z:\Data\C#\XNA\Warlord\WarlordTests\obj\Debug\WarlordTests.pdb
+Z:\Data\C#\XNA\Warlord\WarlordTests\bin\Debug\nunit.framework.dll
+Z:\Data\C#\XNA\Warlord\WarlordTests\bin\Debug\nunit.framework.xml

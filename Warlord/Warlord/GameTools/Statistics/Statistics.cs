@@ -1,36 +1,58 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Microsoft.Xna.Framework;
 
-namespace Warlord.GameTools.Statistics
+namespace GameTools.Statistics
 {
     class Statistics
     {
-        static public double Adverage( double[] numberArray )
+        static public Vector3 Adverage(Vector3[] vectorArray)
+        {
+            Vector3 sum;
+
+            int numberCount = vectorArray.Length;
+
+            sum = Vector3.Zero;
+            for(int index = 0; index < vectorArray.Length; index++)
+                sum += vectorArray[index];
+
+            return sum / numberCount;
+        }
+        static public float Adverage(float[] numberArray)
+        {
+            float sum;
+
+            int numberCount = numberArray.Length;
+
+            sum = 0;
+            for(int index = 0; index < numberArray.Length; index++)
+                sum += numberArray[index];
+
+            return sum / numberCount;
+        }
+        static public double Adverage(double[] numberArray)
         {
             double sum;
 
             int numberCount = numberArray.Length;
 
             sum = 0;
-            foreach( double number in numberArray )
-                sum += number;
+            for(int index = 0; index < numberArray.Length; index++)
+                sum += numberArray[index];
 
-            return sum/numberCount;
+            return sum / numberCount;
         }
 
-        static public double StdDeviation( double[] numberArray )
+        static public double StdDeviation(double[] numberArray)
         {
-            double adverage = Adverage( numberArray );
+            double adverage = Adverage(numberArray);
             int numberCount = numberArray.Length;
 
             double[] sumOfDifference = new double[numberArray.Length];
-                        
-            for( int index = 0; index < numberCount; index++ )
-                sumOfDifference[index] += Math.Pow(numberArray[index] - adverage, 2);            
 
-            return Math.Sqrt( Adverage( sumOfDifference ) );
+            for(int index = 0; index < numberCount; index++)
+                sumOfDifference[index] += Math.Pow(numberArray[index] - adverage, 2);
+
+            return Math.Sqrt(Adverage(sumOfDifference));
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using GameTools.Graph;
-using System.Threading;
+using Warlord.Application;
+using Warlord.Event.EventTypes;
 using Warlord.GameTools;
 using Warlord.Event;
 
@@ -13,172 +13,159 @@ namespace Warlord.Logic.Data.World
     {
         Vector3i regionSize;
         RegionGenerator generator;
+        Stack<Region> RegionPool;
 
-        HashSet<Vector2i> createdWorlds;
-        Dictionary<Vector2i, Region> regionMap;
-        
+        Dictionary<Vector3i, Region> regionMap;
+
         int seed;
-
-        bool generating;
 
         public RegionDatabase(int seed, Vector3i regionSize)
         {
-            createdWorlds = new HashSet<Vector2i>();
-            regionMap = new Dictionary<Vector2i, Region>(new BasicComparer<Vector2i>());
-            generating = false;
+            Debug.Assert(regionSize.X > 0 && regionSize.Y > 0 && regionSize.Z > 0);
+
+            regionMap = new Dictionary<Vector3i, Region>();
+            RegionPool = new Stack<Region>();
+            generator = new RegionGenerator(seed, regionSize);
 
             this.seed = seed;
             this.regionSize = regionSize;
-            generator = new RegionGenerator(seed, regionSize);
+
+            GlobalSystems.EventManager.Subscribe(SendCurrentRegions, "refresh_region_graphics");
         }
-        public bool CreateRegion(RegionUpdater updater, Vector2i regionCoordiants)
+        public bool CreateRegion(RegionController updater, Vector3i regionCoordiants)
         {
             if(!regionMap.Keys.Contains(regionCoordiants))
-            { 
-                generating = true;
-                Vector3i newOrigin = new Vector3i(regionCoordiants.X*regionSize.X, 0, regionCoordiants.Y*regionSize.Z);
-                regionMap.Add(regionCoordiants, new Region(newOrigin,  regionSize));
-                generator.FastGenerateRegion(updater, newOrigin );
-                generating = false;
+            {
+                Vector3i newOrigin = new Vector3i(regionCoordiants.X * regionSize.X,
+                                                  regionCoordiants.Y * regionSize.Y,
+                                                  regionCoordiants.Z * regionSize.Z);
 
-                GlobalApplication.Application.GameEventManager.SendEvent( new GameEvent( new Optional<object>(this),
-                                                                          "region_added",
-                                                                          regionMap[regionCoordiants],
-                                                                          0 ) );
+                Region newRegion = GetNewRegion(newOrigin, regionSize);
+                regionMap.Add(regionCoordiants, newRegion);
+                generator.FastGenerateRegion3D(updater, newOrigin);
+
+                RegionCreatedData creationData = new RegionCreatedData(newRegion);
+
+                GlobalSystems.EventManager.SendEvent(new RegionCreatedEvent(new Optional<object>(this),
+                                                      0,
+                                                      creationData));
 
                 return true;
             }
 
             return false;
         }
-        public void UnloadRegion(Vector2i regionCoordiants)
+        private Region GetNewRegion(Vector3i newOrigin, Vector3i regionSize)
+        {
+            Region newRegion;
+
+            if(RegionPool.Count == 0)
+                newRegion = new Region(newOrigin, regionSize);
+            else
+            {
+                newRegion = RegionPool.Pop();
+                newRegion.Reinit(newOrigin, regionSize);
+            }
+
+            return newRegion;
+        }
+        public void UnloadRegion(Vector3i regionCoordiants)
         {
             if(regionMap.Keys.Contains(regionCoordiants))
-            {                
-                GlobalApplication.Application.GameEventManager.SendEvent( new GameEvent( new Optional<object>(this),
-                                                                          "region_removed",
-                                                                          regionMap[regionCoordiants],
-                                                                          0 ) );
+            {
+                Region theRegion = regionMap[regionCoordiants];
+                GlobalSystems.EventManager.SendEvent(new RegionRemovedEvent(new Optional<object>(this),
+                                                     0,
+                                                     theRegion));
 
                 regionMap.Remove(regionCoordiants);
+
+                theRegion.Deactivate();
+                RegionPool.Push(theRegion);
             }
         }
         public void ChangeBlock(Vector3i absolutePosition, BlockType type)
         {
-            Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);            
+            Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);
 
-            if(currentRegion.Valid)
-            {
-                Vector3i currentBlockRelativePosition = absolutePosition - currentRegion.Data.RegionOrigin;
+            Debug.Assert(currentRegion.Valid);
 
-                currentRegion.Data.AddBlock(currentBlockRelativePosition, type);
+            Vector3i currentBlockRelativePosition = Transformation.AbsoluteToRelative(absolutePosition,
+                                                                                      currentRegion.Data.RegionOrigin);
 
-                Block theBlock = currentRegion.Data.GetBlock(currentBlockRelativePosition);
+            Block oldBlock = currentRegion.Data.GetBlock(currentBlockRelativePosition);
+            currentRegion.Data.AddBlock(currentBlockRelativePosition, type);
+            Block newBlock = currentRegion.Data.GetBlock(currentBlockRelativePosition);
 
-                GlobalApplication.Application.GameEventManager.SendEvent(new GameEvent(new GameTools.Optional<object>(this),
-                                                                         "block_added",
-                                                                         new KeyValuePair<Region, Block>(currentRegion.Data, theBlock),
-                                                                         0));
-            }
-            else
-            {
-                GlobalApplication.Application.ReportError( "The region at absolute position " + absolutePosition +
-                                                           " does not exist and something tried to change one of its block from it");
-                throw new NullReferenceException("Invalid operation on a null region");
-            }
-        }        
+            BlockChangedData blockChangedData = new BlockChangedData(oldBlock, newBlock);
+
+            GlobalSystems.EventManager.SendEvent(new BlockChangedEvent(new GameTools.Optional<object>(this),
+                                                                       0,
+                                                                       blockChangedData));
+        }
         public Block GetBlock(Vector3i absolutePosition)
         {
             Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);
-            if(currentRegion.Valid)
-            {
-                Vector3i currentBlockRelativePosition = absolutePosition - currentRegion.Data.RegionOrigin;
-                return currentRegion.Data.GetBlock(currentBlockRelativePosition);
-            }
-            else
-            {
-                GlobalApplication.Application.ReportError( "The region at absolute position " + absolutePosition +
-                                                           " does not exist and something tried to ask for a block from it");
-                throw new NullReferenceException("Invalid operation on a null region");
-            }            
-        }
-        public Block HighestBlockAt(Vector2i location)
-        {
-            Block highestBlock;
-            int y = regionSize.Z - 1;
 
-            do
-            {
-                highestBlock = GetBlock(new Vector3i(location.X, y, location.Y));
-                y--;
-            } while(highestBlock.Type == BlockType.Air && y > -1);
+            Debug.Assert(currentRegion.Valid);
 
-            return highestBlock;
+            Vector3i currentBlockRelativePosition = Transformation.AbsoluteToRelative(absolutePosition,
+                                                                                      currentRegion.Data.RegionOrigin);
+
+            return currentRegion.Data.GetBlock(currentBlockRelativePosition);
+
         }
-        public void ChangeFacing(Vector3i absolutePosition, BlockFaceField facing, bool active)
+        public void ChangeFacing(Vector3i absolutePosition, BlockFaceField facing, bool activate)
         {
-            Optional<Region> region = GetRegionFromAbsolute(absolutePosition);
-            if(region.Valid)
-            {
-                Vector3i relativePosition = absolutePosition - region.Data.RegionOrigin;
-                if(active)
-                    region.Data.AddFace(relativePosition, facing);
-                else
-                    region.Data.RemoveFace(relativePosition, facing);
-            }
+            Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);
+
+            Debug.Assert(currentRegion.Valid);
+
+            Vector3i relativePosition = Transformation.AbsoluteToRelative(absolutePosition,
+                                                                          currentRegion.Data.RegionOrigin);
+
+            if(activate)
+                currentRegion.Data.AddFace(relativePosition, facing);
             else
-            {
-                GlobalApplication.Application.ReportError( "The region at absolute position " + absolutePosition +
-                                                           " does not exist and something tried to change it's facing");
-            }
-            
+                currentRegion.Data.RemoveFace(relativePosition, facing);
+
+        }
+        public bool IsRegionLoaded(Vector3i regionCoordiantes)
+        {
+            return regionMap.ContainsKey(regionCoordiantes);
         }
         public Optional<Region> GetRegionFromAbsolute(Vector3i absolutePosition)
         {
-            Vector2i coordinates = GetRegionCoordiantes(absolutePosition);
+            Vector3i coordinates = GetRegionCoordiantes(absolutePosition);
             return GetRegionFromCoordiantes(coordinates);
-
         }
-        public Optional<Region> GetRegionFromCoordiantes(Vector2i coordiantes)
+        public Optional<Region> GetRegionFromCoordiantes(Vector3i coordiantes)
         {
             if(regionMap.Keys.Contains(coordiantes))
                 return new Optional<Region>(regionMap[coordiantes]);
             else
                 return new Optional<Region>();
         }
-        public Vector2i GetRegionCoordiantes(Vector3i absolutePosition)
+        public Vector3i GetRegionCoordiantes(Vector3i absolutePosition)
         {
-            Vector2i regionCoordinates = new Vector2i(absolutePosition.X, absolutePosition.Z);
+            return Transformation.ChangeVectorScale(absolutePosition, regionSize);
+        }
 
-            if(absolutePosition.X > 0)
-                regionCoordinates.X /= regionSize.X;
-            else
-            {
-                double doubleX = regionCoordinates.X / (double)regionSize.X;
-                regionCoordinates.X = (int)Math.Floor(doubleX);
-            }
-            if(absolutePosition.Z > 0)
-                regionCoordinates.Y /= regionSize.Z;
-            else
-            {
-                double doubleZ = regionCoordinates.Y / (double)regionSize.Z;
-                regionCoordinates.Y = (int)Math.Floor(doubleZ);
-            }
-
-            return regionCoordinates;
+        public void SendCurrentRegions(BaseGameEvent theEvent)
+        {
+            SendingRegionListEvent sendingRegionsEvent = new SendingRegionListEvent(new Optional<object>(this),
+                                                                                     0,
+                                                                                     regionMap.Values.ToList());
         }
         public Vector3i RegionSize
         {
             get { return regionSize; }
         }
 
-        public bool Generating
+        internal IEnumerable<Vector3i> GetCoordiantesOfLoadedRegions()
         {
-            get { return generating; }
-        }
-        public Dictionary<Vector2i, Region> RegionMap
-        {
-            get { return regionMap; }
+            return regionMap.Keys;
         }
     }
 }
+
