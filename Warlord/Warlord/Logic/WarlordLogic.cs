@@ -1,10 +1,9 @@
 ﻿using GameTools.Graph;
+using GameTools.Process;
 using GameTools.State;
 using Microsoft.Xna.Framework;
-using Warlord.Interfaces.Subsystems;
 using Warlord.Logic.Data.Entity;
 using Warlord.Logic.States;
-using GameTools.Process;
 
 namespace Warlord.Logic
 {
@@ -23,9 +22,7 @@ namespace Warlord.Logic
         private void Initialize()
         {
             processManager = new ProcessManager();
-            entityManager = new WarlordEntityManager();
-
-            entityManager.AddPlayer(new Vector3(0, 80, 0));
+            entityManager = new WarlordEntityManager(16);
 
             stateMachine = new StateMachine<WarlordLogic>(this);
         }

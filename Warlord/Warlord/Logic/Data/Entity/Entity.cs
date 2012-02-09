@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GameTools.Graph;
+﻿using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Warlord.GameTools;
-using System.Diagnostics;
 
 namespace Warlord.Logic.Data.Entity
 {
     class GameEntity
     {
         private Optional<uint> id;
+        protected Vector3 currentPosition;        
 
-        public GameEntity()
+        public GameEntity(Vector3 position)
         {
+            this.currentPosition = position;
             id = new Optional<uint>();
         }
         public void InitalizeID(uint id)
@@ -23,6 +20,14 @@ namespace Warlord.Logic.Data.Entity
 
             this.id = new Optional<uint>(id);
         }
+        public void Teleport( Vector3 newPosition )
+        {
+            currentPosition = newPosition;
+        }
+        public override int GetHashCode()
+        {
+            return (int)id.Data;
+        }
         public uint actorID
         {
             get
@@ -30,6 +35,10 @@ namespace Warlord.Logic.Data.Entity
                 Debug.Assert(id.Valid);
                 return id.Data;
             }
+        }
+        public Vector3 CurrentPosition
+        {
+            get { return currentPosition; }
         }
     }
 }

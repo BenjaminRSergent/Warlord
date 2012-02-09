@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Warlord.Logic.Data;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
 using GameTools;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Warlord.Application;
 using Warlord.Event;
 using Warlord.Event.EventTypes;
-using Microsoft.Xna.Framework.Content;
-using Warlord.Application;
+using Warlord.Logic.Data;
 using Warlord.View.Human.Display;
+using Warlord.GameTools;
 
 namespace Warlord.View.Human.Screens
 {
@@ -22,6 +20,8 @@ namespace Warlord.View.Human.Screens
 
         private Camera3D camera;
         private Effect effect;
+        
+        private bool synchronising;
 
         Queue<KeyValuePair<Region, RegionGraphics>> toAdd;
 
@@ -37,6 +37,9 @@ namespace Warlord.View.Human.Screens
             effect = content.Load<Effect>("Fxs/block_effects");
 
             GlobalSystems.EventManager.Subscribe(AddRegion, "region_created");
+            GlobalSystems.EventManager.Subscribe(RenewRegion, "sending_region_list");
+
+            SynchroniseAllRegions( );
         }
 
         public override void Draw(GameTime gameTime)
@@ -111,6 +114,10 @@ namespace Warlord.View.Human.Screens
         private void AddRegion(BaseGameEvent theEvent)
         {
             Region newRegion = (theEvent as RegionCreatedEvent).Data.newRegion;
+            AddRegion(newRegion);            
+        }
+        private void AddRegion(Region newRegion)
+        {
             KeyValuePair<Region, RegionGraphics> newRegionGraphicsPair;            
 
             if(!regionGraphics.ContainsKey(newRegion))
@@ -123,7 +130,25 @@ namespace Warlord.View.Human.Screens
                     toAdd.Enqueue(newRegionGraphicsPair);
                 }
             }
+        }
+        private void RenewRegion(BaseGameEvent theEvent)
+        {
+            if(synchronising)
+            {
+                synchronising = false;
 
+                foreach(Region region in (theEvent as SendingRegionListEvent).CurrentRegionList)
+                {
+                    AddRegion(region);
+                }
+            }
+        }
+        private void SynchroniseAllRegions( )
+        {
+            synchronising = true;
+            regionGraphics.Clear( );
+
+            GlobalSystems.EventManager.SendEvent(new RefreshRegionGraphicsEvent(new Optional<object>(this), 0));
         }
     }
 }

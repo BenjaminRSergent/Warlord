@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GameTools;
-using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
 using GameTools.Graph;
-using Warlord.View;
-using Warlord.Logic.Data;
+using Microsoft.Xna.Framework;
 using Warlord.Logic.Data.World;
 using Warlord.View.Human.Display;
 

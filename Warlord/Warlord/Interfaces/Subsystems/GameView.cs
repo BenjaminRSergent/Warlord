@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Warlord.GameTools;
+﻿using Warlord.GameTools;
 
 namespace Warlord.Interfaces.Subsystems
 {

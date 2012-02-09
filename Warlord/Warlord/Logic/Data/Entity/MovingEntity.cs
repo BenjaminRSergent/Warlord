@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace Warlord.Logic.Data.Entity
 {
@@ -14,9 +10,7 @@ namespace Warlord.Logic.Data.Entity
 
         private Vector3 previousPosition;
 
-        protected Vector3 currentPosition;
-
-        public MovingEntity(Vector3 position)
+        public MovingEntity(Vector3 position) : base(position)
         {
             previousPosition = position;
             currentPosition = position;
@@ -26,7 +20,7 @@ namespace Warlord.Logic.Data.Entity
             float seconds = gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
             currentPosition += velocity * seconds;
         }
-        public void Teleport(Vector3 location)
+        new public void Teleport(Vector3 location)
         {
             previousPosition = currentPosition;
             this.currentPosition = location;
@@ -46,10 +40,6 @@ namespace Warlord.Logic.Data.Entity
         protected Vector3 PreviousPosition
         {
             get { return previousPosition; }
-        }
-        public Vector3 CurrentPosition
-        {
-            get { return currentPosition; }
         }
         public float Mass
         {

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
-
-using Microsoft.Xna.Framework;
-using Warlord.Logic.Data;
 using GameTools.Graph;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Warlord.Logic.Data;
 using Warlord.Logic.Data.World;
 
 namespace Warlord.View.Human.Display

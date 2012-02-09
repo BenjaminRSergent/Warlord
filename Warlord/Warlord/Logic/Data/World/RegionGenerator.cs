@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using GameTools.Graph;
 using GameTools.Noise3D;
-using System.Diagnostics;
 
 namespace Warlord.Logic.Data.World
 {
@@ -58,7 +55,7 @@ namespace Warlord.Logic.Data.World
             return ( (float density, float height) => 
                 density - ((height-heightZoneStart)/(heightZoneEnd - heightZoneStart))/2 );
         }
-        public void FastGenerateRegion(RegionUpdater ownerWorld, Vector3i origin)
+        public void FastGenerateRegion(RegionController ownerWorld, Vector3i origin)
         {
             noiseSettings.startingPoint = origin;
 
@@ -67,7 +64,7 @@ namespace Warlord.Logic.Data.World
 
             AddGrassToTop(ownerWorld, origin);
         }
-        public void FakeGenerator(RegionUpdater ownerWorld, Vector3i origin)
+        public void FakeGenerator(RegionController ownerWorld, Vector3i origin)
         {
             float density;
             BlockType blockType;
@@ -85,7 +82,7 @@ namespace Warlord.Logic.Data.World
                 }
             }
         }
-        private void PlaceBlocks(RegionUpdater ownerWorld, Vector3i origin, float[] noise)
+        private void PlaceBlocks(RegionController ownerWorld, Vector3i origin, float[] noise)
         {
             float density;
             BlockType blockType;
@@ -106,7 +103,7 @@ namespace Warlord.Logic.Data.World
                 }
             }
         }
-        public void AddGrassToTop(RegionUpdater ownerWorld, Vector3i origin)
+        public void AddGrassToTop(RegionController ownerWorld, Vector3i origin)
         {
             Vector3i currentPosition;
             Block currentBlock;

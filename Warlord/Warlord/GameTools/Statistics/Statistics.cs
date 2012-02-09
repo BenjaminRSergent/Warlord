@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Warlord.GameTools.Statistics
+namespace GameTools.Statistics
 {
     class Statistics
     {
@@ -14,8 +11,8 @@ namespace Warlord.GameTools.Statistics
             int numberCount = numberArray.Length;
 
             sum = 0;
-            foreach(double number in numberArray)
-                sum += number;
+            for(int index = 0; index < numberArray.Length; index++)
+                sum += numberArray[index];
 
             return sum / numberCount;
         }

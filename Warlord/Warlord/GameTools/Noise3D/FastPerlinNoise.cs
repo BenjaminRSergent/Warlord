@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using GameTools.Graph;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
 
 namespace GameTools.Noise3D
 {
     class FastPerlinNoise
     {
-        private const int premutationSize = 100;
-        private Random rng;
+        private const int premutationSize = 100;        
         private float[] flatPremutationList;
+
+        private Random rng;
 
         private Dictionary<Vector3, FastPerlinInterpolatedNoise3D> calcLookup;
 
@@ -61,9 +60,7 @@ namespace GameTools.Noise3D
 
             x /= settings.zoom;
             y /= settings.zoom;
-            z /= settings.zoom;    
-       
-   
+            z /= settings.zoom;
 
             result = 0;
             for(int oct = 0; oct < settings.octaves; oct++)
@@ -182,7 +179,6 @@ namespace GameTools.Noise3D
             return (rightUpForward + rightUpBack + rightDownForward + rightDownBack +
                     leftUpForward + leftUpBack + leftDownForward + leftDownBack) / 64;
         }
-
         private float ThreeIndexIntoArray(int x, int y, int z)
         {
             return flatPremutationList[x * premutationSize * premutationSize + y * premutationSize + z];

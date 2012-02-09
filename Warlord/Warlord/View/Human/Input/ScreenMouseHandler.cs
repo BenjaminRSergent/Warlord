@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
-using Warlord.View.Human.Screens;
 using Warlord.Application;
+using Warlord.View.Human.Screens;
 
 namespace Warlord.View.Human.Input
 {

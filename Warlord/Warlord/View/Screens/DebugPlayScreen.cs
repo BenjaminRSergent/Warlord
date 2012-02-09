@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
+﻿using GameTools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using GameTools;
+using Microsoft.Xna.Framework.Graphics;
 using Warlord.View.Human.Input;
 
 namespace Warlord.View.Human.Screens

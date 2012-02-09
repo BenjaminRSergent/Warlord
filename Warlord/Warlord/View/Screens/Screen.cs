@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Warlord.View.Human.Display;
+﻿using System.Collections.Generic;
 using Warlord.View.Human.Input;
 
 namespace Warlord.View.Human.Screens

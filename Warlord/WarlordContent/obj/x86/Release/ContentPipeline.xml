@@ -11,15 +11,6 @@
       <Time>2012-02-02T18:54:53.6458718-08:00</Time>
     </Item>
     <Item>
-      <Source>Fxs\block_effects.fx</Source>
-      <Name>Fxs\block_effects</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Fxs\block_effects.xnb</Output>
-      <Time>2012-02-02T18:54:53.6158701-08:00</Time>
-    </Item>
-    <Item>
       <Source>Font\DebugFont.spritefont</Source>
       <Name>Font\DebugFont</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -27,6 +18,15 @@
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Font\DebugFont.xnb</Output>
       <Time>2012-02-02T18:54:53.6148701-08:00</Time>
+    </Item>
+    <Item>
+      <Source>Fxs\block_effects.fx</Source>
+      <Name>Fxs\block_effects</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Fxs\block_effects.xnb</Output>
+      <Time>2012-02-02T18:54:53.6158701-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

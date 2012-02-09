@@ -90,10 +90,6 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Performance, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\x86\Debug\Performance.dll</HintPath>
-    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -119,22 +115,26 @@
     <Compile Include="Event\EventTypes\ActorMovedEvent.cs" />
     <Compile Include="Event\EventTypes\ActorRemovedEvent.cs" />
     <Compile Include="Event\EventTypes\BlockChangedEvent.cs" />
+    <Compile Include="Event\EventTypes\RefreshRegionGraphicsEvent.cs" />
     <Compile Include="Event\EventTypes\RegionCreatedEvent.cs" />
     <Compile Include="Event\EventTypes\RegionRemovedEvent.cs" />
     <Compile Include="Application\GameStaticInitalizer.cs" />
+    <Compile Include="Event\EventTypes\SendingRegionListEvent.cs" />
     <Compile Include="GameTools\Camera3D.cs" />
+    <Compile Include="GameTools\Direction.cs" />
     <Compile Include="GameTools\Graph\GraphMath.cs" />
+    <Compile Include="GameTools\Graph\Transformation.cs" />
     <Compile Include="GameTools\MultipriorityQueue.cs" />
     <Compile Include="GameTools\Noise2D\PerlinNoise2D.cs" />
     <Compile Include="GameTools\Noise2D\PerlinNoiseSettings2D.cs" />
     <Compile Include="GameTools\Noise2D\SimpleNoise2D.cs" />
     <Compile Include="GameTools\Noise3D\FastPerlinInterpolatedNoise3D.cs" />
     <Compile Include="GameTools\Noise3D\FastPerlinNoise.cs" />
-    <Compile Include="GameTools\Noise3D\PancakePerlinNoise3D.cs" />
     <Compile Include="GameTools\Noise3D\PerlinNoise3D.cs" />
     <Compile Include="GameTools\Noise3D\PerlinNoiseSettings3D.cs" />
     <Compile Include="GameTools\Noise3D\SimpleNoise3D.cs" />
     <Compile Include="GameTools\Process\ThreadManager.cs" />
+    <Compile Include="GameTools\SpiralProducer.cs" />
     <Compile Include="GameTools\State\NullState.cs" />
     <Compile Include="GameTools\Optional.cs" />
     <Compile Include="GameTools\Graph\Vector2i.cs" />
@@ -168,7 +168,7 @@
     <Compile Include="Logic\Data\World\Region.cs" />
     <Compile Include="Logic\Data\World\RegionDatabase.cs" />
     <Compile Include="Logic\Data\World\RegionGenerator.cs" />
-    <Compile Include="Logic\Data\World\RegionUpdater.cs" />
+    <Compile Include="Logic\Data\World\RegionController.cs" />
     <Compile Include="GameTools\Process\MultiTickProcess.cs" />
     <Compile Include="GameTools\Process\ProcessManager.cs" />
     <Compile Include="Logic\Data\World\ZoneBlockSettings.cs" />
@@ -190,11 +190,12 @@
     <Compile Include="View\Human\Audio\MusicPlayer.cs" />
     <Compile Include="View\Human\Audio\Song.cs" />
     <Compile Include="View\Human\Audio\SoundEffect.cs" />
+    <Compile Include="View\Human\State\DebugPlayingState.cs" />
     <Compile Include="View\Screens\DebugPlayScreen.cs" />
     <Compile Include="View\Human\Display\BlockTexture.cs" />
-    <Compile Include="View\Human\Display\DebugView.cs" />
+    <Compile Include="View\Human\DebugView.cs" />
     <Compile Include="View\Screens\EntityGraphics.cs" />
-    <Compile Include="View\Human\Display\HumanView.cs" />
+    <Compile Include="View\Human\HumanView.cs" />
     <Compile Include="View\Human\Display\HUD.cs" />
     <Compile Include="View\Human\Display\ParticleSystem.cs" />
     <Compile Include="View\Human\Display\RegionGraphics.cs" />
