@@ -60,7 +60,7 @@ namespace Warlord.View.Human.Display
                     if(region.Clean && region.RegionMesh.Length > 0)
                     {
                         graphics.SetVertexBuffer(region.RegionBuffer);
-                        graphics.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.RegionMesh.Length / 3);
+                        graphics.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.NumVertices / 3);
                     }
                 }
 

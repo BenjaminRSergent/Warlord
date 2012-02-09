@@ -18,6 +18,7 @@ namespace Warlord.View.Human.Display
         private GraphicsDevice graphics;
 
         private int index;
+        private int numVertices;        
 
         private bool clean;
 
@@ -32,6 +33,8 @@ namespace Warlord.View.Human.Display
             this.masterRegion = masterRegion;
             this.graphics = graphics;
 
+            regionMesh = new VertexPositionTexture[0];
+
             clean = false;
         }
         public void Update()
@@ -44,10 +47,12 @@ namespace Warlord.View.Human.Display
             clean = false;
 
             const int VERTICES_PER_FACE = 6;
+                        
+            numVertices = VERTICES_PER_FACE * masterRegion.VisibleFaces;
 
-            int numFaces = VERTICES_PER_FACE * masterRegion.VisibleFaces;
-
-            regionMesh = new VertexPositionTexture[VERTICES_PER_FACE * masterRegion.VisibleFaces];
+            // Resize if it's too small or more that 2 times too big
+            if( regionMesh.Length < numVertices || regionMesh.Length > numVertices*2)
+                Array.Resize(ref regionMesh, numVertices);
 
             index = 0;
 
@@ -95,7 +100,7 @@ namespace Warlord.View.Human.Display
         private void BuildFace(Vector3i bottomBackLeft, BlockFaceField faceDir, BlockType type)
         {
             if(type == BlockType.Air)
-                throw new ApplicationException("Air with visible face found");
+                return;
 
             BlockTexture faceTexture = GetTexture(faceDir, type);
             Vector2[] uvMap = UVMap[faceTexture][faceDir];
@@ -108,7 +113,16 @@ namespace Warlord.View.Human.Display
                     break;
 
                 currentFace = (bottomBackLeft + offsetMap[k]);
-                regionMesh[index + k] = new VertexPositionTexture(currentFace.ToVector3, uvMap[k]);
+
+                if(regionMesh[index + k] == null)
+                {
+                    regionMesh[index + k] = new VertexPositionTexture(currentFace.ToVector3, uvMap[k]);
+                }
+                else
+                {
+                    regionMesh[index + k].Position = currentFace.ToVector3;
+                    regionMesh[index + k].TextureCoordinate = uvMap[k];
+                }
             }
 
             index += 6;
@@ -157,13 +171,16 @@ namespace Warlord.View.Human.Display
             if(regionBuffer != null)
                 regionBuffer.Dispose();
         }
-
-        internal bool IsInVolume(BoundingFrustum frustum)
+        public bool IsInVolume(BoundingFrustum frustum)
         {
             if(frustum.Contains(masterRegion.RegionBox) != ContainmentType.Disjoint)
                 return true;
             else
                 return false;
+        }
+        public int NumVertices
+        {
+            get { return numVertices; }
         }
     }
 }

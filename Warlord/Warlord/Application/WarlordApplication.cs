@@ -10,15 +10,17 @@ using Warlord.View;
 using Warlord.View.Human.Input;
 using Warlord.View.Human.Display;
 using System;
+using System.Diagnostics;
+using Warlord.GameTools.Statistics;
 
 namespace Warlord
 {
     internal class WarlordApplication : Game
     {
-        private const long MEMORY_THRESHOLD = 1536000000;
+        private const long MEMORY_THRESHOLD = 536000000;
 
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        SpriteBatch debugSpriteBatch;
 
         WarlordLogic logic;
         DebugView debugView;
@@ -27,13 +29,21 @@ namespace Warlord
 
         WarlordEventManager eventManager;        
 
+        Stopwatch stopWatch;
+        double[] fps = new double[60];
+        int fpsIndex;
+        private SpriteFont debugFont;
+
         public WarlordApplication()
         {
             GlobalSystems.SetCurrentApplication(this);
 
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            Content.RootDirectory = "Content";            
+        }
 
+        protected override void Initialize()
+        {
             eventManager = new WarlordEventManager();
 
             errorLogger = new ErrorLogger();
@@ -43,23 +53,22 @@ namespace Warlord
 
             RegionArrayMaps.Init();
 
-            Vector2i VectorOne = new Vector2i(-4, -4);
-
-            IsFixedTimeStep = false;
-
             logic = new WarlordLogic();
-        }
 
-        protected override void Initialize()
-        {
+            stopWatch = new Stopwatch( );
+
+            stopWatch.Start( );
+
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            debugSpriteBatch = new SpriteBatch(GraphicsDevice);
 
             debugView = new DebugView(Window, GraphicsDevice, Content);
+
+            debugFont = Content.Load<SpriteFont>("Font/DebugFont");
 
             debugView.BeginGame();
             logic.BeginGame();
@@ -77,21 +86,55 @@ namespace Warlord
             logic.Update(gameTime);
             debugView.HandleInput();
 
-            if( GC.GetTotalMemory(false) > MEMORY_THRESHOLD )
-                GC.Collect( );
-
+            LimitMemoryUsage( );
+            
+            CalcFPS( );
 
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             base.Update(gameTime);
         }
-
         protected override void Draw(GameTime gameTime)
-        {
+        {           
             debugView.Draw(gameTime);
 
+
+            DrawFPS( );
+
             base.Draw(gameTime);
+        }
+        protected void LimitMemoryUsage( )
+        {
+            if( GC.GetTotalMemory(false) > MEMORY_THRESHOLD )
+                GC.Collect( );
+        }
+        protected void CalcFPS( )
+        {
+            if(fpsIndex > fps.Length-1)
+                fpsIndex = 0;
+
+            long realDeltaTime = stopWatch.ElapsedMilliseconds;
+            if( realDeltaTime > 0)
+                fps[fpsIndex] = 1000/realDeltaTime;
+            stopWatch.Restart( );
+
+            fpsIndex++;
+
+        }        
+        private void DrawFPS( )
+        {
+            RasterizerState rs = GraphicsDevice.RasterizerState;
+            DepthStencilState ds = GraphicsDevice.DepthStencilState;
+            BlendState bs = GraphicsDevice.BlendState;
+
+            debugSpriteBatch.Begin( );
+            debugSpriteBatch.DrawString( debugFont, "FPS: " + (int)Statistics.Adverage(fps), new Vector2( 20, 20), Color.Yellow);
+            debugSpriteBatch.End( );
+
+            GraphicsDevice.RasterizerState = rs;
+            GraphicsDevice.DepthStencilState = ds;
+            GraphicsDevice.BlendState = bs;
         }
         public void ReportError(string errorReport)
         {

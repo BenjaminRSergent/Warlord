@@ -29,7 +29,7 @@ namespace Warlord.View.Human.Input
             // a real controller tells its actor where to try to move;
             // it's the brains not the legs.
 
-            float moveSpeed = 0.1f;
+            float moveSpeed = 0.06f;
 
             if(shiftIsDown)
                 moveSpeed *= 10;
