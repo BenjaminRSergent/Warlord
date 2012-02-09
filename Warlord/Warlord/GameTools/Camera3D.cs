@@ -11,19 +11,19 @@ namespace GameTools
 
         private float aspectRatio;
         private float fov;
-        private Vector2 drawDistance;        
-               
+        private Vector2 drawDistance;
+
         public Camera3D(Rectangle clientBounds, Vector3 position, Vector2 initalFacingRotation, Vector3 up)
         {
             this.position = position;
             this.rotation = initalFacingRotation;
             this.up = up;
-            
+
             aspectRatio = (float)clientBounds.Width / (float)clientBounds.Height;
             fov = 45;
-            drawDistance = new Vector2( 1, 300 );
+            drawDistance = new Vector2(1, 300);
 
-            BuildProjection( );
+            BuildProjection();
         }
         public Camera3D(Rectangle clientBounds, Vector3 position, Vector2 initalFacingRotation, Vector3 up, Matrix projection)
         {
@@ -33,7 +33,7 @@ namespace GameTools
 
             Projection = projection;
         }
-        private void BuildProjection( )
+        private void BuildProjection()
         {
             Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fov),
                                                              aspectRatio,
@@ -116,30 +116,30 @@ namespace GameTools
         public float AspectRatio
         {
             get { return aspectRatio; }
-            set 
-            { 
-                aspectRatio = value; 
-                BuildProjection( );
+            set
+            {
+                aspectRatio = value;
+                BuildProjection();
             }
         }
         public float Fov
         {
             get { return fov; }
-            set 
-            { 
-                fov = value; 
-                BuildProjection( );
+            set
+            {
+                fov = value;
+                BuildProjection();
             }
         }
         public Vector2 DrawDistance
         {
             get { return drawDistance; }
-            set 
-            { 
-                drawDistance = value; 
-                BuildProjection( );
+            set
+            {
+                drawDistance = value;
+                BuildProjection();
             }
-        } 
+        }
         public Matrix Projection { get; set; }
     }
 }

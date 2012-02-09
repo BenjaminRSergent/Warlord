@@ -22,9 +22,47 @@ namespace Warlord.View.Human.Input
         }
         public bool OnKeyDown(Keys key)
         {
-            // a real controller tells its actor where to try to move;
-            // it's the brains not the legs.            
+            return Move(key);
+        }
+        public bool OnKeyHeld(Keys key)
+        {
+            return Move(key);
+        }
+        public bool OnKeyUp(Keys key)
+        {
+            switch(key)
+            {
+                case Keys.LeftShift:
+                    shiftIsDown = false;
+                    return true;
+            }
 
+            return false;
+        }
+        public bool OnMouseMove(Vector2 prevPosition, Vector2 currentPosition)
+        {
+            Vector2 centerOfScreen = new Vector2(gameWindow.ClientBounds.Width / 2,
+                                                  gameWindow.ClientBounds.Height / 2);
+            Vector2 facingRotation;
+            Vector2 mouseMove = centerOfScreen - currentPosition;
+
+            facingRotation.X = 0.001f * mouseMove.X;
+            facingRotation.Y = 0.001f * mouseMove.Y;
+
+            Mouse.SetPosition((int)centerOfScreen.X, (int)centerOfScreen.Y);
+
+            System.Drawing.Rectangle window = new System.Drawing.Rectangle(gameWindow.ClientBounds.Left,
+                                                                            gameWindow.ClientBounds.Top,
+                                                                            gameWindow.ClientBounds.Right,
+                                                                            gameWindow.ClientBounds.Bottom);
+            ClipCursor(ref window);
+
+            camera.ForceChangeRotation(facingRotation);
+
+            return true;
+        }
+        private bool Move(Keys key)
+        {
             float moveSpeed = 0.06f;
 
             if(shiftIsDown)
@@ -57,39 +95,6 @@ namespace Warlord.View.Human.Input
             }
 
             return false;
-        }
-        public bool OnKeyUp(Keys key)
-        {
-            switch(key)
-            {
-                case Keys.LeftShift:
-                    shiftIsDown = false;
-                    return true;
-            }
-
-            return false;
-        }
-        public bool OnMouseMove(Vector2 prevPosition, Vector2 currentPosition)
-        {
-            Vector2 centerOfScreen = new Vector2( gameWindow.ClientBounds.Width / 2,
-                                                  gameWindow.ClientBounds.Height / 2 );
-            Vector2 facingRotation;
-            Vector2 mouseMove = centerOfScreen - currentPosition;
-
-            facingRotation.X = 0.001f * mouseMove.X;
-            facingRotation.Y = 0.001f * mouseMove.Y;
-
-            Mouse.SetPosition((int)centerOfScreen.X,(int)centerOfScreen.Y);
-
-            System.Drawing.Rectangle window = new System.Drawing.Rectangle(gameWindow.ClientBounds.Left,
-                                                                            gameWindow.ClientBounds.Top,
-                                                                            gameWindow.ClientBounds.Right,
-                                                                            gameWindow.ClientBounds.Bottom);
-            ClipCursor(ref window);
-
-            camera.ForceChangeRotation(facingRotation);            
-
-            return true;
         }
         public bool OnLButtonDown(Vector2 location)
         {

@@ -19,7 +19,7 @@ namespace GameTools.Process
 
             started = false;
             kill = false;
-            waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);            
+            waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
         }
 
         public void Start()
@@ -83,6 +83,6 @@ namespace GameTools.Process
             get { return kill; }
         }
 
-        public string Name { get{ return name; } }
+        public string Name { get { return name; } }
     }
 }

@@ -16,7 +16,7 @@ namespace Warlord.View.Human.State
         GraphicsDevice graphics;
         ContentManager content;
 
-        public DebugPlayingState( DebugView owner, GameWindow gameWindow, GraphicsDevice graphics, ContentManager content) 
+        public DebugPlayingState(DebugView owner, GameWindow gameWindow, GraphicsDevice graphics, ContentManager content)
             : base(owner)
         {
             this.gameWindow = gameWindow;

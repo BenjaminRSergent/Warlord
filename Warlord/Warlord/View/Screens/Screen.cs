@@ -7,13 +7,13 @@ namespace Warlord.View.Human.Screens
     {
         private Stack<ScreenElement> screenElements = new Stack<ScreenElement>();
         private Stack<KeyboardListener> keyboardListeners = new Stack<KeyboardListener>();
-        private Stack<MouseListener> mouseListeners = new Stack<MouseListener>();  
-      
-        protected Screen( )
+        private Stack<MouseListener> mouseListeners = new Stack<MouseListener>();
+
+        protected Screen()
         {
-            screenElements = new Stack<ScreenElement>( );
-            keyboardListeners = new Stack<KeyboardListener>( );
-            mouseListeners = new Stack<MouseListener>( );
+            screenElements = new Stack<ScreenElement>();
+            keyboardListeners = new Stack<KeyboardListener>();
+            mouseListeners = new Stack<MouseListener>();
         }
 
         protected void PushScreenElement(ScreenElement element)
@@ -39,16 +39,16 @@ namespace Warlord.View.Human.Screens
         protected MouseListener PopMouseListener()
         {
             return mouseListeners.Pop();
-        }       
+        }
 
         public Stack<ScreenElement> ScreenElements
         {
             get { return screenElements; }
-        }        
+        }
         public Stack<KeyboardListener> KeyboardListeners
         {
             get { return keyboardListeners; }
-        }      
+        }
         public Stack<MouseListener> MouseListeners
         {
             get { return mouseListeners; }

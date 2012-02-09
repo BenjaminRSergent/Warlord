@@ -48,7 +48,7 @@ namespace GameTools.Process
             foreach(MultiTickProcess process in processes)
             {
                 process.KillProcess();
-            }            
+            }
         }
     }
 }

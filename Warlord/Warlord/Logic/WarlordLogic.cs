@@ -15,20 +15,26 @@ namespace Warlord.Logic
         StateMachine<WarlordLogic> stateMachine;
         GameTime mostRecentGameTime;
 
+        Vector3i regionSize;
+        int entityCellSize;
+
         public WarlordLogic()
         {
             Initialize();
         }
         private void Initialize()
         {
-            processManager = new ProcessManager();
-            entityManager = new WarlordEntityManager(16);
+            processManager = new ProcessManager();            
 
             stateMachine = new StateMachine<WarlordLogic>(this);
         }
-        public void BeginGame()
+        public void BeginGame(Vector3i regionSize, int entityCellSize)
         {
-            stateMachine.ChangeState(new DebugPlayingState(this, 10, new Vector3i(16, 128, 16)));
+            this.regionSize = regionSize;
+            this.entityCellSize = entityCellSize;
+
+            entityManager = new WarlordEntityManager(entityCellSize);            
+            stateMachine.ChangeState(new DebugPlayingState(this, 10, regionSize));
         }
         public void EndGame()
         {

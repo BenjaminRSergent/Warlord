@@ -7,7 +7,7 @@ namespace Warlord.Logic.Data.Entity
     class GameEntity
     {
         private Optional<uint> id;
-        protected Vector3 currentPosition;        
+        protected Vector3 currentPosition;
 
         public GameEntity(Vector3 position)
         {
@@ -20,7 +20,7 @@ namespace Warlord.Logic.Data.Entity
 
             this.id = new Optional<uint>(id);
         }
-        public void Teleport( Vector3 newPosition )
+        public void Teleport(Vector3 newPosition)
         {
             currentPosition = newPosition;
         }

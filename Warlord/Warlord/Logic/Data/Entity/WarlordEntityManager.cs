@@ -12,14 +12,14 @@ namespace Warlord.Logic.Data.Entity
     {
         Player player;
         Dictionary<uint, GameEntity> entityMap;
-        Dictionary<Vector3i, HashSet<GameEntity>> cells;
+        Dictionary<Vector3i, HashSet<GameEntity>> entityCells;
 
         int cellSideLength;
         uint nextEntityID;
 
         public WarlordEntityManager(int cellSideLength)
         {
-            cells = new Dictionary<Vector3i, HashSet<GameEntity>>();
+            entityCells = new Dictionary<Vector3i, HashSet<GameEntity>>();
             entityMap = new Dictionary<uint, GameEntity>();
             nextEntityID = 0;
 
@@ -64,23 +64,23 @@ namespace Warlord.Logic.Data.Entity
         {
             HashSet<GameEntity> theCell;
 
-            cells.TryGetValue(cell, out theCell);
+            entityCells.TryGetValue(cell, out theCell);
 
             if(theCell == null)
-                cells.Add(cell, new HashSet<GameEntity>());
+                entityCells.Add(cell, new HashSet<GameEntity>());
 
-            cells[cell].Add(entity);
+            entityCells[cell].Add(entity);
         }
         private void RemoveFromCell(Vector3i cell, GameEntity entity)
         {
             HashSet<GameEntity> theCell;
 
-            cells.TryGetValue(cell, out theCell);
+            entityCells.TryGetValue(cell, out theCell);
 
             Debug.Assert(theCell != null);
-            Debug.Assert(cells[cell].Contains(entity));
+            Debug.Assert(entityCells[cell].Contains(entity));
 
-            cells[cell].Remove(entity);
+            entityCells[cell].Remove(entity);
         }
         public List<GameEntity> GetEntitiesWithin(Vector3 position, int radius)
         {
@@ -102,7 +102,7 @@ namespace Warlord.Logic.Data.Entity
                     {
                         adjacentCell = centerCell + new Vector3i(x, y, z);
 
-                        cells.TryGetValue(adjacentCell, out nearbyCell);
+                        entityCells.TryGetValue(adjacentCell, out nearbyCell);
 
                         if(nearbyCell != null)
                         {

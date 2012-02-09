@@ -10,7 +10,7 @@ namespace Warlord.Event.EventTypes
     class SendingRegionListEvent : BaseGameEvent
     {
         private List<Region> currentRegionList;
-        
+
         public SendingRegionListEvent(Optional<Object> sender, int delay, List<Region> currentRegionList)
             : base(sender, "sending_region_list", delay)
         {

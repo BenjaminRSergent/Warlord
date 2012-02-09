@@ -34,37 +34,23 @@ namespace Warlord.Logic.Physics
         }
         public void Update(GameTime gameTime)
         {
-            List<MovingEntity> entities = movingEntityMap.Values.ToList();
-            ResetEntityForces(entities);
-            ApplyGlobalForces(gameTime, entities);
-            UpdateEntities(gameTime, entities);
-            ResolveCollisions(gameTime, entities);
-        }
-        private void ResetEntityForces(List<MovingEntity> movingEntities)
-        {
-            foreach(MovingEntity entity in movingEntities)
-                entity.ResetForce();
-        }
-        private void ApplyGlobalForces(GameTime gameTime, List<MovingEntity> movingEntities)
-        {
-            foreach(ForceGenerator force in globalForces)
-                foreach(MovingEntity entity in movingEntities)
-                {
-                    force.ApplyForceTo(gameTime, entity);
-                }
-        }
-        private void UpdateEntities(GameTime gameTime, List<MovingEntity> movingEntities)
-        {
-            foreach(MovingEntity entity in movingEntities)
+            foreach( MovingEntity entity in movingEntityMap.Values)                
             {
-                entity.Velocity += entity.SumOfForces/entity.Mass;
-                entity.Update(gameTime);
+                entity.ResetForce();
+
+                foreach(ForceGenerator force in globalForces)
+                    force.ApplyForceTo(gameTime, entity);
+
+                 UpdateEntity(entity, gameTime);
+
+                collisionDetection.ResolveCollisions(gameTime, entity);
             }
         }
-        private void ResolveCollisions(GameTime gameTime, List<MovingEntity> movingEntities)
+
+        private void UpdateEntity(MovingEntity entity, GameTime gameTime)
         {
-            foreach(MovingEntity entity in movingEntities)
-                collisionDetection.ResolveCollisions(gameTime, entity);
+            entity.Velocity += entity.SumOfForces / entity.Mass;
+            entity.Update(gameTime);            
         }
         private void AddEntity(BaseGameEvent theEvent)
         {

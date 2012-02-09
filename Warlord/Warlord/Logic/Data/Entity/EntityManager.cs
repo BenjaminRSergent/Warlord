@@ -6,7 +6,7 @@ namespace Warlord.Logic.Data.Entity
     interface EntityManager
     {
         GameEntity GetEntity(uint id);
-        List<GameEntity> GetEntitiesWithin( Vector3 position, int radius );
+        List<GameEntity> GetEntitiesWithin(Vector3 position, int radius);
         Player Player { get; }
     }
 }

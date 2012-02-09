@@ -3,7 +3,7 @@
 namespace Warlord.Logic.Data.World
 {
     class GeneratorSettings
-    {        
+    {
         public Vector3i RegionSize;
 
         public int midLevel;

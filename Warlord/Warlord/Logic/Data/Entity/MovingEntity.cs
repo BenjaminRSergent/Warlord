@@ -10,7 +10,8 @@ namespace Warlord.Logic.Data.Entity
 
         private Vector3 previousPosition;
 
-        public MovingEntity(Vector3 position) : base(position)
+        public MovingEntity(Vector3 position)
+            : base(position)
         {
             previousPosition = position;
             currentPosition = position;

@@ -3,62 +3,47 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using GameTools.Statistics;
+using Warlord.View.Human.Display;
+using System;
+using Warlord.GameTools;
 
 namespace Warlord.Application
 {
     class DebugFpsHelper
     {
-        private SpriteBatch debugSpriteBatch;
-        private SpriteFont debugFont;
-        private Stopwatch stopWatch;        
+        private Stopwatch stopWatch;
 
-        private double[] fps = new double[60];
-        private int advFps = 60;
-        private int fpsIndex;
-        private GraphicsDevice graphics;
+        private TextDrawer textDrawer;
+        private FloatSmoother floatSmoother;
 
-        public DebugFpsHelper( GraphicsDevice graphics, ContentManager content )
+        public DebugFpsHelper(GraphicsDevice graphics)
         {
-            stopWatch = new Stopwatch( );
+            stopWatch = new Stopwatch();
+            textDrawer = new TextDrawer(graphics);
 
-            this.graphics = graphics;
+            floatSmoother = new FloatSmoother(60);
 
-            stopWatch.Start( );
-            debugSpriteBatch = new SpriteBatch(graphics);
-            debugFont = content.Load<SpriteFont>("Font/DebugFont");
+            stopWatch.Start();
         }
 
-        public void CalcFPS( )
+        public void CalcFPS()
         {
-            if(fpsIndex > fps.Length-1)
-                fpsIndex = 0;
+            if(stopWatch.ElapsedMilliseconds != 0)
+                floatSmoother.AddValue(1000 / stopWatch.ElapsedMilliseconds);
 
-            long realDeltaTime = stopWatch.ElapsedMilliseconds;
-            if( realDeltaTime > 0)
-                fps[fpsIndex] = 1000/realDeltaTime;
-            stopWatch.Restart( );
-
-            fpsIndex++;
-
-        }        
-        public void DrawFPS( )
+            stopWatch.Restart();
+        }
+        public void DrawFPS()
         {
-            RasterizerState rs = graphics.RasterizerState;
-            DepthStencilState ds = graphics.DepthStencilState;
-            BlendState bs = graphics.BlendState;           
+            int smoothFps = (int)floatSmoother.SmoothedValue;
 
-            int smoothFps = (int)Statistics.Adverage(fps);
-            advFps += smoothFps;
-            advFps /= 2;
+            if(FontRepository.DebugFont != null)
+            {
+                string output = "Current FPS: " + smoothFps;
+                Vector2 position = new Vector2(20, 20);
 
-            debugSpriteBatch.Begin( );
-            debugSpriteBatch.DrawString( debugFont, "Current FPS: " + smoothFps, new Vector2( 20, 20), Color.Yellow);
-            debugSpriteBatch.DrawString( debugFont, "Adverage FPS: " + advFps, new Vector2( 20, 40), Color.Yellow);
-            debugSpriteBatch.End( );
-
-            graphics.RasterizerState = rs;
-            graphics.DepthStencilState = ds;
-            graphics.BlendState = bs;
+                textDrawer.Drawstring(output, FontRepository.DebugFont, position, Color.Yellow);
+            }
         }
     }
 }

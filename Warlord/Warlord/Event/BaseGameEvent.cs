@@ -8,18 +8,17 @@ namespace Warlord.Event
     {
         private int hash;
 
-        protected BaseGameEvent(Optional<Object> sender, String eventType, int delay)
+        protected BaseGameEvent(Optional<Object> sender, string eventType, int delay)
         {
             Sender = sender;
             EventType = eventType;
             Delay = delay;
 
-
             hash = eventType.GetHashCode();
         }
 
         public int Delay { get; private set; }
-        public String EventType { get; private set; }
+        public string EventType { get; private set; }
         public Optional<Object> Sender { get; private set; }
         public Optional<List<BaseGameEvent>> NextEvents { get; private set; }
 

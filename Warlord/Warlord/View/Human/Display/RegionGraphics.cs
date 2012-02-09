@@ -17,7 +17,7 @@ namespace Warlord.View.Human.Display
         private GraphicsDevice graphics;
 
         private int index;
-        private int numVertices;        
+        private int numVertices;
 
         private bool clean;
 
@@ -46,11 +46,11 @@ namespace Warlord.View.Human.Display
             clean = false;
 
             const int VERTICES_PER_FACE = 6;
-                        
+
             numVertices = VERTICES_PER_FACE * masterRegion.VisibleFaces;
 
             // Resize if it's too small or more that 2 times too big
-            if( regionMesh.Length < numVertices || regionMesh.Length > numVertices*2)
+            if(regionMesh.Length < numVertices || regionMesh.Length > numVertices * 2)
                 Array.Resize(ref regionMesh, numVertices);
 
             index = 0;

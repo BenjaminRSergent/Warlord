@@ -6,9 +6,9 @@ using Microsoft.Xna.Framework;
 
 namespace GameTools.Noise3D
 {
-    class FastPerlinNoise
+    class FastPerlinNoise3D
     {
-        private const int premutationSize = 100;        
+        private const int premutationSize = 100;
         private float[] flatPremutationList;
 
         private Random rng;
@@ -17,7 +17,7 @@ namespace GameTools.Noise3D
 
         private PerlinNoiseSettings3D settings;
 
-        public FastPerlinNoise(PerlinNoiseSettings3D settings)
+        public FastPerlinNoise3D(PerlinNoiseSettings3D settings)
         {
             this.settings = settings;
             rng = new Random(settings.seed);
@@ -44,7 +44,7 @@ namespace GameTools.Noise3D
                     {
                         effectiveX = x + settings.startingPoint.X;
                         effectiveY = y + settings.startingPoint.Y;
-                        effectiveZ = z + settings.startingPoint.Z;                       
+                        effectiveZ = z + settings.startingPoint.Z;
 
                         toFill[x * height * length + y * length + z] = GetPerlinNoise3D(effectiveX, effectiveY, effectiveZ);
                     }
@@ -141,16 +141,16 @@ namespace GameTools.Noise3D
             sides = GetSides(adjustedX, adjustedY, adjustedZ);
             corners = GetCorners(adjustedX, adjustedY, adjustedZ);
 
-            Debug.Assert( Math.Abs(center) < 5/8.0);
-            Debug.Assert( Math.Abs(sides) < 1/4.0);
-            Debug.Assert( Math.Abs(corners) < 1/8.0);
+            Debug.Assert(Math.Abs(center) < 5 / 8.0);
+            Debug.Assert(Math.Abs(sides) < 1 / 4.0);
+            Debug.Assert(Math.Abs(corners) < 1 / 8.0);
 
             return corners + sides + center;
         }
 
         private float GetCenter(int adjustedX, int adjustedY, int adjustedZ)
         {
-            return 5*ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ)/8;
+            return 5 * ThreeIndexIntoArray(adjustedX, adjustedY, adjustedZ) / 8;
         }
         private float GetSides(int adjustedX, int adjustedY, int adjustedZ)
         {

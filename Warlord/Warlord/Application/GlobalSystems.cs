@@ -22,7 +22,7 @@ namespace Warlord.Application
         }
         static public ThreadManager ThreadManager
         {
-            get{ return application.ThreadManager; }
+            get { return application.ThreadManager; }
         }
         static public bool GameWindowHasFocus
         {

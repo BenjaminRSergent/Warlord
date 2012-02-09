@@ -4,99 +4,97 @@ using Microsoft.Xna.Framework;
 
 namespace GameTools.Graph
 {
-    class Vector2i
-    {     
-        public Vector2i( )
+    struct Vector2i
+    {
+        int x;
+        int y;
+
+        public Vector2i(int X, int Y)
         {
-            this.X = 0;
-            this.Y = 0;
+            x = X;
+            y = Y;
         }
-        public Vector2i( int X, int Y )
+        public Vector2i(Vector2i source)
         {
-            this.X = X;
-            this.Y = Y;
+            x = source.X;
+            y = source.Y;
         }
-        public Vector2i( Vector2i source )
+        public Vector2i(Vector2 source)
         {
-            this.X = source.X;
-            this.Y = source.Y;
+            x = (int)source.X;
+            y = (int)source.Y;
         }
-        public Vector2i( Vector2 source )
+        public static implicit operator Vector2i(Vector2 source)
         {
-            this.X = (int)source.X;
-            this.Y = (int)source.Y;
-        }
-        public static implicit operator Vector2i( Vector2 source )
-        {
-            Vector2i vector = new Vector2i( );
-            vector.X = (int)source.X;
-            vector.Y = (int)source.Y;
+            Vector2i vector = new Vector2i();
+            vector.x = (int)source.X;
+            vector.y = (int)source.Y;
 
             return vector;
         }
-        public float AngleBetween( Vector2i otherVector )
+        public float AngleBetween(Vector2i otherVector)
         {
-            Vector2 thisNorm = GetNormalized( );
-            Vector2 otherNorm = otherVector.GetNormalized( );
-            float dot = GraphMath.Dot(thisNorm, otherNorm );
+            Vector2 thisNorm = GetNormalized();
+            Vector2 otherNorm = otherVector.GetNormalized();
+            float dot = GraphMath.Dot(thisNorm, otherNorm);
 
             return (float)Math.Acos(dot);
         }
-        public float DotProduct(  Vector2i otherVector )
+        public float DotProduct(Vector2i otherVector)
         {
             return this.X * otherVector.X + this.Y * otherVector.Y;
-        }  
-        public Vector2 GetNormalized( )
+        }
+        public Vector2 GetNormalized()
         {
-            Vector2 normVec = new Vector2( this.X, this.Y );
-            normVec.Normalize( );
+            Vector2 normVec = new Vector2(this.X, this.Y);
+            normVec.Normalize();
 
             return normVec;
         }
-        static public Vector2i operator+( Vector2i leftVector, Vector2i rightVector )
+        static public Vector2i operator +(Vector2i leftVector, Vector2i rightVector)
         {
-            Vector2i sumVector = new Vector2i( leftVector );
+            Vector2i sumVector = new Vector2i(leftVector);
 
             sumVector.X += rightVector.X;
             sumVector.Y += rightVector.Y;
 
             return sumVector;
         }
-        static public Vector2i operator-( Vector2i leftVector, Vector2i rightVector )
+        static public Vector2i operator -(Vector2i leftVector, Vector2i rightVector)
         {
-            Vector2i differenceVector = new Vector2i( leftVector );
+            Vector2i differenceVector = new Vector2i(leftVector);
 
             differenceVector.X -= rightVector.X;
             differenceVector.Y -= rightVector.Y;
 
             return differenceVector;
         }
-        static public Vector2i operator*( int number, Vector2i vector )
+        static public Vector2i operator *(int number, Vector2i vector)
         {
-            Vector2i scaledVector = new Vector2i( vector );
+            Vector2i scaledVector = new Vector2i(vector);
 
             scaledVector.X *= number;
             scaledVector.Y *= number;
 
             return scaledVector;
         }
-        static public float operator*( Vector2i leftVector, Vector2i rightVector )
+        static public float operator *(Vector2i leftVector, Vector2i rightVector)
         {
-            return leftVector.DotProduct( rightVector );
-        }        
-        static public bool operator==( Vector2i leftVector, Vector2i rightVector )
+            return leftVector.DotProduct(rightVector);
+        }
+        static public bool operator ==(Vector2i leftVector, Vector2i rightVector)
         {
             return leftVector.X == rightVector.X &&
                    leftVector.Y == rightVector.Y;
         }
-        static public bool operator!=( Vector2i leftVector, Vector2i rightVector )
+        static public bool operator !=(Vector2i leftVector, Vector2i rightVector)
         {
             return leftVector.X != rightVector.X ||
                    leftVector.Y != rightVector.Y;
         }
         public override bool Equals(object obj)
         {
-            if( obj is Vector2i )
+            if(obj is Vector2i)
             {
                 return this == (Vector2i)obj;
             }
@@ -104,26 +102,26 @@ namespace GameTools.Graph
                 return false;
         }
         public override int GetHashCode()
-        {            
-            return X.GetHashCode() ^ Y.GetHashCode( );
+        {
+            return x ^ 73856093 ^ y ^ 19349663 ;
         }
         public override string ToString()
         {
             return "(" + X + "," + Y + ")";
-        }       
-        
+        }
+
         public float Length
-        { 
+        {
             get
             {
-                return (float)Math.Sqrt(X*X + Y*Y);
+                return (float)Math.Sqrt(X * X + Y * Y);
             }
         }
         public int LengthSquared
-        { 
+        {
             get
             {
-                return X*X + Y*Y;
+                return X * X + Y * Y;
             }
         }
         public Vector2 ToVector2
@@ -137,18 +135,38 @@ namespace GameTools.Graph
         {
             get
             {
-                return new Vector2i( 0, 0 );
+                return new Vector2i(0, 0);
             }
         }
         static public Vector2i One
         {
             get
             {
-                return new Vector2i( 1, 1 );
+                return new Vector2i(1, 1);
             }
         }
 
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X 
+        {
+            get
+            {
+                return x;
+            }
+            set
+            {
+                x = value;
+            }
+        }
+        public int Y
+        {
+            get
+            {
+                return y;
+            }
+            set
+            {
+                y = value;
+            }
+        }
     }
 }

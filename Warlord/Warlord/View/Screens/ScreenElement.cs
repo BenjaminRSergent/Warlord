@@ -6,15 +6,8 @@ namespace Warlord.View.Human.Screens
 {
     abstract class ScreenElement : KeyboardListener, MouseListener
     {
-        private int zOrder;
-
         public ScreenElement()
         {
-            this.zOrder = 0;
-        }
-        public ScreenElement(int zOrder)
-        {
-            this.zOrder = zOrder;
         }
 
         abstract public void Draw(GameTime gameTime);
@@ -23,7 +16,10 @@ namespace Warlord.View.Human.Screens
         {
             return false;
         }
-
+        public bool OnKeyHeld(Keys key)
+        {
+            return false;
+        }
         virtual public bool OnKeyUp(Keys key)
         {
             return false;
@@ -58,11 +54,5 @@ namespace Warlord.View.Human.Screens
         {
             return false;
         }
-
-        public int ZOrder
-        {
-            get { return zOrder; }
-        }
-
     }
 }

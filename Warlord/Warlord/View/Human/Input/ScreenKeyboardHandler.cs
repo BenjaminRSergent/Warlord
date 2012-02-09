@@ -15,19 +15,19 @@ namespace Warlord.View.Human.Input
         {
             this.screen = screen;
         }
-        public void DispatchKeyboardInput( )
+        public void DispatchKeyboardInput()
         {
             currentKeyboardState = Keyboard.GetState();
 
             if(GlobalSystems.GameWindowHasFocus)
-            { 
-                KeysUp( );
-                KeysDown( );
+            {
+                KeysUp();
+                KeysDown();
             }
 
             previousKeyboardState = currentKeyboardState;
         }
-        private void KeysUp( )
+        private void KeysUp()
         {
             Keys[] previousKeysDown = previousKeyboardState.GetPressedKeys();
 
@@ -46,7 +46,7 @@ namespace Warlord.View.Human.Input
                         }
                     }
 
-                    if( consumed )
+                    if(consumed)
                         continue;
 
                     foreach(KeyboardListener listener in screen.KeyboardListeners)
@@ -59,7 +59,7 @@ namespace Warlord.View.Human.Input
                 }
             }
         }
-        private void KeysDown( )
+        private void KeysDown()
         {
             Keys[] currentKeysDown = currentKeyboardState.GetPressedKeys();
 
@@ -68,23 +68,48 @@ namespace Warlord.View.Human.Input
             {
                 consumed = false;
 
-                foreach(KeyboardListener listener in screen.ScreenElements)
+                if(previousKeyboardState.IsKeyDown(key))
                 {
-                    if(listener.OnKeyDown(key))
+                    foreach(KeyboardListener listener in screen.ScreenElements)
                     {
-                        consumed = true;
-                        break;
+                        if(listener.OnKeyHeld(key))
+                        {
+                            consumed = true;
+                            break;
+                        }
+                    }
+
+                    if(consumed)
+                        continue;
+
+                    foreach(KeyboardListener listener in screen.KeyboardListeners)
+                    {
+                        if(listener.OnKeyHeld(key))
+                        {
+                            break;
+                        }
                     }
                 }
-
-                if( consumed )
-                    continue;
-
-                foreach(KeyboardListener listener in screen.KeyboardListeners)
+                else
                 {
-                    if(listener.OnKeyDown(key))
+                    foreach(KeyboardListener listener in screen.ScreenElements)
                     {
-                        break;
+                        if(listener.OnKeyDown(key))
+                        {
+                            consumed = true;
+                            break;
+                        }
+                    }
+
+                    if(consumed)
+                        continue;
+
+                    foreach(KeyboardListener listener in screen.KeyboardListeners)
+                    {
+                        if(listener.OnKeyDown(key))
+                        {
+                            break;
+                        }
                     }
                 }
             }

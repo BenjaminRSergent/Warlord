@@ -20,7 +20,8 @@ namespace Warlord.View.Human.Screens
 
         private Camera3D camera;
         private Effect effect;
-        
+        private Vector2 fog;
+
         private bool synchronising;
 
         Queue<KeyValuePair<Region, RegionGraphics>> toAdd;
@@ -28,18 +29,19 @@ namespace Warlord.View.Human.Screens
         public WorldGraphics(GraphicsDevice graphics, GameWindow gameWindow, ContentManager content, Camera3D camera)
         {
             this.graphics = graphics;
+            this.camera = camera;
+            this.fog = new Vector2(130, 140);
+
             regionGraphics = new Dictionary<Region, RegionGraphics>();
 
             toAdd = new Queue<KeyValuePair<Region, RegionGraphics>>();
-
-            this.camera = camera;
 
             effect = content.Load<Effect>("Fxs/block_effects");
 
             GlobalSystems.EventManager.Subscribe(AddRegion, "region_created");
             GlobalSystems.EventManager.Subscribe(RenewRegion, "sending_region_list");
 
-            SynchroniseAllRegions( );
+            SynchroniseAllRegions();
         }
 
         public override void Draw(GameTime gameTime)
@@ -51,7 +53,7 @@ namespace Warlord.View.Human.Screens
         {
             SetupBlockEffects();
             UpdateRegionGraphicsPairs();
-            
+
             BoundingFrustum frustum = GetExpandedCameraFrustum(0.05f);
 
             foreach(EffectPass pass in effect.CurrentTechnique.Passes)
@@ -61,7 +63,7 @@ namespace Warlord.View.Human.Screens
                 foreach(RegionGraphics region in regionGraphics.Values)
                 {
                     if(region.IsInVolume(frustum))
-                    { 
+                    {
                         region.Update();
 
                         if(region.Clean && region.RegionMesh.Length > 0)
@@ -77,10 +79,10 @@ namespace Warlord.View.Human.Screens
         private BoundingFrustum GetExpandedCameraFrustum(float percentExpand)
         {
             float originalFov = camera.Fov;
-            camera.Fov = originalFov*(1+percentExpand);
+            camera.Fov = originalFov * (1 + percentExpand);
             BoundingFrustum frustum = new BoundingFrustum(camera.View * camera.Projection);
             camera.Fov = originalFov;
-            
+
             return frustum;
         }
         private void SetupBlockEffects()
@@ -94,8 +96,8 @@ namespace Warlord.View.Human.Screens
             effect.Parameters["AmbientColor"].SetValue(Color.White.ToVector4());
             effect.Parameters["AmbientIntensity"].SetValue(0.8f);
             effect.Parameters["FogColor"].SetValue(Color.SkyBlue.ToVector4());
-            effect.Parameters["FogNear"].SetValue(16 * 8.5f);
-            effect.Parameters["FogFar"].SetValue(16 * 9f);
+            effect.Parameters["FogNear"].SetValue(fog.X);
+            effect.Parameters["FogFar"].SetValue(fog.Y);
             effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
         }
         private void UpdateRegionGraphicsPairs()
@@ -114,11 +116,11 @@ namespace Warlord.View.Human.Screens
         private void AddRegion(BaseGameEvent theEvent)
         {
             Region newRegion = (theEvent as RegionCreatedEvent).Data.newRegion;
-            AddRegion(newRegion);            
+            AddRegion(newRegion);
         }
         private void AddRegion(Region newRegion)
         {
-            KeyValuePair<Region, RegionGraphics> newRegionGraphicsPair;            
+            KeyValuePair<Region, RegionGraphics> newRegionGraphicsPair;
 
             if(!regionGraphics.ContainsKey(newRegion))
             {
@@ -143,12 +145,24 @@ namespace Warlord.View.Human.Screens
                 }
             }
         }
-        private void SynchroniseAllRegions( )
+        private void SynchroniseAllRegions()
         {
             synchronising = true;
-            regionGraphics.Clear( );
+            regionGraphics.Clear();
 
             GlobalSystems.EventManager.SendEvent(new RefreshRegionGraphicsEvent(new Optional<object>(this), 0));
+        }
+
+        public Vector2 Fog
+        {
+            get
+            {
+                return fog;
+            }
+            set
+            {
+                fog = value;
+            }
         }
     }
 }

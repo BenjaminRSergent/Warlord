@@ -47,7 +47,7 @@ namespace GameTools.Noise3D
                        GenDoubleNoise(x - 1, y - 1, z + 1, seed) +
                        GenDoubleNoise(x - 1, y - 1, z - 1, seed)) / 64.0;
 
-            return corners + sides + center;
+            return center + sides + corners;
         }
 
         static public double GenInterpolatedNoise(double x, double y, double z, int seed)

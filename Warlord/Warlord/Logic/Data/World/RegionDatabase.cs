@@ -28,7 +28,7 @@ namespace Warlord.Logic.Data.World
             generator = new RegionGenerator(seed, regionSize);
 
             this.seed = seed;
-            this.regionSize = regionSize;            
+            this.regionSize = regionSize;
 
             GlobalSystems.EventManager.Subscribe(SendCurrentRegions, "refresh_region_graphics");
         }
@@ -42,7 +42,7 @@ namespace Warlord.Logic.Data.World
 
                 Region newRegion = GetNewRegion(newOrigin, regionSize);
                 regionMap.Add(regionCoordiants, newRegion);
-                generator.FastGenerateRegion(updater, newOrigin);
+                generator.FastGenerateRegion3D(updater, newOrigin);
 
                 RegionCreatedData creationData = new RegionCreatedData(newRegion);
 
@@ -55,7 +55,6 @@ namespace Warlord.Logic.Data.World
 
             return false;
         }
-
         private Region GetNewRegion(Vector3i newOrigin, Vector3i regionSize)
         {
             Region newRegion;
@@ -131,7 +130,7 @@ namespace Warlord.Logic.Data.World
                 currentRegion.Data.RemoveFace(relativePosition, facing);
 
         }
-        public bool IsRegionLoaded( Vector3i regionCoordiantes )
+        public bool IsRegionLoaded(Vector3i regionCoordiantes)
         {
             return regionMap.ContainsKey(regionCoordiantes);
         }
@@ -154,11 +153,10 @@ namespace Warlord.Logic.Data.World
 
         public void SendCurrentRegions(BaseGameEvent theEvent)
         {
-            SendingRegionListEvent sendingRegionsEvent = new SendingRegionListEvent( new Optional<object>(this),
+            SendingRegionListEvent sendingRegionsEvent = new SendingRegionListEvent(new Optional<object>(this),
                                                                                      0,
-                                                                                     regionMap.Values.ToList( ));
+                                                                                     regionMap.Values.ToList());
         }
-
         public Vector3i RegionSize
         {
             get { return regionSize; }

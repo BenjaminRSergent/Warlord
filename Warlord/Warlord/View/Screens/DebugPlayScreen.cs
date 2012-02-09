@@ -10,6 +10,7 @@ namespace Warlord.View.Human.Screens
     {
         private WorldGraphics worldGraphics;
         private DebugMovementController movementController;
+        private DebugFogController fogController;
         private Camera3D camera;
 
         public DebugPlayScreen(GraphicsDevice graphics, GameWindow gameWindow, ContentManager content)
@@ -18,10 +19,12 @@ namespace Warlord.View.Human.Screens
             worldGraphics = new WorldGraphics(graphics, gameWindow, content, camera);
 
             movementController = new DebugMovementController(camera, gameWindow);
+            fogController = new DebugFogController(worldGraphics);
 
             PushScreenElement(worldGraphics);
             PushMouseListener(movementController);
             PushKeyboardListener(movementController);
+            PushKeyboardListener(fogController);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Microsoft.Xna.Framework;
+using GameTools.Graph;
 
 namespace GameTools.Noise2D
 {
@@ -8,36 +8,34 @@ namespace GameTools.Noise2D
     {
         Random rng;
 
-        public Point size;
-        public Point startingPoint;
-        public double frequencyMulti;
-        public double persistence;
+        public Vector2i size;
+        public Vector2i startingPoint;
+        public float frequencyMulti;
+        public float persistence;
         public float zoom;
         public int octaves;
         public int seed;
-
-        public int numThreads;
 
         public PerlinNoiseSettings2D()
         {
             rng = new Random();
 
-            size = new Point(100, 100);
-            startingPoint = Point.Zero;
+            size = new Vector2i(100, 100);
+            startingPoint = Vector2i.Zero;
 
             frequencyMulti = 2;
-            persistence = 0.5;
+            persistence = 0.5f;
             zoom = 40;
             octaves = 6;
-            numThreads = 4;
+            seed = 0;
 
             GenerateNewSeed();
         }
 
         public PerlinNoiseSettings2D(PerlinNoiseSettings2D settings)
         {
-            size = settings.size;
-            startingPoint = settings.startingPoint;
+            size = new Vector2i(settings.size);
+            startingPoint = new Vector2i(settings.startingPoint);
 
             frequencyMulti = settings.frequencyMulti;
             persistence = settings.persistence;

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using GameTools.Graph;
 using GameTools.Noise3D;
+using GameTools.Noise2D;
 
 namespace Warlord.Logic.Data.World
 {
@@ -9,10 +10,10 @@ namespace Warlord.Logic.Data.World
     {
         private int seed;
         private GeneratorSettings generatorSettings;
-        private PerlinNoiseSettings3D noiseSettings;
-        FastPerlinNoise fastNoise;
+        private PerlinNoiseSettings3D noiseSettings3D;
+        private FastPerlinNoise3D fastNoise3D;
 
-        float[] flatNoise;
+        private float[] flatNoise;
 
         public RegionGenerator(int seed)
         {
@@ -24,42 +25,42 @@ namespace Warlord.Logic.Data.World
             this.seed = seed;
             generatorSettings = new GeneratorSettings();
             generatorSettings.RegionSize = regionSize;
-            LoadDefaultSettings();            
+            LoadDefaultSettings();
 
             flatNoise = new float[generatorSettings.RegionSize.X *
-                              generatorSettings.RegionSize.Y *
-                              generatorSettings.RegionSize.Z];
+                                  generatorSettings.RegionSize.Y *
+                                  generatorSettings.RegionSize.Z];
         }
         private void LoadDefaultSettings()
-        {            
-            noiseSettings = new PerlinNoiseSettings3D();
-            noiseSettings.frequencyMulti = 2.0f;
-            noiseSettings.octaves = 4;
-            noiseSettings.persistence = 0.5f;
-            noiseSettings.seed = 3;
-            noiseSettings.size = generatorSettings.RegionSize;
-            noiseSettings.startingPoint = Vector3i.Zero;
-            noiseSettings.zoom = 60;
+        {
+            noiseSettings3D = new PerlinNoiseSettings3D();
+            noiseSettings3D.frequencyMulti = 2.0f;
+            noiseSettings3D.octaves = 4;
+            noiseSettings3D.persistence = 0.5f;
+            noiseSettings3D.seed = 3;
+            noiseSettings3D.size = generatorSettings.RegionSize;
+            noiseSettings3D.startingPoint = Vector3i.Zero;
+            noiseSettings3D.zoom = 60;
 
-            fastNoise = new FastPerlinNoise(noiseSettings);                       
+            fastNoise3D = new FastPerlinNoise3D(noiseSettings3D);
 
-            generatorSettings.midLevel = generatorSettings.RegionSize.Y/10;
-            generatorSettings.highLevel = (6*generatorSettings.RegionSize.Y)/7;
-            
-            generatorSettings.lowLevelZone = new ZoneBlockSettings(-1,-0.7f, GetDefaultHeightMod(0, generatorSettings.midLevel));
-            generatorSettings.midLevelZone = new ZoneBlockSettings(0.1f, 1, GetDefaultHeightMod(generatorSettings.midLevel,generatorSettings.highLevel));
+            generatorSettings.midLevel = generatorSettings.RegionSize.Y / 10;
+            generatorSettings.highLevel = (6 * generatorSettings.RegionSize.Y) / 7;
+
+            generatorSettings.lowLevelZone = new ZoneBlockSettings(-1, -0.7f, GetDefaultHeightMod(0, generatorSettings.midLevel));
+            generatorSettings.midLevelZone = new ZoneBlockSettings(0.1f, 1, GetDefaultHeightMod(generatorSettings.midLevel, generatorSettings.highLevel));
             generatorSettings.highLevelZone = new ZoneBlockSettings(0.6f, 1, GetDefaultHeightMod(generatorSettings.highLevel, generatorSettings.RegionSize.Y));
         }
         private ZoneBlockSettings.ModifyDensity GetDefaultHeightMod(int heightZoneStart, int heightZoneEnd)
         {
-            return ( (float density, float height) => 
-                density - ((height-heightZoneStart)/(heightZoneEnd - heightZoneStart))/2 );
+            return ((float density, float height) =>
+                density - ((height - heightZoneStart) / (heightZoneEnd - heightZoneStart)) / 2);
         }
-        public void FastGenerateRegion(RegionController ownerWorld, Vector3i origin)
+        public void FastGenerateRegion3D(RegionController ownerWorld, Vector3i origin)
         {
-            noiseSettings.startingPoint = origin;
+            noiseSettings3D.startingPoint = origin;
 
-            fastNoise.FillWithPerlinNoise3D(flatNoise);
+            fastNoise3D.FillWithPerlinNoise3D(flatNoise);
             PlaceBlocks(ownerWorld, origin, flatNoise);
 
             AddGrassToTop(ownerWorld, origin);
@@ -136,10 +137,10 @@ namespace Warlord.Logic.Data.World
         {
             Debug.Assert(Math.Abs(noise) <= 1.1);
 
-            if( height < generatorSettings.midLevel )
+            if(height < generatorSettings.midLevel)
                 return generatorSettings.lowLevelZone.GetBlockFromDensity(noise, height);
 
-            if( height < generatorSettings.highLevel )
+            if(height < generatorSettings.highLevel)
                 return generatorSettings.midLevelZone.GetBlockFromDensity(noise, height);
 
             return generatorSettings.highLevelZone.GetBlockFromDensity(noise, height);

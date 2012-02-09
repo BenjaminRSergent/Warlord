@@ -11,7 +11,7 @@ namespace Warlord.Application
         {
 
         }
-        public void Init(String fileName, bool append)
+        public void Init(string fileName, bool append)
         {
             errorLog = new StreamWriter(File.Open(fileName, (append) ? FileMode.Append : FileMode.Create));
         }

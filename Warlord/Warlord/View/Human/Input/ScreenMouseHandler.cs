@@ -22,23 +22,23 @@ namespace Warlord.View.Human.Input
         public void DispatchMouseInput()
         {
             currentMouseState = Mouse.GetState();
-            previousMouseLoc = new Vector2(previousMouseState.X, previousMouseState.Y);   
+            previousMouseLoc = new Vector2(previousMouseState.X, previousMouseState.Y);
             currentMouseLoc = new Vector2(currentMouseState.X, currentMouseState.Y);
 
             if(GlobalSystems.GameWindowHasFocus)
-            { 
+            {
                 if(currentMouseLoc != previousMouseLoc)
                     MouseMove();
 
                 LButton();
                 RButton();
-                Wheel();            
+                Wheel();
 
                 previousMouseState = currentMouseState;
             }
         }
-        private void MouseMove( )
-        {                     
+        private void MouseMove()
+        {
             bool consumed;
             if(previousMouseLoc != currentMouseLoc)
             {
@@ -53,7 +53,7 @@ namespace Warlord.View.Human.Input
                 }
 
                 if(!consumed)
-                { 
+                {
                     foreach(MouseListener listener in screen.MouseListeners)
                     {
                         if(listener.OnMouseMove(previousMouseLoc, currentMouseLoc))
@@ -62,7 +62,7 @@ namespace Warlord.View.Human.Input
                 }
             }
         }
-        private void LButton( )
+        private void LButton()
         {
             bool consumed;
             if(currentMouseState.LeftButton == ButtonState.Pressed)
@@ -70,7 +70,7 @@ namespace Warlord.View.Human.Input
                 consumed = false;
                 foreach(MouseListener listener in screen.ScreenElements)
                 {
-                    if(listener.OnLButtonDown( currentMouseLoc))
+                    if(listener.OnLButtonDown(currentMouseLoc))
                     {
                         consumed = true;
                         break;
@@ -78,7 +78,7 @@ namespace Warlord.View.Human.Input
                 }
 
                 if(!consumed)
-                { 
+                {
                     foreach(MouseListener listener in screen.MouseListeners)
                     {
                         if(listener.OnLButtonDown(currentMouseLoc))
@@ -91,7 +91,7 @@ namespace Warlord.View.Human.Input
                 consumed = false;
                 foreach(MouseListener listener in screen.ScreenElements)
                 {
-                    if(listener.OnLButtonUp( currentMouseLoc))
+                    if(listener.OnLButtonUp(currentMouseLoc))
                     {
                         consumed = true;
                         break;
@@ -99,7 +99,7 @@ namespace Warlord.View.Human.Input
                 }
 
                 if(!consumed)
-                { 
+                {
                     foreach(MouseListener listener in screen.MouseListeners)
                     {
                         if(listener.OnLButtonUp(currentMouseLoc))
@@ -108,7 +108,7 @@ namespace Warlord.View.Human.Input
                 }
             }
         }
-        private void RButton( )
+        private void RButton()
         {
             bool consumed;
             if(currentMouseState.RightButton == ButtonState.Pressed)
@@ -116,7 +116,7 @@ namespace Warlord.View.Human.Input
                 consumed = false;
                 foreach(MouseListener listener in screen.ScreenElements)
                 {
-                    if(listener.OnRButtonDown( currentMouseLoc))
+                    if(listener.OnRButtonDown(currentMouseLoc))
                     {
                         consumed = true;
                         break;
@@ -124,7 +124,7 @@ namespace Warlord.View.Human.Input
                 }
 
                 if(!consumed)
-                { 
+                {
                     foreach(MouseListener listener in screen.MouseListeners)
                     {
                         if(listener.OnRButtonDown(currentMouseLoc))
@@ -137,7 +137,7 @@ namespace Warlord.View.Human.Input
                 consumed = false;
                 foreach(MouseListener listener in screen.ScreenElements)
                 {
-                    if(listener.OnRButtonUp( currentMouseLoc))
+                    if(listener.OnRButtonUp(currentMouseLoc))
                     {
                         consumed = true;
                         break;
@@ -145,7 +145,7 @@ namespace Warlord.View.Human.Input
                 }
 
                 if(!consumed)
-                { 
+                {
                     foreach(MouseListener listener in screen.MouseListeners)
                     {
                         if(listener.OnRButtonUp(currentMouseLoc))
@@ -154,7 +154,7 @@ namespace Warlord.View.Human.Input
                 }
             }
         }
-        private void Wheel( )
+        private void Wheel()
         {
             int prevWheel = previousMouseState.ScrollWheelValue;
             int deltaWheel = currentMouseState.ScrollWheelValue - prevWheel;
@@ -170,7 +170,7 @@ namespace Warlord.View.Human.Input
             }
 
             if(!consumed)
-            { 
+            {
                 foreach(MouseListener listener in screen.MouseListeners)
                 {
                     if(listener.OnMouseWheel(deltaWheel))
@@ -179,6 +179,6 @@ namespace Warlord.View.Human.Input
                     }
                 }
             }
-        }        
+        }
     }
 }

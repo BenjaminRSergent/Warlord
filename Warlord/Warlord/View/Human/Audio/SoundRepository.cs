@@ -6,7 +6,7 @@ namespace Warlord.View.Human.Audio
     {
         public static SoundEffect footFall;
 
-        SoundRepository( )
+        SoundRepository()
         {
         }
     }

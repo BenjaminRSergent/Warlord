@@ -16,7 +16,6 @@ namespace Warlord.View.Human
         private GraphicsDevice graphics;
 
         private SpriteBatch spriteBatch;
-        private SpriteFont spriteFont;
 
         ContentManager content;
 
@@ -29,8 +28,9 @@ namespace Warlord.View.Human
             this.content = content;
 
             TextureRepository.BlockTextures = content.Load<Texture2D>("Textures/Blocks/block_textures");
+            FontRepository.DebugFont = content.Load<SpriteFont>("Font/DebugFont");
+
             spriteBatch = new SpriteBatch(graphics);
-            spriteFont = content.Load<SpriteFont>("Font/DebugFont");
 
             stateMachine = new StateMachine<DebugView>(this);
         }

@@ -9,7 +9,7 @@ namespace Warlord.Event
     class WarlordEventManager : EventManager
     {
         private MultipriorityQueue<int, BaseGameEvent> eventQueue;
-        private Dictionary<String, List<EventReaction>> subscriberDirectory;
+        private Dictionary<string, List<EventReaction>> subscriberDirectory;
 
         private int currentTime;
 
@@ -22,7 +22,7 @@ namespace Warlord.Event
             currentTime = 0;
         }
 
-        public void Subscribe(EventReaction eventReaction, String eventType)
+        public void Subscribe(EventReaction eventReaction, string eventType)
         {
             if(!subscriberDirectory.ContainsKey(eventType))
             {
