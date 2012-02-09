@@ -74,17 +74,9 @@ namespace Warlord.View.Human.Display
 
         private void BuildCubes()
         {
-            Block currentBlock;
-            for( int x = 0; x < masterRegion.Blocks.GetLength(0); x++)
+            foreach(Block currentBlock in masterRegion.Blocks)
             {
-                for( int y = 0; y < masterRegion.Blocks.GetLength(1); y++)
-                {
-                    for( int z = 0; z < masterRegion.Blocks.GetLength(2); z++)
-                    {
-                        currentBlock = masterRegion.Blocks[x,y,z];
-                        BuildBlockFaces(currentBlock);
-                    }
-                }
+                BuildBlockFaces(currentBlock);
             }
         }
 

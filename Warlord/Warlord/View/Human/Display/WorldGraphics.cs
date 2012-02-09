@@ -80,8 +80,8 @@ namespace Warlord.View.Human.Display
             effect.Parameters["AmbientColor"].SetValue(Color.White.ToVector4());
             effect.Parameters["AmbientIntensity"].SetValue(0.8f);
             effect.Parameters["FogColor"].SetValue(Color.SkyBlue.ToVector4());
-            effect.Parameters["FogNear"].SetValue(16 * 9.5f);
-            effect.Parameters["FogFar"].SetValue(16 * 10f);
+            effect.Parameters["FogNear"].SetValue(16 * 8.5f);
+            effect.Parameters["FogFar"].SetValue(16 * 9f);
             effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
         }
         private void UpdateRegionGraphicsPairs()
