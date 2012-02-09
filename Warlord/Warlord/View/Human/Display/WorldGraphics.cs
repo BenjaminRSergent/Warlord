@@ -55,12 +55,15 @@ namespace Warlord.View.Human.Display
 
                 foreach(RegionGraphics region in regionGraphics.Values)
                 {
-                    region.Update();
+                    if(region.IsInVolume(frustum))
+                    { 
+                        region.Update();
 
-                    if(region.Clean && region.RegionMesh.Length > 0)
-                    {
-                        graphics.SetVertexBuffer(region.RegionBuffer);
-                        graphics.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.NumVertices / 3);
+                        if(region.Clean && region.RegionMesh.Length > 0)
+                        {
+                            graphics.SetVertexBuffer(region.RegionBuffer);
+                            graphics.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.NumVertices / 3);
+                        }
                     }
                 }
 

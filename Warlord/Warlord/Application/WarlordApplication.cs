@@ -17,8 +17,6 @@ namespace Warlord
 {
     internal class WarlordApplication : Game
     {
-        private const long MEMORY_THRESHOLD = 536000000;
-
         GraphicsDeviceManager graphics;
         SpriteBatch debugSpriteBatch;
 
@@ -31,6 +29,7 @@ namespace Warlord
 
         Stopwatch stopWatch;
         double[] fps = new double[60];
+        int advFps = 60;
         int fpsIndex;
         private SpriteFont debugFont;
 
@@ -86,8 +85,6 @@ namespace Warlord
             logic.Update(gameTime);
             debugView.HandleInput();
 
-            LimitMemoryUsage( );
-            
             CalcFPS( );
 
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -97,17 +94,11 @@ namespace Warlord
         }
         protected override void Draw(GameTime gameTime)
         {           
-            debugView.Draw(gameTime);
-
-
+            debugView.Draw(gameTime);            
+            
             DrawFPS( );
 
             base.Draw(gameTime);
-        }
-        protected void LimitMemoryUsage( )
-        {
-            if( GC.GetTotalMemory(false) > MEMORY_THRESHOLD )
-                GC.Collect( );
         }
         protected void CalcFPS( )
         {
@@ -128,8 +119,13 @@ namespace Warlord
             DepthStencilState ds = GraphicsDevice.DepthStencilState;
             BlendState bs = GraphicsDevice.BlendState;
 
+            int smoothFps = (int)Statistics.Adverage(fps);
+            advFps += smoothFps;
+            advFps /= 2;
+
             debugSpriteBatch.Begin( );
-            debugSpriteBatch.DrawString( debugFont, "FPS: " + (int)Statistics.Adverage(fps), new Vector2( 20, 20), Color.Yellow);
+            debugSpriteBatch.DrawString( debugFont, "Current FPS: " + smoothFps, new Vector2( 20, 20), Color.Yellow);
+            debugSpriteBatch.DrawString( debugFont, "Adverage FPS: " + advFps, new Vector2( 20, 40), Color.Yellow);
             debugSpriteBatch.End( );
 
             GraphicsDevice.RasterizerState = rs;
