@@ -24,8 +24,6 @@ namespace Warlord.Logic.Data.Entity
         public void Update(GameTime gameTime)
         {
             float seconds = gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
-
-            velocity = sumOfForces / mass * seconds;
             currentPosition += velocity * seconds;
         }
         public void Teleport(Vector3 location)

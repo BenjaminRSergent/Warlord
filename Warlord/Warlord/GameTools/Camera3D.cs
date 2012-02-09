@@ -21,7 +21,7 @@ namespace GameTools
             Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
                                                               (float)clientBounds.Width / (float)clientBounds.Height,
                                                               1,
-                                                              160);
+                                                              300);
         }
         public Camera3D(Rectangle clientBounds, Vector3 position, Vector2 initalFacingRotation, Vector3 up, Matrix projection)
         {

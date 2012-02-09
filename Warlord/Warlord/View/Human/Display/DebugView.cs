@@ -38,7 +38,7 @@ namespace Warlord.View.Human.Display
             spriteBatch = new SpriteBatch(graphics);
             spriteFont = content.Load<SpriteFont>("Font/DebugFont");
 
-            camera = new Camera3D(gameWindow.ClientBounds, new Vector3(0, 80, 0), Vector2.Zero, Vector3.Up);
+            camera = new Camera3D(gameWindow.ClientBounds, new Vector3(0, 12, 0), Vector2.Zero, Vector3.Up);
         }
         public void BeginGame()
         {

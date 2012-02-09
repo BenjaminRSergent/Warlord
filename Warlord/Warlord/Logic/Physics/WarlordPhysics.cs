@@ -17,14 +17,11 @@ namespace Warlord.Logic.Physics
         List<ForceGenerator> globalForces;
         CollisionDetection collisionDetection;
 
-        Dictionary<uint, Vector3> sumOfLocalForces;
-
         public WarlordPhysics()
         {
             movingEntityMap = new Dictionary<uint, MovingEntity>();
             globalForces = new List<ForceGenerator>();
             collisionDetection = new CollisionDetection();
-            sumOfLocalForces = new Dictionary<uint, Vector3>();
 
             GlobalSystems.EventManager.Subscribe(AddEntity, "actor_created_event");
             GlobalSystems.EventManager.Subscribe(RemoveEntity, "actor_removed_event");
@@ -43,11 +40,8 @@ namespace Warlord.Logic.Physics
             List<MovingEntity> entities = movingEntityMap.Values.ToList();
             ResetEntityForces(entities);
             ApplyGlobalForces(gameTime, entities);
-            ApplyLocalForces(gameTime, entities);
             UpdateEntities(gameTime, entities);
             ResolveCollisions(gameTime, entities);
-
-            sumOfLocalForces.Clear();
         }
         private void ResetEntityForces(List<MovingEntity> movingEntities)
         {
@@ -62,20 +56,13 @@ namespace Warlord.Logic.Physics
                     force.ApplyForceTo(gameTime, entity);
                 }
         }
-        private void ApplyLocalForces(GameTime gameTime, List<MovingEntity> movingEntities)
-        {
-            GameEntity entity;
-            foreach(uint id in sumOfLocalForces.Keys)
-            {
-                entity = GlobalSystems.EntityManager.GetEntity(id);
-
-                (entity as MovingEntity).SumOfForces += sumOfLocalForces[id];
-            }
-        }
         private void UpdateEntities(GameTime gameTime, List<MovingEntity> movingEntities)
         {
             foreach(MovingEntity entity in movingEntities)
+            {
+                entity.Velocity += entity.SumOfForces/entity.Mass;
                 entity.Update(gameTime);
+            }
         }
         private void ResolveCollisions(GameTime gameTime, List<MovingEntity> movingEntities)
         {

@@ -22,7 +22,6 @@ namespace Warlord.View.Human.Display
         private Effect effect;
 
         Queue<KeyValuePair<Region, RegionGraphics>> toAdd;
-        Queue<KeyValuePair<Region, RegionGraphics>> toRemove;
 
         public WorldGraphics(GraphicsDevice graphics, GameWindow gameWindow, ContentManager content, Camera3D camera)
         {
@@ -30,14 +29,12 @@ namespace Warlord.View.Human.Display
             regionGraphics = new Dictionary<Region, RegionGraphics>();
 
             toAdd = new Queue<KeyValuePair<Region, RegionGraphics>>();
-            toRemove = new Queue<KeyValuePair<Region, RegionGraphics>>();
 
             this.camera = camera;
 
             effect = content.Load<Effect>("Fxs/block_effects");
 
             GlobalSystems.EventManager.Subscribe(AddRegion, "region_created");
-            GlobalSystems.EventManager.Subscribe(RemoveRegion, "region_removed");
         }
 
         public override void Draw(GameTime gameTime)
@@ -80,8 +77,8 @@ namespace Warlord.View.Human.Display
             effect.Parameters["AmbientColor"].SetValue(Color.White.ToVector4());
             effect.Parameters["AmbientIntensity"].SetValue(0.8f);
             effect.Parameters["FogColor"].SetValue(Color.SkyBlue.ToVector4());
-            effect.Parameters["FogNear"].SetValue(16 * 7f);
-            effect.Parameters["FogFar"].SetValue(16 * 8f);
+            effect.Parameters["FogNear"].SetValue(16 * 9.5f);
+            effect.Parameters["FogFar"].SetValue(16 * 10f);
             effect.Parameters["BlockTexture"].SetValue(TextureRepository.BlockTextures);
         }
         private void UpdateRegionGraphicsPairs()
@@ -96,27 +93,17 @@ namespace Warlord.View.Human.Display
                     regionGraphics.Add(currentPair.Key, currentPair.Value);
                 }
             }
-            lock(toRemove)
-            {
-                while(toRemove.Count > 0)
-                {
-                    currentPair = toRemove.Dequeue();
-                    currentPair.Value.Dispose();
-                    regionGraphics.Remove(currentPair.Key);
-                }
-            }
         }
         private void AddRegion(BaseGameEvent theEvent)
         {
             Region newRegion = (theEvent as RegionCreatedEvent).Data.newRegion;
-
-            KeyValuePair<Region, RegionGraphics> newRegionGraphicsPair;
-
-            newRegionGraphicsPair = new KeyValuePair<Region, RegionGraphics>
-                (newRegion, new RegionGraphics(graphics, newRegion));
+            KeyValuePair<Region, RegionGraphics> newRegionGraphicsPair;            
 
             if(!regionGraphics.ContainsKey(newRegion))
             {
+                newRegionGraphicsPair = new KeyValuePair<Region, RegionGraphics>
+                    (newRegion, new RegionGraphics(graphics, newRegion));
+
                 lock(toAdd)
                 {
                     toAdd.Enqueue(newRegionGraphicsPair);
@@ -124,21 +111,5 @@ namespace Warlord.View.Human.Display
             }
 
         }
-        private void RemoveRegion(BaseGameEvent theEvent)
-        {
-            Region deadRegion = (theEvent as RegionRemovedEvent).DeadRegion;
-
-            KeyValuePair<Region, RegionGraphics> deadRegionGraphicsPair;
-            deadRegionGraphicsPair = new KeyValuePair<Region, RegionGraphics>
-                (deadRegion, new RegionGraphics(graphics, deadRegion));
-
-            lock(toRemove)
-            {
-                toRemove.Enqueue(new KeyValuePair<Region, RegionGraphics>
-                    (deadRegion, new RegionGraphics(graphics, deadRegion)));
-            }
-        }
-
-
     }
 }

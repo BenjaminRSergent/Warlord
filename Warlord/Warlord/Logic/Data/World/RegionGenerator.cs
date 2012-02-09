@@ -25,22 +25,18 @@ namespace Warlord.Logic.Data.World
         public RegionGenerator(int seed, Vector3i regionSize)
         {
             this.seed = seed;
-            LoadDefaultSettings();
+            generatorSettings = new GeneratorSettings();
             generatorSettings.RegionSize = regionSize;
+            LoadDefaultSettings();            
 
             flatNoise = new float[generatorSettings.RegionSize.X *
                               generatorSettings.RegionSize.Y *
                               generatorSettings.RegionSize.Z];
         }
         private void LoadDefaultSettings()
-        {
-            generatorSettings = new GeneratorSettings();
-            generatorSettings.RegionSize = new Vector3i(16, 128, 16);
-            generatorSettings.DirtLevel = 10;
-            generatorSettings.AirLevel = 120;
-
+        {            
             noiseSettings = new PerlinNoiseSettings3D();
-            noiseSettings.frequencyMulti = 2.0f;
+            noiseSettings.frequencyMulti = 2.2f;
             noiseSettings.octaves = 4;
             noiseSettings.persistence = 0.5f;
             noiseSettings.seed = 3;
@@ -131,47 +127,17 @@ namespace Warlord.Logic.Data.World
         {
             Debug.Assert(Math.Abs(noise) <= 1.1);
 
-            if(height < generatorSettings.DirtLevel)
-            {
-                return StoneLevelBlock(noise, height);
-            }
-            else if(height < generatorSettings.AirLevel)
-            {
-                return DirtLevelBlock(noise, height);
-            }
-            else
-            {
-                return AirLevelBlock(noise, height);
-            }
-        }
-        public BlockType StoneLevelBlock(double noise, int height)
-        {
-            float heightMod = -(height / (float)generatorSettings.DirtLevel);
-            if(noise + heightMod > 0)
+            if( height == 0 )
                 return BlockType.Stone;
-            else
-                return BlockType.Dirt;
-        }
-        public BlockType DirtLevelBlock(double noise, int height)
-        {
-            float heightMod = -(height - generatorSettings.DirtLevel) / (float)(generatorSettings.AirLevel - generatorSettings.DirtLevel);
 
-            if(noise + heightMod > 1)
+            if( noise > 0.5 )
                 return BlockType.Stone;
-            else if(noise + heightMod > -0.3)
+            if( noise > 0 )
                 return BlockType.Dirt;
-            else
-                return BlockType.Air;
-        }
-        public BlockType AirLevelBlock(double noise, int height)
-        {
-            float heightMod = -(height - generatorSettings.AirLevel) / (float)generatorSettings.AirLevel;
 
-            if(noise + heightMod > 0.6)
-                return BlockType.Dirt;
-            else
-                return BlockType.Air;
+            return BlockType.Air;
         }
+
         public int Seed
         {
             get { return seed; }
