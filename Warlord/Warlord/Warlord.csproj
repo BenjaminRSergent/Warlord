@@ -108,13 +108,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <Compile Include="Event\EventData\BaseEventDataStructs.cs" />
-    <Compile Include="Event\GameEvent.cs" />
-=======
     <Compile Include="Application\DebugFpsHelper.cs" />
     <Compile Include="Event\BaseGameEvent.cs" />
->>>>>>> refactor
     <Compile Include="Event\EventManager.cs" />
     <Compile Include="Event\EventTypes\ActorCreatedEvent.cs" />
     <Compile Include="Event\EventTypes\ActorMovedEvent.cs" />
@@ -153,17 +148,6 @@
     <Compile Include="Application\GlobalSystems.cs" />
     <Compile Include="Application\ErrorLogger.cs" />
     <Compile Include="Interfaces\Subsystems\GameView.cs" />
-<<<<<<< HEAD
-    <Compile Include="Interfaces\Subsystems\GameApplication.cs" />
-    <Compile Include="KeyboardInput.cs" />
-    <Compile Include="Logic\Data\BlockFaceField.cs" />
-    <Compile Include="Logic\Data\BlockType.cs" />
-    <Compile Include="Logic\Data\Entity.cs" />
-    <Compile Include="Logic\Data\EntityManager.cs" />
-    <Compile Include="Logic\Data\WarlordEntityManager.cs" />
-    <Compile Include="Logic\Data\Player.cs" />
-    <Compile Include="Logic\Data\RegionArrayMaps.cs" />
-=======
     <Compile Include="GameTools\Process\ThreadWrapper.cs" />
     <Compile Include="Logic\Civilization\CiviliationGenerator.cs" />
     <Compile Include="Logic\Civilization\Civilization.cs" />
@@ -182,7 +166,6 @@
     <Compile Include="Logic\Data\Entity\WarlordEntityManager.cs" />
     <Compile Include="Logic\Data\Entity\Player.cs" />
     <Compile Include="Logic\Data\World\RegionArrayMaps.cs" />
->>>>>>> refactor
     <Compile Include="Logic\Data\World\Block.cs" />
     <Compile Include="Logic\Data\World\GeneratorSettings.cs" />
     <Compile Include="Logic\Data\World\Region.cs" />
@@ -200,13 +183,9 @@
     <Compile Include="Logic\Physics\PenetrationHandler.cs" />
     <Compile Include="Logic\States\DebugPlayingState.cs" />
     <Compile Include="Logic\WarlordLogic.cs" />
-<<<<<<< HEAD
-    <Compile Include="MouseInput.cs" />
-=======
     <Compile Include="Logic\Zones\Zone.cs" />
     <Compile Include="Logic\Zones\ZoneManager.cs" />
     <Compile Include="Logic\Zones\ZoneRules.cs" />
->>>>>>> refactor
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="View\AI\AIView.cs" />
