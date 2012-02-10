@@ -115,7 +115,7 @@ namespace Warlord.Logic.Data.World
             return currentRegion.Data.GetBlock(currentBlockRelativePosition);
 
         }
-        public void ChangeFacing(Vector3i absolutePosition, BlockFaceField facing, bool activate)
+        public void AddFace(Vector3i absolutePosition, BlockFaceField facing)
         {
             Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);
 
@@ -124,11 +124,18 @@ namespace Warlord.Logic.Data.World
             Vector3i relativePosition = Transformation.AbsoluteToRelative(absolutePosition,
                                                                           currentRegion.Data.RegionOrigin);
 
-            if(activate)
-                currentRegion.Data.AddFace(relativePosition, facing);
-            else
-                currentRegion.Data.RemoveFace(relativePosition, facing);
+            currentRegion.Data.AddFace(relativePosition, facing);  
+        }
+        public void RemoveFace(Vector3i absolutePosition, BlockFaceField facing)
+        {
+            Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);
 
+            Debug.Assert(currentRegion.Valid);
+
+            Vector3i relativePosition = Transformation.AbsoluteToRelative(absolutePosition,
+                                                                          currentRegion.Data.RegionOrigin);
+
+            currentRegion.Data.RemoveFace(relativePosition, facing);
         }
         public bool IsRegionLoaded(Vector3i regionCoordiantes)
         {

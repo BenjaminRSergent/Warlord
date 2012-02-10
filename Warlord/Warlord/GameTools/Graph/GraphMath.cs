@@ -6,21 +6,21 @@ namespace GameTools.Graph
 {
     static class GraphMath
     {
-        static public double DistanceBetweenPoints(Point A, Point B)
+        public static double DistanceBetweenPoints(Point A, Point B)
         {
             int X = B.X - A.X;
             int Y = B.Y - A.Y;
 
             return Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2));
         }
-        static public double DistanceBetweenVector2s(Vector2 A, Vector2 B)
+        public static double DistanceBetweenVector2s(Vector2 A, Vector2 B)
         {
             double X = B.X - A.X;
             double Y = B.Y - A.Y;
 
             return Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2));
         }
-        static public double CosineInterpolate(double a, double b, double amountGreaterThanA)
+        public static double CosineInterpolate(double a, double b, double amountGreaterThanA)
         {
             double angle = amountGreaterThanA * Math.PI;
 
@@ -29,11 +29,11 @@ namespace GameTools.Graph
             return a * (1.0 - weightOfB) + b * weightOfB;
         }
 
-        static public double LinearInterpolate(double a, double b, double amountGreaterThanA)
+        public static double LinearInterpolate(double a, double b, double amountGreaterThanA)
         {
             return a * (1 - amountGreaterThanA) + b * amountGreaterThanA;
         }
-        static public float LinearInterpolateFloat(float a, float b, float amountGreaterThanA)
+        public static float LinearInterpolateFloat(float a, float b, float amountGreaterThanA)
         {
             return a * (1 - amountGreaterThanA) + b * amountGreaterThanA;
         }

@@ -5,7 +5,7 @@ namespace GameTools.Noise2D
 {
     static class SimpleNoise2D
     {
-        static public float GenFloatNoise(int x, int y,  int seed)
+        public static float GenFloatNoise(int x, int y,  int seed)
         {
             int n;
 
@@ -14,7 +14,7 @@ namespace GameTools.Noise2D
 
             return (1.0f - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0f);
         }
-        static public double GenDoubleNoise(int x, int y, int seed)
+        public static double GenDoubleNoise(int x, int y, int seed)
         {
             int n;
 
@@ -24,7 +24,7 @@ namespace GameTools.Noise2D
             return (1.0 - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0);
         }
 
-        static public double GenSmoothNoise(int x, int y, int seed)
+        public static double GenSmoothNoise(int x, int y, int seed)
         {
             double corners, sides, center;
 
@@ -45,7 +45,7 @@ namespace GameTools.Noise2D
             return corners + sides + center;
         }
 
-        static public double GenInterpolatedNoise(double x, double y, int seed)
+        public static double GenInterpolatedNoise(double x, double y, int seed)
         {
             int floorX = (int)x;
             int floorY = (int)y;

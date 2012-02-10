@@ -62,26 +62,26 @@ namespace Warlord.Logic.Data.World
             const int NUM_ORTHOGONAL_DIRECTIONS = 6;
 
             Vector3i addedBlockPosition = addedBlock.UpperLeftTopPosition;
-
             Vector3i adjacentBlockPosition;
+
             Vector3i adjacentRegion;
 
             BlockType adjacentBlockType;
 
             BlockFaceField adjacentBlockFacing;
             BlockFaceField addedBlockFacing;
+
             for(int directionIndex = 0; directionIndex < NUM_ORTHOGONAL_DIRECTIONS; directionIndex++)
             {
                 addedBlockFacing = RegionArrayMaps.FacingList[directionIndex];
-                adjacentBlockFacing = (directionIndex < 3) ?
-                    RegionArrayMaps.FacingList[directionIndex + 3] : RegionArrayMaps.FacingList[directionIndex - 3];
+                adjacentBlockFacing = RegionArrayMaps.GetOppositeFacing(addedBlockFacing);
 
-                adjacentBlockPosition = addedBlockPosition + RegionArrayMaps.AdjacencyOffsets[directionIndex];
+                adjacentBlockPosition = addedBlockPosition + RegionArrayMaps.GetDirectionFromFacing(addedBlockFacing);
                 adjacentRegion = database.GetRegionCoordiantes(adjacentBlockPosition);
 
                 if(!database.IsRegionLoaded(adjacentRegion))
                 {
-                    database.ChangeFacing(addedBlockPosition, addedBlockFacing, true);
+                    database.AddFace(addedBlockPosition, addedBlockFacing);
                 }
                 else
                 {
@@ -89,40 +89,41 @@ namespace Warlord.Logic.Data.World
 
                     if(adjacentBlockType == BlockType.Air)
                     {
-                        database.ChangeFacing(addedBlockPosition, addedBlockFacing, true);
+                        database.AddFace(addedBlockPosition, addedBlockFacing);
                     }
                     else
                     {
-                        database.ChangeFacing(addedBlockPosition, addedBlockFacing, false);
-                        database.ChangeFacing(adjacentBlockPosition, adjacentBlockFacing, false);
+                        database.RemoveFace(addedBlockPosition, addedBlockFacing);
+                        database.RemoveFace(adjacentBlockPosition, adjacentBlockFacing);
                     }
                 }
             }
         }
-        private void RemoveBlockFace(Block addedBlock)
+        private void RemoveBlockFace(Block removedBlock)
         {
             const int NUM_ORTHOGONAL_DIRECTIONS = 6;
 
-            Vector3i currentBlockPosition = addedBlock.UpperLeftTopPosition;
+            Vector3i removedBlockPosition = removedBlock.UpperLeftTopPosition;
 
             Vector3i adjacentBlockPosition;
             Vector3i adjacentRegion;
 
-            BlockFaceField currentBlockFacing;
+            BlockFaceField removedBlockFacing;
             BlockFaceField oppositeBlockFacing;
-            for(int directionIndex = 0; directionIndex < NUM_ORTHOGONAL_DIRECTIONS; directionIndex++)
-            {
-                currentBlockFacing = RegionArrayMaps.FacingList[directionIndex];
-                oppositeBlockFacing = (directionIndex < 3) ?
-                    RegionArrayMaps.FacingList[directionIndex + 3] : RegionArrayMaps.FacingList[directionIndex - 3];
 
-                adjacentBlockPosition = currentBlockPosition + RegionArrayMaps.AdjacencyOffsets[directionIndex];
+            for(int directionIndex = 0; directionIndex < NUM_ORTHOGONAL_DIRECTIONS; directionIndex++)
+            {                
+                removedBlockFacing = RegionArrayMaps.FacingList[directionIndex];
+                oppositeBlockFacing = RegionArrayMaps.GetOppositeFacing(removedBlockFacing);
+
+                adjacentBlockPosition = removedBlockPosition + RegionArrayMaps.GetDirectionFromFacing(removedBlockFacing);
                 adjacentRegion = database.GetRegionCoordiantes(adjacentBlockPosition);
 
-                database.ChangeFacing(currentBlockPosition, currentBlockFacing, false);
+                database.RemoveFace(removedBlockPosition, removedBlockFacing);
+
                 if(database.IsRegionLoaded(adjacentRegion))
                 {
-                    database.ChangeFacing(adjacentBlockPosition, oppositeBlockFacing, true);
+                    database.AddFace(adjacentBlockPosition, oppositeBlockFacing);
                 }
             }
         }

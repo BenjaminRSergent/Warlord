@@ -1,21 +1,26 @@
 ﻿using GameTools.Graph;
+using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace Warlord.Logic.Data.World
 {
     static class RegionArrayMaps
     {
-        static private Vector3i[] adjacencyOffsets = new Vector3i[6];
-        static private BlockFaceField[] facingList = new BlockFaceField[6];
+        private static Dictionary<BlockFaceField, Vector3> faceOffsetMap;
+        private static BlockFaceField[] facingList = new BlockFaceField[6];
 
-        static public void Init()
+        static RegionArrayMaps( )
         {
-            adjacencyOffsets[0] = new Vector3i(0, 0, 1);
-            adjacencyOffsets[1] = new Vector3i(0, 1, 0);
-            adjacencyOffsets[2] = new Vector3i(1, 0, 0);
+            faceOffsetMap = new Dictionary<BlockFaceField,Vector3>( );
 
-            adjacencyOffsets[3] = new Vector3i(0, 0, -1);
-            adjacencyOffsets[4] = new Vector3i(0, -1, 0);
-            adjacencyOffsets[5] = new Vector3i(-1, 0, 0);
+            faceOffsetMap.Add(BlockFaceField.ZIncreasing,new Vector3(0, 0, 1));
+            faceOffsetMap.Add(BlockFaceField.YIncreasing,new Vector3(0, 1, 0));
+            faceOffsetMap.Add(BlockFaceField.XIncreasing,new Vector3(1, 0, 0));
+
+            faceOffsetMap.Add( BlockFaceField.ZDecreasing,new Vector3(0, 0, -1));
+            faceOffsetMap.Add( BlockFaceField.YDecreasing,new Vector3(0, -1, 0));
+            faceOffsetMap.Add( BlockFaceField.XDecreasing,new Vector3(-1, 0, 0));
 
             facingList[0] = BlockFaceField.ZIncreasing;
             facingList[1] = BlockFaceField.YIncreasing;
@@ -25,10 +30,23 @@ namespace Warlord.Logic.Data.World
             facingList[4] = BlockFaceField.YDecreasing;
             facingList[5] = BlockFaceField.XDecreasing;
         }
-
-        public static Vector3i[] AdjacencyOffsets
+        public static BlockFaceField GetOppositeFacing(BlockFaceField facing)
         {
-            get { return RegionArrayMaps.adjacencyOffsets; }
+            int oppositeIndex;
+            for(int index = 0; index < facingList.Length; index++)
+            {
+                if(facingList[index] == facing)
+                {
+                    oppositeIndex = (index < 3) ? index + 3 : index - 3;
+                    return facingList[oppositeIndex];
+                }
+            }
+
+            throw new ArgumentException("" + facing.ToString() + " was not found in the facingList");
+        }
+        public static Vector3 GetDirectionFromFacing( BlockFaceField facing)
+        {
+            return faceOffsetMap[facing];
         }
         public static BlockFaceField[] FacingList
         {

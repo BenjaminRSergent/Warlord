@@ -21,10 +21,12 @@ namespace Warlord.View.Human.Display
 
         private bool clean;
 
-        static public Dictionary<BlockFaceField, Vector3i[]> faceVertexOffsetMap =
+        static BlockFaceField[] faces = (BlockFaceField[])System.Enum.GetValues(typeof(BlockFaceField) );
+
+        public static Dictionary<BlockFaceField, Vector3i[]> faceVertexOffsetMap =
                                                       new Dictionary<BlockFaceField, Vector3i[]>();
 
-        static public Dictionary<BlockTexture, Dictionary<BlockFaceField, Vector2[]>> UVMap
+        public static Dictionary<BlockTexture, Dictionary<BlockFaceField, Vector2[]>> UVMap
                                                                 = new Dictionary<BlockTexture, Dictionary<BlockFaceField, Vector2[]>>();
 
         public RegionGraphics(GraphicsDevice graphics, Region masterRegion)
@@ -80,19 +82,11 @@ namespace Warlord.View.Human.Display
         }
 
         private void BuildBlockFaces(Block currentBlock)
-        {
-            int x = currentBlock.UpperLeftTopPosition.X - masterRegion.RegionOrigin.X;
-            int y = currentBlock.UpperLeftTopPosition.Y - masterRegion.RegionOrigin.Y;
-            int z = currentBlock.UpperLeftTopPosition.Z - masterRegion.RegionOrigin.Z;
-
-            byte FaceInfo = masterRegion.VisibleFaceBitField[x, y, z];
-
-            for(byte faceNum = 1; faceNum < (byte)BlockFaceField.MAXIMUM; faceNum *= 2)
+        {     
+            foreach(BlockFaceField facing in faces)
             {
-                if((faceNum & FaceInfo) > 0)
-                {
-                    BuildFace(currentBlock.UpperLeftTopPosition, (BlockFaceField)faceNum, currentBlock.Type);
-                }
+                if( currentBlock.IsFaceOn(facing) )
+                    BuildFace(currentBlock.UpperLeftTopPosition, facing, currentBlock.Type);
             }
         }
 

@@ -5,7 +5,7 @@ namespace GameTools.Statistics
 {
     class Statistics
     {
-        static public Vector3 Adverage(Vector3[] vectorArray)
+        public static Vector3 Adverage(Vector3[] vectorArray)
         {
             Vector3 sum;
 
@@ -17,7 +17,7 @@ namespace GameTools.Statistics
 
             return sum / numberCount;
         }
-        static public float Adverage(float[] numberArray)
+        public static float Adverage(float[] numberArray)
         {
             float sum;
 
@@ -29,7 +29,7 @@ namespace GameTools.Statistics
 
             return sum / numberCount;
         }
-        static public double Adverage(double[] numberArray)
+        public static double Adverage(double[] numberArray)
         {
             double sum;
 
@@ -42,7 +42,7 @@ namespace GameTools.Statistics
             return sum / numberCount;
         }
 
-        static public double StdDeviation(double[] numberArray)
+        public static double StdDeviation(double[] numberArray)
         {
             double adverage = Adverage(numberArray);
             int numberCount = numberArray.Length;

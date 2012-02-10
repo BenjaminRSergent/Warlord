@@ -6,14 +6,14 @@ namespace GameTools.Noise3D
 {
     static class PerlinNoise3D
     {
-        static public double[, ,] GenPerlinNoise3D(PerlinNoiseSettings3D settings)
+        public static double[, ,] GenPerlinNoise3D(PerlinNoiseSettings3D settings)
         {
             double[, ,] noise = new double[settings.size.X, settings.size.Y, settings.size.Z];
             MakePerlinNoise3D(noise, Vector3i.Zero, settings);
 
             return noise;
         }
-        static public double[, ,] GenPerlinNoise3D(PerlinNoiseSettings3D settings, int numThreads)
+        public static double[, ,] GenPerlinNoise3D(PerlinNoiseSettings3D settings, int numThreads)
         {
             double[, ,] noise = new double[settings.size.X, settings.size.Y, settings.size.Z];
 

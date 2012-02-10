@@ -4,7 +4,7 @@ namespace GameTools.Graph
 {
     static class Transformation
     {
-        static public Vector3i ChangeVectorScale(Vector3i position, Vector3i scale)
+        public static Vector3i ChangeVectorScale(Vector3i position, Vector3i scale)
         {
             Vector3i scaledPosition = Vector3i.Zero;
 
@@ -14,7 +14,7 @@ namespace GameTools.Graph
 
             return scaledPosition;
         }
-        static public int ScaleSingle(int original, int scale)
+        public static int ScaleSingle(int original, int scale)
         {
             int scaledSingle;
 
@@ -29,7 +29,7 @@ namespace GameTools.Graph
             return scaledSingle;
         }
 
-        static public Vector3i AbsoluteToRelative(Vector3i position, Vector3i origin)
+        public static Vector3i AbsoluteToRelative(Vector3i position, Vector3i origin)
         {
             return position - origin;
         }

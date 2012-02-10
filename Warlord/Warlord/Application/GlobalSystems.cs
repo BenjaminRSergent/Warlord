@@ -6,25 +6,25 @@ namespace Warlord.Application
 {
     static class GlobalSystems
     {
-        static private WarlordApplication application;
+        private static WarlordApplication application;
 
-        static public void SetCurrentApplication(WarlordApplication currentApplication)
+        public static void SetCurrentApplication(WarlordApplication currentApplication)
         {
             application = currentApplication;
         }
-        static public WarlordEntityManager EntityManager
+        public static WarlordEntityManager EntityManager
         {
             get { return application.EntityManager; }
         }
-        static public WarlordEventManager EventManager
+        public static WarlordEventManager EventManager
         {
             get { return application.EventManager; }
         }
-        static public ThreadManager ThreadManager
+        public static ThreadManager ThreadManager
         {
             get { return application.ThreadManager; }
         }
-        static public bool GameWindowHasFocus
+        public static bool GameWindowHasFocus
         {
             get { return application.IsActive; }
         }

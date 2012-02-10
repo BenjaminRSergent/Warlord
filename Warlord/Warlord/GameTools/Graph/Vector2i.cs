@@ -51,7 +51,7 @@ namespace GameTools.Graph
 
             return normVec;
         }
-        static public Vector2i operator +(Vector2i leftVector, Vector2i rightVector)
+        public static Vector2i operator +(Vector2i leftVector, Vector2i rightVector)
         {
             Vector2i sumVector = new Vector2i(leftVector);
 
@@ -60,7 +60,7 @@ namespace GameTools.Graph
 
             return sumVector;
         }
-        static public Vector2i operator -(Vector2i leftVector, Vector2i rightVector)
+        public static Vector2i operator -(Vector2i leftVector, Vector2i rightVector)
         {
             Vector2i differenceVector = new Vector2i(leftVector);
 
@@ -69,7 +69,7 @@ namespace GameTools.Graph
 
             return differenceVector;
         }
-        static public Vector2i operator *(int number, Vector2i vector)
+        public static Vector2i operator *(int number, Vector2i vector)
         {
             Vector2i scaledVector = new Vector2i(vector);
 
@@ -78,16 +78,16 @@ namespace GameTools.Graph
 
             return scaledVector;
         }
-        static public float operator *(Vector2i leftVector, Vector2i rightVector)
+        public static float operator *(Vector2i leftVector, Vector2i rightVector)
         {
             return leftVector.DotProduct(rightVector);
         }
-        static public bool operator ==(Vector2i leftVector, Vector2i rightVector)
+        public static bool operator ==(Vector2i leftVector, Vector2i rightVector)
         {
             return leftVector.X == rightVector.X &&
                    leftVector.Y == rightVector.Y;
         }
-        static public bool operator !=(Vector2i leftVector, Vector2i rightVector)
+        public static bool operator !=(Vector2i leftVector, Vector2i rightVector)
         {
             return leftVector.X != rightVector.X ||
                    leftVector.Y != rightVector.Y;
@@ -131,14 +131,14 @@ namespace GameTools.Graph
                 return new Vector2(X, Y);
             }
         }
-        static public Vector2i Zero
+        public static Vector2i Zero
         {
             get
             {
                 return new Vector2i(0, 0);
             }
         }
-        static public Vector2i One
+        public static Vector2i One
         {
             get
             {

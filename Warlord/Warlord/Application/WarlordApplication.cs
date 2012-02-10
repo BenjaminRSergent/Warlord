@@ -40,8 +40,6 @@ namespace Warlord.Application
 
             GameStaticInitalizer.InitalizeStatics();
 
-            RegionArrayMaps.Init();
-
             logic = new WarlordLogic();
 
             fpsHelper = new DebugFpsHelper(GraphicsDevice);

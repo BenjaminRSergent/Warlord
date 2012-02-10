@@ -30,11 +30,11 @@ namespace Warlord.Event
         {
             return base.Equals(obj);
         }
-        static public bool operator ==(BaseGameEvent lhs, BaseGameEvent rhs)
+        public static bool operator ==(BaseGameEvent lhs, BaseGameEvent rhs)
         {
             return lhs.hash == rhs.hash;
         }
-        static public bool operator !=(BaseGameEvent lhs, BaseGameEvent rhs)
+        public static bool operator !=(BaseGameEvent lhs, BaseGameEvent rhs)
         {
             return lhs.hash != rhs.hash;
         }

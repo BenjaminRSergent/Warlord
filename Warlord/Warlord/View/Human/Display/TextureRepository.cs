@@ -4,7 +4,7 @@ namespace Warlord.View.Human.Display
 {
     static class TextureRepository
     {
-        static public Texture2D BlockTextures;
-        static public TextureCube skyboxTexture;
+        public static Texture2D BlockTextures;
+        public static TextureCube skyboxTexture;
     }
 }

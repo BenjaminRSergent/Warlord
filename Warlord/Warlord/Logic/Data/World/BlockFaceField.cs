@@ -10,7 +10,5 @@ namespace Warlord.Logic.Data.World
         XDecreasing = 8,
         YDecreasing = 16,
         ZDecreasing = 32,
-
-        MAXIMUM = 64
     }
 }

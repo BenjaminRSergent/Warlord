@@ -14,7 +14,6 @@ namespace Warlord.Logic.Data
 
         private Block[, ,] blocks;
 
-        private Byte[, ,] visibleFaceBitField;
         private int visibleFaces;
 
         public Region(Vector3i regionOrigin, Vector3i regionSize)
@@ -25,7 +24,6 @@ namespace Warlord.Logic.Data
             regionBox = new BoundingBox(regionOrigin.ToVector3, (regionOrigin + regionSize - Vector3i.One).ToVector3);
 
             blocks = new Block[regionSize.X, regionSize.Y, regionSize.Z];
-            visibleFaceBitField = new byte[regionSize.X, regionSize.Y, regionSize.Z];
 
             Init();
         }
@@ -40,8 +38,7 @@ namespace Warlord.Logic.Data
                     for(int z = 0; z < regionSize.Z; z++)
                     {
                         blockLocation = regionOrigin + new Vector3i(x, y, z);
-                        blocks[x, y, z] = new Block(blockLocation, BlockType.Air);
-                        visibleFaceBitField[x, y, z] = 0;
+                        blocks[x, y, z] = new Block(blockLocation, BlockType.Air);                        
                     }
                 }
             }
@@ -54,14 +51,26 @@ namespace Warlord.Logic.Data
         {
             lock(this)
             {
+                Vector3i blockLocation;
+
                 this.regionOrigin = newOrigin;
 
                 if(this.regionSize != regionSize)
                 {
                     this.regionSize = regionSize;
 
-                    blocks = new Block[regionSize.X, regionSize.Y, regionSize.Z];
-                    visibleFaceBitField = new byte[regionSize.X, regionSize.Y, regionSize.Z];
+                    for(int x = 0; x < regionSize.X; x++)
+                    {
+                        for(int y = 0; y < regionSize.Y; y++)
+                        {
+                            for(int z = 0; z < regionSize.Z; z++)
+                            {
+                                blockLocation = regionOrigin + new Vector3i(x, y, z);
+                                blocks[x, y, z].Type = BlockType.Air;              
+                                blocks[x, y, z].TurnOffAllFaces( );
+                            }
+                        }
+                    }
                 }
 
                 regionBox = new BoundingBox(regionOrigin.ToVector3, (regionOrigin + regionSize - Vector3i.One).ToVector3);
@@ -87,7 +96,7 @@ namespace Warlord.Logic.Data
             int y = relativePosition.Y;
             int z = relativePosition.Z;
 
-            blocks[x, y, z] = new Block(blocks[x, y, z].UpperLeftTopPosition, type);
+            blocks[x, y, z].Type = type;
 
             Altered = true;
         }
@@ -99,60 +108,30 @@ namespace Warlord.Logic.Data
 
             if(blocks[x, y, z].Type != BlockType.Air)
             {
-                blocks[x, y, z] = new Block(blocks[x, y, z].UpperLeftTopPosition, BlockType.Air);
+                blocks[x, y, z].Type = BlockType.Air;
 
                 Altered = true;
             }
         }
         public void AddFace(Vector3i position, BlockFaceField facing)
         {
-            if((visibleFaceBitField[position.X, position.Y, position.Z] & (byte)facing) == 0)
+            Block blockAtPos = GetBlock(position);
+            if(blockAtPos.IsFaceOff(facing))
             {
-                visibleFaceBitField[position.X, position.Y, position.Z] |= (byte)facing;
+                blockAtPos.TurnFaceOn(facing);
                 visibleFaces++;
                 Altered = true;
             }
         }
         public void RemoveFace(Vector3i position, BlockFaceField facing)
         {
-            if((visibleFaceBitField[position.X, position.Y, position.Z] & (byte)facing) > 0)
+            Block blockAtPos = GetBlock(position);
+            if(blockAtPos.IsFaceOn(facing))
             {
-                visibleFaceBitField[position.X, position.Y, position.Z] ^= (byte)facing;
+                blockAtPos.TurnFaceOff(facing);
                 visibleFaces--;
                 Altered = true;
             }
-        }
-        public void Save(BinaryWriter outStream)
-        {
-            outStream.Write(visibleFaces);
-            for(int x = 0; x < regionSize.X; x++)
-            {
-                for(int y = 0; y < regionSize.Y; y++)
-                {
-                    for(int z = 0; z < regionSize.Z; z++)
-                    {
-                        outStream.Write(visibleFaceBitField[x, y, z]);
-                        blocks[x, y, z].Save(outStream);
-                    }
-                }
-            }
-        }
-        public void Load(BinaryReader inStream)
-        {
-            visibleFaces = inStream.ReadInt32();
-            for(int x = 0; x < regionSize.X; x++)
-            {
-                for(int y = 0; y < regionSize.Y; y++)
-                {
-                    for(int z = 0; z < regionSize.Z; z++)
-                    {
-                        visibleFaceBitField[x, y, z] = inStream.ReadByte();
-                        blocks[x, y, z].Load(inStream);
-                    }
-                }
-            }
-
-            Altered = true;
         }
         public Vector3i RegionOrigin
         {
@@ -169,10 +148,6 @@ namespace Warlord.Logic.Data
         public Block[, ,] Blocks
         {
             get { return blocks; }
-        }
-        public Byte[, ,] VisibleFaceBitField
-        {
-            get { return visibleFaceBitField; }
         }
         public int VisibleFaces
         {

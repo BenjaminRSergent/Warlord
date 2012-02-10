@@ -57,7 +57,7 @@ namespace GameTools.Graph
             return normVec;
         }
 
-        static public Vector3i operator +(Vector3i leftVector, Vector3i rightVector)
+        public static Vector3i operator +(Vector3i leftVector, Vector3i rightVector)
         {
             Vector3i sumVector = new Vector3i(leftVector);
 
@@ -67,7 +67,7 @@ namespace GameTools.Graph
 
             return sumVector;
         }
-        static public Vector3i operator -(Vector3i leftVector, Vector3i rightVector)
+        public static Vector3i operator -(Vector3i leftVector, Vector3i rightVector)
         {
             Vector3i differenceVector = new Vector3i(leftVector);
 
@@ -77,7 +77,7 @@ namespace GameTools.Graph
 
             return differenceVector;
         }
-        static public Vector3i operator *(int number, Vector3i vector)
+        public static Vector3i operator *(int number, Vector3i vector)
         {
             Vector3i scaledVector = new Vector3i(vector);
 
@@ -87,17 +87,17 @@ namespace GameTools.Graph
 
             return scaledVector;
         }
-        static public float operator *(Vector3i leftVector, Vector3i rightVector)
+        public static float operator *(Vector3i leftVector, Vector3i rightVector)
         {
             return leftVector.DotProduct(rightVector);
         }
-        static public bool operator ==(Vector3i leftVector, Vector3i rightVector)
+        public static bool operator ==(Vector3i leftVector, Vector3i rightVector)
         {
             return leftVector.X == rightVector.X &&
                    leftVector.Y == rightVector.Y &&
                    leftVector.Z == rightVector.Z;
         }
-        static public bool operator !=(Vector3i leftVector, Vector3i rightVector)
+        public static bool operator !=(Vector3i leftVector, Vector3i rightVector)
         {
             return leftVector.X != rightVector.X ||
                    leftVector.Y != rightVector.Y ||
@@ -143,56 +143,56 @@ namespace GameTools.Graph
                 return new Vector3(X, Y, Z);
             }
         }
-        static public Vector3i Zero
+        public static Vector3i Zero
         {
             get
             {
                 return new Vector3i(0, 0, 0);
             }
         }
-        static public Vector3i One
+        public static Vector3i One
         {
             get
             {
                 return new Vector3i(1, 1, 1);
             }
         }
-        static public Vector3i XIncreasing
+        public static Vector3i XIncreasing
         {
             get
             {
                 return new Vector3i(1, 0, 0);
             }
         }
-        static public Vector3i YIncreasing
+        public static Vector3i YIncreasing
         {
             get
             {
                 return new Vector3i(0, 1, 0);
             }
         }
-        static public Vector3i ZIncreasing
+        public static Vector3i ZIncreasing
         {
             get
             {
                 return new Vector3i(0, 0, 1);
             }
         }
-        static public Vector3i XDecreasing
+        public static Vector3i XDecreasing
         {
             get
             {
                 return new Vector3i(-1, 0, 0);
             }
         }
-        static public Vector3i YDecreasing
+        public static Vector3i YDecreasing
         {
             get
             {
                 return new Vector3i(0, -1, 0);
             }
         }
-        static public Vector3i ZDecreasing
+        public static Vector3i ZDecreasing
         {
             get
             {

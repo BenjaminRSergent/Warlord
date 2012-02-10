@@ -8,13 +8,13 @@ namespace Warlord.Application
 {
     class GameStaticInitalizer
     {
-        static public void InitalizeStatics()
+        public static void InitalizeStatics()
         {
             InitializeVertecies();
             InitalizeUvMap();
         }
 
-        static private void InitializeVertecies()
+        private static void InitializeVertecies()
         {
             Vector3i[] offset = new Vector3i[6];
 
@@ -92,7 +92,7 @@ namespace Warlord.Application
             RegionGraphics.faceVertexOffsetMap.Add(BlockFaceField.ZDecreasing, offset);
 
         }
-        static private void InitalizeUvMap()
+        private static void InitalizeUvMap()
         {
             Dictionary<BlockFaceField, Vector2[]> uvMap;
 
@@ -112,7 +112,7 @@ namespace Warlord.Application
             uvMap = GetUVFromXY(3, 0);
             RegionGraphics.UVMap.Add(BlockTexture.Stone, uvMap);
         }
-        static private Dictionary<BlockFaceField, Vector2[]> GetUVFromXY(int x, int y)
+        private static Dictionary<BlockFaceField, Vector2[]> GetUVFromXY(int x, int y)
         {
             Dictionary<BlockFaceField, Vector2[]> uvMap = new Dictionary<BlockFaceField, Vector2[]>();
 
