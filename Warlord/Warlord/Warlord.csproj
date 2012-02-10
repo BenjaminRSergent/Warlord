@@ -109,7 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\CubeVertexMaps\FullCube.cs" />
-    <Compile Include="Application\CubeVertexMaps\XDecreasingRamp.cs" />
+    <Compile Include="Application\CubeVertexMaps\ZIncreasingRamp.cs" />
     <Compile Include="Application\DebugFpsHelper.cs" />
     <Compile Include="Event\BaseGameEvent.cs" />
     <Compile Include="Event\EventManager.cs" />

@@ -8,13 +8,13 @@ namespace Warlord.Logic.Data.World
     class Block
     {
         private Vector3 upperLeftTopPosition;
-        private byte type;
+        private BlockType type;
         public byte facing;
 
         public Block(Vector3 upperLeftTopPosition, BlockType blockType)
         {
             this.upperLeftTopPosition = upperLeftTopPosition;
-            this.type = (byte)blockType;
+            this.type = blockType;
         }
         public void TurnOffAllFaces( )
         {
@@ -37,7 +37,13 @@ namespace Warlord.Logic.Data.World
         {
             return (facing & (byte)face) == 0;
         }
-
+        public bool DoesHideFace( Vector3 adjacentLocation )
+        {
+            if( type == BlockType.Air )
+                return false;
+            else
+                return true;
+        }
         public Vector3 UpperLeftTopPosition
         {
             get { return upperLeftTopPosition; }
@@ -45,7 +51,7 @@ namespace Warlord.Logic.Data.World
         public BlockType Type
         {
             get { return (BlockType)type; }
-            set { type = (byte)value; }
+            set { type = value; }
         }
     }
 }
