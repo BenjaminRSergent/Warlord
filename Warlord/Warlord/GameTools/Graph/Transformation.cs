@@ -1,35 +1,46 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace GameTools.Graph
 {
     static class Transformation
     {
-        public static Vector3i ChangeVectorScale(Vector3i position, Vector3i scale)
+        public static Vector3 ChangeVectorScaleFloored(Vector3 position, Vector3 scale)
         {
-            Vector3i scaledPosition = Vector3i.Zero;
+            Vector3 scaledPosition = Vector3.Zero;
 
-            scaledPosition.X = ScaleSingle(position.X, scale.X);
-            scaledPosition.Y = ScaleSingle(position.Y, scale.Y);
-            scaledPosition.Z = ScaleSingle(position.Z, scale.Z);
+            scaledPosition.X = ScaleSingleFloored(position.X, scale.X);
+            scaledPosition.Y = ScaleSingleFloored(position.Y, scale.Y);
+            scaledPosition.Z = ScaleSingleFloored(position.Z, scale.Z);
 
             return scaledPosition;
         }
-        public static int ScaleSingle(int original, int scale)
+        public static float ScaleSingleFloored(float original, float scale)
         {
-            int scaledSingle;
+            float scaledSingle;
+
+            if( original == 0 )
+                return 0;
 
             if(original > 0)
-                scaledSingle = original / scale;
+            {
+                scaledSingle = (original / scale);
+                scaledSingle -= scaledSingle % 1.0f;
+            }
             else
             {
-                double doubleX = original / (double)scale;
-                scaledSingle = (int)Math.Floor(doubleX);
+                scaledSingle = (original / scale);  
+                scaledSingle -= scaledSingle % 1.0f;
+
+                if( original % scale != 0 ) 
+                    scaledSingle -= 1;
+                
             }
 
             return scaledSingle;
         }
 
-        public static Vector3i AbsoluteToRelative(Vector3i position, Vector3i origin)
+        public static Vector3 AbsoluteToRelative(Vector3 position, Vector3 origin)
         {
             return position - origin;
         }

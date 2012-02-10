@@ -6,24 +6,25 @@ using Warlord.Application;
 using Warlord.Event.EventTypes;
 using Warlord.GameTools;
 using Warlord.Event;
+using Microsoft.Xna.Framework;
 
 namespace Warlord.Logic.Data.World
 {
     class RegionDatabase
     {
-        Vector3i regionSize;
+        Vector3 regionSize;
         RegionGenerator generator;
         Stack<Region> RegionPool;
 
-        Dictionary<Vector3i, Region> regionMap;
+        Dictionary<Vector3, Region> regionMap;
 
         int seed;
 
-        public RegionDatabase(int seed, Vector3i regionSize)
+        public RegionDatabase(int seed, Vector3 regionSize)
         {
             Debug.Assert(regionSize.X > 0 && regionSize.Y > 0 && regionSize.Z > 0);
 
-            regionMap = new Dictionary<Vector3i, Region>();
+            regionMap = new Dictionary<Vector3, Region>();
             RegionPool = new Stack<Region>();
             generator = new RegionGenerator(seed, regionSize);
 
@@ -32,11 +33,11 @@ namespace Warlord.Logic.Data.World
 
             GlobalSystems.EventManager.Subscribe(SendCurrentRegions, "refresh_region_graphics");
         }
-        public bool CreateRegion(RegionController updater, Vector3i regionCoordiants)
+        public bool CreateRegion(RegionController updater, Vector3 regionCoordiants)
         {
             if(!regionMap.Keys.Contains(regionCoordiants))
             {
-                Vector3i newOrigin = new Vector3i(regionCoordiants.X * regionSize.X,
+                Vector3 newOrigin = new Vector3(regionCoordiants.X * regionSize.X,
                                                   regionCoordiants.Y * regionSize.Y,
                                                   regionCoordiants.Z * regionSize.Z);
 
@@ -55,7 +56,7 @@ namespace Warlord.Logic.Data.World
 
             return false;
         }
-        private Region GetNewRegion(Vector3i newOrigin, Vector3i regionSize)
+        private Region GetNewRegion(Vector3 newOrigin, Vector3 regionSize)
         {
             Region newRegion;
 
@@ -69,7 +70,7 @@ namespace Warlord.Logic.Data.World
 
             return newRegion;
         }
-        public void UnloadRegion(Vector3i regionCoordiants)
+        public void UnloadRegion(Vector3 regionCoordiants)
         {
             if(regionMap.Keys.Contains(regionCoordiants))
             {
@@ -84,13 +85,13 @@ namespace Warlord.Logic.Data.World
                 RegionPool.Push(theRegion);
             }
         }
-        public void ChangeBlock(Vector3i absolutePosition, BlockType type)
+        public void ChangeBlock(Vector3 absolutePosition, BlockType type)
         {
             Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);
 
             Debug.Assert(currentRegion.Valid);
 
-            Vector3i currentBlockRelativePosition = Transformation.AbsoluteToRelative(absolutePosition,
+            Vector3 currentBlockRelativePosition = Transformation.AbsoluteToRelative(absolutePosition,
                                                                                       currentRegion.Data.RegionOrigin);
 
             Block oldBlock = currentRegion.Data.GetBlock(currentBlockRelativePosition);
@@ -103,59 +104,59 @@ namespace Warlord.Logic.Data.World
                                                                        0,
                                                                        blockChangedData));
         }
-        public Block GetBlock(Vector3i absolutePosition)
+        public Block GetBlock(Vector3 absolutePosition)
         {
             Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);
 
             Debug.Assert(currentRegion.Valid);
 
-            Vector3i currentBlockRelativePosition = Transformation.AbsoluteToRelative(absolutePosition,
+            Vector3 currentBlockRelativePosition = Transformation.AbsoluteToRelative(absolutePosition,
                                                                                       currentRegion.Data.RegionOrigin);
 
             return currentRegion.Data.GetBlock(currentBlockRelativePosition);
 
         }
-        public void AddFace(Vector3i absolutePosition, BlockFaceField facing)
+        public void AddFace(Vector3 absolutePosition, BlockFaceField facing)
         {
             Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);
 
             Debug.Assert(currentRegion.Valid);
 
-            Vector3i relativePosition = Transformation.AbsoluteToRelative(absolutePosition,
+            Vector3 relativePosition = Transformation.AbsoluteToRelative(absolutePosition,
                                                                           currentRegion.Data.RegionOrigin);
 
             currentRegion.Data.AddFace(relativePosition, facing);  
         }
-        public void RemoveFace(Vector3i absolutePosition, BlockFaceField facing)
+        public void RemoveFace(Vector3 absolutePosition, BlockFaceField facing)
         {
             Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);
 
             Debug.Assert(currentRegion.Valid);
 
-            Vector3i relativePosition = Transformation.AbsoluteToRelative(absolutePosition,
+            Vector3 relativePosition = Transformation.AbsoluteToRelative(absolutePosition,
                                                                           currentRegion.Data.RegionOrigin);
 
             currentRegion.Data.RemoveFace(relativePosition, facing);
         }
-        public bool IsRegionLoaded(Vector3i regionCoordiantes)
+        public bool IsRegionLoaded(Vector3 regionCoordiantes)
         {
             return regionMap.ContainsKey(regionCoordiantes);
         }
-        public Optional<Region> GetRegionFromAbsolute(Vector3i absolutePosition)
+        public Optional<Region> GetRegionFromAbsolute(Vector3 absolutePosition)
         {
-            Vector3i coordinates = GetRegionCoordiantes(absolutePosition);
+            Vector3 coordinates = GetRegionCoordiantes(absolutePosition);
             return GetRegionFromCoordiantes(coordinates);
         }
-        public Optional<Region> GetRegionFromCoordiantes(Vector3i coordiantes)
+        public Optional<Region> GetRegionFromCoordiantes(Vector3 coordiantes)
         {
             if(regionMap.Keys.Contains(coordiantes))
                 return new Optional<Region>(regionMap[coordiantes]);
             else
                 return new Optional<Region>();
         }
-        public Vector3i GetRegionCoordiantes(Vector3i absolutePosition)
+        public Vector3 GetRegionCoordiantes(Vector3 absolutePosition)
         {
-            return Transformation.ChangeVectorScale(absolutePosition, regionSize);
+            return Transformation.ChangeVectorScaleFloored(absolutePosition, regionSize);
         }
 
         public void SendCurrentRegions(BaseGameEvent theEvent)
@@ -164,12 +165,12 @@ namespace Warlord.Logic.Data.World
                                                                                      0,
                                                                                      regionMap.Values.ToList());
         }
-        public Vector3i RegionSize
+        public Vector3 RegionSize
         {
             get { return regionSize; }
         }
 
-        internal IEnumerable<Vector3i> GetCoordiantesOfLoadedRegions()
+        internal IEnumerable<Vector3> GetCoordiantesOfLoadedRegions()
         {
             return regionMap.Keys;
         }

@@ -1,16 +1,17 @@
 ﻿
 using System.IO;
 using GameTools.Graph;
+using Microsoft.Xna.Framework;
 
 namespace Warlord.Logic.Data.World
 {
     class Block
     {
-        private Vector3i upperLeftTopPosition;
+        private Vector3 upperLeftTopPosition;
         private byte type;
         public byte facing;
 
-        public Block(Vector3i upperLeftTopPosition, BlockType blockType)
+        public Block(Vector3 upperLeftTopPosition, BlockType blockType)
         {
             this.upperLeftTopPosition = upperLeftTopPosition;
             this.type = (byte)blockType;
@@ -37,7 +38,7 @@ namespace Warlord.Logic.Data.World
             return (facing & (byte)face) == 0;
         }
 
-        public Vector3i UpperLeftTopPosition
+        public Vector3 UpperLeftTopPosition
         {
             get { return upperLeftTopPosition; }
         }

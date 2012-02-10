@@ -3,6 +3,7 @@ using System.Diagnostics;
 using GameTools.Graph;
 using GameTools.Noise3D;
 using GameTools.Noise2D;
+using Microsoft.Xna.Framework;
 
 namespace Warlord.Logic.Data.World
 {
@@ -20,16 +21,16 @@ namespace Warlord.Logic.Data.World
             this.seed = seed;
             LoadDefaultSettings();
         }
-        public RegionGenerator(int seed, Vector3i regionSize)
+        public RegionGenerator(int seed, Vector3 regionSize)
         {
             this.seed = seed;
             generatorSettings = new GeneratorSettings();
             generatorSettings.RegionSize = regionSize;
             LoadDefaultSettings();
 
-            flatNoise = new float[generatorSettings.RegionSize.X *
+            flatNoise = new float[(int)(generatorSettings.RegionSize.X *
                                   generatorSettings.RegionSize.Y *
-                                  generatorSettings.RegionSize.Z];
+                                  generatorSettings.RegionSize.Z)];
         }
         private void LoadDefaultSettings()
         {
@@ -39,24 +40,24 @@ namespace Warlord.Logic.Data.World
             noiseSettings3D.persistence = 0.5f;
             noiseSettings3D.seed = 3;
             noiseSettings3D.size = generatorSettings.RegionSize;
-            noiseSettings3D.startingPoint = Vector3i.Zero;
+            noiseSettings3D.startingPoint = Vector3.Zero;
             noiseSettings3D.zoom = 60;
 
             fastNoise3D = new FastPerlinNoise3D(noiseSettings3D);
 
-            generatorSettings.midLevel = generatorSettings.RegionSize.Y / 10;
-            generatorSettings.highLevel = (6 * generatorSettings.RegionSize.Y) / 7;
+            generatorSettings.midLevel = (int)generatorSettings.RegionSize.Y / 10;
+            generatorSettings.highLevel = (int)(6 * generatorSettings.RegionSize.Y) / 7;
 
             generatorSettings.lowLevelZone = new ZoneBlockSettings(-1, -0.7f, GetDefaultHeightMod(0, generatorSettings.midLevel));
             generatorSettings.midLevelZone = new ZoneBlockSettings(0.1f, 1, GetDefaultHeightMod(generatorSettings.midLevel, generatorSettings.highLevel));
-            generatorSettings.highLevelZone = new ZoneBlockSettings(0.6f, 1, GetDefaultHeightMod(generatorSettings.highLevel, generatorSettings.RegionSize.Y));
+            generatorSettings.highLevelZone = new ZoneBlockSettings(0.6f, 1, GetDefaultHeightMod(generatorSettings.highLevel, (int)generatorSettings.RegionSize.Y));
         }
         private ZoneBlockSettings.ModifyDensity GetDefaultHeightMod(int heightZoneStart, int heightZoneEnd)
         {
             return ((float density, float height) =>
                 density - ((height - heightZoneStart) / (heightZoneEnd - heightZoneStart)) / 2);
         }
-        public void FastGenerateRegion3D(RegionController ownerWorld, Vector3i origin)
+        public void FastGenerateRegion3D(RegionController ownerWorld, Vector3 origin)
         {
             noiseSettings3D.startingPoint = origin;
 
@@ -65,7 +66,7 @@ namespace Warlord.Logic.Data.World
 
             AddGrassToTop(ownerWorld, origin);
         }
-        public void FakeGenerator(RegionController ownerWorld, Vector3i origin)
+        public void FakeGenerator(RegionController ownerWorld, Vector3 origin)
         {
             float density;
             BlockType blockType;
@@ -78,12 +79,12 @@ namespace Warlord.Logic.Data.World
                         density = 0;
                         blockType = GetBlockFromNoise(density, y);
                         if(blockType != BlockType.Air)
-                            ownerWorld.ChangeBlock(origin + new Vector3i(x, y, z), blockType);
+                            ownerWorld.ChangeBlock(origin + new Vector3(x, y, z), blockType);
                     }
                 }
             }
         }
-        private void PlaceBlocks(RegionController ownerWorld, Vector3i origin, float[] noise)
+        private void PlaceBlocks(RegionController ownerWorld, Vector3 origin, float[] noise)
         {
             float density;
             BlockType blockType;
@@ -93,20 +94,20 @@ namespace Warlord.Logic.Data.World
                 {
                     for(int z = 0; z < generatorSettings.RegionSize.Z; z++)
                     {
-                        density = noise[x * generatorSettings.RegionSize.Y * generatorSettings.RegionSize.Z +
+                        density = noise[(int)(x * generatorSettings.RegionSize.Y * generatorSettings.RegionSize.Z +
                                         y * generatorSettings.RegionSize.Z +
-                                        z];
+                                        z)];
 
                         blockType = GetBlockFromNoise(density, y);
                         if(blockType != BlockType.Air)
-                            ownerWorld.ChangeBlock(origin + new Vector3i(x, y, z), blockType);
+                            ownerWorld.ChangeBlock(origin + new Vector3(x, y, z), blockType);
                     }
                 }
             }
         }
-        public void AddGrassToTop(RegionController ownerWorld, Vector3i origin)
+        public void AddGrassToTop(RegionController ownerWorld, Vector3 origin)
         {
-            Vector3i currentPosition;
+            Vector3 currentPosition;
             Block currentBlock;
 
             bool recentAir;
@@ -116,9 +117,9 @@ namespace Warlord.Logic.Data.World
             {
                 for(int z = 0; z < generatorSettings.RegionSize.Z; z++)
                 {
-                    for(int y = generatorSettings.RegionSize.Y - 1; y > 0; y--)
+                    for(int y = (int)generatorSettings.RegionSize.Y - 1; y > 0; y--)
                     {
-                        currentPosition = origin + new Vector3i(x, y, z);
+                        currentPosition = origin + new Vector3(x, y, z);
 
                         currentBlock = ownerWorld.GetBlock(currentPosition);
 

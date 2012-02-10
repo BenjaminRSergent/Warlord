@@ -142,8 +142,6 @@
     <Compile Include="GameTools\SpiralProducer.cs" />
     <Compile Include="GameTools\State\NullState.cs" />
     <Compile Include="GameTools\Optional.cs" />
-    <Compile Include="GameTools\Graph\Vector2i.cs" />
-    <Compile Include="GameTools\Graph\Vector3i.cs" />
     <Compile Include="GameTools\State\State.cs" />
     <Compile Include="GameTools\State\StateMachine.cs" />
     <Compile Include="GameTools\Statistics\Statistics.cs" />

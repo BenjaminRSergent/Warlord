@@ -15,11 +15,11 @@ namespace Warlord.Logic.Data.World
         private int drawDistance;
         private SpiralProducer spiralProducer;
 
-        public RegionController(int drawDistance, int seed, Vector3i regionSize)
+        public RegionController(int drawDistance, int seed, Vector3 regionSize)
             : base("Region Updater")
         {
             this.drawDistance = drawDistance;
-            spiralProducer = new SpiralProducer(Vector3i.Zero, Direction.Up);
+            spiralProducer = new SpiralProducer(Vector3.Zero, Direction.Up);
             database = new RegionDatabase(seed, regionSize);
         }
 
@@ -27,15 +27,15 @@ namespace Warlord.Logic.Data.World
         {
             while(true)
             {
-                List<Vector3i> mustExist = new List<Vector3i>();
+                List<Vector3> mustExist = new List<Vector3>();
 
-                Optional<Vector3i> region = GetFirstUncreatedWithin(drawDistance);
+                Optional<Vector3> region = GetFirstUncreatedWithin(drawDistance);
 
                 if(region.Valid)
                     database.CreateRegion(this, region.Data);
 
-                List<Vector3i> mustUnload = GetCreatedRegionsOutsideArea(drawDistance);
-                foreach(Vector3i loadedRegion in mustUnload)
+                List<Vector3> mustUnload = GetCreatedRegionsOutsideArea(drawDistance);
+                foreach(Vector3 loadedRegion in mustUnload)
                 {
                     database.UnloadRegion(loadedRegion);
                 }
@@ -44,7 +44,7 @@ namespace Warlord.Logic.Data.World
             }
         }
 
-        public void ChangeBlock(Vector3i absolutePosition, BlockType blockType)
+        public void ChangeBlock(Vector3 absolutePosition, BlockType blockType)
         {
             database.ChangeBlock(absolutePosition, blockType);
             UpdateFacing(database.GetBlock(absolutePosition));
@@ -61,10 +61,10 @@ namespace Warlord.Logic.Data.World
         {
             const int NUM_ORTHOGONAL_DIRECTIONS = 6;
 
-            Vector3i addedBlockPosition = addedBlock.UpperLeftTopPosition;
-            Vector3i adjacentBlockPosition;
+            Vector3 addedBlockPosition = addedBlock.UpperLeftTopPosition;
+            Vector3 adjacentBlockPosition;
 
-            Vector3i adjacentRegion;
+            Vector3 adjacentRegion;
 
             BlockType adjacentBlockType;
 
@@ -103,10 +103,10 @@ namespace Warlord.Logic.Data.World
         {
             const int NUM_ORTHOGONAL_DIRECTIONS = 6;
 
-            Vector3i removedBlockPosition = removedBlock.UpperLeftTopPosition;
+            Vector3 removedBlockPosition = removedBlock.UpperLeftTopPosition;
 
-            Vector3i adjacentBlockPosition;
-            Vector3i adjacentRegion;
+            Vector3 adjacentBlockPosition;
+            Vector3 adjacentRegion;
 
             BlockFaceField removedBlockFacing;
             BlockFaceField oppositeBlockFacing;
@@ -127,21 +127,21 @@ namespace Warlord.Logic.Data.World
                 }
             }
         }
-        public Block GetBlock(Vector3i absolutePosition)
+        public Block GetBlock(Vector3 absolutePosition)
         {
             return database.GetBlock(absolutePosition);
         }
-        private Optional<Vector3i> GetFirstUncreatedWithin(int drawDistance)
+        private Optional<Vector3> GetFirstUncreatedWithin(int drawDistance)
         {
             Vector3 playerPosition = GlobalSystems.EntityManager.Player.CurrentPosition;
-            Vector3i playerRegion = database.GetRegionCoordiantes(playerPosition);
+            Vector3 playerRegion = database.GetRegionCoordiantes(playerPosition);
 
             playerPosition.Y = 0;
 
             if(!database.IsRegionLoaded(playerRegion))
-                return new Optional<Vector3i>(playerRegion);
+                return new Optional<Vector3>(playerRegion);
 
-            Vector3i currentPosition;
+            Vector3 currentPosition;
             spiralProducer.NewSpiral(playerRegion, Direction.Up);
 
             for(int k = 0; k < 4 * drawDistance * drawDistance; k++)
@@ -149,22 +149,22 @@ namespace Warlord.Logic.Data.World
                 currentPosition = spiralProducer.GetNextPosition();
 
                 if(!database.IsRegionLoaded(currentPosition) &&
-                    (currentPosition - playerRegion).LengthSquared < (drawDistance + 1) * (drawDistance + 1))
-                    return new Optional<Vector3i>(currentPosition);
+                    (currentPosition - playerRegion).LengthSquared( ) < (drawDistance + 1) * (drawDistance + 1))
+                    return new Optional<Vector3>(currentPosition);
             }
 
-            return new Optional<Vector3i>();
+            return new Optional<Vector3>();
         }
-        private List<Vector3i> GetCreatedRegionsOutsideArea(int maxDistance)
+        private List<Vector3> GetCreatedRegionsOutsideArea(int maxDistance)
         {
             Vector3 playerPosition = GlobalSystems.EntityManager.Player.CurrentPosition;
             playerPosition.Y = 0;
-            Vector3i playerRegion = database.GetRegionCoordiantes(playerPosition);
+            Vector3 playerRegion = database.GetRegionCoordiantes(playerPosition);
 
-            Vector3i playerToRegion;
+            Vector3 playerToRegion;
 
-            List<Vector3i> regionsOutside = new List<Vector3i>();
-            foreach(Vector3i region in database.GetCoordiantesOfLoadedRegions())
+            List<Vector3> regionsOutside = new List<Vector3>();
+            foreach(Vector3 region in database.GetCoordiantesOfLoadedRegions())
             {
                 playerToRegion = playerRegion - region;
                 if(Math.Abs(playerToRegion.X) > maxDistance ||

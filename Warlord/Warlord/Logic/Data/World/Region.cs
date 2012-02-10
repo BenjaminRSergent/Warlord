@@ -8,28 +8,28 @@ namespace Warlord.Logic.Data
 {
     class Region
     {
-        private Vector3i regionOrigin;
-        private Vector3i regionSize;
+        private Vector3 regionOrigin;
+        private Vector3 regionSize;
         private BoundingBox regionBox;
 
         private Block[, ,] blocks;
 
         private int visibleFaces;
 
-        public Region(Vector3i regionOrigin, Vector3i regionSize)
+        public Region(Vector3 regionOrigin, Vector3 regionSize)
         {
             this.regionOrigin = regionOrigin;
             this.regionSize = regionSize;
 
-            regionBox = new BoundingBox(regionOrigin.ToVector3, (regionOrigin + regionSize - Vector3i.One).ToVector3);
+            regionBox = new BoundingBox(regionOrigin, (regionOrigin + regionSize - Vector3.One));
 
-            blocks = new Block[regionSize.X, regionSize.Y, regionSize.Z];
+            blocks = new Block[(int)regionSize.X, (int)regionSize.Y, (int)regionSize.Z];
 
             Init();
         }
         public void Init()
         {
-            Vector3i blockLocation;
+            Vector3 blockLocation;
 
             for(int x = 0; x < regionSize.X; x++)
             {
@@ -37,7 +37,7 @@ namespace Warlord.Logic.Data
                 {
                     for(int z = 0; z < regionSize.Z; z++)
                     {
-                        blockLocation = regionOrigin + new Vector3i(x, y, z);
+                        blockLocation = regionOrigin + new Vector3(x, y, z);
                         blocks[x, y, z] = new Block(blockLocation, BlockType.Air);                        
                     }
                 }
@@ -47,11 +47,11 @@ namespace Warlord.Logic.Data
             visibleFaces = 0;
             Active = true;
         }
-        public void Reinit(Vector3i newOrigin, Vector3i regionSize)
+        public void Reinit(Vector3 newOrigin, Vector3 regionSize)
         {
             lock(this)
             {
-                Vector3i blockLocation;
+                Vector3 blockLocation;
 
                 this.regionOrigin = newOrigin;
 
@@ -65,7 +65,7 @@ namespace Warlord.Logic.Data
                         {
                             for(int z = 0; z < regionSize.Z; z++)
                             {
-                                blockLocation = regionOrigin + new Vector3i(x, y, z);
+                                blockLocation = regionOrigin + new Vector3(x, y, z);
                                 blocks[x, y, z].Type = BlockType.Air;              
                                 blocks[x, y, z].TurnOffAllFaces( );
                             }
@@ -73,7 +73,7 @@ namespace Warlord.Logic.Data
                     }
                 }
 
-                regionBox = new BoundingBox(regionOrigin.ToVector3, (regionOrigin + regionSize - Vector3i.One).ToVector3);
+                regionBox = new BoundingBox(regionOrigin, (regionOrigin + regionSize - Vector3.One));
 
                 Init();
             }
@@ -83,28 +83,28 @@ namespace Warlord.Logic.Data
             Active = false;
             Altered = false;
         }
-        public Block GetBlock(Vector3i relativePosition)
+        public Block GetBlock(Vector3 relativePosition)
         {
-            if(regionBox.Contains(regionOrigin.ToVector3 + relativePosition.ToVector3) == ContainmentType.Contains)
-                return blocks[relativePosition.X, relativePosition.Y, relativePosition.Z];
+            if(regionBox.Contains(regionOrigin + relativePosition) == ContainmentType.Contains)
+                return blocks[(int)relativePosition.X, (int)relativePosition.Y, (int)relativePosition.Z];
             else
                 throw new ArgumentException("The relative position " + relativePosition + " is not within the region");
         }
-        public void AddBlock(Vector3i relativePosition, BlockType type)
+        public void AddBlock(Vector3 relativePosition, BlockType type)
         {
-            int x = relativePosition.X;
-            int y = relativePosition.Y;
-            int z = relativePosition.Z;
+            int x = (int)relativePosition.X;
+            int y = (int)relativePosition.Y;
+            int z = (int)relativePosition.Z;
 
             blocks[x, y, z].Type = type;
 
             Altered = true;
         }
-        public void RemoveBlock(Vector3i relativePosition)
+        public void RemoveBlock(Vector3 relativePosition)
         {
-            int x = relativePosition.X;
-            int y = relativePosition.Y;
-            int z = relativePosition.Z;
+            int x = (int)relativePosition.X;
+            int y = (int)relativePosition.Y;
+            int z = (int)relativePosition.Z;
 
             if(blocks[x, y, z].Type != BlockType.Air)
             {
@@ -113,7 +113,7 @@ namespace Warlord.Logic.Data
                 Altered = true;
             }
         }
-        public void AddFace(Vector3i position, BlockFaceField facing)
+        public void AddFace(Vector3 position, BlockFaceField facing)
         {
             Block blockAtPos = GetBlock(position);
             if(blockAtPos.IsFaceOff(facing))
@@ -123,7 +123,7 @@ namespace Warlord.Logic.Data
                 Altered = true;
             }
         }
-        public void RemoveFace(Vector3i position, BlockFaceField facing)
+        public void RemoveFace(Vector3 position, BlockFaceField facing)
         {
             Block blockAtPos = GetBlock(position);
             if(blockAtPos.IsFaceOn(facing))
@@ -133,11 +133,11 @@ namespace Warlord.Logic.Data
                 Altered = true;
             }
         }
-        public Vector3i RegionOrigin
+        public Vector3 RegionOrigin
         {
             get { return regionOrigin; }
         }
-        public Vector3i RegionSize
+        public Vector3 RegionSize
         {
             get { return regionSize; }
         }

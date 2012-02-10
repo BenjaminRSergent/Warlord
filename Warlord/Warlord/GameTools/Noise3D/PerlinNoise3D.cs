@@ -8,17 +8,17 @@ namespace GameTools.Noise3D
     {
         public static double[, ,] GenPerlinNoise3D(PerlinNoiseSettings3D settings)
         {
-            double[, ,] noise = new double[settings.size.X, settings.size.Y, settings.size.Z];
-            MakePerlinNoise3D(noise, Vector3i.Zero, settings);
+            double[, ,] noise = new double[(int)settings.size.X, (int)settings.size.Y, (int)settings.size.Z];
+            MakePerlinNoise3D(noise, Vector3.Zero, settings);
 
             return noise;
         }
         public static double[, ,] GenPerlinNoise3D(PerlinNoiseSettings3D settings, int numThreads)
         {
-            double[, ,] noise = new double[settings.size.X, settings.size.Y, settings.size.Z];
+            double[, ,] noise = new double[(int)settings.size.X, (int)settings.size.Y, (int)settings.size.Z];
 
-            int rowsPerThread = settings.size.X / numThreads;
-            int extraRows = settings.size.X % numThreads;
+            int rowsPerThread = (int)settings.size.X / numThreads;
+            int extraRows = (int)settings.size.X % numThreads;
 
             PerlinNoiseSettings3D threadSettings = new PerlinNoiseSettings3D(settings);
 
@@ -36,7 +36,7 @@ namespace GameTools.Noise3D
                     threadSettings.size.X += extraRows;
                 }
 
-                noiseGenThreads[thread] = new Thread(() => MakePerlinNoise3D(noise, new Vector3i(arrayStartX, 0, 0), threadSettings));
+                noiseGenThreads[thread] = new Thread(() => MakePerlinNoise3D(noise, new Vector3(arrayStartX, 0, 0), threadSettings));
                 noiseGenThreads[thread].Start();
             }
 
@@ -47,7 +47,7 @@ namespace GameTools.Noise3D
 
             return noise;
         }
-        static void MakePerlinNoise3D(double[, ,] toFill, Vector3i fillStart, PerlinNoiseSettings3D settings)
+        static void MakePerlinNoise3D(double[, ,] toFill, Vector3 fillStart, PerlinNoiseSettings3D settings)
         {
             int width;
             int height;
@@ -62,23 +62,23 @@ namespace GameTools.Noise3D
             double frequency;
             double amplitude;
 
-            width = settings.size.X;
-            height = settings.size.Y;
-            length = settings.size.Z;
+            width = (int)settings.size.X;
+            height = (int)settings.size.Y;
+            length = (int)settings.size.Z;
 
             regionSize.X = width / settings.zoom;
             regionSize.Y = width / settings.zoom;
             regionSize.Z = width / settings.zoom;
 
-            for(int x = fillStart.X; x < fillStart.X + width; x++)
+            for(int x = (int)fillStart.X; x < fillStart.X + width; x++)
             {
-                for(int y = fillStart.Y; y < fillStart.Y + height; y++)
+                for(int y = (int)fillStart.Y; y < fillStart.Y + height; y++)
                 {
-                    for(int z = fillStart.Z; z < fillStart.Z + length; z++)
+                    for(int z = (int)fillStart.Z; z < fillStart.Z + length; z++)
                     {
-                        effectiveX = x + settings.startingPoint.X;
-                        effectiveY = y + settings.startingPoint.Y;
-                        effectiveZ = z + settings.startingPoint.Z;
+                        effectiveX = x + (int)settings.startingPoint.X;
+                        effectiveY = y + (int)settings.startingPoint.Y;
+                        effectiveZ = z + (int)settings.startingPoint.Z;
 
                         frequency = 1;
                         amplitude = 1;

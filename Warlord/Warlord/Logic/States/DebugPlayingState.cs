@@ -10,7 +10,7 @@ namespace Warlord.Logic.States
     {
         RegionController regionUpdater;
 
-        public DebugPlayingState(WarlordLogic owner, int drawDistance, Vector3i regionSize)
+        public DebugPlayingState(WarlordLogic owner, int drawDistance, Vector3 regionSize)
             : base(owner)
         {
             regionUpdater = new RegionController(drawDistance, 27, regionSize);

@@ -15,7 +15,7 @@ namespace Warlord.Logic
         StateMachine<WarlordLogic> stateMachine;
         GameTime mostRecentGameTime;
 
-        Vector3i regionSize;
+        Vector3 regionSize;
         int entityCellSize;
 
         public WarlordLogic()
@@ -28,7 +28,7 @@ namespace Warlord.Logic
 
             stateMachine = new StateMachine<WarlordLogic>(this);
         }
-        public void BeginGame(Vector3i regionSize, int entityCellSize)
+        public void BeginGame(Vector3 regionSize, int entityCellSize)
         {
             this.regionSize = regionSize;
             this.entityCellSize = entityCellSize;

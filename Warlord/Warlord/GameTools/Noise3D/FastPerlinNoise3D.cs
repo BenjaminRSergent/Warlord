@@ -26,9 +26,9 @@ namespace GameTools.Noise3D
         }
         public void FillWithPerlinNoise3D(float[] toFill)
         {
-            int width = settings.size.X;
-            int height = settings.size.Y;
-            int length = settings.size.Z;
+            int width = (int)settings.size.X;
+            int height = (int)settings.size.Y;
+            int length = (int)settings.size.Z;
 
             int effectiveX;
             int effectiveY;
@@ -42,9 +42,9 @@ namespace GameTools.Noise3D
                 {
                     for(int z = 0; z < 0 + length; z++)
                     {
-                        effectiveX = x + settings.startingPoint.X;
-                        effectiveY = y + settings.startingPoint.Y;
-                        effectiveZ = z + settings.startingPoint.Z;
+                        effectiveX = x + (int)settings.startingPoint.X;
+                        effectiveY = y + (int)settings.startingPoint.Y;
+                        effectiveZ = z + (int)settings.startingPoint.Z;
 
                         toFill[x * height * length + y * length + z] = GetPerlinNoise3D(effectiveX, effectiveY, effectiveZ);
                     }

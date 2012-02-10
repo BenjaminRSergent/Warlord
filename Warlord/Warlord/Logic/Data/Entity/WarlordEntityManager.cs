@@ -12,14 +12,14 @@ namespace Warlord.Logic.Data.Entity
     {
         Player player;
         Dictionary<uint, GameEntity> entityMap;
-        Dictionary<Vector3i, HashSet<GameEntity>> entityCells;
+        Dictionary<Vector3, HashSet<GameEntity>> entityCells;
 
         int cellSideLength;
         uint nextEntityID;
 
         public WarlordEntityManager(int cellSideLength)
         {
-            entityCells = new Dictionary<Vector3i, HashSet<GameEntity>>();
+            entityCells = new Dictionary<Vector3, HashSet<GameEntity>>();
             entityMap = new Dictionary<uint, GameEntity>();
             nextEntityID = 0;
 
@@ -40,7 +40,7 @@ namespace Warlord.Logic.Data.Entity
         }
         private void AddEntity(GameEntity newEntity)
         {
-            Vector3i cell = GetCellFromPosition(newEntity.CurrentPosition);
+            Vector3 cell = GetCellFromPosition(newEntity.CurrentPosition);
 
             newEntity.InitalizeID(NextEntityID);
             entityMap.Add(newEntity.actorID, newEntity);
@@ -51,7 +51,7 @@ namespace Warlord.Logic.Data.Entity
         }
         private void RemoveEntity(GameEntity deadEntity)
         {
-            Vector3i cell = GetCellFromPosition(deadEntity.CurrentPosition);
+            Vector3 cell = GetCellFromPosition(deadEntity.CurrentPosition);
 
             entityMap.Remove(deadEntity.actorID);
             RemoveFromCell(cell, deadEntity);
@@ -60,7 +60,7 @@ namespace Warlord.Logic.Data.Entity
                                                                         0,
                                                                         deadEntity));
         }
-        private void AddToCell(Vector3i cell, GameEntity entity)
+        private void AddToCell(Vector3 cell, GameEntity entity)
         {
             HashSet<GameEntity> theCell;
 
@@ -71,7 +71,7 @@ namespace Warlord.Logic.Data.Entity
 
             entityCells[cell].Add(entity);
         }
-        private void RemoveFromCell(Vector3i cell, GameEntity entity)
+        private void RemoveFromCell(Vector3 cell, GameEntity entity)
         {
             HashSet<GameEntity> theCell;
 
@@ -91,8 +91,8 @@ namespace Warlord.Logic.Data.Entity
 
             int radiusSq = radius * radius;
 
-            Vector3i centerCell = GetCellFromPosition(position);
-            Vector3i adjacentCell;
+            Vector3 centerCell = GetCellFromPosition(position);
+            Vector3 adjacentCell;
 
             for(int x = -radiusInCells; x < radiusInCells + 1; x++)
             {
@@ -100,7 +100,7 @@ namespace Warlord.Logic.Data.Entity
                 {
                     for(int z = -radiusInCells; z < radiusInCells + 1; z++)
                     {
-                        adjacentCell = centerCell + new Vector3i(x, y, z);
+                        adjacentCell = centerCell + new Vector3(x, y, z);
 
                         entityCells.TryGetValue(adjacentCell, out nearbyCell);
 
@@ -120,10 +120,10 @@ namespace Warlord.Logic.Data.Entity
 
             return nearbyEntities;
         }
-        private Vector3i GetCellFromPosition(Vector3 position)
+        private Vector3 GetCellFromPosition(Vector3 position)
         {
-            return Transformation.ChangeVectorScale(position,
-                                                    new Vector3i(cellSideLength, cellSideLength, cellSideLength));
+            return Transformation.ChangeVectorScaleFloored(position,
+                                                    new Vector3(cellSideLength, cellSideLength, cellSideLength));
         }
 
         public Player Player

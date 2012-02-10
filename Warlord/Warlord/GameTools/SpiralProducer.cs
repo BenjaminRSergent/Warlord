@@ -1,21 +1,22 @@
 ﻿using System.Diagnostics;
 using GameTools.Graph;
+using Microsoft.Xna.Framework;
 
 namespace GameTools
 {
     class SpiralProducer
     {
         private Direction currentDirection;
-        private Vector3i currentPosition;
+        private Vector3 currentPosition;
 
         private int tillDirectionChange;
         private int currentLevel;
 
-        public SpiralProducer(Vector3i startingPosition, Direction startingDirection)
+        public SpiralProducer(Vector3 startingPosition, Direction startingDirection)
         {
             NewSpiral(startingPosition, startingDirection);
         }
-        public void NewSpiral(Vector3i startingPosition, Direction startingDirection)
+        public void NewSpiral(Vector3 startingPosition, Direction startingDirection)
         {
             this.currentPosition = startingPosition;
             this.currentDirection = startingDirection;
@@ -24,7 +25,7 @@ namespace GameTools
             currentLevel = 0;
         }
 
-        public Vector3i GetNextPosition()
+        public Vector3 GetNextPosition()
         {
             if(tillDirectionChange == 0)
             {
@@ -57,21 +58,21 @@ namespace GameTools
             return currentPosition;
         }
 
-        private Vector3i GetMoveFromDirection(Direction direction)
+        private Vector3 GetMoveFromDirection(Direction direction)
         {
             switch(direction)
             {
                 case Direction.Up:
-                    return Vector3i.ZIncreasing;
+                    return Vector3.Backward;
                 case Direction.Right:
-                    return Vector3i.XIncreasing;
+                    return Vector3.Right;
                 case Direction.Down:
-                    return Vector3i.ZDecreasing;
+                    return Vector3.Forward;
                 case Direction.Left:
-                    return Vector3i.XDecreasing;
+                    return Vector3.Left;
                 default:
                     Debug.Assert(false);
-                    return Vector3i.Zero;
+                    return Vector3.Zero;
             }
         }
     }

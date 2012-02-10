@@ -23,8 +23,8 @@ namespace Warlord.View.Human.Display
 
         static BlockFaceField[] faces = (BlockFaceField[])System.Enum.GetValues(typeof(BlockFaceField) );
 
-        public static Dictionary<BlockFaceField, Vector3i[]> faceVertexOffsetMap =
-                                                      new Dictionary<BlockFaceField, Vector3i[]>();
+        public static Dictionary<BlockFaceField, Vector3[]> faceVertexOffsetMap =
+                                                      new Dictionary<BlockFaceField, Vector3[]>();
 
         public static Dictionary<BlockTexture, Dictionary<BlockFaceField, Vector2[]>> UVMap
                                                                 = new Dictionary<BlockTexture, Dictionary<BlockFaceField, Vector2[]>>();
@@ -90,16 +90,16 @@ namespace Warlord.View.Human.Display
             }
         }
 
-        private void BuildFace(Vector3i bottomBackLeft, BlockFaceField faceDir, BlockType type)
+        private void BuildFace(Vector3 bottomBackLeft, BlockFaceField faceDir, BlockType type)
         {
             if(type == BlockType.Air)
                 return;
 
             BlockTexture faceTexture = GetTexture(faceDir, type);
             Vector2[] uvMap = UVMap[faceTexture][faceDir];
-            Vector3i[] offsetMap = faceVertexOffsetMap[faceDir];
+            Vector3[] offsetMap = faceVertexOffsetMap[faceDir];
 
-            Vector3i currentFace;
+            Vector3 currentFace;
             for(int k = 0; k < 6; k++)
             {
                 if(regionMesh.Length < index + k + 1)
@@ -109,11 +109,11 @@ namespace Warlord.View.Human.Display
 
                 if(regionMesh[index + k] == null)
                 {
-                    regionMesh[index + k] = new VertexPositionTexture(currentFace.ToVector3, uvMap[k]);
+                    regionMesh[index + k] = new VertexPositionTexture(currentFace, uvMap[k]);
                 }
                 else
                 {
-                    regionMesh[index + k].Position = currentFace.ToVector3;
+                    regionMesh[index + k].Position = currentFace;
                     regionMesh[index + k].TextureCoordinate = uvMap[k];
                 }
             }

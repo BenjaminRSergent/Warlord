@@ -1,6 +1,7 @@
 ﻿using System;
 
 using GameTools.Graph;
+using Microsoft.Xna.Framework;
 
 namespace GameTools.Noise3D
 {
@@ -8,8 +9,8 @@ namespace GameTools.Noise3D
     {
         Random rng;
 
-        public Vector3i size;
-        public Vector3i startingPoint;
+        public Vector3 size;
+        public Vector3 startingPoint;
         public float frequencyMulti;
         public float persistence;
         public float zoom;
@@ -20,8 +21,8 @@ namespace GameTools.Noise3D
         {
             rng = new Random();
 
-            size = new Vector3i(100, 100, 100);
-            startingPoint = Vector3i.Zero;
+            size = new Vector3(100, 100, 100);
+            startingPoint = Vector3.Zero;
 
             frequencyMulti = 2;
             persistence = 0.5f;
@@ -34,8 +35,8 @@ namespace GameTools.Noise3D
 
         public PerlinNoiseSettings3D(PerlinNoiseSettings3D settings)
         {
-            size = new Vector3i(settings.size);
-            startingPoint = new Vector3i(settings.startingPoint);
+            size = settings.size;
+            startingPoint = settings.startingPoint;
 
             frequencyMulti = settings.frequencyMulti;
             persistence = settings.persistence;
