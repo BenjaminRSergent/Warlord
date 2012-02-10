@@ -16,7 +16,7 @@ namespace Warlord.Logic.Data.World
         private SpiralProducer spiralProducer;
 
         public RegionController(int drawDistance, int seed, Vector3 regionSize)
-            : base("Region Updater")
+            : base("Region Controller")
         {
             this.drawDistance = drawDistance;
             spiralProducer = new SpiralProducer(Vector3.Zero, Direction.Up);
@@ -43,13 +43,15 @@ namespace Warlord.Logic.Data.World
                 SafePointCheckIn();
             }
         }
-
+        public Block GetBlock(Vector3 absolutePosition)
+        {
+            return database.GetBlock(absolutePosition);
+        }
         public void ChangeBlock(Vector3 absolutePosition, BlockType blockType)
         {
             database.ChangeBlock(absolutePosition, blockType);
             UpdateFacing(database.GetBlock(absolutePosition));
         }
-
         private void UpdateFacing(Block block)
         {
             UpdateBlockFaces(block);
@@ -98,11 +100,7 @@ namespace Warlord.Logic.Data.World
                         database.AddFace(changedBlockPosition, changedBlockFacing);
                 }
             }
-        }
-        public Block GetBlock(Vector3 absolutePosition)
-        {
-            return database.GetBlock(absolutePosition);
-        }
+        }        
         private Optional<Vector3> GetFirstUncreatedWithin(int drawDistance)
         {
             Vector3 playerPosition = GlobalSystems.EntityManager.Player.CurrentPosition;

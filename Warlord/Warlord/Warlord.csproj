@@ -123,6 +123,7 @@
     <Compile Include="Application\GameStaticInitalizer.cs" />
     <Compile Include="Event\EventTypes\SendingRegionListEvent.cs" />
     <Compile Include="GameTools\Camera3D.cs" />
+    <Compile Include="GameTools\Graph\VectorTransformAroundAxis.cs" />
     <Compile Include="GameTools\Noise2D\FastPerlinInterpolatedNoise2D.cs" />
     <Compile Include="GameTools\Noise2D\FastPerlinNoise2D.cs" />
     <Compile Include="GameTools\Noise2D\PerlinNoiseSetting2D.cs" />
