@@ -133,12 +133,13 @@ namespace Warlord.Logic.Data.World
 
             Vector3 playerToRegion;
 
+            int maxDistanceSq = maxDistance*maxDistance;
+
             List<Vector3> regionsOutside = new List<Vector3>();
             foreach(Vector3 region in database.GetCoordiantesOfLoadedRegions())
             {
                 playerToRegion = playerRegion - region;
-                if(Math.Abs(playerToRegion.X) > maxDistance ||
-                   Math.Abs(playerToRegion.Y) > maxDistance)
+                if(playerToRegion.LengthSquared( ) > maxDistanceSq)
                 {
                     regionsOutside.Add(region);
                 }

@@ -52,7 +52,7 @@ namespace Warlord.Application
             debugView = new DebugView(Window, GraphicsDevice, Content);
 
             debugView.BeginGame();
-            logic.BeginGame(new Vector3( 16, 128, 16), 8);
+            logic.BeginGame(new Vector3( 16, 128, 16), 8, 10);
         }
 
         protected override void UnloadContent()

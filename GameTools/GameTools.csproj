@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EEA3306B-C277-47FE-989E-DFAEFDF68C43}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GameTools</RootNamespace>
+    <AssemblyName>GameTools</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Content.Pipeline, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GameTools\Camera3D.cs" />
+    <Compile Include="GameTools\Direction.cs" />
+    <Compile Include="GameTools\FloatSmoother.cs" />
+    <Compile Include="GameTools\Graph\GraphMath.cs" />
+    <Compile Include="GameTools\Graph\Transformation.cs" />
+    <Compile Include="GameTools\Graph\Vector2i.cs" />
+    <Compile Include="GameTools\Graph\Vector3i.cs" />
+    <Compile Include="GameTools\MultipriorityQueue.cs" />
+    <Compile Include="GameTools\Noise2D\FastPerlinInterpolatedNoise2D.cs" />
+    <Compile Include="GameTools\Noise2D\FastPerlinNoise2D.cs" />
+    <Compile Include="GameTools\Noise2D\PerlinNoiseSetting2D.cs" />
+    <Compile Include="GameTools\Noise2D\SimpleNoise2D.cs" />
+    <Compile Include="GameTools\Noise3D\FastPerlinInterpolatedNoise3D.cs" />
+    <Compile Include="GameTools\Noise3D\FastPerlinNoise3D.cs" />
+    <Compile Include="GameTools\Noise3D\PerlinNoise3D.cs" />
+    <Compile Include="GameTools\Noise3D\PerlinNoiseSettings3D.cs" />
+    <Compile Include="GameTools\Noise3D\SimpleNoise3D.cs" />
+    <Compile Include="GameTools\Optional.cs" />
+    <Compile Include="GameTools\Process\MultiTickProcess.cs" />
+    <Compile Include="GameTools\Process\ProcessManager.cs" />
+    <Compile Include="GameTools\Process\ThreadManager.cs" />
+    <Compile Include="GameTools\Process\ThreadWrapper.cs" />
+    <Compile Include="GameTools\SpiralProducer.cs" />
+    <Compile Include="GameTools\State\NullState.cs" />
+    <Compile Include="GameTools\State\State.cs" />
+    <Compile Include="GameTools\State\StateMachine.cs" />
+    <Compile Include="GameTools\Statistics\Statistics.cs" />
+    <Compile Include="GameTools\VectorSmoother3.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

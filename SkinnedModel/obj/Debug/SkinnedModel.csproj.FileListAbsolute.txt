@@ -1,0 +1,9 @@
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinnedModel\obj\Debug\ResolveAssemblyReference.cache
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinnedModel\bin\Debug\SkinnedModel.dll
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinnedModel\bin\Debug\SkinnedModel.pdb
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinnedModel\bin\Debug\AnimationLibrary.dll
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinnedModel\bin\Debug\GameTools.dll
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinnedModel\bin\Debug\AnimationLibrary.pdb
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinnedModel\bin\Debug\GameTools.pdb
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinnedModel\obj\Debug\SkinnedModel.dll
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinnedModel\obj\Debug\SkinnedModel.pdb

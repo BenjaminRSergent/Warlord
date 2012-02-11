@@ -1,0 +1,14 @@
+Z:\Data\C#\XNA\Library Building\SkinningWork\AnimationLibrary\AnimationLibrary\bin\x86\Release\AnimationLibrary.dll
+Z:\Data\C#\XNA\Library Building\SkinningWork\AnimationLibrary\AnimationLibrary\bin\x86\Release\AnimationLibrary.pdb
+Z:\Data\C#\XNA\Library Building\SkinningWork\AnimationLibrary\AnimationLibrary\obj\x86\Release\ResolveAssemblyReference.cache
+Z:\Data\C#\XNA\Library Building\SkinningWork\AnimationLibrary\AnimationLibrary\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
+Z:\Data\C#\XNA\Library Building\SkinningWork\AnimationLibrary\AnimationLibrary\obj\x86\Release\AnimationLibrary.dll
+Z:\Data\C#\XNA\Library Building\SkinningWork\AnimationLibrary\AnimationLibrary\obj\x86\Release\AnimationLibrary.pdb
+Z:\Data\C#\XNA\Warlord\AnimationLibrary\AnimationLibrary\bin\x86\Release\AnimationLibrary.dll
+Z:\Data\C#\XNA\Warlord\AnimationLibrary\AnimationLibrary\bin\x86\Release\AnimationLibrary.pdb
+Z:\Data\C#\XNA\Warlord\AnimationLibrary\AnimationLibrary\bin\x86\Release\GameTools.dll
+Z:\Data\C#\XNA\Warlord\AnimationLibrary\AnimationLibrary\bin\x86\Release\GameTools.pdb
+Z:\Data\C#\XNA\Warlord\AnimationLibrary\AnimationLibrary\obj\x86\Release\ResolveAssemblyReference.cache
+Z:\Data\C#\XNA\Warlord\AnimationLibrary\AnimationLibrary\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
+Z:\Data\C#\XNA\Warlord\AnimationLibrary\AnimationLibrary\obj\x86\Release\AnimationLibrary.dll
+Z:\Data\C#\XNA\Warlord\AnimationLibrary\AnimationLibrary\obj\x86\Release\AnimationLibrary.pdb

@@ -112,6 +112,9 @@ namespace Warlord.View.Human.Screens
                     regionGraphics.Add(currentPair.Key, currentPair.Value);
                 }
             }
+
+            if( regionGraphics.Count > 500 )
+                SynchroniseAllRegions();
         }
         private void AddRegion(BaseGameEvent theEvent)
         {

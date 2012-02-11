@@ -14,18 +14,18 @@ float4 FogColor = {0.5,0.5,0.5,1.0};
 Texture BlockTexture;
 sampler BlockTextureSampler = sampler_state
 {
-	texture = <BlockTexture>;
-	magfilter = POINT;
-	minfilter = POINT;
-	mipfilter = POINT;
-	AddressU = WRAP;
-	AddressV = WRAP;
+    texture = <BlockTexture>;
+    magfilter = POINT;
+    minfilter = POINT;
+    mipfilter = POINT;
+    AddressU = WRAP;
+    AddressV = WRAP;
 };
 
 struct VertexShaderInput
 {
     float4 Position : POSITION0;	
-	float2 TexCoords : TEXCOORD0;
+    float2 TexCoords : TEXCOORD0;
 };
 
 struct VertexShaderOutput
@@ -55,7 +55,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
     float4 texColor = tex2D(BlockTextureSampler, input.TexCoords);
 
-	float4 ambient = AmbientIntensity * AmbientColor;	    
+    float4 ambient = AmbientIntensity * AmbientColor;	    
 
     float fog = saturate((input.Distance - FogNear)/(FogFar - FogNear));
 

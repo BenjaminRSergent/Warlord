@@ -122,34 +122,9 @@
     <Compile Include="Event\EventTypes\RegionRemovedEvent.cs" />
     <Compile Include="Application\GameStaticInitalizer.cs" />
     <Compile Include="Event\EventTypes\SendingRegionListEvent.cs" />
-    <Compile Include="GameTools\Camera3D.cs" />
-    <Compile Include="GameTools\Graph\VectorTransformAroundAxis.cs" />
-    <Compile Include="GameTools\Noise2D\FastPerlinInterpolatedNoise2D.cs" />
-    <Compile Include="GameTools\Noise2D\FastPerlinNoise2D.cs" />
-    <Compile Include="GameTools\Noise2D\PerlinNoiseSetting2D.cs" />
-    <Compile Include="GameTools\VectorSmoother3.cs" />
-    <Compile Include="GameTools\Direction.cs" />
-    <Compile Include="GameTools\Graph\GraphMath.cs" />
-    <Compile Include="GameTools\Graph\Transformation.cs" />
-    <Compile Include="GameTools\MultipriorityQueue.cs" />
-    <Compile Include="GameTools\Noise2D\SimpleNoise2D.cs" />
-    <Compile Include="GameTools\Noise3D\FastPerlinInterpolatedNoise3D.cs" />
-    <Compile Include="GameTools\Noise3D\FastPerlinNoise3D.cs" />
-    <Compile Include="GameTools\Noise3D\PerlinNoise3D.cs" />
-    <Compile Include="GameTools\Noise3D\PerlinNoiseSettings3D.cs" />
-    <Compile Include="GameTools\Noise3D\SimpleNoise3D.cs" />
-    <Compile Include="GameTools\Process\ThreadManager.cs" />
-    <Compile Include="GameTools\FloatSmoother.cs" />
-    <Compile Include="GameTools\SpiralProducer.cs" />
-    <Compile Include="GameTools\State\NullState.cs" />
-    <Compile Include="GameTools\Optional.cs" />
-    <Compile Include="GameTools\State\State.cs" />
-    <Compile Include="GameTools\State\StateMachine.cs" />
-    <Compile Include="GameTools\Statistics\Statistics.cs" />
     <Compile Include="Application\GlobalSystems.cs" />
     <Compile Include="Application\ErrorLogger.cs" />
     <Compile Include="Interfaces\Subsystems\GameView.cs" />
-    <Compile Include="GameTools\Process\ThreadWrapper.cs" />
     <Compile Include="Logic\Civilization\CiviliationGenerator.cs" />
     <Compile Include="Logic\Civilization\Civilization.cs" />
     <Compile Include="Logic\Civilization\CivilizationUpdater.cs" />
@@ -173,8 +148,6 @@
     <Compile Include="Logic\Data\World\RegionDatabase.cs" />
     <Compile Include="Logic\Data\World\RegionGenerator.cs" />
     <Compile Include="Logic\Data\World\RegionController.cs" />
-    <Compile Include="GameTools\Process\MultiTickProcess.cs" />
-    <Compile Include="GameTools\Process\ProcessManager.cs" />
     <Compile Include="Logic\Data\World\ZoneBlockSettings.cs" />
     <Compile Include="Logic\Physics\CollisionDetection.cs" />
     <Compile Include="Logic\Physics\SimpleDrag.cs" />
@@ -226,6 +199,14 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AnimationLibrary\AnimationLibrary\AnimationLibrary.csproj">
+      <Project>{35E772D4-2799-4F64-963D-FE8F7E2E8A2C}</Project>
+      <Name>AnimationLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GameTools\GameTools.csproj">
+      <Project>{EEA3306B-C277-47FE-989E-DFAEFDF68C43}</Project>
+      <Name>GameTools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WarlordContent\WarlordContent.contentproj">
       <Name>WarlordContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>

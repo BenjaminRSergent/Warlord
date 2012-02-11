@@ -28,13 +28,13 @@ namespace Warlord.Logic
 
             stateMachine = new StateMachine<WarlordLogic>(this);
         }
-        public void BeginGame(Vector3 regionSize, int entityCellSize)
+        public void BeginGame(Vector3 regionSize, int entityCellSize, int drawDistance)
         {
             this.regionSize = regionSize;
             this.entityCellSize = entityCellSize;
 
             entityManager = new WarlordEntityManager(entityCellSize);            
-            stateMachine.ChangeState(new DebugPlayingState(this, 10, regionSize));
+            stateMachine.ChangeState(new DebugPlayingState(this, drawDistance, regionSize));
         }
         public void EndGame()
         {

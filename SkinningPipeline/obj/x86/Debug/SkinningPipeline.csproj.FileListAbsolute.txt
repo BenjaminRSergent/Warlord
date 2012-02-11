@@ -1,0 +1,21 @@
+Z:\Data\C#\Experiments\SkinningWork\SkinningPipeline\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\Data\C#\Experiments\SkinningWork\SkinningPipeline\bin\x86\Debug\SkinningPipeline.dll
+Z:\Data\C#\Experiments\SkinningWork\SkinningPipeline\bin\x86\Debug\SkinningPipeline.pdb
+Z:\Data\C#\Experiments\SkinningWork\SkinningPipeline\obj\x86\Debug\SkinningPipeline.dll
+Z:\Data\C#\Experiments\SkinningWork\SkinningPipeline\obj\x86\Debug\SkinningPipeline.pdb
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinningPipeline\bin\x86\Debug\SkinningPipeline.dll
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinningPipeline\bin\x86\Debug\SkinningPipeline.pdb
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinningPipeline\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinningPipeline\obj\x86\Debug\SkinningPipeline.dll
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinningPipeline\obj\x86\Debug\SkinningPipeline.pdb
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinningPipeline\bin\x86\Debug\AnimationLibrary.dll
+Z:\Data\C#\XNA\Library Building\SkinningWork\SkinningPipeline\bin\x86\Debug\AnimationLibrary.pdb
+Z:\Data\C#\XNA\Warlord\SkinningPipeline\bin\x86\Debug\SkinningPipeline.dll
+Z:\Data\C#\XNA\Warlord\SkinningPipeline\bin\x86\Debug\SkinningPipeline.pdb
+Z:\Data\C#\XNA\Warlord\SkinningPipeline\bin\x86\Debug\AnimationLibrary.dll
+Z:\Data\C#\XNA\Warlord\SkinningPipeline\bin\x86\Debug\GameTools.dll
+Z:\Data\C#\XNA\Warlord\SkinningPipeline\bin\x86\Debug\AnimationLibrary.pdb
+Z:\Data\C#\XNA\Warlord\SkinningPipeline\bin\x86\Debug\GameTools.pdb
+Z:\Data\C#\XNA\Warlord\SkinningPipeline\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\Data\C#\XNA\Warlord\SkinningPipeline\obj\x86\Debug\SkinningPipeline.dll
+Z:\Data\C#\XNA\Warlord\SkinningPipeline\obj\x86\Debug\SkinningPipeline.pdb

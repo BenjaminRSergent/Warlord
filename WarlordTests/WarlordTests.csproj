@@ -46,6 +46,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SkinningPipeline\SkinningPipeline.csproj">
+      <Project>{A2ABF4AF-6774-4E84-9B81-A9FC2E273BA7}</Project>
+      <Name>SkinningPipeline</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Warlord\Warlord\Warlord.csproj">
       <Project>{A49069CC-B17F-4679-8D16-BC305A069BE6}</Project>
       <Name>Warlord</Name>

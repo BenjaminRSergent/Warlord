@@ -1,0 +1,12 @@
+Z:\Data\C#\Experiments\SkinningWork\AnimationLibrary\AnimationLibrary\bin\x86\Debug\AnimationLibrary.dll
+Z:\Data\C#\Experiments\SkinningWork\AnimationLibrary\AnimationLibrary\bin\x86\Debug\AnimationLibrary.pdb
+Z:\Data\C#\Experiments\SkinningWork\AnimationLibrary\AnimationLibrary\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\Data\C#\Experiments\SkinningWork\AnimationLibrary\AnimationLibrary\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+Z:\Data\C#\Experiments\SkinningWork\AnimationLibrary\AnimationLibrary\obj\x86\Debug\AnimationLibrary.dll
+Z:\Data\C#\Experiments\SkinningWork\AnimationLibrary\AnimationLibrary\obj\x86\Debug\AnimationLibrary.pdb
+Z:\Data\C#\XNA\Library Building\SkinningWork\AnimationLibrary\AnimationLibrary\bin\x86\Debug\AnimationLibrary.dll
+Z:\Data\C#\XNA\Library Building\SkinningWork\AnimationLibrary\AnimationLibrary\bin\x86\Debug\AnimationLibrary.pdb
+Z:\Data\C#\XNA\Library Building\SkinningWork\AnimationLibrary\AnimationLibrary\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\Data\C#\XNA\Library Building\SkinningWork\AnimationLibrary\AnimationLibrary\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+Z:\Data\C#\XNA\Library Building\SkinningWork\AnimationLibrary\AnimationLibrary\obj\x86\Debug\AnimationLibrary.dll
+Z:\Data\C#\XNA\Library Building\SkinningWork\AnimationLibrary\AnimationLibrary\obj\x86\Debug\AnimationLibrary.pdb

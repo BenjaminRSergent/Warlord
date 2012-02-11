@@ -1,0 +1,2 @@
+Z:\Data\C#\Experiments\SkinningWork\AnimationLibrary\AnimationLibraryContent\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\Data\C#\XNA\Library Building\SkinningWork\AnimationLibrary\AnimationLibraryContent\obj\x86\Debug\ResolveAssemblyReference.cache
