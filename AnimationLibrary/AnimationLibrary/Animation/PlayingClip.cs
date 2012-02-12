@@ -158,6 +158,8 @@ namespace SkinnedModels.Animation
                 get { return translation; }
             }
         }
+
+        public string Name { get{ return masterClip.Name; } }
     }
 }
 

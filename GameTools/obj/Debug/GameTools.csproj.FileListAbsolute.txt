@@ -3,3 +3,8 @@ Z:\Data\C#\XNA\Library Building\SkinningWork\GameTools\bin\Debug\GameTools.dll
 Z:\Data\C#\XNA\Library Building\SkinningWork\GameTools\bin\Debug\GameTools.pdb
 Z:\Data\C#\XNA\Library Building\SkinningWork\GameTools\obj\Debug\GameTools.dll
 Z:\Data\C#\XNA\Library Building\SkinningWork\GameTools\obj\Debug\GameTools.pdb
+Z:\Data\C#\XNA\Warlord\GameTools\bin\Debug\GameTools.dll
+Z:\Data\C#\XNA\Warlord\GameTools\bin\Debug\GameTools.pdb
+Z:\Data\C#\XNA\Warlord\GameTools\obj\Debug\ResolveAssemblyReference.cache
+Z:\Data\C#\XNA\Warlord\GameTools\obj\Debug\GameTools.dll
+Z:\Data\C#\XNA\Warlord\GameTools\obj\Debug\GameTools.pdb

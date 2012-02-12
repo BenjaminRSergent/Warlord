@@ -13,6 +13,7 @@ namespace SkinnedModels.Animation
         private ModelExtra skeletonModelExtra;
         private Dictionary<string, ModelSkin> parts;
         private AnimationPlayer animationPlayer;
+        private Matrix world;        
 
         public AnimatedComposite(Model skeletonModel)
         {
@@ -45,6 +46,11 @@ namespace SkinnedModels.Animation
             Debug.Assert(parts.ContainsKey(name));
             parts[name] = model;
         }
+        public void AddAnimation(Model animationSkin)
+        {
+            AnimationClip animation = (animationSkin.Tag as ModelExtra).clips[0];
+            animationPlayer.AddAnimation(animation);
+        }
         public void AddAnimation(AnimationClip animation)
         {
             animationPlayer.AddAnimation(animation);
@@ -57,7 +63,7 @@ namespace SkinnedModels.Animation
         {
             animationPlayer.Update(gameTime);
         }
-        public void Draw(GraphicsDevice graphics, Matrix world, Camera3D camera)
+        public void Draw(GraphicsDevice graphics, Camera3D camera)
         {
             List<Bone> boneTransforms;
             boneTransforms = animationPlayer.GetTransformedBones();
@@ -65,6 +71,17 @@ namespace SkinnedModels.Animation
             {
                 model.Draw(graphics, world, camera, boneTransforms);
             }
+        }
+
+        public Matrix World
+        {
+            get { return world; }
+            set { world = value; }
+        }
+
+        public void StopAnimation(string name)
+        {
+            animationPlayer.Stop(name);
         }
     }
 }

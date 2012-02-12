@@ -20,47 +20,43 @@ namespace SkinnedModels.Animation
 
         public AnimationPlayer(Model skeletonModel, AnimationClip neutral)
         {
-            storedClips = new List<AnimationClip>( );
-            playingClips = new List<PlayingClip>( );            
+            storedClips = new List<AnimationClip>();
+            playingClips = new List<PlayingClip>();
             skeleton = AnimationHelper.ObtainBones(skeletonModel);
             totalWeight = new float[skeleton.Count];
 
-            this.neutral = new PlayingClip(neutral,1,0,true);
+            this.neutral = new PlayingClip(neutral, 1, 0, true);
         }
         public List<Bone> GetTransformedBones()
-        {            
+        {
             Matrix totalTransform = Matrix.Identity;
             Vector3 totalTranslation = Vector3.Zero;
 
             Quaternion[] rotation = new Quaternion[skeleton.Count];
             Vector3[] translation = new Vector3[skeleton.Count];
-            
+
             Quaternion newRotation;
             Vector3 newTranslation;
 
-            bool firstClip = true;
+            for(int index = 0; index < skeleton.Count; index++)
+            {
+                rotation[index] = neutral.BoneRotations[index];
+                translation[index] = neutral.BoneTranslations[index];
+            }
+
             foreach(PlayingClip clip in playingClips)
-            {                
+            {
                 for(int index = 0; index < skeleton.Count; index++)
                 {
-                    if(firstClip)
-                    {
-                        rotation[index] = Quaternion.Slerp(neutral.BoneRotations[index], clip.BoneRotations[index], clip.RelativeWeight[index]);
-                        translation[index] =  Vector3.Lerp(neutral.BoneTranslations[index],clip.BoneTranslations[index], clip.RelativeWeight[index]);
-                    }
-                    else
-                    { 
-                        newRotation = clip.BoneRotations[index];
-                        newTranslation = clip.BoneTranslations[index];
+                    newRotation = clip.BoneRotations[index];
+                    newTranslation = clip.BoneTranslations[index];
 
-                        if(clip.RelativeWeight[index] > 0)
-                        { 
-                            rotation[index] = Quaternion.Slerp(rotation[index], newRotation, clip.RelativeWeight[index]);                        
-                            translation[index] = Vector3.Lerp(translation[index], newTranslation, clip.RelativeWeight[index]);
-                        }
+                    if(clip.RelativeWeight[index] > 0)
+                    {
+                        rotation[index] = Quaternion.Slerp(rotation[index], newRotation, clip.RelativeWeight[index]);
+                        translation[index] = Vector3.Lerp(translation[index], newTranslation, clip.RelativeWeight[index]);
                     }
                 }
-                firstClip = false;
             }
 
             for(int index = 0; index < skeleton.Count; index++)
@@ -74,7 +70,7 @@ namespace SkinnedModels.Animation
         }
         public void Update(GameTime gameTime)
         {
-            List<PlayingClip> toRemove = new List<PlayingClip>( );
+            List<PlayingClip> toRemove = new List<PlayingClip>();
 
             neutral.IncrementPosition(gameTime);
 
@@ -86,22 +82,22 @@ namespace SkinnedModels.Animation
             }
 
             foreach(PlayingClip clip in toRemove)
-            {                
+            {
                 playingClips.Remove(clip);
             }
 
-            if( toRemove.Count > 0)
-                UpdateWeights( );
+            if(toRemove.Count > 0)
+                UpdateWeights();
         }
         public void AddAnimation(AnimationClip animation)
         {
             storedClips.Add(animation);
         }
         public void RemoveAnimation(AnimationClip animation)
-        {            
+        {
             storedClips.Remove(animation);
         }
-        private void UpdateWeights( )
+        private void UpdateWeights()
         {
             for(int index = 0; index < skeleton.Count; index++)
             {
@@ -117,13 +113,21 @@ namespace SkinnedModels.Animation
                     if(clip.IsBoneStatic(index))
                         clip.RelativeWeight[index] = 0;
                     else
-                        clip.RelativeWeight[index] = clip.OriginalWeight/totalWeight[index];
+                        clip.RelativeWeight[index] = clip.OriginalWeight / totalWeight[index];
                 }
             }
         }
         public void Play(string name, float speed, float weight, bool loop)
         {
             AnimationClip clipToPlay = null;
+
+
+            foreach(PlayingClip clip in playingClips)
+            {
+                if(clip.Name == name)
+                    return;
+            }
+
             foreach(AnimationClip clip in storedClips)
             {
                 if(clip.Name == name)
@@ -134,10 +138,26 @@ namespace SkinnedModels.Animation
             }
 
             if(clipToPlay != null)
-            { 
-                playingClips.Add(new PlayingClip(clipToPlay,speed, weight, loop));
-                UpdateWeights( );
+            {
+                playingClips.Add(new PlayingClip(clipToPlay, speed, weight, loop));
+                UpdateWeights();
             }
-        }        
+        }
+
+        internal void Stop(string name)
+        {
+            PlayingClip theClip = null;
+            foreach(PlayingClip clip in playingClips)
+            {
+                if(clip.Name == name)
+                {
+                    theClip = clip;
+                    break;
+                }
+            }
+
+            if(theClip != null)
+                playingClips.Remove(theClip);
+        }
     }
 }
