@@ -70,7 +70,7 @@ namespace Warlord.Logic.Data.World
             BlockFaceField changedBlockFacing;
             BlockFaceField adjacentBlockFacing;            
 
-            changedBlockPosition = changedBlock.UpperLeftTopPosition;
+            changedBlockPosition = changedBlock.BackLeftbottomPosition;
             for(int facingIndex = 0; facingIndex < NUM_ORTHOGONAL_DIRECTIONS; facingIndex++)
             {
                 changedBlockFacing = RegionArrayMaps.FacingList[facingIndex];

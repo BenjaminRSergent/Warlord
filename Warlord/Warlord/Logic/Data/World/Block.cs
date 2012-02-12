@@ -7,13 +7,13 @@ namespace Warlord.Logic.Data.World
 {
     class Block
     {
-        private Vector3 upperLeftTopPosition;
+        private Vector3 backLeftbottomPosition;
         private BlockType type;
         public byte facing;
 
-        public Block(Vector3 upperLeftTopPosition, BlockType blockType)
+        public Block(Vector3 backLeftbottomPosition, BlockType blockType)
         {
-            this.upperLeftTopPosition = upperLeftTopPosition;
+            this.backLeftbottomPosition = backLeftbottomPosition;
             this.type = blockType;
         }
         public void TurnOffAllFaces( )
@@ -44,9 +44,9 @@ namespace Warlord.Logic.Data.World
             else
                 return true;
         }
-        public Vector3 UpperLeftTopPosition
+        public Vector3 BackLeftbottomPosition
         {
-            get { return upperLeftTopPosition; }
+            get { return backLeftbottomPosition; }
         }
         public BlockType Type
         {

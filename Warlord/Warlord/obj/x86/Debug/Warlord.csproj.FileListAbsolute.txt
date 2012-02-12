@@ -7,3 +7,7 @@ Z:\Data\C#\XNA\Warlord\Warlord\Warlord\obj\x86\Debug\Microsoft.Xna.Framework.Run
 Z:\Data\C#\XNA\Warlord\Warlord\Warlord\obj\x86\Debug\Warlord.exe
 Z:\Data\C#\XNA\Warlord\Warlord\Warlord\obj\x86\Debug\Warlord.pdb
 Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Font\DebugFont.xnb
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\AnimationLibrary.dll
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\GameTools.dll
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\AnimationLibrary.pdb
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\GameTools.pdb

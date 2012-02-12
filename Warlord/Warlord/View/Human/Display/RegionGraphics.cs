@@ -86,7 +86,7 @@ namespace Warlord.View.Human.Display
             foreach(BlockFaceField facing in faces)
             {
                 if( currentBlock.IsFaceOn(facing) )
-                    BuildFace(currentBlock.UpperLeftTopPosition, facing, currentBlock.Type);
+                    BuildFace(currentBlock.BackLeftbottomPosition, facing, currentBlock.Type);
             }
         }
 

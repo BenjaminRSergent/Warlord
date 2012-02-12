@@ -30,7 +30,7 @@ namespace Warlord.View.Human.Screens
         {
             this.graphics = graphics;
             this.camera = camera;
-            this.fog = new Vector2(130, 140);
+            this.fog = new Vector2(110, 120);
 
             regionGraphics = new Dictionary<Region, RegionGraphics>();
 
