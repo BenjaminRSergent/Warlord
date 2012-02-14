@@ -1,0 +1,11 @@
+Z:\Data\C#\XNA\Warlord\GraphicsHelperTest\GraphicsHelperTest\obj\x86\Release\ResolveAssemblyReference.cache
+Z:\Data\C#\XNA\Warlord\GraphicsHelperTest\GraphicsHelperTest\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
+Z:\Data\C#\XNA\Warlord\GraphicsHelperTest\GraphicsHelperTest\bin\x86\Release\GraphicsHelperTest.exe
+Z:\Data\C#\XNA\Warlord\GraphicsHelperTest\GraphicsHelperTest\bin\x86\Release\GraphicsHelperTest.pdb
+Z:\Data\C#\XNA\Warlord\GraphicsHelperTest\GraphicsHelperTest\bin\x86\Release\GameTools.dll
+Z:\Data\C#\XNA\Warlord\GraphicsHelperTest\GraphicsHelperTest\bin\x86\Release\XNAGraphicsHelper.dll
+Z:\Data\C#\XNA\Warlord\GraphicsHelperTest\GraphicsHelperTest\bin\x86\Release\GameTools.pdb
+Z:\Data\C#\XNA\Warlord\GraphicsHelperTest\GraphicsHelperTest\bin\x86\Release\XNAGraphicsHelper.pdb
+Z:\Data\C#\XNA\Warlord\GraphicsHelperTest\GraphicsHelperTest\obj\x86\Release\GraphicsHelperTest.exe
+Z:\Data\C#\XNA\Warlord\GraphicsHelperTest\GraphicsHelperTest\obj\x86\Release\GraphicsHelperTest.pdb
+Z:\Data\C#\XNA\Warlord\GraphicsHelperTest\GraphicsHelperTest\bin\x86\Release\Content\debugFont.xnb

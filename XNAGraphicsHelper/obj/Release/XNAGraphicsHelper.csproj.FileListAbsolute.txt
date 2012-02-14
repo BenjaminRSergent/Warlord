@@ -1,0 +1,8 @@
+Z:\Data\C#\XNA\Warlord\XNAGraphicsHelper\bin\Release\XNAGraphicsHelper.dll
+Z:\Data\C#\XNA\Warlord\XNAGraphicsHelper\bin\Release\XNAGraphicsHelper.pdb
+Z:\Data\C#\XNA\Warlord\XNAGraphicsHelper\bin\Release\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll
+Z:\Data\C#\XNA\Warlord\XNAGraphicsHelper\bin\Release\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll
+Z:\Data\C#\XNA\Warlord\XNAGraphicsHelper\bin\Release\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll
+Z:\Data\C#\XNA\Warlord\XNAGraphicsHelper\obj\Release\ResolveAssemblyReference.cache
+Z:\Data\C#\XNA\Warlord\XNAGraphicsHelper\obj\Release\XNAGraphicsHelper.dll
+Z:\Data\C#\XNA\Warlord\XNAGraphicsHelper\obj\Release\XNAGraphicsHelper.pdb

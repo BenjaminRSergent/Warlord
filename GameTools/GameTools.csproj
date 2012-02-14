@@ -48,8 +48,6 @@
     <Compile Include="GameTools\FloatSmoother.cs" />
     <Compile Include="GameTools\Graph\GraphMath.cs" />
     <Compile Include="GameTools\Graph\Transformation.cs" />
-    <Compile Include="GameTools\Graph\Vector2i.cs" />
-    <Compile Include="GameTools\Graph\Vector3i.cs" />
     <Compile Include="GameTools\MultipriorityQueue.cs" />
     <Compile Include="GameTools\Noise2D\FastPerlinInterpolatedNoise2D.cs" />
     <Compile Include="GameTools\Noise2D\FastPerlinNoise2D.cs" />

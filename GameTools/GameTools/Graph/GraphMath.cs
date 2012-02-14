@@ -37,15 +37,33 @@ namespace GameTools.Graph
         {
             return a * (1 - amountGreaterThanA) + b * amountGreaterThanA;
         }
-
-        internal static float Dot(Vector2 firstVector, Vector2 secondVector)
+        public static Vector2 AngleBetweenNorms(Vector3 firstVector, Vector3 secondVector)
         {
-            return firstVector.X * secondVector.X + firstVector.Y * secondVector.Y;
+            Vector2 rotation;
+            float angle = (float)Math.Acos(Vector3.Dot(firstVector,secondVector));
+            Vector3 axis = Vector3.Cross(firstVector, secondVector);
+                        
+            Matrix rotationMatrix = Matrix.CreateFromAxisAngle(axis,angle);
+            rotation.X = (float)Math.Acos(rotationMatrix.M22);
+            rotation.Y = (float)Math.Acos(rotationMatrix.M11);
+
+            if( float.IsNaN(rotation.X) )
+                rotation.X = 0;
+            if( float.IsNaN(rotation.Y) )
+                rotation.Y = 0;
+
+            return rotation;
         }
-
-        internal static float Dot(Vector3 firstVector, Vector3 secondVector)
+        public static float AngleBetweenNorms(Vector2 firstVector, Vector2 secondVector)
         {
-            return firstVector.X * secondVector.X + firstVector.Y * secondVector.Y + firstVector.Z + secondVector.Z;
+            float angle;
+
+            angle = (float)(Math.Atan2(secondVector.Y, secondVector.X) - Math.Atan2(firstVector.Y, firstVector.X));
+
+            if(float.IsNaN(angle))
+                angle = 0;
+
+            return angle;
         }
     }
 }

@@ -1,0 +1,1 @@
+Z:\Data\C#\XNA\Warlord\GraphicsHelperTest\GraphicsHelperTestContent\obj\x86\Release\ResolveAssemblyReference.cache

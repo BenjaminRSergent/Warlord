@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
+using GameTools.Graph;
 
 namespace GameTools
 {
@@ -19,19 +21,28 @@ namespace GameTools
             this.rotation = initalFacingRotation;
             this.up = up;
 
+
             aspectRatio = (float)clientBounds.Width / (float)clientBounds.Height;
             fov = 45;
             drawDistance = new Vector2(1, 300);
 
             BuildProjection();
         }
-        public Camera3D(Rectangle clientBounds, Vector3 position, Vector2 initalFacingRotation, Vector3 up, Matrix projection)
-        {
-            this.position = position;
-            this.rotation = initalFacingRotation;
+        public Camera3D(Rectangle clientBounds, Vector3 position, Vector3 lookAt, Vector3 up)
+        {  
+            this.position = position;           
             this.up = up;
 
-            Projection = projection;
+            Vector3 origionalForward = lookAt - position;
+            origionalForward.Normalize( );
+
+            rotation = GraphMath.AngleBetweenNorms(Vector3.Forward, origionalForward);
+
+            aspectRatio = (float)clientBounds.Width / (float)clientBounds.Height;
+            fov = 45;
+            drawDistance = new Vector2(1, 300);
+
+            BuildProjection();
         }
         private void BuildProjection()
         {
@@ -40,7 +51,7 @@ namespace GameTools
                                                              drawDistance.X,
                                                              drawDistance.Y);
         }
-        public void ForceMoveNoFly(Vector3 movement)
+        public void MoveNoFly(Vector3 movement)
         {
             Matrix frontToSize = Matrix.CreateRotationY(-MathHelper.PiOver2);
 
@@ -55,7 +66,7 @@ namespace GameTools
 
             position.Y += movement.Y;
         }
-        public void ForceMoveFly(Vector3 movement)
+        public void MoveFly(Vector3 movement)
         {
             Matrix frontToSide = Matrix.CreateRotationY(-MathHelper.PiOver2);
 
@@ -69,7 +80,7 @@ namespace GameTools
 
             position.Y += movement.Y;
         }
-        public void ForceChangeRotation(Vector2 facingChange)
+        public void ChangeRotation(Vector2 facingChange)
         {
             const float cameraPadding = 0.2f;
 
