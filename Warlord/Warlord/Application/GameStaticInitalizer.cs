@@ -21,11 +21,11 @@ namespace Warlord.Application
             //X+++
             offset = new Vector3[6];
 
-            offset[0] = new Vector3(1, 0, 0);
-            offset[1] = new Vector3(1, 1, -1);
-            offset[2] = new Vector3(1, 0, -1);
+            offset[0] = new Vector3(1, 0, 1);
+            offset[1] = new Vector3(1, 1, 0);
+            offset[2] = new Vector3(1, 0, 0);
 
-            offset[3] = new Vector3(1, 1, 0);
+            offset[3] = new Vector3(1, 1, 1);
             offset[4] = offset[1];
             offset[5] = offset[0];
 
@@ -33,23 +33,23 @@ namespace Warlord.Application
             //Y+++
             offset = new Vector3[6];
 
-            offset[0] = new Vector3(0, 1, -1);
-            offset[1] = new Vector3(1, 1, -1);
-            offset[2] = new Vector3(0, 1, 0);
+            offset[0] = new Vector3(0, 1, 0);
+            offset[1] = new Vector3(1, 1, 0);
+            offset[2] = new Vector3(0, 1, 1);
 
             offset[3] = offset[2];
             offset[4] = offset[1];
-            offset[5] = new Vector3(1, 1, 0);
+            offset[5] = new Vector3(1, 1, 1);
 
             RegionGraphics.faceVertexOffsetMap.Add(BlockFaceField.YIncreasing, offset);
             //Z+++
             offset = new Vector3[6];
 
-            offset[0] = new Vector3(0, 1, 0);
-            offset[1] = new Vector3(1, 0, 0);
-            offset[2] = new Vector3(0, 0, 0);
+            offset[0] = new Vector3(0, 1, 1);
+            offset[1] = new Vector3(1, 0, 1);
+            offset[2] = new Vector3(0, 0, 1);
 
-            offset[3] = new Vector3(1, 1, 0);
+            offset[3] = new Vector3(1, 1, 1);
             offset[4] = offset[1];
             offset[5] = offset[0];
 
@@ -57,23 +57,23 @@ namespace Warlord.Application
             //X---
             offset = new Vector3[6];
 
-            offset[0] = new Vector3(0, 0, -1);
-            offset[1] = new Vector3(0, 1, -1);
-            offset[2] = new Vector3(0, 0, 0);
+            offset[0] = new Vector3(0, 0, 0);
+            offset[1] = new Vector3(0, 1, 0);
+            offset[2] = new Vector3(0, 0, 1);
 
             offset[3] = offset[2];
             offset[4] = offset[1];
-            offset[5] = new Vector3(0, 1, 0);
+            offset[5] = new Vector3(0, 1, 1);
 
             RegionGraphics.faceVertexOffsetMap.Add(BlockFaceField.XDecreasing, offset);
             //Y---
             offset = new Vector3[6];
 
-            offset[0] = new Vector3(0, 0, 0);
-            offset[1] = new Vector3(1, 0, -1);
-            offset[2] = new Vector3(0, 0, -1);
+            offset[0] = new Vector3(0, 0, 1);
+            offset[1] = new Vector3(1, 0, 0);
+            offset[2] = new Vector3(0, 0, 0);
 
-            offset[3] = new Vector3(1, 0, 0);
+            offset[3] = new Vector3(1, 0, 1);
             offset[4] = offset[1];
             offset[5] = offset[0];
 
@@ -81,13 +81,13 @@ namespace Warlord.Application
             //Z---
             offset = new Vector3[6];
 
-            offset[0] = new Vector3(0, 0, -1);
-            offset[1] = new Vector3(1, 0, -1);
-            offset[2] = new Vector3(0, 1, -1);
+            offset[0] = new Vector3(0, 0, 0);
+            offset[1] = new Vector3(1, 0, 0);
+            offset[2] = new Vector3(0, 1, 0);
 
             offset[3] = offset[2];
             offset[4] = offset[1];
-            offset[5] = new Vector3(1, 1, -1);
+            offset[5] = new Vector3(1, 1, 0);
 
             RegionGraphics.faceVertexOffsetMap.Add(BlockFaceField.ZDecreasing, offset);
 

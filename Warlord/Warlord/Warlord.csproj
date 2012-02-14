@@ -207,6 +207,10 @@
       <Project>{EEA3306B-C277-47FE-989E-DFAEFDF68C43}</Project>
       <Name>GameTools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\XNAGraphicsHelper\XNAGraphicsHelper.csproj">
+      <Project>{B8E2D515-6568-45E4-B6DB-0B8F09B4E887}</Project>
+      <Name>XNAGraphicsHelper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WarlordContent\WarlordContent.contentproj">
       <Name>WarlordContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>

@@ -21,7 +21,7 @@ namespace Warlord.Logic.Data
             this.regionOrigin = regionOrigin;
             this.regionSize = regionSize;
 
-            regionBox = new BoundingBox(regionOrigin, (regionOrigin + regionSize - Vector3.One));
+            regionBox = new BoundingBox(regionOrigin, (regionOrigin + regionSize));
 
             blocks = new Block[(int)regionSize.X, (int)regionSize.Y, (int)regionSize.Z];
 
@@ -38,7 +38,7 @@ namespace Warlord.Logic.Data
                     for(int z = 0; z < regionSize.Z; z++)
                     {
                         blockLocation = regionOrigin + new Vector3(x, y, z);
-                        blocks[x, y, z] = new Block(blockLocation, BlockType.Air);                        
+                        blocks[x, y, z] = new Block(blockLocation, BlockType.Air);    
                     }
                 }
             }

@@ -11,3 +11,5 @@ Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\AnimationLibrary.pdb
 Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\GameTools.pdb
 Z:\Data\C#\XNA\Warlord\Warlord\Warlord\obj\x86\Release\Warlord.exe
 Z:\Data\C#\XNA\Warlord\Warlord\Warlord\obj\x86\Release\Warlord.pdb
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\XNAGraphicsHelper.dll
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\XNAGraphicsHelper.pdb

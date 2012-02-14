@@ -9,6 +9,8 @@ using Warlord.Event.EventTypes;
 using Warlord.Logic.Data;
 using Warlord.View.Human.Display;
 using Warlord.GameTools;
+using XNAGraphicsHelper;
+using Warlord.Logic.Data.World;
 
 namespace Warlord.View.Human.Screens
 {
@@ -20,10 +22,9 @@ namespace Warlord.View.Human.Screens
 
         private Camera3D camera;
         private Effect effect;
-        private Vector2 fog;
-
+        private Vector2 fog;        
         private bool synchronising;
-
+        private WireFrameDrawer wireframeDrawer;
         Queue<KeyValuePair<Region, RegionGraphics>> toAdd;
 
         public WorldGraphics(GraphicsDevice graphics, GameWindow gameWindow, ContentManager content, Camera3D camera)
@@ -33,8 +34,8 @@ namespace Warlord.View.Human.Screens
             this.fog = new Vector2(110, 120);
 
             regionGraphics = new Dictionary<Region, RegionGraphics>();
-
             toAdd = new Queue<KeyValuePair<Region, RegionGraphics>>();
+            wireframeDrawer = new WireFrameDrawer(graphics);
 
             effect = content.Load<Effect>("Fxs/block_effects");
 
@@ -70,7 +71,7 @@ namespace Warlord.View.Human.Screens
                         {
                             graphics.SetVertexBuffer(region.RegionBuffer);
                             graphics.DrawUserPrimitives(PrimitiveType.TriangleList, region.RegionMesh, 0, region.NumVertices / 3);
-                        }
+                        }                        
                     }
                 }
 

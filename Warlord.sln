@@ -3,7 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Warlord", "Warlord\Warlord\Warlord.csproj", "{A49069CC-B17F-4679-8D16-BC305A069BE6}"
 	ProjectSection(ProjectDependencies) = postProject
-		{31CA1C13-20DA-4BA1-8D3B-06FBC58A0FD6} = {31CA1C13-20DA-4BA1-8D3B-06FBC58A0FD6}
 		{A2ABF4AF-6774-4E84-9B81-A9FC2E273BA7} = {A2ABF4AF-6774-4E84-9B81-A9FC2E273BA7}
 	EndProjectSection
 EndProject
@@ -23,10 +22,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkinningPipeline", "SkinningPipeline\SkinningPipeline.csproj", "{A2ABF4AF-6774-4E84-9B81-A9FC2E273BA7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XNAGraphicsHelper", "XNAGraphicsHelper\XNAGraphicsHelper.csproj", "{B8E2D515-6568-45E4-B6DB-0B8F09B4E887}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicsHelperTest", "GraphicsHelperTest\GraphicsHelperTest\GraphicsHelperTest.csproj", "{31CA1C13-20DA-4BA1-8D3B-06FBC58A0FD6}"
-EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "GraphicsHelperTestContent", "GraphicsHelperTest\GraphicsHelperTestContent\GraphicsHelperTestContent.contentproj", "{B4D292C9-3A78-4EA9-9D4D-7DFF7E46CCDB}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -111,22 +106,6 @@ Global
 		{B8E2D515-6568-45E4-B6DB-0B8F09B4E887}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B8E2D515-6568-45E4-B6DB-0B8F09B4E887}.Release|x86.ActiveCfg = Release|Any CPU
 		{B8E2D515-6568-45E4-B6DB-0B8F09B4E887}.Release|x86.Build.0 = Release|Any CPU
-		{31CA1C13-20DA-4BA1-8D3B-06FBC58A0FD6}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{31CA1C13-20DA-4BA1-8D3B-06FBC58A0FD6}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{31CA1C13-20DA-4BA1-8D3B-06FBC58A0FD6}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{31CA1C13-20DA-4BA1-8D3B-06FBC58A0FD6}.Debug|x86.ActiveCfg = Debug|x86
-		{31CA1C13-20DA-4BA1-8D3B-06FBC58A0FD6}.Debug|x86.Build.0 = Debug|x86
-		{31CA1C13-20DA-4BA1-8D3B-06FBC58A0FD6}.Release|Any CPU.ActiveCfg = Release|x86
-		{31CA1C13-20DA-4BA1-8D3B-06FBC58A0FD6}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{31CA1C13-20DA-4BA1-8D3B-06FBC58A0FD6}.Release|Mixed Platforms.Build.0 = Release|x86
-		{31CA1C13-20DA-4BA1-8D3B-06FBC58A0FD6}.Release|x86.ActiveCfg = Release|x86
-		{31CA1C13-20DA-4BA1-8D3B-06FBC58A0FD6}.Release|x86.Build.0 = Release|x86
-		{B4D292C9-3A78-4EA9-9D4D-7DFF7E46CCDB}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{B4D292C9-3A78-4EA9-9D4D-7DFF7E46CCDB}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{B4D292C9-3A78-4EA9-9D4D-7DFF7E46CCDB}.Debug|x86.ActiveCfg = Debug|x86
-		{B4D292C9-3A78-4EA9-9D4D-7DFF7E46CCDB}.Release|Any CPU.ActiveCfg = Release|x86
-		{B4D292C9-3A78-4EA9-9D4D-7DFF7E46CCDB}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{B4D292C9-3A78-4EA9-9D4D-7DFF7E46CCDB}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

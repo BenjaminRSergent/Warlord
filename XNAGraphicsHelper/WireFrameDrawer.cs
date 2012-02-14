@@ -21,10 +21,11 @@ namespace XNAGraphicsHelper
             effect = new BasicEffect(graphicsDevice);
             effect.VertexColorEnabled = true;
         }
-        public void DrawBoundingBox(BoundingBox box, Matrix view, Matrix projection)
+        public void DrawBoundingBox(BoundingBox box, Matrix view, Matrix projection, Matrix world = new Matrix())
         {
             VertexPositionColor[] vertices = GetBoundingBoxLineList(box, Color.Red, Color.Blue, Color.Green);
 
+            effect.World = world;
             effect.View = view;
             effect.Projection = projection;
 
@@ -35,15 +36,15 @@ namespace XNAGraphicsHelper
                 graphics.DrawUserPrimitives(PrimitiveType.LineList, vertices, 0, vertices.Length/2);
             }
         }
-        public void DrawBoundingBoxs(BoundingBox[] box, Matrix view, Matrix projection)
+        public void DrawBoundingBoxes(BoundingBox[] boxes, Matrix view, Matrix projection, Matrix world = new Matrix())
         {
             const int PointsInBox = 24;
-            VertexPositionColor[] totalVertices = new VertexPositionColor[box.Length*PointsInBox];
+            VertexPositionColor[] totalVertices = new VertexPositionColor[boxes.Length*PointsInBox];
 
             VertexPositionColor[] boxVerticies;
-            for(int outerIndex = 0; outerIndex < box.Length; outerIndex++)
+            for(int outerIndex = 0; outerIndex < boxes.Length; outerIndex++)
             {
-                boxVerticies = GetBoundingBoxLineList(box[outerIndex], Color.Red, Color.Blue, Color.Green);
+                boxVerticies = GetBoundingBoxLineList(boxes[outerIndex], Color.Red, Color.Blue, Color.Green);
                 
                 for(int innerIndex = 0; innerIndex < boxVerticies.Length; innerIndex++)
                 {
@@ -51,6 +52,7 @@ namespace XNAGraphicsHelper
                 }
             }            
 
+            effect.World = world;
             effect.View = view;
             effect.Projection = projection;
 
@@ -61,7 +63,7 @@ namespace XNAGraphicsHelper
                 graphics.DrawUserPrimitives(PrimitiveType.LineList, totalVertices, 0, totalVertices.Length/2);
             }
         }
-        public void DrawLine(Vector3 start, Vector3 end, Color color, Matrix view, Matrix projection)
+        public void DrawLine(Vector3 start, Vector3 end, Color color, Matrix view, Matrix projection, Matrix world = new Matrix())
         {
             if(effect == null)
                 return;
@@ -73,6 +75,7 @@ namespace XNAGraphicsHelper
             vertices[0].Color = color;
             vertices[1].Color = color;
 
+            effect.World = world;
             effect.View = view;
             effect.Projection = projection;
 
@@ -83,7 +86,7 @@ namespace XNAGraphicsHelper
                 graphics.DrawUserPrimitives(PrimitiveType.LineStrip, vertices, 0, 1);
             }
         }
-        public void DrawLineStrip(Vector3[] points, Color color, Matrix view, Matrix projection)
+        public void DrawLineStrip(Vector3[] points, Color color, Matrix view, Matrix projection, Matrix world = new Matrix())
         {
             if(effect == null || points.Length == 0)
                 return;
@@ -96,6 +99,7 @@ namespace XNAGraphicsHelper
                 vertices[index].Color = color;
             }
 
+            effect.World = world;
             effect.View = view;
             effect.Projection = projection;
 
@@ -106,7 +110,7 @@ namespace XNAGraphicsHelper
                 graphics.DrawUserPrimitives(PrimitiveType.LineStrip, vertices, 0, vertices.Length - 1);
             }
         }
-        public void DrawLineList(Vector3[] points, Color color, Matrix view, Matrix projection)
+        public void DrawLineList(Vector3[] points, Color color, Matrix view, Matrix projection, Matrix world = new Matrix())
         {
             if(effect == null || points.Length == 0)
                 return;
@@ -119,6 +123,7 @@ namespace XNAGraphicsHelper
                 vertices[index].Color = color;
             }
 
+            effect.World = world;
             effect.View = view;
             effect.Projection = projection;
 
@@ -129,7 +134,7 @@ namespace XNAGraphicsHelper
                 graphics.DrawUserPrimitives(PrimitiveType.LineList, vertices, 0, vertices.Length - 1);
             }
         }
-        public void DrawLineStrip(Vector3[] points, Color[] color, Matrix view, Matrix projection)
+        public void DrawLineStrip(Vector3[] points, Color[] color, Matrix view, Matrix projection, Matrix world = new Matrix())
         {
             if(effect == null || points.Length == 0)
                 return;
@@ -142,6 +147,7 @@ namespace XNAGraphicsHelper
                 vertices[index].Color = color[index];
             }
 
+            effect.World = world;
             effect.View = view;
             effect.Projection = projection;
 
@@ -152,7 +158,7 @@ namespace XNAGraphicsHelper
                 graphics.DrawUserPrimitives(PrimitiveType.LineStrip, vertices, 0, vertices.Length - 1);
             }
         }
-        public void DrawLineList(Vector3[] points, Color[] color, Matrix view, Matrix projection)
+        public void DrawLineList(Vector3[] points, Color[] color, Matrix view, Matrix projection, Matrix world = new Matrix())
         {
             if(effect == null || points.Length == 0)
                 return;
@@ -165,6 +171,7 @@ namespace XNAGraphicsHelper
                 vertices[index].Color = color[index];
             }
 
+            effect.World = world;
             effect.View = view;
             effect.Projection = projection;
 

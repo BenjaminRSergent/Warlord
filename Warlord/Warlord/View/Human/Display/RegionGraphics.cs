@@ -21,7 +21,7 @@ namespace Warlord.View.Human.Display
 
         private bool clean;
 
-        static BlockFaceField[] faces = (BlockFaceField[])System.Enum.GetValues(typeof(BlockFaceField) );
+        static BlockFaceField[] faces = (BlockFaceField[])System.Enum.GetValues(typeof(BlockFaceField));
 
         public static Dictionary<BlockFaceField, Vector3[]> faceVertexOffsetMap =
                                                       new Dictionary<BlockFaceField, Vector3[]>();
@@ -82,10 +82,10 @@ namespace Warlord.View.Human.Display
         }
 
         private void BuildBlockFaces(Block currentBlock)
-        {     
+        {
             foreach(BlockFaceField facing in faces)
             {
-                if( currentBlock.IsFaceOn(facing) )
+                if(currentBlock.IsFaceOn(facing))
                     BuildFace(currentBlock.BackLeftbottomPosition, facing, currentBlock.Type);
             }
         }
@@ -175,6 +175,8 @@ namespace Warlord.View.Human.Display
         {
             get { return numVertices; }
         }
+
+        public BoundingBox BoundingBox { get { return masterRegion.RegionBox; } }
     }
 }
 
