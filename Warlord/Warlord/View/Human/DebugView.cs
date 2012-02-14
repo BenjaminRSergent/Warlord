@@ -6,7 +6,7 @@ using Warlord.View.Human.Display;
 using GameTools.State;
 using Warlord.View.Human.State;
 
-// Flagged for refactoring
+// Flagged for refentitying
 
 namespace Warlord.View.Human
 {

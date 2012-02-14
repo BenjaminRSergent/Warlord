@@ -4,17 +4,17 @@ using Warlord.Logic.Data.Entity;
 
 namespace Warlord.Event.EventTypes
 {
-    class ActorMovedEvent : BaseGameEvent
+    class EntityMovedEvent : BaseGameEvent
     {
-        MovingEntity movedEntity;
+        GameEntity movedEntity;
 
-        public ActorMovedEvent(Optional<Object> sender, int delay, MovingEntity movedEntity)
-            : base(sender, "actor_moved", delay)
+        public EntityMovedEvent(Optional<Object> sender, int delay, GameEntity movedEntity)
+            : base(sender, "entity_moved", delay)
         {
             this.movedEntity = movedEntity;
         }
 
-        public MovingEntity MovedEntity
+        public GameEntity MovedEntity
         {
             get { return movedEntity; }
             set { movedEntity = value; }

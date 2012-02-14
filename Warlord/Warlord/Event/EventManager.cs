@@ -2,7 +2,7 @@
 
 namespace Warlord.Event
 {
-    delegate void EventReaction(BaseGameEvent theEvent);
+    delegate bool EventReaction(BaseGameEvent theEvent);
     interface EventManager
     {
         void Subscribe(EventReaction eventReaction, string eventType);

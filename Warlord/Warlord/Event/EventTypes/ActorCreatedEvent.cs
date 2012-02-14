@@ -4,12 +4,12 @@ using Warlord.Logic.Data.Entity;
 
 namespace Warlord.Event.EventTypes
 {
-    class ActorCreatedEvent : BaseGameEvent
+    class EntityCreatedEvent : BaseGameEvent
     {
         GameEntity newEntity;
 
-        public ActorCreatedEvent(Optional<Object> sender, int delay, GameEntity newEntity)
-            : base(sender, "actor_created", delay)
+        public EntityCreatedEvent(Optional<Object> sender, int delay, GameEntity newEntity)
+            : base(sender, "entity_created", delay)
         {
             this.newEntity = newEntity;
         }

@@ -4,19 +4,19 @@ namespace Warlord.Interfaces.Subsystems
 {
     class GameView
     {
-        Optional<uint> actorID;
+        Optional<uint> entityID;
 
         public GameView()
         {
-            actorID = new Optional<uint>();
+            entityID = new Optional<uint>();
         }
         public GameView(uint id)
         {
-            actorID = new Optional<uint>(id);
+            entityID = new Optional<uint>(id);
         }
-        public Optional<uint> ActorID
+        public Optional<uint> EntityID
         {
-            get { return actorID; }
+            get { return entityID; }
         }
     }
 }

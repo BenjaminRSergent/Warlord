@@ -1,18 +1,28 @@
 ﻿using System;
+using SkinnedModels.Animation;
+using Microsoft.Xna.Framework;
+using GameTools;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Warlord.View.Human.Screens
 {
     class EntityGraphics
         : ScreenElement
     {
-        uint actorID;
-        EntityGraphics(uint actorID)
+        private uint entityID;
+        private AnimatedComposite model;
+        private GraphicsDevice graphics;
+        private Camera3D camera;
+
+        EntityGraphics(uint entityID, GraphicsDevice graphics, Camera3D camera)
         {
-            this.actorID = actorID;
+            this.entityID = entityID;
+            this.graphics = graphics;
+            this.camera = camera;
         }
-        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            model.Draw(graphics, camera);
         }
     }
 }

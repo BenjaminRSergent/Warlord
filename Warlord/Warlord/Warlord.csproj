@@ -138,7 +138,6 @@
     <Compile Include="Logic\Data\Entity\Entity.cs" />
     <Compile Include="Logic\Data\Entity\EntityManager.cs" />
     <Compile Include="Logic\Data\Entity\Faction.cs" />
-    <Compile Include="Logic\Data\Entity\MovingEntity.cs" />
     <Compile Include="Logic\Data\Entity\WarlordEntityManager.cs" />
     <Compile Include="Logic\Data\Entity\Player.cs" />
     <Compile Include="Logic\Data\World\RegionArrayMaps.cs" />

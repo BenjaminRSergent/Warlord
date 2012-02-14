@@ -14,7 +14,7 @@ namespace Warlord.Logic.Physics
             this.force = force;
             Direction = direction;
         }
-        public void ApplyForceTo(GameTime gameTime, MovingEntity entity)
+        public void ApplyForceTo(GameTime gameTime, GameEntity entity)
         {
             entity.SumOfForces += force * Direction;
         }

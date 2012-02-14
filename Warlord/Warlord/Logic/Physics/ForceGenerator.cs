@@ -5,6 +5,6 @@ namespace Warlord.Logic.Physics
 {
     interface ForceGenerator
     {
-        void ApplyForceTo(GameTime gameTime, MovingEntity entity);
+        void ApplyForceTo(GameTime gameTime, GameEntity entity);
     }
 }

@@ -11,7 +11,7 @@ namespace Warlord.Logic.Physics
         {
             this.dragCoefficant = dragCoefficant;
         }
-        public void ApplyForceTo(GameTime gameTime, MovingEntity entity)
+        public void ApplyForceTo(GameTime gameTime, GameEntity entity)
         {
             Vector3 opposingForce = dragCoefficant * entity.Velocity;
             entity.SumOfForces += opposingForce;

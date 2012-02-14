@@ -4,13 +4,13 @@ using Warlord.Logic.Data.Entity;
 
 namespace Warlord.Event.EventTypes
 {
-    class ActorRemovedEvent
+    class EntityRemovedEvent
         : BaseGameEvent
     {
         GameEntity deadEntity;
 
-        public ActorRemovedEvent(Optional<Object> sender, int delay, GameEntity deadEntity)
-            : base(sender, "actor_removed", delay)
+        public EntityRemovedEvent(Optional<Object> sender, int delay, GameEntity deadEntity)
+            : base(sender, "entity_removed", delay)
         {
             this.deadEntity = deadEntity;
         }

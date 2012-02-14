@@ -159,11 +159,13 @@ namespace Warlord.Logic.Data.World
             return Transformation.ChangeVectorScaleFloored(absolutePosition, regionSize);
         }
 
-        public void SendCurrentRegions(BaseGameEvent theEvent)
+        public bool SendCurrentRegions(BaseGameEvent theEvent)
         {
             SendingRegionListEvent sendingRegionsEvent = new SendingRegionListEvent(new Optional<object>(this),
                                                                                      0,
                                                                                      regionMap.Values.ToList());
+
+            return true;
         }
         public Vector3 RegionSize
         {

@@ -2,7 +2,7 @@
 
 namespace Warlord.Logic.Data.Entity
 {
-    class Player : MovingEntity
+    class Player : GameEntity
     {
         public Player(Vector3 position)
             : base(position)

@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Textures\Blocks\block_textures.xnb</Output>
-      <Time>2012-02-09T13:53:40.0075752-08:00</Time>
+      <Time>2012-02-14T10:40:22.8815927-08:00</Time>
     </Item>
     <Item>
       <Source>Font\DebugFont.spritefont</Source>
@@ -17,7 +17,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Font\DebugFont.xnb</Output>
-      <Time>2012-02-09T13:53:39.9215703-08:00</Time>
+      <Time>2012-02-14T10:49:00.9532247-08:00</Time>
     </Item>
     <Item>
       <Source>Fxs\block_effects.fx</Source>
@@ -26,7 +26,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Fxs\block_effects.xnb</Output>
-      <Time>2012-02-14T02:54:59.9404918-08:00</Time>
+      <Time>2012-02-14T10:50:59.2769924-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

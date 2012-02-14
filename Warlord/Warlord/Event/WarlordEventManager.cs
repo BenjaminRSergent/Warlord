@@ -65,7 +65,8 @@ namespace Warlord.Event
         {
             foreach(EventReaction eventReaction in subscriberDirectory[theEvent.EventType])
             {
-                eventReaction(theEvent);
+                if(eventReaction(theEvent))
+                    break;
             }
         }
     }

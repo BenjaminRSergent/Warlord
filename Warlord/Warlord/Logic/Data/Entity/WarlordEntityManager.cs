@@ -43,9 +43,9 @@ namespace Warlord.Logic.Data.Entity
             Vector3 cell = GetCellFromPosition(newEntity.CurrentPosition);
 
             newEntity.InitalizeID(NextEntityID);
-            entityMap.Add(newEntity.actorID, newEntity);
+            entityMap.Add(newEntity.entityID, newEntity);
 
-            GlobalSystems.EventManager.SendEvent(new ActorCreatedEvent(new Optional<object>(),
+            GlobalSystems.EventManager.SendEvent(new EntityCreatedEvent(new Optional<object>(),
                                                                         0,
                                                                         newEntity));
         }
@@ -53,10 +53,10 @@ namespace Warlord.Logic.Data.Entity
         {
             Vector3 cell = GetCellFromPosition(deadEntity.CurrentPosition);
 
-            entityMap.Remove(deadEntity.actorID);
+            entityMap.Remove(deadEntity.entityID);
             RemoveFromCell(cell, deadEntity);
 
-            GlobalSystems.EventManager.SendEvent(new ActorRemovedEvent(new Optional<object>(),
+            GlobalSystems.EventManager.SendEvent(new EntityRemovedEvent(new Optional<object>(),
                                                                         0,
                                                                         deadEntity));
         }

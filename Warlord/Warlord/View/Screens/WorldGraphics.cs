@@ -117,12 +117,14 @@ namespace Warlord.View.Human.Screens
             if( regionGraphics.Count > 500 )
                 SynchroniseAllRegions();
         }
-        private void AddRegion(BaseGameEvent theEvent)
+        private bool AddRegion(BaseGameEvent theEvent)
         {
             Region newRegion = (theEvent as RegionCreatedEvent).Data.newRegion;
             AddRegion(newRegion);
+
+            return false;
         }
-        private void AddRegion(Region newRegion)
+        private bool AddRegion(Region newRegion)
         {
             KeyValuePair<Region, RegionGraphics> newRegionGraphicsPair;
 
@@ -136,8 +138,10 @@ namespace Warlord.View.Human.Screens
                     toAdd.Enqueue(newRegionGraphicsPair);
                 }
             }
+
+            return false;
         }
-        private void RenewRegion(BaseGameEvent theEvent)
+        private bool RenewRegion(BaseGameEvent theEvent)
         {
             if(synchronising)
             {
@@ -148,6 +152,8 @@ namespace Warlord.View.Human.Screens
                     AddRegion(region);
                 }
             }
+
+            return false;
         }
         private void SynchroniseAllRegions()
         {

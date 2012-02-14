@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// On Windows, the following GUactorID is for the actorID of the typelib if this
+// On Windows, the following GUentityID is for the entityID of the typelib if this
 // project is exposed to COM. On other platforms, it unique identifies the
 // title storage container when deploying this assembly to the device.
 [assembly: Guid("f79f2ec1-404e-46c9-b572-76cfc586568d")]
