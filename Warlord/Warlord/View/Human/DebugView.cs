@@ -25,10 +25,7 @@ namespace Warlord.View.Human
         {
             this.gameWindow = gameWindow;
             this.graphics = graphics;
-            this.content = content;
-
-            TextureRepository.BlockTextures = content.Load<Texture2D>("Textures/Blocks/block_textures");
-            FontRepository.DebugFont = content.Load<SpriteFont>("Font/DebugFont");
+            this.content = content;            
 
             spriteBatch = new SpriteBatch(graphics);
 

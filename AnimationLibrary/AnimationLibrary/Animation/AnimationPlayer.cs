@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Animation;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SkinnedModels.Animation
+namespace Animation
 {
     public class AnimationPlayer
     {

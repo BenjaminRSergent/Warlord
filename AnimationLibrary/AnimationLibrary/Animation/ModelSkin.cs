@@ -8,7 +8,7 @@ using GameTools;
 using Animation;
 using System.Diagnostics;
 
-namespace SkinnedModels.Animation
+namespace Animation
 {
     public class ModelSkin
     {
@@ -16,12 +16,15 @@ namespace SkinnedModels.Animation
         private ModelExtra skeletonModelExtra;
         private Texture2D texture;
         private BaseSkinnedShader skinnedShader;
+        List<Vector3> vertices;
+        private BoundingBox modelBoundingBox;
 
         public ModelSkin(Model model, Model skeletonModel)
         {
             this.model = model;
             this.skeletonModelExtra = skeletonModel.Tag as ModelExtra;
 
+            vertices = new List<Vector3>();
 
             if(model.Meshes[0].Effects[0] is SkinnedEffect)
             {
@@ -29,6 +32,8 @@ namespace SkinnedModels.Animation
                 effect.EnableDefaultLighting();
                 SetShader(new SkinnedEffectWrapper(effect));
             }
+
+            InitalCalcBoundingBox();
         }
         public ModelSkin(Model model, Model skeletonModel, BaseSkinnedShader shader)
         {
@@ -36,6 +41,8 @@ namespace SkinnedModels.Animation
             this.skeletonModelExtra = skeletonModel.Tag as ModelExtra;
 
             skinnedShader = shader;
+
+            InitalCalcBoundingBox();
         }
         public void SetTexture(Texture2D texture)
         {
@@ -60,7 +67,6 @@ namespace SkinnedModels.Animation
         public void Draw(GraphicsDevice graphics, Matrix world, Camera3D camera, List<Bone> transformedBones)
         {
             Matrix[] boneTransforms = new Matrix[transformedBones.Count];
-
 
             for(int i = 0; i < transformedBones.Count; i++)
             {
@@ -95,7 +101,47 @@ namespace SkinnedModels.Animation
             }
         }
 
-        protected Model Model { get { return model; } }
+        private void InitalCalcBoundingBox()
+        {
+            Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+            Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+
+            Matrix[] bones = new Matrix[this.model.Bones.Count];
+            model.CopyAbsoluteBoneTransformsTo(bones);
+
+            foreach(ModelMesh mesh in this.model.Meshes)
+            {
+                //We need to add two to skip the model and top level skeleton "bones"
+                Matrix transform = bones[mesh.ParentBone.Index + 2];
+
+                foreach(ModelMeshPart part in mesh.MeshParts)
+                {
+                    int stride = part.VertexBuffer.VertexDeclaration.VertexStride;
+                    int numVertices = part.NumVertices;
+                    byte[] verticesData = new byte[stride * numVertices];
+
+                    part.VertexBuffer.GetData(verticesData);
+
+                    for(int i = 0; i < verticesData.Length; i += stride)
+                    {
+                        float x = BitConverter.ToSingle(verticesData, i);
+                        float y = BitConverter.ToSingle(verticesData, i + sizeof(float));
+                        float z = BitConverter.ToSingle(verticesData, i + 2 * sizeof(float));
+
+                        Vector3 vector = new Vector3(x, y, z);
+
+                        vector = Vector3.Transform(vector, transform);
+
+                        vertices.Add(vector);
+                    }
+                }
+            }
+
+            modelBoundingBox = BoundingBox.CreateFromPoints(vertices);
+        }
+
+        private Model Model { get { return model; } }
+        public BoundingBox ModelBoundingBox { get { return modelBoundingBox; } }
         protected ModelExtra SkeletonModelExtra { get { return skeletonModelExtra; } }
         protected Texture2D Texture { get { return texture; } }
     }

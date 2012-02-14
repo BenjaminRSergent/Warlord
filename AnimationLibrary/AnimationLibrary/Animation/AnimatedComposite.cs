@@ -5,7 +5,7 @@ using GameTools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SkinnedModels.Animation
+namespace Animation
 {
     public class AnimatedComposite
     {
@@ -13,7 +13,8 @@ namespace SkinnedModels.Animation
         private ModelExtra skeletonModelExtra;
         private Dictionary<string, ModelSkin> parts;
         private AnimationPlayer animationPlayer;
-        private Matrix world;        
+        private Matrix world;
+        private BoundingBox modelBoundingBox;
 
         public AnimatedComposite(Model skeletonModel)
         {
@@ -22,13 +23,17 @@ namespace SkinnedModels.Animation
             parts = new Dictionary<string, ModelSkin>();
             animationPlayer = new AnimationPlayer(skeletonModel, skeletonModelExtra.Clips[0]);
         }
-        public void AddModel(string name, ModelSkin model)
+        public void AddModel(string name, Model model)
         {
-            parts.Add(name, model);
+            parts.Add(name, new ModelSkin(model, skeletonModel));
+
+            CalcBoundingBox();
         }
         public void RemoveModel(string name)
         {
             parts.Remove(name);
+
+            CalcBoundingBox();
         }
         public void SetModelTexture(string name, Texture2D texture)
         {
@@ -72,7 +77,31 @@ namespace SkinnedModels.Animation
                 model.Draw(graphics, world, camera, boneTransforms);
             }
         }
+        private void CalcBoundingBox()
+        {
+            Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+            Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
+            Vector3 minVector;
+            Vector3 maxVector;
+
+            BoundingBox partBox;
+            foreach(ModelSkin model in parts.Values)
+            {
+                partBox = model.ModelBoundingBox;
+                minVector = partBox.Min;
+                maxVector = partBox.Max;
+                if(minVector.X < min.X) min.X = minVector.X;
+                if(minVector.Y < min.Y) min.Y = minVector.Y;
+                if(minVector.Z < min.Z) min.Z = minVector.Z;
+
+                if(maxVector.X > max.X) max.X = maxVector.X;
+                if(maxVector.Y > max.Y) max.Y = maxVector.Y;
+                if(maxVector.Z > max.Z) max.Z = maxVector.Z;
+            }
+
+            modelBoundingBox = new BoundingBox(min, max);
+        }
         public Matrix World
         {
             get { return world; }
@@ -83,5 +112,7 @@ namespace SkinnedModels.Animation
         {
             animationPlayer.Stop(name);
         }
+
+        public BoundingBox ModelBoundingBox { get { return modelBoundingBox; } }
     }
 }

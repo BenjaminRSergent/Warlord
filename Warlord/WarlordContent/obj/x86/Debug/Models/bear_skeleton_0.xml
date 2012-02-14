@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:BoneContent">
+    <Name>Armature</Name>
+    <Identity>
+      <SourceFilename>Z:\Data\C#\XNA\Warlord\Warlord\WarlordContent\Models\bear_skeleton.fbx</SourceFilename>
+      <SourceTool>FbxImporter</SourceTool>
+    </Identity>
+    <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
+    <Children>
+      <Child Type="Graphics:BoneContent">
+        <Name>spine_001</Name>
+        <Transform>1 9.287115E-09 -5.077105E-07 0 1E-15 0.999832749 0.0182890873 0 5.07795448E-07 -0.0182890873 0.999832749 0 0 -3.22995162 -0.28937465 1</Transform>
+        <Children>
+          <Child Type="Graphics:BoneContent">
+            <Name>spine_002</Name>
+            <Transform>1 1.32101617E-15 5.07795448E-07 0 9.287115E-09 0.999832749 -0.0182890873 0 -5.077105E-07 0.0182890873 0.999832749 0 -7.005584E-16 1.00000012 -9.471623E-10 1</Transform>
+            <Children>
+              <Child Type="Graphics:BoneContent">
+                <Name>spine_003</Name>
+                <Transform>1 0 0 0 0 1 0 0 0 0 1 0 -8.825498E-23 1 0 1</Transform>
+                <Children>
+                  <Child Type="Graphics:BoneContent">
+                    <Name>spine_004</Name>
+                    <Transform>1 0 0 0 0 1 0 0 0 0 1 0 -1.941341E-22 1 0 1</Transform>
+                    <Children>
+                      <Child Type="Graphics:BoneContent">
+                        <Name>spine_005</Name>
+                        <Transform>1 0 0 0 0 1 0 0 0 0 1 0 1.23503256E-22 1 0 1</Transform>
+                        <Children>
+                          <Child Type="Graphics:BoneContent">
+                            <Name>spine_006</Name>
+                            <Transform>1 0 0 0 0 1 0 0 0 0 1 0 -1.00000011E-15 1 0 1</Transform>
+                            <Children>
+                              <Child Type="Graphics:BoneContent">
+                                <Name>spine_007</Name>
+                                <Transform>1 0 0 0 0 1 0 0 0 0 1 0 -8.825498E-23 1 0 1</Transform>
+                              </Child>
+                              <Child Type="Graphics:BoneContent">
+                                <Name>shoulder_L</Name>
+                                <Transform>-0.222524762 -0.9749271 0 0 0.974127769 -0.222342312 -0.040486455 0 0.0394713432 -0.009009238 0.999180138 0 -8.825498E-23 1 0 1</Transform>
+                                <Children>
+                                  <Child Type="Graphics:BoneContent">
+                                    <Name>spine_008_L_001</Name>
+                                    <Transform>0.974927068 0.222342283 0.009009257 0 -0.167193979 0.705193758 0.689019561 0 0.146844909 -0.673250139 0.7246867 0 -3.40920451E-07 0.99999994 3.27684324E-09 1</Transform>
+                                    <Children>
+                                      <Child Type="Graphics:BoneContent">
+                                        <Name>front_wrist_L</Name>
+                                        <Transform>1 -3.201511E-07 -9.036824E-08 0 -2.30886759E-08 0.204201773 -0.9789288 0 3.31858473E-07 0.978928864 0.204201773 0 -1.949542E-07 0.08898383 -9.25873E-08 1</Transform>
+                                        <Children>
+                                          <Child Type="Graphics:BoneContent">
+                                            <Name>front_foot_L</Name>
+                                            <Transform>-0.00115273159 -0.799986 -0.600017667 0 0.207907751 0.586715043 -0.782649457 0 0.978147864 -0.1256504 0.165646911 0 -7.507947E-08 0.9999999 4.85886E-08 1</Transform>
+                                          </Child>
+                                        </Children>
+                                      </Child>
+                                    </Children>
+                                  </Child>
+                                </Children>
+                              </Child>
+                              <Child Type="Graphics:BoneContent">
+                                <Name>shoulder_R</Name>
+                                <Transform>-0.222524762 0.9749271 0 0 -0.974127769 -0.222342312 -0.040486455 0 -0.0394713432 -0.009009238 0.999180138 0 -8.825498E-23 1 0 1</Transform>
+                                <Children>
+                                  <Child Type="Graphics:BoneContent">
+                                    <Name>spine_008_R_001</Name>
+                                    <Transform>0.974927068 -0.222342283 -0.009009257 0 0.167193979 0.705193758 0.689019561 0 -0.146844909 -0.673250139 0.7246867 0 3.40920451E-07 0.99999994 3.27684324E-09 1</Transform>
+                                    <Children>
+                                      <Child Type="Graphics:BoneContent">
+                                        <Name>wrist_R</Name>
+                                        <Transform>1 3.201511E-07 9.036824E-08 0 2.30886759E-08 0.204201773 -0.9789288 0 -3.31858473E-07 0.978928864 0.204201773 0 1.949542E-07 0.08898383 -9.25873E-08 1</Transform>
+                                        <Children>
+                                          <Child Type="Graphics:BoneContent">
+                                            <Name>front_foot_R</Name>
+                                            <Transform>-0.00115273159 0.799986 0.600017667 0 -0.207907751 0.586715043 -0.782649457 0 -0.978147864 -0.1256504 0.165646911 0 7.507947E-08 0.9999999 4.85886E-08 1</Transform>
+                                          </Child>
+                                        </Children>
+                                      </Child>
+                                    </Children>
+                                  </Child>
+                                </Children>
+                              </Child>
+                            </Children>
+                          </Child>
+                        </Children>
+                      </Child>
+                    </Children>
+                  </Child>
+                </Children>
+              </Child>
+            </Children>
+          </Child>
+          <Child Type="Graphics:BoneContent">
+            <Name>hip_L</Name>
+            <Transform>0.029318247 -0.9994028 0.0182812512 0 0.9878182 0.0261724684 -0.15339525 0 0.152825192 0.0225558467 0.9879957 0 -7.005584E-16 1.00000012 -9.471623E-10 1</Transform>
+            <Children>
+              <Child Type="Graphics:BoneContent">
+                <Name>leg_L</Name>
+                <Transform>0.98031193 -0.195133582 -0.03018916 0 0.117273517 0.6983907 -0.7060433 0 0.158856615 0.6886023 0.7075247 0 1.54343127E-07 1.15222967 -8.75711E-09 1</Transform>
+                <Children>
+                  <Child Type="Graphics:BoneContent">
+                    <Name>back_foot_L</Name>
+                    <Transform>0.118956655 -0.6286625 -0.7685265 0 0.0200478341 0.7753853 -0.631170154 0 0.99269706 0.0596745722 0.104840584 0 1.73752184E-07 0.9999999 -1.892085E-08 1</Transform>
+                  </Child>
+                </Children>
+              </Child>
+            </Children>
+          </Child>
+          <Child Type="Graphics:BoneContent">
+            <Name>hip_R</Name>
+            <Transform>0.0293182675 0.99940294 -0.0182812344 0 -0.987818062 0.0261724684 -0.153396249 0 -0.15282619 0.0225558728 0.987995565 0 -7.005584E-16 1.00000012 -9.471623E-10 1</Transform>
+            <Children>
+              <Child Type="Graphics:BoneContent">
+                <Name>leg_R</Name>
+                <Transform>0.98031193 0.195133582 0.0301891752 0 -0.11727351 0.6983907 -0.7060433 0 -0.15885663 0.6886023 0.7075248 0 -1.15681516E-07 1.15222955 2.16143681E-09 1</Transform>
+                <Children>
+                  <Child Type="Graphics:BoneContent">
+                    <Name>back_foot_R</Name>
+                    <Transform>0.118956663 0.6286626 0.7685265 0 -0.0200478472 0.7753854 -0.631170154 0 -0.99269706 0.05967457 0.104840592 0 -1.01408773E-07 1 1.08739613E-07 1</Transform>
+                  </Child>
+                </Children>
+              </Child>
+            </Children>
+          </Child>
+        </Children>
+      </Child>
+    </Children>
+  </Asset>
+</XnaContent>

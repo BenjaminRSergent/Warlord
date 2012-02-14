@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace SkinnedModels.Animation
+namespace Animation
 {
     public class SkinnedEffectWrapper : BaseSkinnedShader
     {

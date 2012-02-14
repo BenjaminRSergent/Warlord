@@ -15,13 +15,14 @@ namespace Warlord.View.Human.Screens
 
         public DebugPlayScreen(GraphicsDevice graphics, GameWindow gameWindow, ContentManager content)
         {
-            camera = new Camera3D(gameWindow.ClientBounds, new Vector3(0, 13, 0), new Vector3(0, 13, 1), Vector3.Up);
+            camera = new Camera3D(gameWindow.ClientBounds, new Vector3(0, 13, 0), Vector2.Zero, Vector3.Up);
             worldGraphics = new WorldGraphics(graphics, gameWindow, content, camera);
 
             movementController = new DebugMovementController(camera, gameWindow);
             fogController = new DebugFogController(worldGraphics);
 
             PushScreenElement(worldGraphics);
+            PushScreenElement(new DebugBearGraphics(0, graphics, camera));
             PushMouseListener(movementController);
             PushKeyboardListener(movementController);
             PushKeyboardListener(fogController);

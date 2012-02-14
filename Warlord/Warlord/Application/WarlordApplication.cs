@@ -7,6 +7,9 @@ using Warlord.Logic.Data.Entity;
 using Warlord.Logic.Data.World;
 using Warlord.View.Human;
 using GameTools.Graph;
+using Warlord.View.Human.Display.Entity;
+using Warlord.View.Human.Display;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Warlord.Application
 {
@@ -34,6 +37,12 @@ namespace Warlord.Application
         {
             eventManager = new WarlordEventManager();
             threadManager = new ThreadManager();
+
+            TextureRepository.BlockTextures = Content.Load<Texture2D>("Textures/Blocks/block_textures");            
+            TextureRepository.BearTexture = Content.Load<Texture2D>("Textures/Models/bear_texture");
+            FontRepository.DebugFont = Content.Load<SpriteFont>("Font/DebugFont");
+
+            ModelRepository.Initialize(Content);
 
             errorLogger = new ErrorLogger();
             errorLogger.Init("Error.log", true);

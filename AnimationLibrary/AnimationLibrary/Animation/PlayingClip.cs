@@ -6,7 +6,7 @@ using Animation;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
 
-namespace SkinnedModels.Animation
+namespace Animation
 {
     public class PlayingClip
     {

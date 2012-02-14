@@ -1,3 +1,7 @@
 Content\Textures\Blocks\block_textures.xnb
-Content\Fxs\block_effects.xnb
+Content\Textures\Models\bear_texture.xnb
 Content\Font\DebugFont.xnb
+Content\Models\bear_model.xnb
+Content\Models\bear_skeleton.xnb
+Content\Models\bear_walk.xnb
+Content\Fxs\block_effects.xnb

@@ -11,3 +11,9 @@ Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\AnimationLibrary.dll
 Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\GameTools.dll
 Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\AnimationLibrary.pdb
 Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\GameTools.pdb
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Textures\Models\bear_texture.xnb
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Models\bear_model.xnb
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Models\bear_skeleton.xnb
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\Content\Models\bear_walk.xnb
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\XNAGraphicsHelper.dll
+Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Debug\XNAGraphicsHelper.pdb

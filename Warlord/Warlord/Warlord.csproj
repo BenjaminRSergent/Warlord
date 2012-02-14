@@ -166,6 +166,7 @@
     <Compile Include="View\Human\Audio\MusicPlayer.cs" />
     <Compile Include="View\Human\Audio\Song.cs" />
     <Compile Include="View\Human\Audio\SoundEffect.cs" />
+    <Compile Include="View\Human\Display\Entity\ModelRepository.cs" />
     <Compile Include="View\Human\Display\FontRepository.cs" />
     <Compile Include="View\Human\Display\GraphicalBlock.cs" />
     <Compile Include="View\Human\Display\TextDrawer.cs" />
@@ -174,7 +175,7 @@
     <Compile Include="View\Screens\DebugPlayScreen.cs" />
     <Compile Include="View\Human\Display\BlockTexture.cs" />
     <Compile Include="View\Human\DebugView.cs" />
-    <Compile Include="View\Screens\EntityGraphics.cs" />
+    <Compile Include="View\Screens\DebugBearGraphics.cs" />
     <Compile Include="View\Human\HumanView.cs" />
     <Compile Include="View\Human\Display\HUD.cs" />
     <Compile Include="View\Human\Display\ParticleSystem.cs" />
