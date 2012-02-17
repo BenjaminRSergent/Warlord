@@ -1,6 +1,7 @@
 ﻿using GameTools.Process;
 using Warlord.Event;
 using Warlord.Logic.Data.Entity;
+using Warlord.Interfaces;
 
 namespace Warlord.Application
 {
@@ -23,6 +24,10 @@ namespace Warlord.Application
         public static ThreadManager ThreadManager
         {
             get { return application.ThreadManager; }
+        }
+        public static BlockAccess Blocks
+        {
+            get { return application.Blocks; }
         }
         public static bool GameWindowHasFocus
         {

@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="nunit.framework, Version=2.6.0.12017, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\..\..\External Libraries\NUnit 2.6\bin\framework\nunit.framework.dll</HintPath>
     </Reference>
@@ -46,6 +49,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AnimationLibrary\AnimationLibrary\AnimationLibrary.csproj">
+      <Project>{35E772D4-2799-4F64-963D-FE8F7E2E8A2C}</Project>
+      <Name>AnimationLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameTools\GameTools.csproj">
+      <Project>{EEA3306B-C277-47FE-989E-DFAEFDF68C43}</Project>
+      <Name>GameTools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SkinningPipeline\SkinningPipeline.csproj">
       <Project>{A2ABF4AF-6774-4E84-9B81-A9FC2E273BA7}</Project>
       <Name>SkinningPipeline</Name>
@@ -53,6 +64,10 @@
     <ProjectReference Include="..\Warlord\Warlord\Warlord.csproj">
       <Project>{A49069CC-B17F-4679-8D16-BC305A069BE6}</Project>
       <Name>Warlord</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XNAGraphicsHelper\XNAGraphicsHelper.csproj">
+      <Project>{B8E2D515-6568-45E4-B6DB-0B8F09B4E887}</Project>
+      <Name>XNAGraphicsHelper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -108,14 +108,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\CubeVertexMaps\FullCube.cs" />
-    <Compile Include="Application\CubeVertexMaps\ZIncreasingRamp.cs" />
+    <Compile Include="Interfaces\BlockContainer.cs" />
     <Compile Include="Application\DebugFpsHelper.cs" />
     <Compile Include="Event\BaseGameEvent.cs" />
     <Compile Include="Event\EventManager.cs" />
-    <Compile Include="Event\EventTypes\ActorCreatedEvent.cs" />
-    <Compile Include="Event\EventTypes\ActorMovedEvent.cs" />
-    <Compile Include="Event\EventTypes\ActorRemovedEvent.cs" />
+    <Compile Include="Event\EventTypes\EntityCreatedEvent.cs" />
+    <Compile Include="Event\EventTypes\EntityMovedEvent.cs" />
+    <Compile Include="Event\EventTypes\EntityRemovedEvent.cs" />
     <Compile Include="Event\EventTypes\BlockChangedEvent.cs" />
     <Compile Include="Event\EventTypes\RefreshRegionGraphicsEvent.cs" />
     <Compile Include="Event\EventTypes\RegionCreatedEvent.cs" />
@@ -130,12 +129,14 @@
     <Compile Include="Logic\Civilization\CivilizationUpdater.cs" />
     <Compile Include="Logic\Crafting\CraftingLogic.cs" />
     <Compile Include="Logic\Crafting\ResourceManagement.cs" />
+    <Compile Include="Logic\Data\Entity\EntityBoundingBoxes.cs" />
+    <Compile Include="Logic\Data\Entity\EntityType.cs" />
     <Compile Include="Logic\Data\Items\Item.cs" />
     <Compile Include="Logic\Data\Items\ItemManager.cs" />
     <Compile Include="Logic\Data\Items\WarlordItemManager.cs" />
     <Compile Include="Logic\Data\World\BlockFaceField.cs" />
     <Compile Include="Logic\Data\World\BlockType.cs" />
-    <Compile Include="Logic\Data\Entity\Entity.cs" />
+    <Compile Include="Logic\Data\Entity\GameEntity.cs" />
     <Compile Include="Logic\Data\Entity\EntityManager.cs" />
     <Compile Include="Logic\Data\Entity\Faction.cs" />
     <Compile Include="Logic\Data\Entity\WarlordEntityManager.cs" />
@@ -148,10 +149,11 @@
     <Compile Include="Logic\Data\World\RegionGenerator.cs" />
     <Compile Include="Logic\Data\World\RegionController.cs" />
     <Compile Include="Logic\Data\World\ZoneBlockSettings.cs" />
+    <Compile Include="Logic\Physics\CollisionData.cs" />
     <Compile Include="Logic\Physics\CollisionDetection.cs" />
     <Compile Include="Logic\Physics\SimpleDrag.cs" />
     <Compile Include="Logic\Physics\ForceGenerator.cs" />
-    <Compile Include="Logic\Physics\ConstantDirectionalForce.cs" />
+    <Compile Include="Logic\Physics\ConstantDirectionalAcceleration.cs" />
     <Compile Include="Logic\Physics\WarlordPhysics.cs" />
     <Compile Include="Logic\Physics\PenetrationHandler.cs" />
     <Compile Include="Logic\States\DebugPlayingState.cs" />

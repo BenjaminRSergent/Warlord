@@ -21,11 +21,11 @@ namespace XNAGraphicsHelper
             effect = new BasicEffect(graphicsDevice);
             effect.VertexColorEnabled = true;
         }
-        public void DrawBoundingBox(BoundingBox box, Matrix view, Matrix projection, Matrix world = new Matrix())
+        public void DrawBoundingBox(BoundingBox box, Matrix view, Matrix projection)
         {
             VertexPositionColor[] vertices = GetBoundingBoxLineList(box, Color.Red, Color.Blue, Color.Green);
 
-            effect.World = world;
+            effect.World = Matrix.Identity;
             effect.View = view;
             effect.Projection = projection;
 

@@ -10,6 +10,7 @@ using GameTools.Graph;
 using Warlord.View.Human.Display.Entity;
 using Warlord.View.Human.Display;
 using Microsoft.Xna.Framework.Graphics;
+using Warlord.Interfaces;
 
 namespace Warlord.Application
 {
@@ -60,8 +61,8 @@ namespace Warlord.Application
         {
             debugView = new DebugView(Window, GraphicsDevice, Content);
 
-            debugView.BeginGame();
             logic.BeginGame(new Vector3( 16, 128, 16), 8, 10);
+            debugView.BeginGame();            
         }
 
         protected override void UnloadContent()
@@ -110,5 +111,7 @@ namespace Warlord.Application
         {
             get { return threadManager; }
         }
+
+        public BlockAccess Blocks { get{ return logic;} }
     }
 }

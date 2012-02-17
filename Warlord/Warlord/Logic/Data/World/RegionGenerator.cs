@@ -121,7 +121,7 @@ namespace Warlord.Logic.Data.World
                     {
                         currentPosition = origin + new Vector3(x, y, z);
 
-                        currentBlock = ownerWorld.GetBlock(currentPosition);
+                        currentBlock = ownerWorld.GetBlock(currentPosition).Data;
 
                         if(currentBlock.Type != BlockType.Air && recentAir)
                         {

@@ -2,19 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Warlord.GameTools.Statistics;
+using GameTools.Statistics;
 
 namespace WarlordTests
 {
     using NUnit.Framework;
+    using Microsoft.Xna.Framework.Graphics;
 
     [TestFixture]
     public class ExampleTest
     {
-        [Test]
-        public void TestAdverage( )
+        GraphicsDevice dummyGraphics;
+        [SetUp]
+        public void Init()
         {
-            Assert.AreEqual(1, 1);
+            dummyGraphics = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.HiDef, new PresentationParameters());
+        }
+
+        [Test]
+        public void Test( )
+        {
+            
         }
     }
 }

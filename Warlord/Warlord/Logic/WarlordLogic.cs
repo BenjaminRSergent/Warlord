@@ -4,16 +4,20 @@ using GameTools.State;
 using Microsoft.Xna.Framework;
 using Warlord.Logic.Data.Entity;
 using Warlord.Logic.States;
+using Warlord.Logic.Data.World;
+using Warlord.Interfaces;
+using System.Collections.Generic;
 
 namespace Warlord.Logic
 {
-    class WarlordLogic
+    class WarlordLogic : BlockAccess
     {
-        ProcessManager processManager;
-        WarlordEntityManager entityManager;
+        private ProcessManager processManager;
+        private WarlordEntityManager entityManager;        
+        private GameTime mostRecentGameTime;
 
-        StateMachine<WarlordLogic> stateMachine;
-        GameTime mostRecentGameTime;
+        public StateMachine<WarlordLogic> stateMachine;
+        public RegionController regionUpdater;        
 
         Vector3 regionSize;
         int entityCellSize;
@@ -61,6 +65,19 @@ namespace Warlord.Logic
         public GameTime MostRecentGameTime
         {
             get { return mostRecentGameTime; }
+        }
+
+        public GameTools.Optional<Block> GetBlockAt(Vector3 location)
+        {
+            location.X = (int)location.X;
+            location.Y = (int)location.Y;
+            location.Z = (int)location.Z;
+
+            return regionUpdater.GetBlock(location);
+        }
+        public List<Block> GetBlockWithin(BoundingBox currentBox)
+        {
+            return regionUpdater.GetBlocksWithin(currentBox);
         }
     }
 }

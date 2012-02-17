@@ -31,11 +31,17 @@ namespace Warlord.Logic.Data.Entity
 
             return entityMap[id];
         }
+        public List<GameEntity> GetAllEntity()
+        {
+            // Need a better way to handle this
+            return new List<GameEntity>(entityMap.Values);
+        }
         public void AddPlayer(Vector3 position)
         {
             Debug.Assert(player == null);
 
-            player = new Player(position);
+            player = new Player(position, EntityType.bear, 400, 0.75f);
+            player.Velocity = new Vector3(3,1,3);
             AddEntity(player);
         }
         private void AddEntity(GameEntity newEntity)
@@ -87,6 +93,9 @@ namespace Warlord.Logic.Data.Entity
             List<GameEntity> nearbyEntities = new List<GameEntity>();
             HashSet<GameEntity> nearbyCell;
 
+            if( radius == 0 )
+                radius = 1;
+
             int radiusInCells = cellSideLength / radius + 1;
 
             int radiusSq = radius * radius;
@@ -124,8 +133,7 @@ namespace Warlord.Logic.Data.Entity
         {
             return Transformation.ChangeVectorScaleFloored(position,
                                                     new Vector3(cellSideLength, cellSideLength, cellSideLength));
-        }
-
+        }        
         public Player Player
         {
             get
@@ -147,6 +155,6 @@ namespace Warlord.Logic.Data.Entity
 
                 return id;
             }
-        }
+        }        
     }
 }

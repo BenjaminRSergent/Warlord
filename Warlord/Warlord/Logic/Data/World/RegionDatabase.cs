@@ -33,7 +33,7 @@ namespace Warlord.Logic.Data.World
 
             GlobalSystems.EventManager.Subscribe(SendCurrentRegions, "refresh_region_graphics");
         }
-        public bool CreateRegion(RegionController updater, Vector3 regionCoordiants)
+        public bool CreateRegion(RegionController controller, Vector3 regionCoordiants)
         {
             if(!regionMap.Keys.Contains(regionCoordiants))
             {
@@ -43,7 +43,7 @@ namespace Warlord.Logic.Data.World
 
                 Region newRegion = GetNewRegion(newOrigin, regionSize);
                 regionMap.Add(regionCoordiants, newRegion);
-                generator.FastGenerateRegion3D(updater, newOrigin);
+                generator.FastGenerateRegion3D(controller, newOrigin);
 
                 RegionCreatedData creationData = new RegionCreatedData(newRegion);
 
@@ -104,16 +104,17 @@ namespace Warlord.Logic.Data.World
                                                                        0,
                                                                        blockChangedData));
         }
-        public Block GetBlock(Vector3 absolutePosition)
-        {
+        public Optional<Block> GetBlock(Vector3 absolutePosition)
+        {            
             Optional<Region> currentRegion = GetRegionFromAbsolute(absolutePosition);
 
-            Debug.Assert(currentRegion.Valid);
+            if(!currentRegion.Valid)
+                return new Optional<Block>( );
 
             Vector3 currentBlockRelativePosition = Transformation.AbsoluteToRelative(absolutePosition,
                                                                                       currentRegion.Data.RegionOrigin);
 
-            return currentRegion.Data.GetBlock(currentBlockRelativePosition);
+            return new Optional<Block>(currentRegion.Data.GetBlock(currentBlockRelativePosition));
 
         }
         public void AddFace(Vector3 absolutePosition, BlockFaceField facing)

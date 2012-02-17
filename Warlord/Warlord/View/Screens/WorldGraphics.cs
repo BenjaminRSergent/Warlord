@@ -88,8 +88,6 @@ namespace Warlord.View.Human.Screens
         }
         private void SetupBlockEffects()
         {
-            GlobalSystems.EntityManager.Player.Teleport(camera.Position);
-
             effect.Parameters["World"].SetValue(Matrix.Identity);
             effect.Parameters["View"].SetValue(camera.View);
             effect.Parameters["Projection"].SetValue(camera.Projection);

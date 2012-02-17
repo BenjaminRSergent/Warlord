@@ -5,12 +5,13 @@ using Microsoft.Xna.Framework;
 
 namespace Warlord.Logic.Data.World
 {
-    static class RegionArrayMaps
+    static class GameArrayMaps
     {
         private static Dictionary<BlockFaceField, Vector3> faceOffsetMap;
         private static BlockFaceField[] facingList = new BlockFaceField[6];
+        public static Vector3[] directions;
 
-        static RegionArrayMaps( )
+        static GameArrayMaps( )
         {
             faceOffsetMap = new Dictionary<BlockFaceField,Vector3>( );
 
@@ -29,6 +30,16 @@ namespace Warlord.Logic.Data.World
             facingList[3] = BlockFaceField.ZDecreasing;
             facingList[4] = BlockFaceField.YDecreasing;
             facingList[5] = BlockFaceField.XDecreasing;
+
+            directions = new Vector3[6];
+
+            directions[0] = faceOffsetMap[BlockFaceField.ZIncreasing];
+            directions[1] = faceOffsetMap[BlockFaceField.YIncreasing];
+            directions[2] = faceOffsetMap[BlockFaceField.XIncreasing];
+
+            directions[3] = faceOffsetMap[BlockFaceField.ZDecreasing];
+            directions[4] = faceOffsetMap[BlockFaceField.YDecreasing];
+            directions[5] = faceOffsetMap[BlockFaceField.XDecreasing];
         }
         public static BlockFaceField GetOppositeFacing(BlockFaceField facing)
         {
@@ -48,9 +59,13 @@ namespace Warlord.Logic.Data.World
         {
             return faceOffsetMap[facing];
         }
+        public static Vector3[] GetDirections()
+        {
+            return directions;
+        }
         public static BlockFaceField[] FacingList
         {
-            get { return RegionArrayMaps.facingList; }
+            get { return GameArrayMaps.facingList; }
         }
     }
 }

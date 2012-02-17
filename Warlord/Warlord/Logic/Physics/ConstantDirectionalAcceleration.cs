@@ -3,26 +3,26 @@ using Warlord.Logic.Data.Entity;
 
 namespace Warlord.Logic.Physics
 {
-    class ConstantDirectionalForce : ForceGenerator
+    class ConstantDirectionalAcceleration : ForceGenerator
     {
-        private float force;
+        private float acceleration;
 
         private Vector3 direction;
 
-        public ConstantDirectionalForce(float force, Vector3 direction)
+        public ConstantDirectionalAcceleration(float acceleration, Vector3 direction)
         {
-            this.force = force;
+            this.acceleration = acceleration;
             Direction = direction;
         }
         public void ApplyForceTo(GameTime gameTime, GameEntity entity)
         {
-            entity.SumOfForces += force * Direction;
+            entity.SumOfForces += acceleration * entity.Mass * Direction;
         }
 
         public float Force
         {
-            get { return force; }
-            set { force = value; }
+            get { return acceleration; }
+            set { acceleration = value; }
         }
         public Vector3 Direction
         {

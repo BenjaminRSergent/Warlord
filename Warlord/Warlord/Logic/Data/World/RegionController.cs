@@ -6,6 +6,7 @@ using GameTools.Process;
 using Microsoft.Xna.Framework;
 using Warlord.Application;
 using Warlord.GameTools;
+using Warlord.Interfaces;
 
 namespace Warlord.Logic.Data.World
 {
@@ -43,14 +44,14 @@ namespace Warlord.Logic.Data.World
                 SafePointCheckIn();
             }
         }
-        public Block GetBlock(Vector3 absolutePosition)
+        public Optional<Block> GetBlock(Vector3 absolutePosition)
         {
             return database.GetBlock(absolutePosition);
         }
         public void ChangeBlock(Vector3 absolutePosition, BlockType blockType)
         {
             database.ChangeBlock(absolutePosition, blockType);
-            UpdateFacing(database.GetBlock(absolutePosition));
+            UpdateFacing(database.GetBlock(absolutePosition).Data);
         }
         private void UpdateFacing(Block block)
         {
@@ -65,18 +66,18 @@ namespace Warlord.Logic.Data.World
             Vector3 changedBlockPosition;
             Vector3 adjacentBlockPosition;
 
-            Vector3 adjacentBlockRegion;            
+            Vector3 adjacentBlockRegion;
 
             BlockFaceField changedBlockFacing;
-            BlockFaceField adjacentBlockFacing;            
+            BlockFaceField adjacentBlockFacing;
 
             changedBlockPosition = changedBlock.BackLeftbottomPosition;
             for(int facingIndex = 0; facingIndex < NUM_ORTHOGONAL_DIRECTIONS; facingIndex++)
             {
-                changedBlockFacing = RegionArrayMaps.FacingList[facingIndex];
-                adjacentBlockFacing = RegionArrayMaps.GetOppositeFacing(changedBlockFacing);
+                changedBlockFacing = GameArrayMaps.FacingList[facingIndex];
+                adjacentBlockFacing = GameArrayMaps.GetOppositeFacing(changedBlockFacing);
 
-                Vector3 directionToAdjacent = RegionArrayMaps.GetDirectionFromFacing(changedBlockFacing);
+                Vector3 directionToAdjacent = GameArrayMaps.GetDirectionFromFacing(changedBlockFacing);
 
                 adjacentBlockPosition = changedBlockPosition + directionToAdjacent;
                 adjacentBlockRegion = database.GetRegionCoordiantes(adjacentBlockPosition);
@@ -87,7 +88,7 @@ namespace Warlord.Logic.Data.World
                 }
                 else
                 {
-                    adjacentBlock = database.GetBlock(adjacentBlockPosition);
+                    adjacentBlock = database.GetBlock(adjacentBlockPosition).Data;
 
                     if(changedBlock.DoesHideFace(directionToAdjacent))
                         database.RemoveFace(adjacentBlockPosition, adjacentBlockFacing);
@@ -100,7 +101,7 @@ namespace Warlord.Logic.Data.World
                         database.AddFace(changedBlockPosition, changedBlockFacing);
                 }
             }
-        }        
+        }
         private Optional<Vector3> GetFirstUncreatedWithin(int drawDistance)
         {
             Vector3 playerPosition = GlobalSystems.EntityManager.Player.CurrentPosition;
@@ -119,7 +120,7 @@ namespace Warlord.Logic.Data.World
                 currentPosition = spiralProducer.GetNextPosition();
 
                 if(!database.IsRegionLoaded(currentPosition) &&
-                    (currentPosition - playerRegion).LengthSquared( ) < (drawDistance + 1) * (drawDistance + 1))
+                    (currentPosition - playerRegion).LengthSquared() < (drawDistance + 1) * (drawDistance + 1))
                     return new Optional<Vector3>(currentPosition);
             }
 
@@ -133,19 +134,40 @@ namespace Warlord.Logic.Data.World
 
             Vector3 playerToRegion;
 
-            int maxDistanceSq = maxDistance*maxDistance;
+            int maxDistanceSq = maxDistance * maxDistance;
 
             List<Vector3> regionsOutside = new List<Vector3>();
             foreach(Vector3 region in database.GetCoordiantesOfLoadedRegions())
             {
                 playerToRegion = playerRegion - region;
-                if(playerToRegion.LengthSquared( ) > maxDistanceSq)
+                if(playerToRegion.LengthSquared() > maxDistanceSq)
                 {
                     regionsOutside.Add(region);
                 }
             }
 
             return regionsOutside;
+        }
+
+        public List<Block> GetBlocksWithin(BoundingBox currentBox)
+        {
+            List<Block> blocksWithin = new List<Block>();
+            Optional<Block> currentBlock;
+            for(int x = (int)currentBox.Min.X; x < currentBox.Max.X; x++)
+            {
+                for(int y = (int)currentBox.Min.Y; y < currentBox.Max.Y; y++)
+                {
+                    for(int z = (int)currentBox.Min.Z; z < currentBox.Max.Z; z++)
+                    {
+                        currentBlock = GetBlock(new Vector3(x,y,z));
+
+                        if(currentBlock.Valid && currentBlock.Data.Type != BlockType.Air)
+                            blocksWithin.Add(currentBlock.Data);
+                    }
+                }
+            }
+
+            return blocksWithin;
         }
     }
 }
