@@ -36,12 +36,12 @@ namespace Warlord.View.Human.Display.Entity
 
         public static AnimatedComposite GetBear( )
         {
-            return modelMap[EntityType.bear];
+            return new AnimatedComposite(modelMap[EntityType.bear]);
         }
 
         public static AnimatedComposite GetEntity(EntityType entityType)
         {
-            return modelMap[entityType];
+            return new AnimatedComposite(modelMap[entityType]);
         }
     }
 }

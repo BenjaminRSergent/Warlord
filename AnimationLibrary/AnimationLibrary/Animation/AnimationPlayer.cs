@@ -27,6 +27,14 @@ namespace Animation
 
             this.neutral = new PlayingClip(neutral, 1, 0, true);
         }
+        public AnimationPlayer(AnimationPlayer source)
+        {
+            this.skeleton = source.skeleton;
+            this.neutral = new PlayingClip(source.neutral);
+            this.storedClips = new List<AnimationClip>(source.storedClips);
+            this.playingClips = new List<PlayingClip>(source.playingClips);
+            this.totalWeight = source.totalWeight;
+        }
         public List<Bone> GetTransformedBones()
         {
             Matrix totalTransform = Matrix.Identity;

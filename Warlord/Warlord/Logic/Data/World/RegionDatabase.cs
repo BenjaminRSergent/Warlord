@@ -35,7 +35,7 @@ namespace Warlord.Logic.Data.World
         }
         public bool CreateRegion(RegionController controller, Vector3 regionCoordiants)
         {
-            if(!regionMap.Keys.Contains(regionCoordiants))
+            if(!regionMap.ContainsKey(regionCoordiants))
             {
                 Vector3 newOrigin = new Vector3(regionCoordiants.X * regionSize.X,
                                                   regionCoordiants.Y * regionSize.Y,
@@ -72,7 +72,7 @@ namespace Warlord.Logic.Data.World
         }
         public void UnloadRegion(Vector3 regionCoordiants)
         {
-            if(regionMap.Keys.Contains(regionCoordiants))
+            if(regionMap.ContainsKey(regionCoordiants))
             {
                 Region theRegion = regionMap[regionCoordiants];
                 GlobalSystems.EventManager.SendEvent(new RegionRemovedEvent(new Optional<object>(this),
@@ -150,7 +150,7 @@ namespace Warlord.Logic.Data.World
         }
         public Optional<Region> GetRegionFromCoordiantes(Vector3 coordiantes)
         {
-            if(regionMap.Keys.Contains(coordiantes))
+            if(regionMap.ContainsKey(coordiantes))
                 return new Optional<Region>(regionMap[coordiantes]);
             else
                 return new Optional<Region>();

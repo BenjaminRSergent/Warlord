@@ -41,6 +41,25 @@ namespace Animation
                 boneInfo.Add(new BoneInfo(masterClip.AnimatedBoneCollection[index]));
             }
         }
+        public PlayingClip(PlayingClip source)
+        {
+            this.masterClip = source.masterClip;
+            this.speed = source.speed;
+            this.originalWeight = source.originalWeight;
+            this.loop = source.loop;
+            this.position = source.position;
+
+            this.relativeWeight = source.relativeWeight;
+            this.boneRotations = source.boneRotations;
+            this.boneTranslations = source.boneTranslations;
+
+            boneInfo = new List<BoneInfo>( );
+
+            for(int index = 0; index < masterClip.AnimatedBoneCollection.Count; index++)
+            {
+                boneInfo.Add(new BoneInfo(masterClip.AnimatedBoneCollection[index]));
+            }
+        }
         public void IncrementPosition(GameTime gameTime)
         {
             position += (gameTime.ElapsedGameTime.Milliseconds / 1000.0f) * speed;

@@ -43,7 +43,7 @@ namespace Warlord.Logic.Data.World
             noiseSettings3D.zoom = 60;
             noiseSettings3D.seed = 3;
 
-            fastNoise3D = new FastPerlinNoise3D(noiseSettings3D);
+            fastNoise3D = new FastPerlinNoise3D(noiseSettings3D);            
 
             generatorSettings.midLevel = (int)generatorSettings.RegionSize.Y / 10;
             generatorSettings.highLevel = (int)(6 * generatorSettings.RegionSize.Y) / 7;
@@ -62,7 +62,7 @@ namespace Warlord.Logic.Data.World
             noiseSettings3D.startingPoint = origin;
 
             fastNoise3D.FillWithPerlinNoise3D(flatNoise);
-            PlaceBlocks(ownerWorld, origin, flatNoise);
+            PlaceBlocks(ownerWorld, origin);
 
             AddGrassToTop(ownerWorld, origin);
         }
@@ -84,7 +84,7 @@ namespace Warlord.Logic.Data.World
                 }
             }
         }
-        private void PlaceBlocks(RegionController ownerWorld, Vector3 origin, float[] noise)
+        private void PlaceBlocks(RegionController ownerWorld, Vector3 origin)
         {
             float density;
             BlockType blockType;
@@ -94,7 +94,7 @@ namespace Warlord.Logic.Data.World
                 {
                     for(int z = 0; z < generatorSettings.RegionSize.Z; z++)
                     {
-                        density = noise[(int)(x * generatorSettings.RegionSize.Y * generatorSettings.RegionSize.Z +
+                        density = flatNoise[(int)(x * generatorSettings.RegionSize.Y * generatorSettings.RegionSize.Z +
                                         y * generatorSettings.RegionSize.Z +
                                         z)];
 

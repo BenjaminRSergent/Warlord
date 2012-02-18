@@ -22,6 +22,16 @@ namespace Animation
             skeletonModelExtra = skeletonModel.Tag as ModelExtra;
             parts = new Dictionary<string, ModelSkin>();
             animationPlayer = new AnimationPlayer(skeletonModel, skeletonModelExtra.Clips[0]);
+            world = Matrix.Identity;
+        }
+        public AnimatedComposite(AnimatedComposite source)
+        {
+            this.skeletonModel = source.skeletonModel;
+            this.skeletonModelExtra = source.skeletonModelExtra;
+            this.parts = source.parts;            
+            this.animationPlayer = new AnimationPlayer(source.animationPlayer);
+            this.world = source.world;
+            this.modelBoundingBox = source.modelBoundingBox;
         }
         public void AddModel(string name, Model model)
         {
