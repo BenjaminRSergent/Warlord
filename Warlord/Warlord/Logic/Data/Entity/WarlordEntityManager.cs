@@ -41,7 +41,6 @@ namespace Warlord.Logic.Data.Entity
             Debug.Assert(player == null);
 
             player = new Player(position, EntityType.bear, 400, 0.75f);
-            player.Velocity = new Vector3(3,1,3);
             AddEntity(player);
         }
         private void AddEntity(GameEntity newEntity)

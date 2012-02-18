@@ -23,7 +23,7 @@ namespace Warlord.Logic.Physics
         }
         public void InitializeBasicForces()
         {
-            ConstantDirectionalAcceleration gravity = new ConstantDirectionalAcceleration(9.81f, Vector3.Down);
+            ConstantDirectionalAcceleration gravity = new ConstantDirectionalAcceleration(this, 9.81f, Vector3.Down);
             SimpleDrag airResistance = new SimpleDrag(16f);
 
             globalForces.Add(gravity);
@@ -162,9 +162,10 @@ namespace Warlord.Logic.Physics
         {
             Vector3 normal = Vector3.Zero;
 
-            normal += Vector3.Up;
-
-            normal.Normalize( );
+            Vector3 minLessMax = boxA.Min - boxB.Max;
+            Vector3 maxLessMin = boxB.Min - boxA.Max;
+                                    
+            normal = Vector3.Up;
 
             return normal;
         }

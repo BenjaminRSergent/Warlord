@@ -89,7 +89,7 @@ namespace Animation
                     if(texture != null)
                         skinnedShader.Texture = texture;
 
-                    skinnedShader.World = boneTransforms[mesh.ParentBone.Index] * world;
+                    skinnedShader.World = world;
                     skinnedShader.View = camera.View;
                     skinnedShader.Projection = camera.Projection;
                     skinnedShader.SetBoneTransforms(skeleton);
@@ -112,7 +112,7 @@ namespace Animation
             foreach(ModelMesh mesh in this.model.Meshes)
             {
                 //We need to add two to skip the model and top level skeleton "bones"
-                Matrix transform = bones[mesh.ParentBone.Index + 2];
+                Matrix transform = bones[mesh.ParentBone.Index];
 
                 foreach(ModelMeshPart part in mesh.MeshParts)
                 {

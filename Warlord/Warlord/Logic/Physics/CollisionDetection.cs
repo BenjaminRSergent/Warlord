@@ -32,12 +32,15 @@ namespace Warlord.Logic.Physics
 
             if(collisionData.collisionType == CollisionType.Block)
             {
+                Vector3 force = entity.SumOfForces;
                 Vector3 velocity = entity.Velocity;
+                Vector3.Reflect(ref force, ref collisionData.collisionNormal, out force);
                 Vector3.Reflect(ref velocity, ref collisionData.collisionNormal, out velocity);
 
 
                 // Do with force?
-                entity.Velocity = velocity/4;
+                entity.SumOfForces = force;
+                entity.Velocity = velocity;
             }            
         }        
 

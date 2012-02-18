@@ -38,10 +38,10 @@ namespace Warlord.Logic.Data.World
             noiseSettings3D.frequencyMulti = 2.0f;
             noiseSettings3D.octaves = 4;
             noiseSettings3D.persistence = 0.5f;
-            noiseSettings3D.seed = 3;
             noiseSettings3D.size = generatorSettings.RegionSize;
             noiseSettings3D.startingPoint = Vector3.Zero;
             noiseSettings3D.zoom = 60;
+            noiseSettings3D.seed = 3;
 
             fastNoise3D = new FastPerlinNoise3D(noiseSettings3D);
 

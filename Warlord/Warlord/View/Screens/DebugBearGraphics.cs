@@ -48,6 +48,11 @@ namespace Warlord.View.Human.Screens
                 wireFrame.DrawBoundingBox(currentBox, camera.View, camera.Projection);
             }
             
+            wireFrame.DrawLine(entity.CurrentPosition + 2*Vector3.Up,
+                               entity.CurrentPosition + 2*Vector3.Down,
+                               Color.Red,
+                               camera.View,
+                               camera.Projection);
 
             model.Update(gameTime);
             model.World = Matrix.CreateScale(entity.Scale);
