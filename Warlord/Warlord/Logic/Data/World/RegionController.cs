@@ -5,7 +5,6 @@ using GameTools.Graph;
 using GameTools.Process;
 using Microsoft.Xna.Framework;
 using Warlord.Application;
-using Warlord.GameTools;
 using Warlord.Interfaces;
 
 namespace Warlord.Logic.Data.World
@@ -104,7 +103,8 @@ namespace Warlord.Logic.Data.World
         }
         private Optional<Vector3> GetFirstUncreatedWithin(int drawDistance)
         {
-            Vector3 playerPosition = GlobalSystems.EntityManager.Player.CurrentPosition;
+            Vector3 playerPosition = GlobalSystems.EntityManager.Player.CurrentPosition;           
+
             Vector3 playerRegion = database.GetRegionCoordiantes(playerPosition);
 
             playerPosition.Y = 0;

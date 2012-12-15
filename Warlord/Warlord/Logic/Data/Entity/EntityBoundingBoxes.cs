@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
-using Warlord.View.Human.Display.Entity;
+using Warlord.View.Human.Display.EntityView;
 
 namespace Warlord.Logic.Data.Entity
 {

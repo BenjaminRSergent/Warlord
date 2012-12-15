@@ -9,8 +9,8 @@ namespace Warlord.View.Human
         : GameView
     {
         private Screen currentScreen;
-        ScreenKeyboardHandler keyboardDispatcher;
-        ScreenMouseHandler mouseDispatcher;
+        private ScreenKeyboardHandler keyboardDispatcher;
+        private ScreenMouseHandler mouseDispatcher;
 
         public virtual void Draw(GameTime gameTime)
         {

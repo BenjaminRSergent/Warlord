@@ -19,3 +19,11 @@ Z:\Data\C#\XNA\Warlord\SkinningPipeline\bin\x86\Debug\AnimationLibrary.pdb
 Z:\Data\C#\XNA\Warlord\SkinningPipeline\bin\x86\Debug\GameTools.pdb
 Z:\Data\C#\XNA\Warlord\SkinningPipeline\obj\x86\Debug\SkinningPipeline.dll
 Z:\Data\C#\XNA\Warlord\SkinningPipeline\obj\x86\Debug\SkinningPipeline.pdb
+C:\Users\Labouts\Desktop\Data\Warlord\SkinningPipeline\bin\x86\Debug\SkinningPipeline.dll
+C:\Users\Labouts\Desktop\Data\Warlord\SkinningPipeline\bin\x86\Debug\SkinningPipeline.pdb
+C:\Users\Labouts\Desktop\Data\Warlord\SkinningPipeline\bin\x86\Debug\AnimationLibrary.dll
+C:\Users\Labouts\Desktop\Data\Warlord\SkinningPipeline\bin\x86\Debug\GameTools.dll
+C:\Users\Labouts\Desktop\Data\Warlord\SkinningPipeline\bin\x86\Debug\AnimationLibrary.pdb
+C:\Users\Labouts\Desktop\Data\Warlord\SkinningPipeline\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Labouts\Desktop\Data\Warlord\SkinningPipeline\obj\x86\Debug\SkinningPipeline.dll
+C:\Users\Labouts\Desktop\Data\Warlord\SkinningPipeline\obj\x86\Debug\SkinningPipeline.pdb

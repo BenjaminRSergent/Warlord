@@ -7,14 +7,16 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using GameTools.State;
 using Warlord.View.Human.Screens;
+using Warlord.Application;
 
 namespace Warlord.View.Human.State
 {
     class DebugPlayingState : State<DebugView>
     {
-        GameWindow gameWindow;
-        GraphicsDevice graphics;
-        ContentManager content;
+        private GameWindow gameWindow;
+        private GraphicsDevice graphics;
+        private ContentManager content;
+        private DebugPlayScreen debugScreen;
 
         public DebugPlayingState(DebugView owner, GameWindow gameWindow, GraphicsDevice graphics, ContentManager content)
             : base(owner)
@@ -26,12 +28,13 @@ namespace Warlord.View.Human.State
 
         public override void EnterState()
         {
-            owner.SetCurrentScreen(new DebugPlayScreen(graphics, gameWindow, content));
+            debugScreen = new DebugPlayScreen(graphics, gameWindow, content);
+            owner.SetCurrentScreen(debugScreen);
         }
 
         public override void Update()
-        {
-            // Nothing to do
+        {   
+            GlobalSystems.EntityManager.Player.Teleport(debugScreen.Camera.Position);
         }
 
         public override void ExitState()

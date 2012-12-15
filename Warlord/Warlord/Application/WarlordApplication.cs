@@ -7,7 +7,7 @@ using Warlord.Logic.Data.Entity;
 using Warlord.Logic.Data.World;
 using Warlord.View.Human;
 using GameTools.Graph;
-using Warlord.View.Human.Display.Entity;
+using Warlord.View.Human.Display.EntityView;
 using Warlord.View.Human.Display;
 using Microsoft.Xna.Framework.Graphics;
 using Warlord.Interfaces;
@@ -36,6 +36,11 @@ namespace Warlord.Application
 
         protected override void Initialize()
         {
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 900;
+
+            graphics.ApplyChanges();
+            
             eventManager = new WarlordEventManager();
             threadManager = new ThreadManager();
 
@@ -78,6 +83,7 @@ namespace Warlord.Application
 
             logic.Update(gameTime);
             debugView.HandleInput();
+            debugView.Update(gameTime);
 
             fpsHelper.CalcFPS();
 

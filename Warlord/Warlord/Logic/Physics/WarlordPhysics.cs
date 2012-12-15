@@ -5,7 +5,7 @@ using Warlord.Application;
 using Warlord.Event;
 using Warlord.Event.EventTypes;
 using Warlord.Logic.Data.Entity;
-using Warlord.GameTools;
+using GameTools;
 using Warlord.Logic.Data.World;
 using System;
 
@@ -39,6 +39,8 @@ namespace Warlord.Logic.Physics
 
             foreach(GameEntity entity in entities)
             {
+                if (entity == GlobalSystems.EntityManager.Player )
+                    continue;
                 foreach(ForceGenerator force in globalForces)
                     force.ApplyForceTo(gameTime, entity);
 

@@ -8,7 +8,6 @@ using Warlord.Event;
 using Warlord.Event.EventTypes;
 using Warlord.Logic.Data;
 using Warlord.View.Human.Display;
-using Warlord.GameTools;
 using XNAGraphicsHelper;
 using Warlord.Logic.Data.World;
 

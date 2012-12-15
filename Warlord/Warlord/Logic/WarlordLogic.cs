@@ -7,6 +7,7 @@ using Warlord.Logic.States;
 using Warlord.Logic.Data.World;
 using Warlord.Interfaces;
 using System.Collections.Generic;
+using GameTools;
 
 namespace Warlord.Logic
 {
@@ -67,7 +68,7 @@ namespace Warlord.Logic
             get { return mostRecentGameTime; }
         }
 
-        public GameTools.Optional<Block> GetBlockAt(Vector3 location)
+        public Optional<Block> GetBlockAt(Vector3 location)
         {
             location.X = (int)location.X;
             location.Y = (int)location.Y;

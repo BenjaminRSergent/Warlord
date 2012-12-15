@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Textures\Blocks\block_textures.xnb</Output>
-      <Time>2012-02-14T10:40:22.8815927-08:00</Time>
+      <Output>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\Warlord\bin\x86\Release\Content\Textures\Blocks\block_textures.xnb</Output>
+      <Time>2012-12-15T12:34:03.665616-08:00</Time>
     </Item>
     <Item>
       <Source>Textures\Models\bear_texture.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Textures\Models\bear_texture.xnb</Output>
-      <Time>2012-02-14T13:24:36.9442129-08:00</Time>
+      <Output>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\Warlord\bin\x86\Release\Content\Textures\Models\bear_texture.xnb</Output>
+      <Time>2012-12-15T12:41:49.4232558-08:00</Time>
     </Item>
     <Item>
       <Source>Font\DebugFont.spritefont</Source>
@@ -25,8 +25,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Font\DebugFont.xnb</Output>
-      <Time>2012-02-14T10:49:00.9532247-08:00</Time>
+      <Output>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\Warlord\bin\x86\Release\Content\Font\DebugFont.xnb</Output>
+      <Time>2012-12-15T12:34:03.5896116-08:00</Time>
     </Item>
     <Item>
       <Source>Models\bear_model.fbx</Source>
@@ -34,15 +34,14 @@
       <Importer>FbxImporter</Importer>
       <Processor>AnimationProcessor</Processor>
       <Parameters>
-        <Data Key="RotationY">180</Data>
         <Data Key="RotationX">-90</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Models\bear_model.xnb</Output>
-      <Time>2012-02-14T12:51:14.1586601-08:00</Time>
+      <Output>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\Warlord\bin\x86\Release\Content\Models\bear_model.xnb</Output>
+      <Time>2012-12-15T12:41:49.3652525-08:00</Time>
       <Dependency>
         <Key>obj\x86\Release\Models\bear_model_0.xml</Key>
-        <Value>2012-02-16T22:48:58.9953549-08:00</Value>
+        <Value>2012-12-15T13:49:14.0975979-08:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -52,14 +51,13 @@
       <Processor>AnimationProcessor</Processor>
       <Parameters>
         <Data Key="RotationX">-90</Data>
-        <Data Key="RotationY">180</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Models\bear_skeleton.xnb</Output>
-      <Time>2012-02-14T11:25:08.8112191-08:00</Time>
+      <Output>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\Warlord\bin\x86\Release\Content\Models\bear_skeleton.xnb</Output>
+      <Time>2012-12-15T12:41:49.3682527-08:00</Time>
       <Dependency>
         <Key>obj\x86\Release\Models\bear_skeleton_0.xml</Key>
-        <Value>2012-02-16T22:48:59.1073613-08:00</Value>
+        <Value>2012-12-15T13:49:14.4236166-08:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -69,14 +67,13 @@
       <Processor>AnimationProcessor</Processor>
       <Parameters>
         <Data Key="RotationX">-90</Data>
-        <Data Key="RotationY">180</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Models\bear_walk.xnb</Output>
-      <Time>2012-02-14T11:25:08.9112248-08:00</Time>
+      <Output>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\Warlord\bin\x86\Release\Content\Models\bear_walk.xnb</Output>
+      <Time>2012-12-15T12:41:49.3782532-08:00</Time>
       <Dependency>
         <Key>obj\x86\Release\Models\bear_walk_0.xml</Key>
-        <Value>2012-02-16T22:48:59.4393803-08:00</Value>
+        <Value>2012-12-15T13:49:15.3536698-08:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -85,29 +82,29 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
-      <Output>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\Fxs\block_effects.xnb</Output>
-      <Time>2012-02-14T10:50:59.2769924-08:00</Time>
+      <Output>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\Warlord\bin\x86\Release\Content\Fxs\block_effects.xnb</Output>
+      <Time>2012-12-15T12:41:49.3532518-08:00</Time>
     </Item>
     <Item>
       <Source>Models\bear_model.fbx</Source>
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Release\Models\bear_model_0.xml</Output>
-      <Time>2012-02-14T12:51:14.1586601-08:00</Time>
+      <Time>2012-12-15T12:41:49.3652525-08:00</Time>
     </Item>
     <Item>
       <Source>Models\bear_skeleton.fbx</Source>
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Release\Models\bear_skeleton_0.xml</Output>
-      <Time>2012-02-14T11:25:08.8112191-08:00</Time>
+      <Time>2012-12-15T12:41:49.3682527-08:00</Time>
     </Item>
     <Item>
       <Source>Models\bear_walk.fbx</Source>
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Release\Models\bear_walk_0.xml</Output>
-      <Time>2012-02-14T11:25:08.9112248-08:00</Time>
+      <Time>2012-12-15T12:41:49.3782532-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -115,43 +112,43 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Release</BuildConfiguration>
       <CompressContent>true</CompressContent>
-      <RootDirectory>Z:\Data\C#\XNA\Warlord\Warlord\WarlordContent\</RootDirectory>
-      <LoggerRootDirectory>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\</LoggerRootDirectory>
-      <IntermediateDirectory>Z:\Data\C#\XNA\Warlord\Warlord\WarlordContent\obj\x86\Release\</IntermediateDirectory>
-      <OutputDirectory>Z:\Data\C#\XNA\Warlord\Warlord\Warlord\bin\x86\Release\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\WarlordContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\Warlord\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\WarlordContent\obj\x86\Release\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\Warlord\bin\x86\Release\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
-        <Key>Z:\Data\C#\XNA\Warlord\SkinningPipeline\bin\x86\Debug\SkinningPipeline.dll</Key>
-        <Value>2012-02-16T22:48:55.9091783-08:00</Value>
+        <Key>C:\Users\Labouts\Desktop\Data\Warlord\SkinningPipeline\bin\x86\Debug\SkinningPipeline.dll</Key>
+        <Value>2012-12-15T13:49:05.4481032-08:00</Value>
       </Assembly>
       <Assembly>
-        <Key>Z:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
         <Value>2010-08-23T12:41:18-07:00</Value>
       </Assembly>
       <Assembly>
-        <Key>Z:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
         <Value>2010-08-23T12:41:18-07:00</Value>
       </Assembly>
       <Assembly>
-        <Key>Z:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
         <Value>2010-08-23T12:41:18-07:00</Value>
       </Assembly>
       <Assembly>
-        <Key>Z:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
         <Value>2010-08-23T12:41:18-07:00</Value>
       </Assembly>
       <Assembly>
-        <Key>Z:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
         <Value>2010-08-23T12:41:18-07:00</Value>
       </Assembly>
       <Assembly>
-        <Key>Z:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
         <Value>2010-08-23T12:41:18-07:00</Value>
       </Assembly>
       <Assembly>
-        <Key>Z:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2011-09-14T03:38:11.0894013-07:00</Value>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2011-10-16T14:25:24.2212706-07:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

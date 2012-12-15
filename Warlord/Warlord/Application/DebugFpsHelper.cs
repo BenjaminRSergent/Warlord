@@ -2,10 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using GameTools.Statistics;
+using GameTools;
 using Warlord.View.Human.Display;
 using System;
-using Warlord.GameTools;
 
 namespace Warlord.Application
 {

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Warlord.Application;
 using Warlord.Logic.Data.World;
 using Warlord.Logic.Physics;
+using Warlord.Logic.Data.Entity;
 
 namespace Warlord.Logic.States
 {
@@ -19,7 +20,8 @@ namespace Warlord.Logic.States
         }
         public override void EnterState()
         {
-            owner.EntityManager.AddPlayer(new Vector3(10, 40, 10));
+            owner.EntityManager.AddPlayer(Vector3.Zero);
+            owner.EntityManager.AddEntity(new Warlord.Logic.Data.Entity.GameEntity(new Vector3(10, 40, 10), EntityType.bear, 400, 0.75f));
             GlobalSystems.ThreadManager.AttachThread(owner.regionUpdater);
             physics.InitializeBasicForces( );
         }

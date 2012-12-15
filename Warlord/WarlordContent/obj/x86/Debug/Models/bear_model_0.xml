@@ -3,7 +3,7 @@
   <Asset Type="Graphics:NodeContent">
     <Name>RootNode</Name>
     <Identity>
-      <SourceFilename>Z:\Data\C#\XNA\Warlord\Warlord\WarlordContent\Models\bear_model.fbx</SourceFilename>
+      <SourceFilename>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\WarlordContent\Models\bear_model.fbx</SourceFilename>
       <SourceTool>FbxImporter</SourceTool>
     </Identity>
     <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
@@ -180,7 +180,7 @@
     <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
       <Name>Material</Name>
       <Identity>
-        <SourceFilename>Z:\Data\C#\XNA\Warlord\Warlord\WarlordContent\Models\bear_model.fbx</SourceFilename>
+        <SourceFilename>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\WarlordContent\Models\bear_model.fbx</SourceFilename>
         <SourceTool>FbxImporter</SourceTool>
       </Identity>
       <OpaqueData>

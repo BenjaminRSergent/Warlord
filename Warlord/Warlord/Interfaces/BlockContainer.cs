@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Warlord.GameTools;
+using GameTools;
 using Warlord.Logic.Data.World;
 
 namespace Warlord.Interfaces

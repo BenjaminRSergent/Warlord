@@ -4,7 +4,7 @@ using System.Linq;
 using GameTools.Graph;
 using Warlord.Application;
 using Warlord.Event.EventTypes;
-using Warlord.GameTools;
+using GameTools;
 using Warlord.Event;
 using Microsoft.Xna.Framework;
 
@@ -92,7 +92,7 @@ namespace Warlord.Logic.Data.World
             Debug.Assert(currentRegion.Valid);
 
             Vector3 currentBlockRelativePosition = Transformation.AbsoluteToRelative(absolutePosition,
-                                                                                      currentRegion.Data.RegionOrigin);
+                                                                                     currentRegion.Data.RegionOrigin);
 
             Block oldBlock = currentRegion.Data.GetBlock(currentBlockRelativePosition);
             currentRegion.Data.AddBlock(currentBlockRelativePosition, type);
@@ -100,7 +100,7 @@ namespace Warlord.Logic.Data.World
 
             BlockChangedData blockChangedData = new BlockChangedData(oldBlock, newBlock);
 
-            GlobalSystems.EventManager.SendEvent(new BlockChangedEvent(new GameTools.Optional<object>(this),
+            GlobalSystems.EventManager.SendEvent(new BlockChangedEvent(new Optional<object>(this),
                                                                        0,
                                                                        blockChangedData));
         }

@@ -1,4 +1,4 @@
-﻿using Warlord.GameTools;
+﻿using GameTools;
 
 namespace Warlord.Interfaces.Subsystems
 {

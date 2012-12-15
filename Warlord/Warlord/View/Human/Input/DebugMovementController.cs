@@ -14,6 +14,7 @@ namespace Warlord.View.Human.Input
         GameWindow gameWindow;
 
         bool shiftIsDown;
+        bool ctrlIsDown;
 
         public DebugMovementController(Camera3D camera, GameWindow gameWindow)
         {
@@ -33,6 +34,9 @@ namespace Warlord.View.Human.Input
             switch(key)
             {
                 case Keys.LeftShift:
+                    shiftIsDown = false;
+                    return true;
+                case Keys.LeftControl:                
                     shiftIsDown = false;
                     return true;
             }
@@ -77,15 +81,20 @@ namespace Warlord.View.Human.Input
         }
         private bool Move(Keys key)
         {
-            float moveSpeed = 0.06f;
+            float moveSpeed = 0.25f;
 
             if(shiftIsDown)
-                moveSpeed *= 10;
+                moveSpeed *= 2.0f;
+            if(ctrlIsDown)
+                moveSpeed *= 0.2f;
 
             switch(key)
             {
                 case Keys.LeftShift:
                     shiftIsDown = true;
+                    return true;
+                case Keys.LeftControl:
+                    ctrlIsDown = true;
                     return true;
                 case Keys.W:
                     camera.MoveFly(new Vector3(0, 0, moveSpeed));

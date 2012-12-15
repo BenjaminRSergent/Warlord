@@ -18,3 +18,10 @@ Z:\Data\C#\XNA\Warlord\AnimationLibrary\AnimationLibrary\obj\x86\Debug\ResolveAs
 Z:\Data\C#\XNA\Warlord\AnimationLibrary\AnimationLibrary\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 Z:\Data\C#\XNA\Warlord\AnimationLibrary\AnimationLibrary\obj\x86\Debug\AnimationLibrary.dll
 Z:\Data\C#\XNA\Warlord\AnimationLibrary\AnimationLibrary\obj\x86\Debug\AnimationLibrary.pdb
+C:\Users\Labouts\Desktop\Data\Warlord\AnimationLibrary\AnimationLibrary\bin\x86\Debug\AnimationLibrary.dll
+C:\Users\Labouts\Desktop\Data\Warlord\AnimationLibrary\AnimationLibrary\bin\x86\Debug\AnimationLibrary.pdb
+C:\Users\Labouts\Desktop\Data\Warlord\AnimationLibrary\AnimationLibrary\bin\x86\Debug\GameTools.dll
+C:\Users\Labouts\Desktop\Data\Warlord\AnimationLibrary\AnimationLibrary\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Labouts\Desktop\Data\Warlord\AnimationLibrary\AnimationLibrary\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Labouts\Desktop\Data\Warlord\AnimationLibrary\AnimationLibrary\obj\x86\Debug\AnimationLibrary.dll
+C:\Users\Labouts\Desktop\Data\Warlord\AnimationLibrary\AnimationLibrary\obj\x86\Debug\AnimationLibrary.pdb

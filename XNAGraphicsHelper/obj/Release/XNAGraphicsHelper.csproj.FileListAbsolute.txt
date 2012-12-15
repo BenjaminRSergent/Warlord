@@ -6,3 +6,12 @@ Z:\Data\C#\XNA\Warlord\XNAGraphicsHelper\bin\Release\Microsoft.Xna.Framework.Con
 Z:\Data\C#\XNA\Warlord\XNAGraphicsHelper\obj\Release\ResolveAssemblyReference.cache
 Z:\Data\C#\XNA\Warlord\XNAGraphicsHelper\obj\Release\XNAGraphicsHelper.dll
 Z:\Data\C#\XNA\Warlord\XNAGraphicsHelper\obj\Release\XNAGraphicsHelper.pdb
+C:\Users\Labouts\Desktop\Data\Warlord\XNAGraphicsHelper\bin\Release\XNAGraphicsHelper.dll
+C:\Users\Labouts\Desktop\Data\Warlord\XNAGraphicsHelper\bin\Release\XNAGraphicsHelper.pdb
+C:\Users\Labouts\Desktop\Data\Warlord\XNAGraphicsHelper\bin\Release\GameTools.dll
+C:\Users\Labouts\Desktop\Data\Warlord\XNAGraphicsHelper\bin\Release\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll
+C:\Users\Labouts\Desktop\Data\Warlord\XNAGraphicsHelper\bin\Release\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll
+C:\Users\Labouts\Desktop\Data\Warlord\XNAGraphicsHelper\bin\Release\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll
+C:\Users\Labouts\Desktop\Data\Warlord\XNAGraphicsHelper\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Labouts\Desktop\Data\Warlord\XNAGraphicsHelper\obj\Release\XNAGraphicsHelper.dll
+C:\Users\Labouts\Desktop\Data\Warlord\XNAGraphicsHelper\obj\Release\XNAGraphicsHelper.pdb

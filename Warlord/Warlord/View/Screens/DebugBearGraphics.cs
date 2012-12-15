@@ -3,7 +3,7 @@ using Animation;
 using Microsoft.Xna.Framework;
 using GameTools;
 using Microsoft.Xna.Framework.Graphics;
-using Warlord.View.Human.Display.Entity;
+using Warlord.View.Human.Display.EntityView;
 using XNAGraphicsHelper;
 using Warlord.Application;
 using Warlord.Logic.Data.Entity;

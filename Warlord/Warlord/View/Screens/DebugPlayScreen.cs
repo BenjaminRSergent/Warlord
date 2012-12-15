@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Warlord.View.Human.Input;
+using Warlord.Application;
 
 namespace Warlord.View.Human.Screens
 {
@@ -22,10 +23,15 @@ namespace Warlord.View.Human.Screens
             fogController = new DebugFogController(worldGraphics);
 
             PushScreenElement(worldGraphics);
-            PushScreenElement(new DebugBearGraphics(0, graphics, camera));
+            PushScreenElement(new DebugBearGraphics(1, graphics, camera));
             PushMouseListener(movementController);
             PushKeyboardListener(movementController);
             PushKeyboardListener(fogController);
+        }
+
+        public Camera3D Camera
+        {
+            get { return camera; }
         }
     }
 }

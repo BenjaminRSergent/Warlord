@@ -1,1 +1,2 @@
 Z:\Data\C#\XNA\Warlord\Warlord\WarlordContent\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Labouts\Desktop\Data\Warlord\Warlord\WarlordContent\obj\x86\Debug\ResolveAssemblyReference.cache

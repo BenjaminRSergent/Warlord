@@ -3,7 +3,7 @@
   <Asset Type="Graphics:BoneContent">
     <Name>Armature</Name>
     <Identity>
-      <SourceFilename>Z:\Data\C#\XNA\Warlord\Warlord\WarlordContent\Models\bear_walk.fbx</SourceFilename>
+      <SourceFilename>C:\Users\Labouts\Desktop\Data\Warlord\Warlord\WarlordContent\Models\bear_walk.fbx</SourceFilename>
       <SourceTool>FbxImporter</SourceTool>
     </Identity>
     <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>

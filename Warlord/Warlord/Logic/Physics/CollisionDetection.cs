@@ -2,7 +2,7 @@
 using Warlord.Logic.Data.Entity;
 using Microsoft.Xna.Framework;
 using Warlord.Logic.Data.World;
-using Warlord.GameTools;
+using GameTools;
 
 namespace Warlord.Logic.Physics
 {

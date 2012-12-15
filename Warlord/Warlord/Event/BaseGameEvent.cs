@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Warlord.GameTools;
+using GameTools;
 
 namespace Warlord.Event
 {

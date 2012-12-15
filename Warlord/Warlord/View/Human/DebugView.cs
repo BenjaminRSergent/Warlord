@@ -17,9 +17,9 @@ namespace Warlord.View.Human
 
         private SpriteBatch spriteBatch;
 
-        ContentManager content;
-
-        StateMachine<DebugView> stateMachine;
+        private ContentManager content;
+        private StateMachine<DebugView> stateMachine;
+        private DebugPlayingState debugState;
 
         public DebugView(GameWindow gameWindow, GraphicsDevice graphics, ContentManager content)
         {
@@ -33,7 +33,8 @@ namespace Warlord.View.Human
         }
         public void BeginGame()
         {
-            stateMachine.ChangeState(new DebugPlayingState(this, gameWindow, graphics, content));
+            debugState = new DebugPlayingState(this, gameWindow, graphics, content);
+            stateMachine.ChangeState(debugState);
         }
         public void SetCurrentScreen(Screen screen)
         {
@@ -50,6 +51,7 @@ namespace Warlord.View.Human
         }
         public override void Update(GameTime gameTime)
         {
+            debugState.Update();
         }
     }
 }

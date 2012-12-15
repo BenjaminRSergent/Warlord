@@ -4,7 +4,7 @@ using GameTools.Graph;
 using Microsoft.Xna.Framework;
 using Warlord.Application;
 using Warlord.Event.EventTypes;
-using Warlord.GameTools;
+using GameTools;
 
 namespace Warlord.Logic.Data.Entity
 {
@@ -39,11 +39,10 @@ namespace Warlord.Logic.Data.Entity
         public void AddPlayer(Vector3 position)
         {
             Debug.Assert(player == null);
-
-            player = new Player(position, EntityType.bear, 400, 0.75f);
+            player = new Player(position, EntityType.bear, 1, 1);
             AddEntity(player);
         }
-        private void AddEntity(GameEntity newEntity)
+        public void AddEntity(GameEntity newEntity)
         {
             Vector3 cell = GetCellFromPosition(newEntity.CurrentPosition);
 

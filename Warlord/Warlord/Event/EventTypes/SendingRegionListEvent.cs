@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Warlord.Logic.Data;
-using Warlord.GameTools;
+using GameTools;
 
 namespace Warlord.Event.EventTypes
 {

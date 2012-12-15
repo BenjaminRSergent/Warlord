@@ -1,5 +1,5 @@
 ﻿using System;
-using Warlord.GameTools;
+using GameTools;
 using Warlord.Logic.Data.Entity;
 
 namespace Warlord.Event.EventTypes
